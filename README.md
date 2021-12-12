@@ -37,5 +37,5 @@ Akayo - one of the best Discord Bots in terms of functionality.</strong>
 5. <strong>Run the bot: `npm run start:js`</strong> <br />
 5.1: <strong>Run `npm run start:ts` to run TS code using ts-node</strong>
 
-# Licence
+# License
 <strong>This repository uses the [Apache License](https://github.com/bad-boy-discord/akayo-bot/blob/master/LICENSE)!</strong>
