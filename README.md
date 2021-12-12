@@ -11,7 +11,7 @@ Akayo - one of the best Discord Bots in terms of functionality.</strong>
 </strong>
 
 # Translation [![Crowdin](https://badges.crowdin.net/akayo-bot/localized.svg)](https://crowdin.com/project/akayo-bot)
-<strong>You can also help me with the translation of my bot using the Crowdin service: [Click here](https://crowdin.com/project/akayo-bot/)</strong>
+<strong>You can also help me with the translation of my bot using the Crowdin service: [Click here](https://crwd.in/akayo-bot)</strong>
 
 # Getting Started
 <strong>WARNING: Before installing, please note that you are not allowed to use the code of this bot as the main one! In this case, assistance will not be provided!</strong>
