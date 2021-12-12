@@ -1,4 +1,4 @@
 commit_message: '[skip ci]'
 files:
-  - source: /src/locales/*.ts
+  - source: /src/locales/English.ts
     translation: /%original_path%/%language%.%file_extension%
