@@ -1,0 +1,13 @@
+{
+	"base-event": {
+	  "prefix": ["event", "base-event"],
+	  "body": [
+		  "import { RunFunction } from '../../interfaces/Event'",
+		  "",
+		  "export const name: string = 'ready';",
+		  "",
+		  "export const run: RunFunction = async(client) => {}"
+		],
+	  "description": "Generate Base Event Code."
+	}
+  }

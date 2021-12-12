@@ -1,0 +1,26 @@
+{
+	"compilerOptions": {
+		"lib": ["ESNext"],
+		"module": "commonjs",
+		"moduleResolution": "node",
+		"target": "ESNext",
+		"outDir": "dist",
+		"sourceMap": false,
+		"esModuleInterop": true,
+		"experimentalDecorators": true,
+		"emitDecoratorMetadata": true,
+		"allowSyntheticDefaultImports": true,
+		"skipLibCheck": true,
+		"skipDefaultLibCheck": true,
+		"declaration": true,
+		"resolveJsonModule": true,
+
+		"baseUrl": "./src",
+		"paths": {
+			"@locales/*": ["locales/*"]
+		}
+	},
+  
+	"include": ["src"],
+	"exclude": ["node_modules", ".github", ".vscode"]
+}
