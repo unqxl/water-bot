@@ -6,10 +6,7 @@ import {
   TextChannel,
 } from "discord.js";
 import { bold, hyperlink } from "@discordjs/builders";
-import dayjs from "dayjs";
-
-import("dayjs/locale/en");
-import("dayjs/locale/ru");
+import Goose from "classes/Goose";
 
 interface TwitchData {
   name: string;
@@ -19,8 +16,8 @@ interface TwitchData {
   date: number;
 }
 
-export = async (lang: typeof import('@locales/English').default, channel: TextChannel, data: TwitchData) => {
-  const embed = await new AnnounceEmbed().build(lang, data);
+export = async (client: Goose, lang: typeof import('@locales/English').default, channel: TextChannel, data: TwitchData) => {
+  const embed = await new AnnounceEmbed().build(client, lang, data, channel.guild);
   const GoToButton = new MessageButton();
   const row = new MessageActionRow();
   const goTo = lang.TWITCH_HANDLER.GO_TO;
@@ -43,7 +40,7 @@ class AnnounceEmbed extends MessageEmbed {
     super();
   }
 
-  async build(lang: typeof import('@locales/English').default, data: TwitchData) {
+  async build(client: Goose, lang: typeof import('@locales/English').default, data: TwitchData, guild: Guild) {
     const [ newStream, title, startedAt, goTo ] = [
       lang.TWITCH_HANDLER.NEW_STREAM,
       lang.TWITCH_HANDLER.STREAM_TITLE,
@@ -51,7 +48,8 @@ class AnnounceEmbed extends MessageEmbed {
       lang.TWITCH_HANDLER.GO_TO,
     ];
 
-    const startedDate = dayjs(data.date).format("YYYY-MM-DD, HH:mm:ss");
+    const locale = client.database.getSetting(guild, 'language');
+    const startedDate = new Date(data.date).toLocaleString(locale);
     const hyperLink = hyperlink(goTo, `https://twitch.tv/${data.name}`);
     const text = `${bold(newStream)}\n${bold(hyperLink)}\n\n› ${bold(
       title

@@ -59,14 +59,14 @@ export = class Functions {
     const id = this.client.config.twitch.client_id;
     const secret = this.client.config.twitch.client_secret;
 
-    const data = await fetch(
+    const data = await (await fetch(
       `https://id.twitch.tv/oauth2/token?client_id=${id}&client_secret=${secret}&grant_type=client_credentials`,
       {
         method: "POST",
       }
-    ).then((res) => res.json());
+    )).json();
 
-    this.client.twitchKey = data.access_token;
+    this.client.twitchKey = data['access_token'];
 
     return true;
   }
