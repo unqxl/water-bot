@@ -1,7 +1,4 @@
 node_modules/
-src/slashCommands/
-src/languages
-web/
 dist/
-json.sqlite
+.env
 package-lock.json
