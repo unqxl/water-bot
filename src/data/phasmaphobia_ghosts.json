@@ -1,82 +1,86 @@
 [
   {
-    "name": "{{banshee}}",
+    "name": "{banshee}",
     "evidences": ["dots", "fingerprints", "orbs"]
   },
   {
-    "name": "{{goryo}}",
+    "name": "{goryo}",
     "evidences": ["emf5", "fingerprints", "dots"]
   },
   {
-    "name": "{{demon}}",
+    "name": "{demon}",
     "evidences": ["fingerprints", "writing", "freezing"]
   },
   {
-    "name": "{{jinn}}",
+    "name": "{jinn}",
     "evidences": ["freezing", "fingerprints", "emf5"]
   },
   {
-    "name": "{{spirit}}",
+    "name": "{spirit}",
     "evidences": ["emf5", "spiritbox", "writing"]
   },
   {
-    "name": "{{shade}}",
+    "name": "{shade}",
     "evidences": ["writing", "emf5", "freezing"]
   },
   {
-    "name": "{{phantom}}",
+    "name": "{phantom}",
     "evidences": ["spiritbox", "fingerprints", "dots"]
   },
   {
-    "name": "{{hantu}}",
+    "name": "{hantu}",
     "evidences": ["fingerprints", "orbs", "freezing"]
   },
   {
-    "name": "{{mare}}",
+    "name": "{mare}",
     "evidences": ["orbs", "spiritbox", "writing"]
   },
   {
-    "name": "{{wraith}}",
+    "name": "{wraith}",
     "evidences": ["emf5", "dots", "spiritbox"]
   },
   {
-    "name": "{{revenant}}",
+    "name": "{revenant}",
     "evidences": ["orbs", "freezing", "writing"]
   },
   {
-    "name": "{{raiju}}",
+    "name": "{raiju}",
     "evidences": ["emf5", "orbs", "dots"]
   },
   {
-    "name": "{{the_twins}}",
+    "name": "{the_twins}",
     "evidences": ["emf5", "spiritbox", "freezing"]
   },
   {
-    "name": "{{poltergeist}}",
+    "name": "{poltergeist}",
     "evidences": ["spiritbox", "fingerprints", "writing"]
   },
   {
-    "name": "{{myling}}",
+    "name": "{myling}",
     "evidences": ["emf5", "fingerprints", "writing"]
   },
   {
-    "name": "{{yurei}}",
+    "name": "{mimic}",
+    "evidences": ["spiritbox", "fingerprints", "freezing"]
+  },
+  {
+    "name": "{yurei}",
     "evidences": ["orbs", "dots", "freezing"]
   },
   {
-    "name": "{{oni}}",
+    "name": "{oni}",
     "evidences": ["freezing", "emf5", "dots"]
   },
   {
-    "name": "{{onryo}}",
+    "name": "{onryo}",
     "evidences": ["orbs", "spiritbox", "freezing"]
   },
   {
-    "name": "{{obake}}",
+    "name": "{obake}",
     "evidences": ["emf5", "orbs", "fingerprints"]
   },
   {
-    "name": "{{yokai}}",
+    "name": "{yokai}",
     "evidences": ["spiritbox", "orbs", "dots"]
   }
 ]

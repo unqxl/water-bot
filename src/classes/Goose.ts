@@ -14,6 +14,7 @@ import DBManager from "./DBManager";
 import Functions from "./Functions";
 import config from "../config";
 import TwitchSystem from "../handlers/TwitchSystem";
+import Logger from "./Logger";
 
 // Music Plugins
 import SpotifyPlugin from "@distube/spotify";
@@ -22,10 +23,13 @@ import SoundCloudPlugin from "@distube/soundcloud";
 // Interfaces and Structures
 import { Event } from "../interfaces/Event";
 import { Command } from "../structures/Command/Command";
+import { SlashCommand } from "structures/Command/SlashCommand";
+import { DiscordTogether } from "discord-together";
 
 class Goose extends Client {
   // Collections
   public commands: Collection<string, Command> = new Collection();
+  public slashCommands: Collection<string, SlashCommand> = new Collection();
   public aliases: Collection<string, string> = new Collection();
   public events: Collection<string, Event> = new Collection();
 
@@ -33,6 +37,7 @@ class Goose extends Client {
   public owners: string[] = ["852921856800718908"];
   public config: typeof config = config;
   public twitchKey: string = "";
+  public version: string = "2.1.1";
 
   // Databases
   public settings = new Enmap({
@@ -57,9 +62,11 @@ class Goose extends Client {
   public handlers: Handlers = new Handlers(this);
   public functions: Functions = new Functions(this);
   public database: DBManager = new DBManager(this);
+  public logger: Logger = new Logger();
   public twitchSystem: TwitchSystem = new TwitchSystem(this);
   public levels: Leveling = new Leveling(this);
   public dagpi: dagpiClient = new dagpiClient(this.config.keys.dagpi_key);
+  public together: DiscordTogether<{}> = new DiscordTogether(this);
 
   public moderation: Moderation = new Moderation(this, {
     dbPath: process.env.BUILD_PATH ? "./db/" : "./src/db/",
@@ -174,6 +181,7 @@ class Goose extends Client {
     await logs(this);
     await this.handlers.loadEvents(this);
     await this.handlers.loadCommands();
+    await this.handlers.loadSlashCommands();
     await this.functions.updateToken();
 
     if (this.config.bot.test) this.login(this.config.bot.testToken);

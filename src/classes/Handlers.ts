@@ -12,7 +12,9 @@ const glob = promisify(glob_events);
 // Other
 import { resolve } from "path";
 import { Command } from "../structures/Command/Command";
-type Structures = Command;
+import { SlashCommand } from "../structures/Command/SlashCommand";
+
+type Structures = Command | SlashCommand;
 
 export = class Handlers {
   client: Goose;
@@ -62,6 +64,23 @@ export = class Handlers {
           this.client.aliases.set(alias, command.name)
         );
       }
+    }
+  }
+
+  async loadSlashCommands() {
+    const files = process.env.BUILD_PATH
+      ? glob_cmds.sync("./slash-commands/**/*.js")
+      : glob_cmds.sync("./src/slash-commands/**/*.ts");
+
+    for (const file of files) {
+      delete require.cache[file];
+
+      const command = await this.resolveFile<SlashCommand>(file, this.client);
+      if (!command) continue;
+
+      await this.validateFile(file, command);
+
+      this.client.slashCommands.set(command.name, command);
     }
   }
 

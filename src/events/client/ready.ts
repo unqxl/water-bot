@@ -2,11 +2,16 @@ import { MessageEmbed, TextChannel, Util } from "discord.js";
 import { RunFunction } from "../../interfaces/Event";
 import { bold } from "@discordjs/builders";
 import Goose from "../../classes/Goose";
+import deployCommands from "../../deploy-commands";
 
 export const name: string = "ready";
 
 export const run: RunFunction = async (client) => {
+  if(!client?.application.owner) await client.application.fetch();
+  
   await checkUp(client);
+  await deployCommands(client);
+
   console.log(`${client.user.username} logged in!`);
 
   setInterval(async () => {

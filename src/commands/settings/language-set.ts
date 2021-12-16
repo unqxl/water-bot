@@ -86,7 +86,7 @@ export default class LanguageSetCommand extends Command {
 
     this.client.database.set(message.guild, "language", newLanguage);
 
-    const text = lang.SETTINGS.SETTED('language', language === 'en-US' ? 'English' : 'Русский');
+    const text = lang.SETTINGS.SETTED(language === 'en-US' ? 'Language' : 'Язык', language === 'en-US' ? 'English' : 'Русский');
     const embed = this.client.functions.buildEmbed(
       message,
       "BLURPLE",

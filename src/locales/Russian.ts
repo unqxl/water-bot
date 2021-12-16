@@ -63,6 +63,7 @@ const Russian: typeof import('@locales/English').default = {
                 THE_TWINS: "Близнецы",
                 POLTERGEIST: "Полтергейст",
                 MYLING: "Мюлинг",
+                MIMIC: "Мимик",
                 YUREI: "Юрей",
                 YOKAI: "Ёкай",
                 ONI: "Они",
@@ -177,6 +178,7 @@ const Russian: typeof import('@locales/English').default = {
             UPTIME: "Время работы",
             STARTED_AT: "Дата Запуска",
             API_PING: "Пинг API",
+            BOT_VERSION: "Версия Бота",
             FIELD_NAME: "О боте",
         },
 
@@ -277,6 +279,12 @@ const Russian: typeof import('@locales/English').default = {
                 }
             }
         },
+    },
+
+    SLASH_COMMANDS: {
+        ACTIVITY: {
+            INVITE: "Вот ваше приглашение: {url}"
+        }
     },
 
     SETTINGS: {

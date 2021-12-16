@@ -81,7 +81,7 @@ export default class TwitchChannelSetCommand extends Command {
     this.client.database.set(message.guild, "twitchChannelID", channel.id);
 
     const type = lang.SETTINGS.CONFIG.TYPES.TWITCH_CHANNEL;
-    const text = lang.SETTINGS.SETTED(type, channel.id);
+    const text = lang.SETTINGS.SETTED(type, channel.toString());
     const embed = this.client.functions.buildEmbed(
       message,
       "BLURPLE",

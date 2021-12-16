@@ -35,7 +35,7 @@ export default class WorkCommand extends Command {
       });
     }
 
-    const text = lang.ECONOMY.WORK_REWARD.replace('{coins}', this.client.functions.sp(work.reward as number));
+    const text = lang.ECONOMY.WORK_REWARD.replace('{coins}', this.client.functions.sp(work.pretty as number));
     const embed = this.client.functions.buildEmbed(
       message,
       "BLURPLE",

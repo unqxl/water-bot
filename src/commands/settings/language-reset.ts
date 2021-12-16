@@ -22,7 +22,8 @@ export default class LanguageSetCommand extends Command {
   async run(message: Message, args: string[], lang: typeof import('@locales/English').default) {
     this.client.database.set(message.guild, "language", "en-US");
 
-    const text = lang.SETTINGS.RESETTED('language', 'en-US');
+    const language = this.client.database.getSetting(message.guild, 'language');
+    const text = lang.SETTINGS.RESETTED(language === 'en-US' ? 'Language' : 'Язык', 'en-US');
     const embed = this.client.functions.buildEmbed(
       message,
       "BLURPLE",
