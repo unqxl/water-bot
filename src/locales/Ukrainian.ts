@@ -57,6 +57,7 @@ export default {
         THE_TWINS: "The Twins",
         POLTERGEIST: "Poltergeist",
         MYLING: "Myling",
+        MIMIC: "The Mimic",
         YUREI: "Yurei",
         YOKAI: "Yokai",
         ONI: "Oni",
@@ -158,6 +159,7 @@ export default {
       UPTIME: "Bot Uptime",
       STARTED_AT: "Started At",
       API_PING: "API Ping",
+      BOT_VERSION: "Bot Version",
       FIELD_NAME: "Bot Information"
     },
     HELP: {
@@ -243,6 +245,11 @@ export default {
           BOT: "Bot"
         }
       }
+    }
+  },
+  SLASH_COMMANDS: {
+    ACTIVITY: {
+      INVITE: "Here's Your Invite: {url}"
     }
   },
   SETTINGS: {
