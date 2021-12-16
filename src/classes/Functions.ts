@@ -1,5 +1,6 @@
 import {
   ColorResolvable,
+  CommandInteraction,
   DiscordAPIError,
   Guild,
   HTTPError,
@@ -22,7 +23,7 @@ export = class Functions {
   }
 
   buildEmbed(
-    message: Message | { author: User | null },
+    message: Message | CommandInteraction | { author: User | null },
     color: ColorResolvable,
     description: string,
     emoji?: string | boolean,
@@ -30,11 +31,11 @@ export = class Functions {
   ): MessageEmbed {
     const embed = new MessageEmbed();
 
-    if (author)
-      embed.setAuthor(
-        message.author.username,
-        message.author.displayAvatarURL({ dynamic: true })
-      );
+    if (author) {
+      if(message instanceof Message) embed.setAuthor(message.author.username, message.author.displayAvatarURL({ dynamic: true }));
+      else if(message instanceof CommandInteraction) embed.setAuthor(message.user.username, message.user.displayAvatarURL({ dynamic: true }));
+      else embed.setAuthor(message.author.username, message.author.displayAvatarURL({ dynamic: true }));
+    }
 
     embed.setColor(color);
     embed.setDescription(
@@ -59,14 +60,14 @@ export = class Functions {
     const id = this.client.config.twitch.client_id;
     const secret = this.client.config.twitch.client_secret;
 
-    const data = await fetch(
+    const data = await (await fetch(
       `https://id.twitch.tv/oauth2/token?client_id=${id}&client_secret=${secret}&grant_type=client_credentials`,
       {
         method: "POST",
       }
-    ).then((res) => res.json());
+    )).json();
 
-    this.client.twitchKey = data.access_token;
+    this.client.twitchKey = data['access_token'];
 
     return true;
   }

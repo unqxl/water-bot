@@ -127,7 +127,7 @@ export = async (
   const successEvidences: string[] = [];
 
   const randomGhost = ghosts[Math.floor(Math.random() * ghosts.length)];
-  const formattedName = randomGhost.name.replace("{{", "").replace("}}", "");
+  const formattedName = randomGhost.name.replace("{", "").replace("}", "");
 
   var ghostType = "";
   switch (formattedName) {

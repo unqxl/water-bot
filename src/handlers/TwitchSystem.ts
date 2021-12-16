@@ -21,7 +21,7 @@ export = class TwitchSystem {
   async send(channel: TextChannel, data: TwitchData) {
     const lang = await this.client.functions.getLanguageFile(channel.guild);
 
-    return await twitchLive(lang, channel, data);
+    return await twitchLive(this.client, lang, channel, data);
   }
 
   async check(guild: Guild) {

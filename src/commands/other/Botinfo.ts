@@ -46,7 +46,8 @@ export default class BotinfoCommand extends Command {
       events, 
       botUptime, 
       runnedAt, 
-      apiPing, 
+      apiPing,
+      botVersion, 
       fieldName
     ] = [
       lang.OTHER.BOTINFO.GUILDS,
@@ -58,6 +59,7 @@ export default class BotinfoCommand extends Command {
       lang.OTHER.BOTINFO.UPTIME,
       lang.OTHER.BOTINFO.STARTED_AT,
       lang.OTHER.BOTINFO.API_PING,
+      lang.OTHER.BOTINFO.BOT_VERSION,
       lang.OTHER.BOTINFO.FIELD_NAME,
     ];
 
@@ -95,6 +97,7 @@ export default class BotinfoCommand extends Command {
         `› **${apiPing}**: **${botInfo.apiPing}**`,
         `› **${runnedAt}**: **${botInfo.runTime}**`,
         `› **${botUptime}**: **${botInfo.uptime}**`,
+        `› **${botVersion}**: **${this.client.version}**`,
       ].join("\n")
     );
 
