@@ -33,6 +33,7 @@ export default class GuessTheFlagCommand extends Command {
 
         var common_name = Data.name.common;
         var official_name = Data.name.official;
+        var russian_name = Data.translations.rus.common;
         var languages = Object.values(Data.languages);
 
         const text = lang.GAMES.GUESS_THE_FLAG.DESCRIPTION.replace('{reward}', reward.toString());
@@ -59,10 +60,13 @@ export default class GuessTheFlagCommand extends Command {
         }
 
         if(
+            // English
             answer === common_name ||
             answer === official_name ||
             answer === common_name.toLowerCase() ||
-            answer === official_name.toLowerCase()
+            answer === official_name.toLowerCase() || 
+            locale === 'ru-RU' && answer === russian_name ||
+            locale === 'ru-RU' && answer === russian_name.toLowerCase()
         ) {
             this.client.economy.balance.add(reward, message.author.id, message.guild.id);
             
