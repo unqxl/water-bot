@@ -1,6 +1,6 @@
 export default {
   BOTOWNER: {
-    LEFT_GUILD: "Successfully left Guild with ID \"{id}\"",
+    LEFT_GUILD: 'Successfully left Guild with ID "{id}"',
     UPDATED_DB: "Successfully Updated all the Servers Configuration!"
   },
   ECONOMY: {
@@ -263,6 +263,7 @@ export default {
         STARBOARD_CHANNEL: "Starboard Channel",
         AUTO_ROLE: "Auto Role",
         MUTE_ROLE: "Mute Role",
+        DJ_ROLES: "DJ Roles",
         ANTISPAM: "Anti-Spam",
         ANTILINK: "Anti-Link",
         ANTIINVITE: "Anti-Invite",
@@ -273,7 +274,7 @@ export default {
       WIKI: "¹ - This channel is intended for Notifications about Participants (their joins and leaves from the server)"
     },
     SETTED: (type, value) => `Successfully changed "${type}" to "${value}"`,
-    RESETTED: (type, value?) => `Successfully resetted "${type}" to default${value !== undefined ? ` (${value})` : ''}`,
+    RESETTED: (type, value?) => `Successfully resetted "${type}" to default${value !== undefined ? ` (${value})` : ""}`,
     ADDED: (type, value) => `Successfully added "${value}" into "${type}"`,
     DELETED: (type, value) => `Successfully deleted "${value}" from "${type}"`,
     ENABLED: type => `Successfully enabled "${type}"`,
@@ -284,10 +285,10 @@ export default {
     NO_ACCESS: "You have not access to use this command!",
     MEMBER_MISSINGPERMS: "You don't have the following Permissions for this command: {perms}",
     BOT_MISSINGPERMS: "I don't have the following Permissions for this command: {perms}",
-    ARGS_MISSING: "You missed an important argument!\nUse the \"help {cmd_name}\" command to get a usage example!",
+    ARGS_MISSING: 'You missed an important argument!\nUse the "help {cmd_name}" command to get a usage example!',
     EVAL_CANCELED: "The code processing process was canceled ahead of time, as the response may contain personal information!",
-    GUILD_NOT_FOUND: "Guild with ID \"{id}\" isn't found!",
-    IS_NAN: "\"{input}\" is not a Number!",
+    GUILD_NOT_FOUND: 'Guild with ID "{id}" isn\'t found!',
+    IS_NAN: '"{input}" is not a Number!',
     USER_BOT: "{target} is a Bot!",
     NOT_ENOUGH_MONEY: action => `You have not enough coins to ${action}`,
     MEMBER_NOT_BANNABLE: "Cannot ban {target} because he has Immunity for this!",
@@ -310,7 +311,9 @@ export default {
     COMMAND_NOT_FOUND: name => `Command with name "${name}" is not found!`,
     BALANCE_BOTS: "Bots Cannot have Balance!",
     GIFT_YOURSELF: "You cannot give coins to yourself!",
-    NOT_FOUND: src => `Your query is not found in ${src}!`
+    NOT_FOUND: src => `Your query is not found in ${src}!`,
+    NOT_FOUND_IN_DB: (type, value) => `"${value}" is not found in "${type}"!`,
+    ALREADY_IN_DB: (type, value) => `"${value}" is already placed in "${type}"`
   },
   FUNCTIONS: {
     TRIMARRAY: "{len} more...",
@@ -362,12 +365,15 @@ export default {
       CLICK_HERE: "Jump to the Message",
       NEW_STAR: "New Star Message!",
       MSG_ATTACH: "Attachments"
+    },
+    DJ_ROLES: {
+      HASNT_ANY: "You can't use this command because You don't have any DJ Role!"
     }
   },
   EVENTS: {
-    GUILD_PREFIX: "Prefix for \"{guild}\": `{prefix}`",
+    GUILD_PREFIX: 'Prefix for "{guild}": `{prefix}`',
     GUILD_BIRTHDAY: {
-      text: "\"{name}\" are celebrating their birthday today! This server is already {years} {check} old!",
+      text: '"{name}" are celebrating their birthday today! This server is already {years} {check} old!',
       YEAR: "year",
       YEARS: "years"
     },
@@ -405,20 +411,20 @@ export default {
       //guildPartnerAdd | guildPartnerRemove
       PARTNERED: {
         TITLE: "🎉 | Server got Partnered!",
-        DESCRIPTION: "This Server just got \"Partnered\" Status right now!"
+        DESCRIPTION: 'This Server just got "Partnered" Status right now!'
       },
       UNPARTNERED: {
         TITLE: "😔 | Server got UnPartnered!",
-        DESCRIPTION: "Server just lost \"Partnered\" Status right now!"
+        DESCRIPTION: 'Server just lost "Partnered" Status right now!'
       },
       //guildVerificationAdd | guildVerificationRemove
       VERIFIED: {
         TITLE: "🎉 | Server got Verified!",
-        DESCRIPTION: "This Server just got \"Verified\" Status right now!"
+        DESCRIPTION: 'This Server just got "Verified" Status right now!'
       },
       UNVERIFIED: {
         TITLE: "😔 | Server got UnPartnered!",
-        DESCRIPTION: "Server just lost \"Verified\" Status right now!"
+        DESCRIPTION: 'Server just lost "Verified" Status right now!'
       }
     },
     LEVELING: {
