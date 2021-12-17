@@ -1,9 +1,9 @@
 import {
 	Categories,
 	ValidateReturn,
-} from "../../structures/Command/BaseCommand";
+} from "../../types/Command/BaseCommand";
 import { Message } from "discord.js";
-import { Command } from "../../structures/Command/Command";
+import { Command } from "../../types/Command/Command";
 import { bold } from "@discordjs/builders";
 import Goose from "../../classes/Goose";
 
@@ -27,6 +27,28 @@ export default class PauseCommand extends Command {
 		args: string[],
 		lang: typeof import("@locales/English").default
 	): Promise<ValidateReturn> {
+		const roles = this.client.database.getSetting(message.guild, 'djRoles');
+		if(roles.length) {
+			const { status, message: error } = await this.client.DJSystem.check(message);
+			if(!status) {
+				const text = bold(error);
+				const embed = this.client.functions.buildEmbed(
+					message,
+					"BLURPLE",
+					bold(text),
+					"❌",
+					true
+				);
+	
+				return {
+					ok: false,
+					error: {
+						embeds: [embed],
+					},
+				};
+			}
+		};
+		
 		const [error, voice_error] = await Promise.all([
 			lang.ERRORS.NOT_JOINED_VOICE,
 			lang.ERRORS.JOIN_BOT_VOICE,

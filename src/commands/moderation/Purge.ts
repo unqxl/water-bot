@@ -1,9 +1,9 @@
 import {
 	Categories,
 	ValidateReturn,
-} from "../../structures/Command/BaseCommand";
+} from "../../types/Command/BaseCommand";
 import { Message, TextChannel } from "discord.js";
-import { Command } from "../../structures/Command/Command";
+import { Command } from "../../types/Command/Command";
 import { bold } from "@discordjs/builders";
 import Goose from "../../classes/Goose";
 

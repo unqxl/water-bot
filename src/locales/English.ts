@@ -436,6 +436,10 @@ export default {
 			NEW_STAR: "New Star Message!",
 			MSG_ATTACH: "Attachments",
 		},
+
+		DJ_ROLES: {
+			HASNT_ANY: "You can't use this command because You don't have any DJ Role!"
+		},
 	},
 
 	EVENTS: {

@@ -2,8 +2,8 @@ import { Message, MessageButton, MessageActionRow, Util } from "discord.js";
 import {
 	Categories,
 	ValidateReturn,
-} from "../../structures/Command/BaseCommand";
-import { Command } from "../../structures/Command/Command";
+} from "../../types/Command/BaseCommand";
+import { Command } from "../../types/Command/Command";
 import { bold, inlineCode } from "@discordjs/builders";
 import Goose from "../../classes/Goose";
 

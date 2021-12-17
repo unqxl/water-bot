@@ -4,6 +4,7 @@ import { Moderation } from "discord-moderation";
 import { Leveling } from "./Leveling";
 import { Client as dagpiClient } from "dagpijs";
 import { DiscordTogether } from "discord-together";
+import DJSystem from "modules/DJSystem";
 import Economy from "discord-economy-super";
 import Enmap from "enmap";
 import DisTube from "distube";
@@ -23,8 +24,8 @@ import SoundCloudPlugin from "@distube/soundcloud";
 
 // Interfaces and Structures
 import { Event } from "../interfaces/Event";
-import { Command } from "../structures/Command/Command";
-import { SlashCommand } from "structures/Command/SlashCommand";
+import { Command } from "../types/Command/Command";
+import { SlashCommand } from "types/Command/SlashCommand";
 
 class Goose extends Client {
 	// Collections
@@ -67,6 +68,7 @@ class Goose extends Client {
 	public levels: Leveling = new Leveling(this);
 	public dagpi: dagpiClient = new dagpiClient(this.config.keys.dagpi_key);
 	public together: DiscordTogether<{}> = new DiscordTogether(this);
+	public DJSystem: DJSystem = new DJSystem(this);
 
 	// Modules
 	public moderation: Moderation = new Moderation(this, {

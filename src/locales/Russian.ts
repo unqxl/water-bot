@@ -439,6 +439,10 @@ const Russian: typeof import("@locales/English").default = {
 			NEW_STAR: "Новое Звёздное Сообщение!",
 			MSG_ATTACH: "Приложенные файлы",
 		},
+
+		DJ_ROLES: {
+			HASNT_ANY: "Вы не можете использовать данную команду так как у вас нету DJ роли!"
+		},
 	},
 
 	EVENTS: {

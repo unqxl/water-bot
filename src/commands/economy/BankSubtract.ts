@@ -1,8 +1,8 @@
-import { Command } from "../../structures/Command/Command";
+import { Command } from "../../types/Command/Command";
 import {
 	Categories,
 	ValidateReturn,
-} from "../../structures/Command/BaseCommand";
+} from "../../types/Command/BaseCommand";
 import { Message } from "discord.js";
 import { bold } from "@discordjs/builders";
 import Goose from "../../classes/Goose";

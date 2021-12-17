@@ -1,6 +1,6 @@
 import { Message } from "discord.js";
-import { Command } from "../../structures/Command/Command";
-import { Categories } from "../../structures/Command/BaseCommand";
+import { Command } from "../../types/Command/Command";
+import { Categories } from "../../types/Command/BaseCommand";
 import Goose from "../../classes/Goose";
 import phasmophobia from "../../games/phasmophobia";
 

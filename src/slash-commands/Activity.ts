@@ -1,5 +1,5 @@
-import { SlashCommand } from "../structures/Command/SlashCommand";
-import { ValidateReturn } from "structures/Command/BaseSlashCommand";
+import { SlashCommand } from "../types/Command/SlashCommand";
+import { ValidateReturn } from "types/Command/BaseSlashCommand";
 import { CommandInteraction, GuildMember } from "discord.js";
 import { bold } from "@discordjs/builders";
 import Goose from "classes/Goose";

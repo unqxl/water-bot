@@ -254,33 +254,6 @@ export = class Functions {
 			console.warn(e);
 		}
 	}
-
-	async checkForDJRole(message: Message): Promise<DJRoleStatus> {
-		const roles = this.client.database.getSetting(message.guild, "djRoles");
-		if (!roles.length) {
-			return {
-				status: false,
-				message: "No DJ Roles in DB!",
-			};
-		}
-
-		for (const { roleID } of roles) {
-			const guildRole = message.guild.roles.cache.get(roleID);
-			if (!guildRole) return;
-
-			const memberRole = message.member.roles.cache.get(guildRole.id);
-
-			if (!memberRole) {
-				return {
-					status: false,
-					message: "Member hasn't any DJ Role!",
-				};
-			} else
-				return {
-					status: true,
-				};
-		}
-	}
 };
 
 type WarningTypes = "warning" | "error";
@@ -288,9 +261,4 @@ type WarningTypes = "warning" | "error";
 interface Birthday {
 	status: boolean;
 	years?: number;
-}
-
-interface DJRoleStatus {
-	status: boolean;
-	message?: string;
 }

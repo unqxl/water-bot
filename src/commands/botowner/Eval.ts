@@ -2,8 +2,8 @@ import { Message, MessageButton, MessageActionRow } from "discord.js";
 import {
 	ValidateReturn,
 	Categories,
-} from "../../structures/Command/BaseCommand";
-import { Command } from "../../structures/Command/Command";
+} from "../../types/Command/BaseCommand";
+import { Command } from "../../types/Command/Command";
 import { get } from "sourcebin";
 import { bold } from "@discordjs/builders";
 import { transpile } from "typescript";

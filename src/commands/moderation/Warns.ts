@@ -1,10 +1,10 @@
 import {
 	Categories,
 	ValidateReturn,
-} from "../../structures/Command/BaseCommand";
+} from "../../types/Command/BaseCommand";
 import { bold, inlineCode } from "@discordjs/builders";
 import { Message } from "discord.js";
-import { Command } from "../../structures/Command/Command";
+import { Command } from "../../types/Command/Command";
 import Goose from "../../classes/Goose";
 
 export default class WarnsCommand extends Command {

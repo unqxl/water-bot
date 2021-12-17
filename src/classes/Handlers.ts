@@ -11,8 +11,8 @@ const glob = promisify(glob_events);
 
 // Other
 import { resolve } from "path";
-import { Command } from "../structures/Command/Command";
-import { SlashCommand } from "../structures/Command/SlashCommand";
+import { Command } from "../types/Command/Command";
+import { SlashCommand } from "../types/Command/SlashCommand";
 
 type Structures = Command | SlashCommand;
 
