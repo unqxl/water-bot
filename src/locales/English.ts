@@ -298,6 +298,7 @@ export default {
                 STARBOARD_CHANNEL: "Starboard Channel",
                 AUTO_ROLE: "Auto Role",
                 MUTE_ROLE: "Mute Role",
+                DJ_ROLES: "DJ Roles",
                 ANTISPAM: "Anti-Spam",
                 ANTILINK: "Anti-Link",
                 ANTIINVITE: "Anti-Invite",
@@ -349,7 +350,9 @@ export default {
         COMMAND_NOT_FOUND: (name) => `Command with name "${name}" is not found!`,
         BALANCE_BOTS: "Bots Cannot have Balance!",
         GIFT_YOURSELF: "You cannot give coins to yourself!",
-        NOT_FOUND: (src) => `Your query is not found in ${src}!`
+        NOT_FOUND: (src) => `Your query is not found in ${src}!`,
+        NOT_FOUND_IN_DB: (type, value) => `"${value}" is not found in "${type}"!`,
+        ALREADY_IN_DB: (type, value) => `"${value}" is already placed in "${type}"`
     },
 
     FUNCTIONS: {

@@ -13,15 +13,15 @@ export interface GuildData {
   antispam: string;
   antiinvite: string;
 
-  djRoles: Array<DJRoles>;
-  immunityUsers: Array<ImmunityUsers>;
+  djRoles: DJRoles[];
+  immunityUsers: ImmunityUsers[];
 
   welcomeText: LanguageReturns;
   byeText: LanguageReturns;
 
   twitchEnabled: string;
   twitchChannelID: string;
-  twitchStreamers: Array<StreamerData>;
+  twitchStreamers: StreamerData[];
 }
 
 interface LanguageReturns {

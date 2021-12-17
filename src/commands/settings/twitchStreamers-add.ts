@@ -87,6 +87,27 @@ export default class TwitchStreamersAddCommand extends Command {
           };
         }
 
+        const streamers = this.client.database.getSetting(message.guild, 'twitchStreamers');
+        const streamer = streamers.find((x) => x.name === channel);
+        if(streamer) {
+          const type = lang.SETTINGS.CONFIG.TYPES.TWITCH_STREAMERS;
+          const text = lang.ERRORS.ALREADY_IN_DB(type, channel);
+          const embed = this.client.functions.buildEmbed(
+              message,
+              "BLURPLE",
+              bold(text),
+              "❌",
+              true
+          );
+
+          return {
+            ok: false,
+            error: {
+              embeds: [embed]
+            }
+          }
+        }
+
         return {
           ok: true
         };

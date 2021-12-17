@@ -298,6 +298,7 @@ const Russian: typeof import('@locales/English').default = {
                 STARBOARD_CHANNEL: "Звёздный Канал",
                 AUTO_ROLE: "Авто Роль",
                 MUTE_ROLE: "Мут Роль",
+                DJ_ROLES: "DJ Роли",
                 ANTISPAM: "Анти-Спам",
                 ANTILINK: "Анти-Ссылка",
                 ANTIINVITE: "Анти-Приглашение",
@@ -349,7 +350,9 @@ const Russian: typeof import('@locales/English').default = {
         COMMAND_NOT_FOUND: (name) => `Команда с названием "${name}" не найдена!`,
         BALANCE_BOTS: "Боты не могут иметь баланс!",
         GIFT_YOURSELF: "Вы не можете подарить монеты самому себе!",
-        NOT_FOUND: (src) => `Your query is not found in ${src}!`
+        NOT_FOUND: (src) => `Your query is not found in ${src}!`,
+        NOT_FOUND_IN_DB: (type, value) => `"${value}" не найден в списке "${type}"!`,
+        ALREADY_IN_DB: (type, value) => `"${value}" уже находится "${type}"`
     },
 
     FUNCTIONS: {
