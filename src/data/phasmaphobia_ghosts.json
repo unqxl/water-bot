@@ -1,86 +1,86 @@
 [
-  {
-    "name": "{banshee}",
-    "evidences": ["dots", "fingerprints", "orbs"]
-  },
-  {
-    "name": "{goryo}",
-    "evidences": ["emf5", "fingerprints", "dots"]
-  },
-  {
-    "name": "{demon}",
-    "evidences": ["fingerprints", "writing", "freezing"]
-  },
-  {
-    "name": "{jinn}",
-    "evidences": ["freezing", "fingerprints", "emf5"]
-  },
-  {
-    "name": "{spirit}",
-    "evidences": ["emf5", "spiritbox", "writing"]
-  },
-  {
-    "name": "{shade}",
-    "evidences": ["writing", "emf5", "freezing"]
-  },
-  {
-    "name": "{phantom}",
-    "evidences": ["spiritbox", "fingerprints", "dots"]
-  },
-  {
-    "name": "{hantu}",
-    "evidences": ["fingerprints", "orbs", "freezing"]
-  },
-  {
-    "name": "{mare}",
-    "evidences": ["orbs", "spiritbox", "writing"]
-  },
-  {
-    "name": "{wraith}",
-    "evidences": ["emf5", "dots", "spiritbox"]
-  },
-  {
-    "name": "{revenant}",
-    "evidences": ["orbs", "freezing", "writing"]
-  },
-  {
-    "name": "{raiju}",
-    "evidences": ["emf5", "orbs", "dots"]
-  },
-  {
-    "name": "{the_twins}",
-    "evidences": ["emf5", "spiritbox", "freezing"]
-  },
-  {
-    "name": "{poltergeist}",
-    "evidences": ["spiritbox", "fingerprints", "writing"]
-  },
-  {
-    "name": "{myling}",
-    "evidences": ["emf5", "fingerprints", "writing"]
-  },
-  {
-    "name": "{mimic}",
-    "evidences": ["spiritbox", "fingerprints", "freezing"]
-  },
-  {
-    "name": "{yurei}",
-    "evidences": ["orbs", "dots", "freezing"]
-  },
-  {
-    "name": "{oni}",
-    "evidences": ["freezing", "emf5", "dots"]
-  },
-  {
-    "name": "{onryo}",
-    "evidences": ["orbs", "spiritbox", "freezing"]
-  },
-  {
-    "name": "{obake}",
-    "evidences": ["emf5", "orbs", "fingerprints"]
-  },
-  {
-    "name": "{yokai}",
-    "evidences": ["spiritbox", "orbs", "dots"]
-  }
+	{
+		"name": "{banshee}",
+		"evidences": ["dots", "fingerprints", "orbs"]
+	},
+	{
+		"name": "{goryo}",
+		"evidences": ["emf5", "fingerprints", "dots"]
+	},
+	{
+		"name": "{demon}",
+		"evidences": ["fingerprints", "writing", "freezing"]
+	},
+	{
+		"name": "{jinn}",
+		"evidences": ["freezing", "fingerprints", "emf5"]
+	},
+	{
+		"name": "{spirit}",
+		"evidences": ["emf5", "spiritbox", "writing"]
+	},
+	{
+		"name": "{shade}",
+		"evidences": ["writing", "emf5", "freezing"]
+	},
+	{
+		"name": "{phantom}",
+		"evidences": ["spiritbox", "fingerprints", "dots"]
+	},
+	{
+		"name": "{hantu}",
+		"evidences": ["fingerprints", "orbs", "freezing"]
+	},
+	{
+		"name": "{mare}",
+		"evidences": ["orbs", "spiritbox", "writing"]
+	},
+	{
+		"name": "{wraith}",
+		"evidences": ["emf5", "dots", "spiritbox"]
+	},
+	{
+		"name": "{revenant}",
+		"evidences": ["orbs", "freezing", "writing"]
+	},
+	{
+		"name": "{raiju}",
+		"evidences": ["emf5", "orbs", "dots"]
+	},
+	{
+		"name": "{the_twins}",
+		"evidences": ["emf5", "spiritbox", "freezing"]
+	},
+	{
+		"name": "{poltergeist}",
+		"evidences": ["spiritbox", "fingerprints", "writing"]
+	},
+	{
+		"name": "{myling}",
+		"evidences": ["emf5", "fingerprints", "writing"]
+	},
+	{
+		"name": "{mimic}",
+		"evidences": ["spiritbox", "fingerprints", "freezing"]
+	},
+	{
+		"name": "{yurei}",
+		"evidences": ["orbs", "dots", "freezing"]
+	},
+	{
+		"name": "{oni}",
+		"evidences": ["freezing", "emf5", "dots"]
+	},
+	{
+		"name": "{onryo}",
+		"evidences": ["orbs", "spiritbox", "freezing"]
+	},
+	{
+		"name": "{obake}",
+		"evidences": ["emf5", "orbs", "fingerprints"]
+	},
+	{
+		"name": "{yokai}",
+		"evidences": ["spiritbox", "orbs", "dots"]
+	}
 ]

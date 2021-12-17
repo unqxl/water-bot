@@ -1,13 +1,12 @@
 {
   "name": "goose-rewrite",
-  "version": "2.1.1",
+  "version": "2.1.2",
   "description": "Multi-Purpose and Multilingual Discord Bot",
   "main": "dist/index.js",
   "scripts": {
-    "prebuild": "rimraf dist",
-    "build": "npm run prebuild && tsc -p tsconfig.json",
+    "build": "rimraf dist && tsc -p tsconfig.json",
     "prepare": "is-ci || husky install",
-    "start:js": "node dist/index.js",
+    "start": "npm run build && node dist/index.js",
     "start:ts": "ts-node src/index.ts"
   },
   "dependencies": {
@@ -19,8 +18,8 @@
     "@distube/soundcloud": "^1.0.0",
     "@distube/spotify": "^1.0.0",
     "bluebird": "^3.7.2",
-    "chalk": "^4.1.2",
     "canvacord": "^5.2.3",
+    "chalk": "^4.1.2",
     "dagpijs": "^2.0.1",
     "dayjs": "^1.10.7",
     "discord-api-types": "^0.25.2",

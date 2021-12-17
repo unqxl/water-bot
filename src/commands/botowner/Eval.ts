@@ -1,9 +1,9 @@
+import { Message, MessageButton, MessageActionRow } from "discord.js";
 import {
-  ValidateReturn,
-  Categories,
-} from "../../structures/Command/BaseCommand";
-import { Command } from "../../structures/Command/Command";
-import { Message, MessageButton, MessageActionRow, MessageEmbed } from "discord.js";
+	ValidateReturn,
+	Categories,
+} from "../../types/Command/BaseCommand";
+import { Command } from "../../types/Command/Command";
 import { get } from "sourcebin";
 import { bold } from "@discordjs/builders";
 import { transpile } from "typescript";
@@ -12,187 +12,192 @@ import { Type } from "@anishshobith/deeptype";
 import Goose from "../../classes/Goose";
 
 const classified = [
-  "this.client.token",
-  "this.client.config.token",
-  "client.token",
-  "client.config.token",
-  "process.env",
-  'client["token"]',
-  "client['token']",
+	"this.client.token",
+	"this.client.config.token",
+	"client.token",
+	"client.config.token",
+	"process.env",
+	'client["token"]',
+	"client['token']",
 ];
 
 export default class EvalCommand extends Command {
-  constructor(client: Goose) {
-    super(client, {
-      name: "eval",
-      category: Categories.BOTOWNER,
-      
-      description: {
-        en: "Executes Code from SourceBin or Message Content!",
-        ru: "Выполняет Код из SourceBin или Контента Сообщения!",
-      },
-      
-      usage: "<prefix>eval <code>",
-    });
-  }
+	constructor(client: Goose) {
+		super(client, {
+			name: "eval",
+			category: Categories.BOTOWNER,
 
-  async validate(
-    message: Message,
-    args: string[],
-    lang: typeof import('@locales/English').default
-  ): Promise<ValidateReturn> {
-    const isOwner = this.client.functions.checkOwner(message.author);
-    const text = lang.ERRORS.NO_ACCESS;
-    
-    const embed = this.client.functions.buildEmbed(
-      message,
-      "BLURPLE",
-      bold(text),
-      "❌",
-      true
-    );
-    const code = args[0];
+			description: {
+				en: "Executes Code from SourceBin or Message Content!",
+				ru: "Выполняет Код из SourceBin или Контента Сообщения!",
+			},
 
-    if (!isOwner) {
-      return {
-        ok: false,
-        error: {
-          embeds: [embed],
-        },
-      };
-    }
+			usage: "<prefix>eval <code>",
+		});
+	}
 
-    if (!code) {
-      const text = lang.ERRORS.ARGS_MISSING.replace('{cmd_name}', 'eval');
+	async validate(
+		message: Message,
+		args: string[],
+		lang: typeof import("@locales/English").default
+	): Promise<ValidateReturn> {
+		const isOwner = this.client.functions.checkOwner(message.author);
+		const text = lang.ERRORS.NO_ACCESS;
 
-      const embed = this.client.functions.buildEmbed(
-        message,
-        "BLURPLE",
-        bold(text),
-        "❌",
-        true
-      );
+		const embed = this.client.functions.buildEmbed(
+			message,
+			"BLURPLE",
+			bold(text),
+			"❌",
+			true
+		);
+		const code = args[0];
 
-      return {
-        ok: false,
-        error: {
-          embeds: [embed],
-        },
-      };
-    }
+		if (!isOwner) {
+			return {
+				ok: false,
+				error: {
+					embeds: [embed],
+				},
+			};
+		}
 
-    return {
-      ok: true,
-    };
-  }
+		if (!code) {
+			const text = lang.ERRORS.ARGS_MISSING.replace("{cmd_name}", "eval");
 
-  async run(message: Message, args: string[], lang: typeof import('@locales/English').default) {
-    const bin_code = args[0];
-    var wasCanceled = false;
+			const embed = this.client.functions.buildEmbed(
+				message,
+				"BLURPLE",
+				bold(text),
+				"❌",
+				true
+			);
 
-    var bin;
+			return {
+				ok: false,
+				error: {
+					embeds: [embed],
+				},
+			};
+		}
 
-    try {
-      bin = await get(`https://sourceb.in/${bin_code}`, {
-        fetchContent: true,
-      });
+		return {
+			ok: true,
+		};
+	}
 
-      bin = bin.files[0].content;
-    } catch (error) {
-      bin = args.join(' ');
-    }
+	async run(
+		message: Message,
+		args: string[],
+		lang: typeof import("@locales/English").default
+	) {
+		const bin_code = args[0];
+		var wasCanceled = false;
 
-    if (bin.includes("import")) bin = transpile(bin);
-    if (bin.includes("await")) bin = `(async() => {\n${bin}\n})()`;
+		var bin;
 
-    classified.forEach((itm) => {
-      if (bin.toLowerCase().includes(itm)) {
-        wasCanceled = true;
-      }
-    });
+		try {
+			bin = await get(`https://sourceb.in/${bin_code}`, {
+				fetchContent: true,
+			});
 
-    if (wasCanceled) {
-      const error = lang.ERRORS.EVAL_CANCELED;
-      const embed = this.client.functions.buildEmbed(
-        message,
-        "RED",
-        `**${error}**`,
-        "❌",
-        true
-      );
+			bin = bin.files[0].content;
+		} catch (error) {
+			bin = args.join(" ");
+		}
 
-      return message.channel.send({
-        embeds: [embed],
-      });
-    }
+		if (bin.includes("import")) bin = transpile(bin);
+		if (bin.includes("await")) bin = `(async() => {\n${bin}\n})()`;
 
-    let evaled;
-    const startTime = process.hrtime();
+		classified.forEach((itm) => {
+			if (bin.toLowerCase().includes(itm)) {
+				wasCanceled = true;
+			}
+		});
 
-    evaled = eval(bin);
-    if (evaled instanceof Promise) {
-      evaled = await evaled;
-    }
+		if (wasCanceled) {
+			const error = lang.ERRORS.EVAL_CANCELED;
+			const embed = this.client.functions.buildEmbed(
+				message,
+				"RED",
+				`**${error}**`,
+				"❌",
+				true
+			);
 
-    const stopTime = process.hrtime(startTime);
-    const res = [
-      `**Output:** \`\`\`js\n${this.clean(
-        inspect(evaled, { depth: 0 })
-      )}\n\`\`\``,
-      `**Type:** \`\`\`ts\n${new Type(evaled).is}\n\`\`\``,
-      `**Time Taken:** \`\`\`${
-        (stopTime[0] * 1e9 + stopTime[1]) / 1e6
-      }ms\`\`\``,
-    ].join("\n");
+			return message.channel.send({
+				embeds: [embed],
+			});
+		}
 
-    const deleteBTN = new MessageButton()
-      .setCustomId("delete")
-      .setStyle("PRIMARY")
-      .setEmoji("❌");
+		let evaled;
+		const startTime = process.hrtime();
 
-    const row = new MessageActionRow().addComponents([deleteBTN]);
+		evaled = eval(bin);
+		if (evaled instanceof Promise) {
+			evaled = await evaled;
+		}
 
-    const embed = this.client.functions.buildEmbed(
-      message,
-      "BLURPLE",
-      res,
-      false,
-      true
-    );
+		const stopTime = process.hrtime(startTime);
+		const res = [
+			`**Output:** \`\`\`js\n${this.clean(
+				inspect(evaled, { depth: 0 })
+			)}\n\`\`\``,
+			`**Type:** \`\`\`ts\n${new Type(evaled).is}\n\`\`\``,
+			`**Time Taken:** \`\`\`${
+				(stopTime[0] * 1e9 + stopTime[1]) / 1e6
+			}ms\`\`\``,
+		].join("\n");
 
-    const msg = await message.channel.send({
-      embeds: [embed],
-      components: [row],
-    });
+		const deleteBTN = new MessageButton()
+			.setCustomId("delete")
+			.setStyle("PRIMARY")
+			.setEmoji("❌");
 
-    const collector = await msg.createMessageComponentCollector({
-      filter: (btn) => (btn.user.id === message.author.id && btn.customId === 'delete'),
-      max: 1,
-      componentType: 'BUTTON',
-      time: 60000 * 60
-    });
+		const row = new MessageActionRow().addComponents([deleteBTN]);
 
-    collector.on('collect', async(btn) => {
-      if(btn.customId === 'delete') {
-        await msg.delete();
-        collector.stop();
+		const embed = this.client.functions.buildEmbed(
+			message,
+			"BLURPLE",
+			res,
+			false,
+			true
+		);
 
-        return;
-      }
-    });
-  }
+		const msg = await message.channel.send({
+			embeds: [embed],
+			components: [row],
+		});
 
-  clean(text) {
-    if (typeof text === "string") {
-      text = text
-        .replace(/`/g, `\`${String.fromCharCode(8203)}`)
-        .replace(/@/g, `@${String.fromCharCode(8203)}`)
-        .replace(
-          new RegExp(this.client.token, "gi"),
-          "mfa.VkO_2G4Qv3T--NO--lWetW_tjND--TOKEN--QFTm6YGtzq9PH--4U--tG0"
-        );
-    }
+		const collector = await msg.createMessageComponentCollector({
+			filter: (btn) =>
+				btn.user.id === message.author.id && btn.customId === "delete",
+			max: 1,
+			componentType: "BUTTON",
+			time: 60000 * 60,
+		});
 
-    return text;
-  }
+		collector.on("collect", async (btn) => {
+			if (btn.customId === "delete") {
+				await msg.delete();
+				collector.stop();
+
+				return;
+			}
+		});
+	}
+
+	clean(text) {
+		if (typeof text === "string") {
+			text = text
+				.replace(/`/g, `\`${String.fromCharCode(8203)}`)
+				.replace(/@/g, `@${String.fromCharCode(8203)}`)
+				.replace(
+					new RegExp(this.client.token, "gi"),
+					"mfa.VkO_2G4Qv3T--NO--lWetW_tjND--TOKEN--QFTm6YGtzq9PH--4U--tG0"
+				);
+		}
+
+		return text;
+	}
 }

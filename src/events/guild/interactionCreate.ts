@@ -1,21 +1,25 @@
-import { Interaction } from 'discord.js';
-import { RunFunction } from '../../interfaces/Event'
+import { Interaction } from "discord.js";
+import { RunFunction } from "../../interfaces/Event";
 
-export const name: string = 'interactionCreate';
+export const name: string = "interactionCreate";
 
-export const run: RunFunction = async(client, interaction: Interaction) => {
-    if(!interaction.inGuild()) return;
-    if(!interaction.isCommand()) return;
+export const run: RunFunction = async (client, interaction: Interaction) => {
+	if (!interaction.inGuild()) return;
+	if (!interaction.isCommand()) return;
 
-    const lang = await client.functions.getLanguageFile(interaction.guild);
-    
-    const command = client.slashCommands.get(interaction.commandName);
-    if(!command) return client.logger.warn(`Command with name "${interaction.commandName}" isn't found!`, 'interactionCreate');
+	const lang = await client.functions.getLanguageFile(interaction.guild);
 
-    if(command.validate) {
-        const { ok, error } = await command.validate(interaction, lang);
-        if(!ok) return interaction.reply(error);
-    };
+	const command = client.slashCommands.get(interaction.commandName);
+	if (!command)
+		return client.logger.warn(
+			`Command with name "${interaction.commandName}" isn't found!`,
+			"interactionCreate"
+		);
 
-    await command.run(interaction, lang);
-}
+	if (command.validate) {
+		const { ok, error } = await command.validate(interaction, lang);
+		if (!ok) return interaction.reply(error);
+	}
+
+	await command.run(interaction, lang);
+};

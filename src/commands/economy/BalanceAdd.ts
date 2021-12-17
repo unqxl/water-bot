@@ -1,132 +1,152 @@
 import { Message } from "discord.js";
-import { Command } from "../../structures/Command/Command";
+import { Command } from "../../types/Command/Command";
 import {
-  Categories,
-  ValidateReturn,
-} from "../../structures/Command/BaseCommand";
+	Categories,
+	ValidateReturn,
+} from "../../types/Command/BaseCommand";
 import { bold } from "@discordjs/builders";
 import Goose from "../../classes/Goose";
 
 export default class BalanceAddCommand extends Command {
-  constructor(client: Goose) {
-    super(client, {
-      name: "balance-add",
-      aliases: ['bal-add'],
-      
-      description: {
-        en: "Gives Balance to You/Target!",
-        ru: "Добавляет Баланс Вам/Пользователю!",
-      },
-      
-      category: Categories.ECONOMY,
-      usage: "<prefix>balance-add <member> <amount>",
+	constructor(client: Goose) {
+		super(client, {
+			name: "balance-add",
+			aliases: ["bal-add"],
 
-      memberPermissions: ["ADMINISTRATOR"],
-    });
-  }
+			description: {
+				en: "Gives Balance to You/Target!",
+				ru: "Добавляет Баланс Вам/Пользователю!",
+			},
 
-  async validate(
-    message: Message,
-    args: string[],
-    lang: typeof import('@locales/English').default
-  ): Promise<ValidateReturn> {
-    const member =
-      message.mentions.members.first() ||
-      message.guild.members.cache.get(args[0]);
-    if (!member) {
-      const text = lang.ERRORS.ARGS_MISSING.replace('{cmd_name}', 'balance-add');
-      const embed = this.client.functions.buildEmbed(
-        message,
-        "BLURPLE",
-        bold(text),
-        "❌",
-        true
-      );
+			category: Categories.ECONOMY,
+			usage: "<prefix>balance-add <member> <amount>",
 
-      return {
-        ok: false,
-        error: {
-          embeds: [embed],
-        },
-      };
-    }
+			memberPermissions: ["ADMINISTRATOR"],
+		});
+	}
 
-    const amount = args[1];
-    if (!amount) {
-      const text = lang.ERRORS.ARGS_MISSING.replace('{cmd_name}', 'balance-add');
-      const embed = this.client.functions.buildEmbed(
-        message,
-        "BLURPLE",
-        bold(text),
-        "❌",
-        true
-      );
+	async validate(
+		message: Message,
+		args: string[],
+		lang: typeof import("@locales/English").default
+	): Promise<ValidateReturn> {
+		const member =
+			message.mentions.members.first() ||
+			message.guild.members.cache.get(args[0]);
+		if (!member) {
+			const text = lang.ERRORS.ARGS_MISSING.replace(
+				"{cmd_name}",
+				"balance-add"
+			);
+			const embed = this.client.functions.buildEmbed(
+				message,
+				"BLURPLE",
+				bold(text),
+				"❌",
+				true
+			);
 
-      return {
-        ok: false,
-        error: {
-          embeds: [embed],
-        },
-      };
-    }
+			return {
+				ok: false,
+				error: {
+					embeds: [embed],
+				},
+			};
+		}
 
-    if (!Number(amount)) {
-      const text = lang.ERRORS.IS_NAN.replace('{input}', amount);
-      const embed = this.client.functions.buildEmbed(
-        message,
-        "BLURPLE",
-        bold(text),
-        "❌",
-        true
-      );
+		const amount = args[1];
+		if (!amount) {
+			const text = lang.ERRORS.ARGS_MISSING.replace(
+				"{cmd_name}",
+				"balance-add"
+			);
+			const embed = this.client.functions.buildEmbed(
+				message,
+				"BLURPLE",
+				bold(text),
+				"❌",
+				true
+			);
 
-      return {
-        ok: false,
-        error: {
-          embeds: [embed],
-        },
-      };
-    }
+			return {
+				ok: false,
+				error: {
+					embeds: [embed],
+				},
+			};
+		}
 
-    return {
-      ok: true,
-    };
-  }
+		if (!Number(amount)) {
+			const text = lang.ERRORS.IS_NAN.replace("{input}", amount);
+			const embed = this.client.functions.buildEmbed(
+				message,
+				"BLURPLE",
+				bold(text),
+				"❌",
+				true
+			);
 
-  async run(message: Message, args: string[], lang: typeof import('@locales/English').default) {
-    const member =
-      message.mentions.members.first() ||
-      message.guild.members.cache.get(args[0]);
-    const amount = Number(args[1]);
+			return {
+				ok: false,
+				error: {
+					embeds: [embed],
+				},
+			};
+		}
 
-    if (member.user.bot) {
-      const text = lang.ERRORS.USER_BOT.replace('{target}', member.toString());
-      const embed = this.client.functions.buildEmbed(
-        message,
-        "BLURPLE",
-        bold(text),
-        "❌",
-        true
-      );
+		return {
+			ok: true,
+		};
+	}
 
-      return message.channel.send({
-        embeds: [embed],
-      });
-    }
+	async run(
+		message: Message,
+		args: string[],
+		lang: typeof import("@locales/English").default
+	) {
+		const member =
+			message.mentions.members.first() ||
+			message.guild.members.cache.get(args[0]);
+		const amount = Number(args[1]);
 
-    this.client.economy.balance.add(amount, member.user.id, message.guild.id);
+		if (member.user.bot) {
+			const text = lang.ERRORS.USER_BOT.replace(
+				"{target}",
+				member.toString()
+			);
+			const embed = this.client.functions.buildEmbed(
+				message,
+				"BLURPLE",
+				bold(text),
+				"❌",
+				true
+			);
 
-    const text = lang.ECONOMY.BALANCE_ADDED.replace('{amount}', this.client.functions.sp(amount)).replace('{member}', member.toString());
-    const embed = this.client.functions.buildEmbed(
-      message,
-      "BLURPLE",
-      bold(text),
-      false,
-      true
-    );
+			return message.channel.send({
+				embeds: [embed],
+			});
+		}
 
-    return message.channel.send({
-      embeds: [embed],
-    });
-  }
+		this.client.economy.balance.add(
+			amount,
+			member.user.id,
+			message.guild.id
+		);
+
+		const text = lang.ECONOMY.BALANCE_ADDED.replace(
+			"{amount}",
+			this.client.functions.sp(amount)
+		).replace("{member}", member.toString());
+		const embed = this.client.functions.buildEmbed(
+			message,
+			"BLURPLE",
+			bold(text),
+			false,
+			true
+		);
+
+		return message.channel.send({
+			embeds: [embed],
+		});
+	}
 }
