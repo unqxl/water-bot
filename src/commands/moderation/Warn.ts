@@ -1,177 +1,186 @@
 import {
-  Categories,
-  ValidateReturn,
+	Categories,
+	ValidateReturn,
 } from "../../structures/Command/BaseCommand";
 import {
-  ButtonInteraction,
-  Message,
-  MessageActionRow,
-  MessageButton,
-  MessageEmbed,
+	ButtonInteraction,
+	Message,
+	MessageActionRow,
+	MessageButton,
+	MessageEmbed,
 } from "discord.js";
 import { Command } from "../../structures/Command/Command";
 import { bold } from "@discordjs/builders";
 import Goose from "../../classes/Goose";
 
 export default class WarnCommand extends Command {
-  constructor(client: Goose) {
-    super(client, {
-      name: "warn",
-      
-      description: {
-        en: "Gives Warn to the Member!",
-        ru: "Выдаёт Предупреждение Участнику!",
-      },
-      
-      category: Categories.MODERATION,
-      usage: "<prefix>warn <member>",
+	constructor(client: Goose) {
+		super(client, {
+			name: "warn",
 
-      memberPermissions: ["MANAGE_MESSAGES"],
-      botPermissions: ["MANAGE_ROLES"],
-    });
-  }
+			description: {
+				en: "Gives Warn to the Member!",
+				ru: "Выдаёт Предупреждение Участнику!",
+			},
 
-  async validate(
-    message: Message,
-    args: string[],
-    lang: typeof import('@locales/English').default
-  ): Promise<ValidateReturn> {
-    const member =
-      message.mentions.members.first() ||
-      message.guild.members.cache.get(args[0]);
+			category: Categories.MODERATION,
+			usage: "<prefix>warn <member>",
 
-    if (!member) {
-      const text = lang.ERRORS.ARGS_MISSING.replace('{cmd_name}', 'warn');
-      const embed = this.client.functions.buildEmbed(
-        message,
-        "BLURPLE",
-        bold(text),
-        "❌",
-        true
-      );
+			memberPermissions: ["MANAGE_MESSAGES"],
+			botPermissions: ["MANAGE_ROLES"],
+		});
+	}
 
-      return {
-        ok: false,
-        error: {
-          embeds: [embed],
-        },
-      };
-    }
+	async validate(
+		message: Message,
+		args: string[],
+		lang: typeof import("@locales/English").default
+	): Promise<ValidateReturn> {
+		const member =
+			message.mentions.members.first() ||
+			message.guild.members.cache.get(args[0]);
 
-    const muteRole = this.client.database.getSetting(message.guild, "muteRole");
+		if (!member) {
+			const text = lang.ERRORS.ARGS_MISSING.replace("{cmd_name}", "warn");
+			const embed = this.client.functions.buildEmbed(
+				message,
+				"BLURPLE",
+				bold(text),
+				"❌",
+				true
+			);
 
-    if (muteRole === "0") {
-      const text = lang.ERRORS.NO_MUTEROLE;
-      const embed = this.client.functions.buildEmbed(
-        message,
-        "BLURPLE",
-        bold(text),
-        "❌",
-        true
-      );
+			return {
+				ok: false,
+				error: {
+					embeds: [embed],
+				},
+			};
+		}
 
-      return {
-        ok: false,
-        error: {
-          embeds: [embed],
-        },
-      };
-    }
+		const muteRole = this.client.database.getSetting(
+			message.guild,
+			"muteRole"
+		);
 
-    return {
-      ok: true,
-    };
-  }
+		if (muteRole === "0") {
+			const text = lang.ERRORS.NO_MUTEROLE;
+			const embed = this.client.functions.buildEmbed(
+				message,
+				"BLURPLE",
+				bold(text),
+				"❌",
+				true
+			);
 
-  async run(message: Message, args: string[], lang: typeof import('@locales/English').default) {
-    const member =
-      message.mentions.members.first() ||
-      message.guild.members.cache.get(args[0]);
+			return {
+				ok: false,
+				error: {
+					embeds: [embed],
+				},
+			};
+		}
 
-    var reason = args[1];
-    if (!reason) reason = "-";
+		return {
+			ok: true,
+		};
+	}
 
-    const [ accept, decline, confirmText ] = [
-      lang.FUNCTIONS.VERIFICATION.ACCEPT,
-      lang.FUNCTIONS.VERIFICATION.DECLINE,
-      lang.FUNCTIONS.VERIFICATION.TEXT,
-    ];
+	async run(
+		message: Message,
+		args: string[],
+		lang: typeof import("@locales/English").default
+	) {
+		const member =
+			message.mentions.members.first() ||
+			message.guild.members.cache.get(args[0]);
 
-    const confirmButton = new MessageButton()
-      .setCustomId("confirm")
-      .setStyle("SUCCESS")
-      .setLabel(accept)
-      .setEmoji("✅");
+		var reason = args[1];
+		if (!reason) reason = "-";
 
-    const cancelButton = new MessageButton()
-      .setCustomId("cancel")
-      .setStyle("DANGER")
-      .setLabel(decline)
-      .setEmoji("❌");
+		const [accept, decline, confirmText] = [
+			lang.FUNCTIONS.VERIFICATION.ACCEPT,
+			lang.FUNCTIONS.VERIFICATION.DECLINE,
+			lang.FUNCTIONS.VERIFICATION.TEXT,
+		];
 
-    const confirmRow = new MessageActionRow().addComponents([
-      confirmButton,
-      cancelButton,
-    ]);
+		const confirmButton = new MessageButton()
+			.setCustomId("confirm")
+			.setStyle("SUCCESS")
+			.setLabel(accept)
+			.setEmoji("✅");
 
-    const confirmEmbed = new MessageEmbed()
-      .setColor("BLURPLE")
-      .setAuthor(
-        message.author.username,
-        message.author.displayAvatarURL({ dynamic: true })
-      )
-      .setDescription(bold(confirmText))
-      .setTimestamp();
+		const cancelButton = new MessageButton()
+			.setCustomId("cancel")
+			.setStyle("DANGER")
+			.setLabel(decline)
+			.setEmoji("❌");
 
-    const msg = await message.channel.send({
-      embeds: [confirmEmbed],
-      components: [confirmRow],
-    });
+		const confirmRow = new MessageActionRow().addComponents([
+			confirmButton,
+			cancelButton,
+		]);
 
-    const collector = await msg.createMessageComponentCollector({
-      filter: (btn) => btn.user.id === message.author.id,
-      componentType: "BUTTON",
-      max: 1,
-      time: 20000,
-    });
+		const confirmEmbed = new MessageEmbed()
+			.setColor("BLURPLE")
+			.setAuthor(
+				message.author.username,
+				message.author.displayAvatarURL({ dynamic: true })
+			)
+			.setDescription(bold(confirmText))
+			.setTimestamp();
 
-    collector.on("collect", async (btn: ButtonInteraction) => {
-      if (btn.customId === "confirm") {
-        await this.client.moderation.warn(message, member, reason);
+		const msg = await message.channel.send({
+			embeds: [confirmEmbed],
+			components: [confirmRow],
+		});
 
-        const text = lang.MODERATION.WARNED
-        .replace('{target}', member.toString())
-        .replace('{reason}', reason)
-        .replace('{moderator}', message.author.toString());
+		const collector = await msg.createMessageComponentCollector({
+			filter: (btn) => btn.user.id === message.author.id,
+			componentType: "BUTTON",
+			max: 1,
+			time: 20000,
+		});
 
-        const embed = this.client.functions.buildEmbed(
-          message,
-          "BLURPLE",
-          bold(text),
-          "✅",
-          true
-        );
+		collector.on("collect", async (btn: ButtonInteraction) => {
+			if (btn.customId === "confirm") {
+				await this.client.moderation.warn(message, member, reason);
 
-        await msg.edit({
-          embeds: [embed],
-          components: [],
-        });
+				const text = lang.MODERATION.WARNED.replace(
+					"{target}",
+					member.toString()
+				)
+					.replace("{reason}", reason)
+					.replace("{moderator}", message.author.toString());
 
-        return;
-      } else if (btn.customId === "cancel") {
-        collector.stop();
-        await msg.delete();
+				const embed = this.client.functions.buildEmbed(
+					message,
+					"BLURPLE",
+					bold(text),
+					"✅",
+					true
+				);
 
-        return;
-      }
-    });
+				await msg.edit({
+					embeds: [embed],
+					components: [],
+				});
 
-    collector.on("end", async (collected, reason) => {
-      if (reason === "time") {
-        await msg.delete();
-      } else if (collected.first().customId === "cancel") {
-        await msg.delete();
-      }
-    });
-  }
+				return;
+			} else if (btn.customId === "cancel") {
+				collector.stop();
+				await msg.delete();
+
+				return;
+			}
+		});
+
+		collector.on("end", async (collected, reason) => {
+			if (reason === "time") {
+				await msg.delete();
+			} else if (collected.first().customId === "cancel") {
+				await msg.delete();
+			}
+		});
+	}
 }

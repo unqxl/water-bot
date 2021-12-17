@@ -1,59 +1,55 @@
 export interface GuildData {
-  prefix: string;
-  language: string;
-  
-  membersChannel: string;
-  logChannel: string;
-  levelsChannel: string;
+	prefix: string;
+	language: string;
 
-  autoRole: string;
-  muteRole: string;
+	membersChannel: string;
+	logChannel: string;
+	levelsChannel: string;
 
-  antilink: string;
-  antispam: string;
-  antiinvite: string;
+	autoRole: string;
+	muteRole: string;
 
-  djRoles: DJRoles[];
-  immunityUsers: ImmunityUsers[];
+	antilink: string;
+	antispam: string;
+	antiinvite: string;
 
-  welcomeText: LanguageReturns;
-  byeText: LanguageReturns;
+	djRoles: DJRoles[];
+	immunityUsers: ImmunityUsers[];
 
-  twitchEnabled: string;
-  twitchChannelID: string;
-  twitchStreamers: StreamerData[];
+	welcomeText: LanguageReturns;
+	byeText: LanguageReturns;
+
+	twitchEnabled: string;
+	twitchChannelID: string;
+	twitchStreamers: StreamerData[];
 }
 
 interface LanguageReturns {
-  en: string;
-  ru: string;
+	en: string;
+	ru: string;
 }
 
 interface ImmunityUsers {
-  userID: string;
+	userID: string;
 }
 
 interface DJRoles {
-  roleID: string;
+	roleID: string;
 }
 
 export interface StreamerData {
-  name: string;
-  latestStream: string;
-}
-
-interface VideoData {
-  id: string;
+	name: string;
+	latestStream: string;
 }
 
 export interface Events {
-  status?: boolean;
-  name: string;
+	status?: boolean;
+	name: string;
 }
 
 export interface UserLeveling {
-  userID: string;
-  guildID: string;
-  xp: number;
-  level: number;
+	userID: string;
+	guildID: string;
+	xp: number;
+	level: number;
 }

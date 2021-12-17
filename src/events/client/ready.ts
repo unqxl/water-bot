@@ -7,74 +7,74 @@ import deployCommands from "../../deploy-commands";
 export const name: string = "ready";
 
 export const run: RunFunction = async (client) => {
-  if(!client?.application.owner) await client.application.fetch();
-  
-  await checkUp(client);
-  await deployCommands(client);
+	if (!client?.application.owner) await client.application.fetch();
 
-  console.log(`${client.user.username} logged in!`);
+	await checkUp(client);
+	await deployCommands(client);
 
-  setInterval(async () => {
-    for (const [n, guild] of client.guilds.cache) {
-      await client.twitchSystem.check(guild);
-    }
-  }, 30000);
+	console.log(`${client.user.username} logged in!`);
 
-  setInterval(async () => {
-    await client.functions.updateToken();
-  }, 600000);
+	setInterval(async () => {
+		for (const [n, guild] of client.guilds.cache) {
+			await client.twitchSystem.check(guild);
+		}
+	}, 30000);
 
-  setInterval(async () => {
-    for (const [n, guild] of client.guilds.cache) {
-      const settings = client.database.getSettings(guild);
-      if (settings.logChannel === "0") return;
+	setInterval(async () => {
+		await client.functions.updateToken();
+	}, 600000);
 
-      const birthdayCheck = client.functions.checkGuildBirthday(guild);
-      if (!birthdayCheck.status) return;
+	setInterval(async () => {
+		for (const [n, guild] of client.guilds.cache) {
+			const settings = client.database.getSettings(guild);
+			if (settings.logChannel === "0") return;
 
-      const channel = guild.channels.cache.get(settings.logChannel);
-      if (!channel) return;
+			const birthdayCheck = client.functions.checkGuildBirthday(guild);
+			if (!birthdayCheck.status) return;
 
-      const lang = await client.functions.getLanguageFile(guild);
+			const channel = guild.channels.cache.get(settings.logChannel);
+			if (!channel) return;
 
-      const [ more, notMore ] = [
-        lang.EVENTS.GUILD_BIRTHDAY.YEARS,
-        lang.EVENTS.GUILD_BIRTHDAY.YEAR,
-      ];
+			const lang = await client.functions.getLanguageFile(guild);
 
-      const description = lang.EVENTS.GUILD_BIRTHDAY.text
-        .replace('{name}', Util.escapeMarkdown(guild.name))
-        .replace('{years}', client.functions.sp(birthdayCheck.years))
-        .replace('{check}', birthdayCheck.years > 1 ? more : notMore);
+			const [more, notMore] = [
+				lang.EVENTS.GUILD_BIRTHDAY.YEARS,
+				lang.EVENTS.GUILD_BIRTHDAY.YEAR,
+			];
 
-      const embed = new MessageEmbed()
-        .setColor("BLURPLE")
-        .setAuthor(guild.name, guild.iconURL({ dynamic: true }))
-        .setDescription(`🎉 | ${bold(description)}`)
-        .setTimestamp();
+			const description = lang.EVENTS.GUILD_BIRTHDAY.text
+				.replace("{name}", Util.escapeMarkdown(guild.name))
+				.replace("{years}", client.functions.sp(birthdayCheck.years))
+				.replace("{check}", birthdayCheck.years > 1 ? more : notMore);
 
-      return (channel as TextChannel).send({
-        embeds: [embed],
-      });
-    }
-  }, 3600000);
+			const embed = new MessageEmbed()
+				.setColor("BLURPLE")
+				.setAuthor(guild.name, guild.iconURL({ dynamic: true }))
+				.setDescription(`🎉 | ${bold(description)}`)
+				.setTimestamp();
+
+			return (channel as TextChannel).send({
+				embeds: [embed],
+			});
+		}
+	}, 3600000);
 };
 
 async function checkUp(client: Goose) {
-  const settingsOBJ = client.settings.keys()
-  const guildIDS: string[] = [];
+	const settingsOBJ = client.settings.keys();
+	const guildIDS: string[] = [];
 
-  for(const name of settingsOBJ) {
-    const guildID = name.toString().slice('server-'.length);
-    guildIDS.push(guildID);
-  };
+	for (const name of settingsOBJ) {
+		const guildID = name.toString().slice("server-".length);
+		guildIDS.push(guildID);
+	}
 
-  for(const guildID of guildIDS) {
-    const guild = client.guilds.cache.get(guildID);
+	for (const guildID of guildIDS) {
+		const guild = client.guilds.cache.get(guildID);
 
-    if(!guild) await client.database.deleteGuild(guildID);
-    else await client.database.getGuild(guild);
-  }
-  
-  return true;
+		if (!guild) await client.database.deleteGuild(guildID);
+		else await client.database.getGuild(guild);
+	}
+
+	return true;
 }

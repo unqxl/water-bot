@@ -1,49 +1,49 @@
-import { UserLeveling } from '../../interfaces/Guild';
+import { UserLeveling } from "../../interfaces/Guild";
 
 export class LevelingUser {
-    _data: UserLeveling;
+	_data: UserLeveling;
 
-    constructor(data: UserLeveling) {
-        this._data = data;
-    }
+	constructor(data: UserLeveling) {
+		this._data = data;
+	}
 
-    get data() {
-        return this._data;
-    }
+	get data() {
+		return this._data;
+	}
 
-    setXP(amount: number) {
-        this.data.xp = amount;
+	setXP(amount: number) {
+		this.data.xp = amount;
 
-        return this.data;
-    }
+		return this.data;
+	}
 
-    setLevel(amount: number) {
-        this.data.level = amount;
+	setLevel(amount: number) {
+		this.data.level = amount;
 
-        return this.data;
-    }
+		return this.data;
+	}
 
-    addXP(amount: number) {
-        this.data.xp += amount;
+	addXP(amount: number) {
+		this.data.xp += amount;
 
-        return this.data;
-    }
+		return this.data;
+	}
 
-    addLevel(amount: number) {
-        this.data.level += amount;
+	addLevel(amount: number) {
+		this.data.level += amount;
 
-        return this.data;
-    }
+		return this.data;
+	}
 
-    subtractXP(amount: number) {
-        this.data.xp -= amount;
+	subtractXP(amount: number) {
+		this.data.xp -= amount;
 
-        return this.data;
-    }
+		return this.data;
+	}
 
-    subtractLevel(amount: number) {
-        this.data.level -= amount;
+	subtractLevel(amount: number) {
+		this.data.level -= amount;
 
-        return this.data;
-    }
+		return this.data;
+	}
 }

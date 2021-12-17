@@ -5,61 +5,65 @@ import { Rank } from "canvacord";
 import Goose from "../../classes/Goose";
 
 export default class RankCommand extends Command {
-  constructor(client: Goose) {
-    super(client, {
-      name: "rank",
-      aliases: ["card"],
-      
-      description: {
-        en: "Displays a Card with Your Leveling Info!",
-        ru: "Показывает Карточку с Вашей Статистикой Уровней!",
-      },
-    
-      category: Categories.LEVELING,
-      usage: "<prefix>rank [member]",
-    });
-  }
+	constructor(client: Goose) {
+		super(client, {
+			name: "rank",
+			aliases: ["card"],
 
-  async run(message: Message, args: string[], lang: typeof import('@locales/English').default) {
-    const member =
-      message.mentions.members.first() ||
-      message.guild.members.cache.get(args[0]) ||
-      message.member;
+			description: {
+				en: "Displays a Card with Your Leveling Info!",
+				ru: "Показывает Карточку с Вашей Статистикой Уровней!",
+			},
 
-    const { level, xp } = this.client.levels.getData(
-      message.guild.id,
-      member.id
-    );
-    const requiredXP = this.client.levels.xpForNextLevel(
-      message.guild.id,
-      member.id
-    );
-    const rank = this.client.levels.getRank(message.guild.id, member.id);
+			category: Categories.LEVELING,
+			usage: "<prefix>rank [member]",
+		});
+	}
 
-    const card = new Rank()
-      .setAvatar(
-        member.user.displayAvatarURL({ dynamic: false, format: "png" })
-      )
-      .setUsername(member.user.username)
-      .setDiscriminator(member.user.discriminator)
-      .renderEmojis(true)
-      .setRank(rank)
-      .setLevel(level)
-      .setCurrentXP(xp)
-      .setRequiredXP(requiredXP)
-      .setProgressBar(["#aab6fb", "#6096fd"], "GRADIENT");
+	async run(
+		message: Message,
+		args: string[],
+		lang: typeof import("@locales/English").default
+	) {
+		const member =
+			message.mentions.members.first() ||
+			message.guild.members.cache.get(args[0]) ||
+			message.member;
 
-    return await card
-      .build({
-        fontX: "Sans",
-        fontY: "Sans",
-      })
-      .then(async (data) => {
-        const attachment = new MessageAttachment(data, "rank.png");
+		const { level, xp } = this.client.levels.getData(
+			message.guild.id,
+			member.id
+		);
+		const requiredXP = this.client.levels.xpForNextLevel(
+			message.guild.id,
+			member.id
+		);
+		const rank = this.client.levels.getRank(message.guild.id, member.id);
 
-        return message.channel.send({
-          files: [attachment],
-        });
-      });
-  }
+		const card = new Rank()
+			.setAvatar(
+				member.user.displayAvatarURL({ dynamic: false, format: "png" })
+			)
+			.setUsername(member.user.username)
+			.setDiscriminator(member.user.discriminator)
+			.renderEmojis(true)
+			.setRank(rank)
+			.setLevel(level)
+			.setCurrentXP(xp)
+			.setRequiredXP(requiredXP)
+			.setProgressBar(["#aab6fb", "#6096fd"], "GRADIENT");
+
+		return await card
+			.build({
+				fontX: "Sans",
+				fontY: "Sans",
+			})
+			.then(async (data) => {
+				const attachment = new MessageAttachment(data, "rank.png");
+
+				return message.channel.send({
+					files: [attachment],
+				});
+			});
+	}
 }

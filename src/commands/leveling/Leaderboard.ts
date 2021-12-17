@@ -1,52 +1,72 @@
-import { Message, MessageEmbed } from 'discord.js';
-import { bold, inlineCode } from '@discordjs/builders';
-import { Command } from '../../structures/Command/Command';
-import { Categories } from '../../structures/Command/BaseCommand';
-import Goose from '../../classes/Goose';
+import { Message, MessageEmbed } from "discord.js";
+import { bold, inlineCode } from "@discordjs/builders";
+import { Command } from "../../structures/Command/Command";
+import { Categories } from "../../structures/Command/BaseCommand";
+import Goose from "../../classes/Goose";
 
 export default class LeaderboardCommand extends Command {
-    constructor(client: Goose) {
-        super(client, {
-            name: 'leaderboard',
-            aliases: ['lb'],
-            
-            description: {
-                en: "Displays Guild Leveling Leaderboard!",
-                ru: "Выводит Серверную Таблицу Лидеров по Уровню!",
-            },
-            
-            category: Categories.LEVELING
-        });
-    }
+	constructor(client: Goose) {
+		super(client, {
+			name: "leaderboard",
+			aliases: ["lb"],
 
-    async run(message: Message, args: string[], lang: typeof import('@locales/English').default) {
-        const leaderboard = this.client.levels.leaderboard(message.guild.id);
-        const userData = this.client.levels.getData(message.guild.id, message.author.id);
-        const userPlace = this.client.levels.getRank(message.guild.id, message.author.id).toLocaleString();
-        
-        const userLevel = this.client.functions.sp(userData.level);
-        const userXP = this.client.functions.sp(userData.xp);
+			description: {
+				en: "Displays Guild Leveling Leaderboard!",
+				ru: "Выводит Серверную Таблицу Лидеров по Уровню!",
+			},
 
-        var content = "";
-        var additionalContent = `\n————————————————————————\n[${inlineCode(`#${userPlace}`)}] ${message.author.toString()} (${bold(`${userLevel} LVL | ${userXP} XP`)})`
+			category: Categories.LEVELING,
+		});
+	}
 
-        for(const leader of leaderboard) {
-            const member = message.guild.members.cache.get(leader.userID) || 'Deleted User';
-            const place = leader.place.toLocaleString();
-            const level = leader.level.toLocaleString();
-            const xp = leader.xp.toLocaleString();
+	async run(
+		message: Message,
+		args: string[],
+		lang: typeof import("@locales/English").default
+	) {
+		const leaderboard = this.client.levels.leaderboard(message.guild.id);
+		const userData = this.client.levels.getData(
+			message.guild.id,
+			message.author.id
+		);
+		const userPlace = this.client.levels
+			.getRank(message.guild.id, message.author.id)
+			.toLocaleString();
 
-            content += `[${inlineCode(`#${place}`)}] ${member.toString()} (${bold(`${level} LVL | ${xp} XP`)})\n`;
-        }
+		const userLevel = this.client.functions.sp(userData.level);
+		const userXP = this.client.functions.sp(userData.xp);
 
-        const embed = new MessageEmbed()
-        .setColor('BLURPLE')
-        .setAuthor(message.guild.name, message.guild.iconURL({ dynamic: true }))
-        .setDescription(content + additionalContent)
-        .setTimestamp();
+		var content = "";
+		var additionalContent = `\n————————————————————————\n[${inlineCode(
+			`#${userPlace}`
+		)}] ${message.author.toString()} (${bold(
+			`${userLevel} LVL | ${userXP} XP`
+		)})`;
 
-        return message.channel.send({
-            embeds: [embed]
-        });
-    }
+		for (const leader of leaderboard) {
+			const member =
+				message.guild.members.cache.get(leader.userID) ||
+				"Deleted User";
+			const place = leader.place.toLocaleString();
+			const level = leader.level.toLocaleString();
+			const xp = leader.xp.toLocaleString();
+
+			content += `[${inlineCode(
+				`#${place}`
+			)}] ${member.toString()} (${bold(`${level} LVL | ${xp} XP`)})\n`;
+		}
+
+		const embed = new MessageEmbed()
+			.setColor("BLURPLE")
+			.setAuthor(
+				message.guild.name,
+				message.guild.iconURL({ dynamic: true })
+			)
+			.setDescription(content + additionalContent)
+			.setTimestamp();
+
+		return message.channel.send({
+			embeds: [embed],
+		});
+	}
 }

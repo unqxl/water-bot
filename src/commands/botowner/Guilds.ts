@@ -1,215 +1,227 @@
 import { Message, MessageButton, MessageActionRow, Util } from "discord.js";
 import {
-  Categories,
-  ValidateReturn,
+	Categories,
+	ValidateReturn,
 } from "../../structures/Command/BaseCommand";
 import { Command } from "../../structures/Command/Command";
 import { bold, inlineCode } from "@discordjs/builders";
 import Goose from "../../classes/Goose";
 
 export default class GuildsCommand extends Command {
-  constructor(client: Goose) {
-    super(client, {
-      name: "guilds",
+	constructor(client: Goose) {
+		super(client, {
+			name: "guilds",
 
-      description: {
-        en: "Shows Bot Guilds List!",
-        ru: "Выводит Список Серверов у Бота!",
-      },
-      
-      category: Categories.BOTOWNER,
-      usage: "<prefix>guilds",
-    });
-  }
+			description: {
+				en: "Shows Bot Guilds List!",
+				ru: "Выводит Список Серверов у Бота!",
+			},
 
-  async validate(
-    message: Message,
-    args: string[],
-    lang: typeof import('@locales/English').default
-  ): Promise<ValidateReturn> {
-    const isOwner = this.client.functions.checkOwner(message.author);
-    const text = lang.ERRORS.NO_ACCESS;
-    const embed = this.client.functions.buildEmbed(
-      message,
-      "BLURPLE",
-      bold(text),
-      "❌",
-      true
-    );
+			category: Categories.BOTOWNER,
+			usage: "<prefix>guilds",
+		});
+	}
 
-    if (!isOwner) {
-      return {
-        ok: false,
-        error: {
-          embeds: [embed],
-        },
-      };
-    }
-    return {
-      ok: true,
-    };
-  }
+	async validate(
+		message: Message,
+		args: string[],
+		lang: typeof import("@locales/English").default
+	): Promise<ValidateReturn> {
+		const isOwner = this.client.functions.checkOwner(message.author);
+		const text = lang.ERRORS.NO_ACCESS;
+		const embed = this.client.functions.buildEmbed(
+			message,
+			"BLURPLE",
+			bold(text),
+			"❌",
+			true
+		);
 
-  async run(
-    message: Message, 
-    args: string[], 
-    lang: typeof import('@locales/English').default
-  ) {
-    let i0 = 0;
-    let i1 = 10;
-    let page = 1;
+		if (!isOwner) {
+			return {
+				ok: false,
+				error: {
+					embeds: [embed],
+				},
+			};
+		}
+		return {
+			ok: true,
+		};
+	}
 
-    var description = this.client.guilds.cache
-      .sort((a, b) => b.memberCount - a.memberCount)
-      .map((v) => v)
-      .map((v, i) => {
-        const name = Util.escapeMarkdown(v.name);
-        const memberCount = this.client.functions.sp(v.memberCount);
+	async run(
+		message: Message,
+		args: string[],
+		lang: typeof import("@locales/English").default
+	) {
+		let i0 = 0;
+		let i1 = 10;
+		let page = 1;
 
-        return `${bold((i + 1).toString())}: ${bold(name)} (${inlineCode(
-          v.id
-        )}) | ${bold(memberCount + " Members")}`;
-      })
-      .slice(0, 10)
-      .join("\n");
+		var description = this.client.guilds.cache
+			.sort((a, b) => b.memberCount - a.memberCount)
+			.map((v) => v)
+			.map((v, i) => {
+				const name = Util.escapeMarkdown(v.name);
+				const memberCount = this.client.functions.sp(v.memberCount);
 
-    const previousPage = new MessageButton()
-      .setStyle("SECONDARY")
-      .setEmoji("⬅️")
-      .setCustomId("previous");
+				return `${bold((i + 1).toString())}: ${bold(
+					name
+				)} (${inlineCode(v.id)}) | ${bold(memberCount + " Members")}`;
+			})
+			.slice(0, 10)
+			.join("\n");
 
-    const nextPage = new MessageButton()
-      .setStyle("SECONDARY")
-      .setEmoji("➡️")
-      .setCustomId("next");
+		const previousPage = new MessageButton()
+			.setStyle("SECONDARY")
+			.setEmoji("⬅️")
+			.setCustomId("previous");
 
-    const deletePage = new MessageButton()
-      .setStyle("SECONDARY")
-      .setEmoji("❌")
-      .setCustomId("delete");
+		const nextPage = new MessageButton()
+			.setStyle("SECONDARY")
+			.setEmoji("➡️")
+			.setCustomId("next");
 
-    const row = new MessageActionRow().addComponents([
-      previousPage,
-      nextPage,
-      deletePage,
-    ]);
+		const deletePage = new MessageButton()
+			.setStyle("SECONDARY")
+			.setEmoji("❌")
+			.setCustomId("delete");
 
-    const embed = this.client.functions.buildEmbed(
-      message,
-      "BLURPLE",
-      description,
-      false,
-      true
-    );
-    embed.setFooter(
-      `Page: ${page}/${Math.ceil(this.client.guilds.cache.size / 10)}`
-    );
+		const row = new MessageActionRow().addComponents([
+			previousPage,
+			nextPage,
+			deletePage,
+		]);
 
-    const msg = await message.channel.send({
-      embeds: [embed],
-      components: [row],
-    });
+		const embed = this.client.functions.buildEmbed(
+			message,
+			"BLURPLE",
+			description,
+			false,
+			true
+		);
+		embed.setFooter(
+			`Page: ${page}/${Math.ceil(this.client.guilds.cache.size / 10)}`
+		);
 
-    const collector = await msg.createMessageComponentCollector({
-      filter: (btn) => btn.user.id === message.author.id,
-      componentType: "BUTTON",
-      time: 60 * 1000 * 5,
-    });
+		const msg = await message.channel.send({
+			embeds: [embed],
+			components: [row],
+		});
 
-    collector.on("collect", (btn) => {
-      switch (btn.customId) {
-        case "previous": {
-          i0 -= 10;
-          i1 -= 10;
-          page -= 1;
+		const collector = await msg.createMessageComponentCollector({
+			filter: (btn) => btn.user.id === message.author.id,
+			componentType: "BUTTON",
+			time: 60 * 1000 * 5,
+		});
 
-          if (i0 < 0) {
-            collector.stop();
+		collector.on("collect", (btn) => {
+			switch (btn.customId) {
+				case "previous": {
+					i0 -= 10;
+					i1 -= 10;
+					page -= 1;
 
-            return btn.update({
-              components: [],
-            });
-          }
+					if (i0 < 0) {
+						collector.stop();
 
-          description = this.client.guilds.cache
-            .sort((a, b) => b.memberCount - a.memberCount)
-            .map((v) => v)
-            .map((v, i) => {
-              const name = Util.escapeMarkdown(v.name);
-              const memberCount = this.client.functions.sp(v.memberCount);
+						return btn.update({
+							components: [],
+						});
+					}
 
-              return `${bold((i + 1).toString())}: ${bold(name)} (${inlineCode(
-                v.id
-              )}) | ${bold(memberCount + " Members")}`;
-            })
-            .slice(i0, i1)
-            .join("\n");
+					description = this.client.guilds.cache
+						.sort((a, b) => b.memberCount - a.memberCount)
+						.map((v) => v)
+						.map((v, i) => {
+							const name = Util.escapeMarkdown(v.name);
+							const memberCount = this.client.functions.sp(
+								v.memberCount
+							);
 
-          embed.setDescription(description);
-          embed.setFooter(
-            `Page: ${page}/${Math.ceil(this.client.guilds.cache.size / 10)}`
-          );
+							return `${bold((i + 1).toString())}: ${bold(
+								name
+							)} (${inlineCode(v.id)}) | ${bold(
+								memberCount + " Members"
+							)}`;
+						})
+						.slice(i0, i1)
+						.join("\n");
 
-          return btn.update({
-            embeds: [embed],
-          });
-        }
+					embed.setDescription(description);
+					embed.setFooter(
+						`Page: ${page}/${Math.ceil(
+							this.client.guilds.cache.size / 10
+						)}`
+					);
 
-        case "next": {
-          i0 += 10;
-          i1 += 10;
-          page += 1;
+					return btn.update({
+						embeds: [embed],
+					});
+				}
 
-          if (i1 > this.client.guilds.cache.size + 10) {
-            collector.stop();
+				case "next": {
+					i0 += 10;
+					i1 += 10;
+					page += 1;
 
-            return btn.update({
-              components: [],
-            });
-          }
+					if (i1 > this.client.guilds.cache.size + 10) {
+						collector.stop();
 
-          if (!i0 || !i1) {
-            collector.stop();
+						return btn.update({
+							components: [],
+						});
+					}
 
-            return btn.update({
-              components: [],
-            });
-          }
+					if (!i0 || !i1) {
+						collector.stop();
 
-          description = this.client.guilds.cache
-            .sort((a, b) => b.memberCount - a.memberCount)
-            .map((v) => v)
-            .map((v, i) => {
-              const name = Util.escapeMarkdown(v.name);
-              const memberCount = this.client.functions.sp(v.memberCount);
+						return btn.update({
+							components: [],
+						});
+					}
 
-              return `${bold((i + 1).toString())}: ${bold(name)} (${inlineCode(
-                v.id
-              )}) | ${bold(memberCount + " Members")}`;
-            })
-            .slice(i0, i1)
-            .join("\n");
+					description = this.client.guilds.cache
+						.sort((a, b) => b.memberCount - a.memberCount)
+						.map((v) => v)
+						.map((v, i) => {
+							const name = Util.escapeMarkdown(v.name);
+							const memberCount = this.client.functions.sp(
+								v.memberCount
+							);
 
-          embed.setDescription(description);
-          embed.setFooter(
-            `Page: ${page}/${Math.ceil(this.client.guilds.cache.size / 10)}`
-          );
+							return `${bold((i + 1).toString())}: ${bold(
+								name
+							)} (${inlineCode(v.id)}) | ${bold(
+								memberCount + " Members"
+							)}`;
+						})
+						.slice(i0, i1)
+						.join("\n");
 
-          return btn.update({
-            embeds: [embed],
-          });
-        }
+					embed.setDescription(description);
+					embed.setFooter(
+						`Page: ${page}/${Math.ceil(
+							this.client.guilds.cache.size / 10
+						)}`
+					);
 
-        case "delete": {
-          collector.stop();
-          return;
-        }
-      }
-    });
+					return btn.update({
+						embeds: [embed],
+					});
+				}
 
-    collector.on("end", async () => {
-      await msg.delete();
-      return;
-    });
-  }
+				case "delete": {
+					collector.stop();
+					return;
+				}
+			}
+		});
+
+		collector.on("end", async () => {
+			await msg.delete();
+			return;
+		});
+	}
 }

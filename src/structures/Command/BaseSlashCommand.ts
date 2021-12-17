@@ -1,46 +1,51 @@
-import { ApplicationCommandOptionData, ApplicationCommandType, CommandInteraction, MessageOptions } from "discord.js";
+import {
+	ApplicationCommandOptionData,
+	ApplicationCommandType,
+	CommandInteraction,
+	MessageOptions,
+} from "discord.js";
 import Goose from "../../classes/Goose";
 
 export interface BaseSlashCommandOptions {
-  name: string;
-  description: string;
-  type?: ApplicationCommandType;
-  options?: ApplicationCommandOptionData[];
-  defaultPermission?: false;
+	name: string;
+	description: string;
+	type?: ApplicationCommandType;
+	options?: ApplicationCommandOptionData[];
+	defaultPermission?: false;
 }
 
 export type ValidateReturn = {
-  ok: boolean;
-  error?: MessageOptions;
+	ok: boolean;
+	error?: MessageOptions;
 };
 
 export abstract class BaseSlashCommand<
-  TOptions extends BaseSlashCommandOptions = BaseSlashCommandOptions
+	TOptions extends BaseSlashCommandOptions = BaseSlashCommandOptions
 > {
-  protected _options: TOptions;
-  client: Goose;
-  name: string;
+	protected _options: TOptions;
+	client: Goose;
+	name: string;
 
-  constructor(client: Goose, options: TOptions) {
-    this.client = client;
-    this.name = options.name;
-    this._options = options;
+	constructor(client: Goose, options: TOptions) {
+		this.client = client;
+		this.name = options.name;
+		this._options = options;
 
-    this.validate = this.validate?.bind(this);
-    this.run = this.run?.bind(this);
-  }
+		this.validate = this.validate?.bind(this);
+		this.run = this.run?.bind(this);
+	}
 
-  get options(): TOptions {
-    return this._options;
-  }
+	get options(): TOptions {
+		return this._options;
+	}
 
-  validate?(
-    interaction: CommandInteraction,
-    lang: typeof import('@locales/English').default
-  ): Promise<ValidateReturn>;
+	validate?(
+		interaction: CommandInteraction,
+		lang: typeof import("@locales/English").default
+	): Promise<ValidateReturn>;
 
-  abstract run(
-    interaction: CommandInteraction,
-    lang: typeof import('@locales/English').default
-  ): Promise<unknown>;
+	abstract run(
+		interaction: CommandInteraction,
+		lang: typeof import("@locales/English").default
+	): Promise<unknown>;
 }
