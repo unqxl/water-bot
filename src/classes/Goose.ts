@@ -5,6 +5,7 @@ import { Leveling } from "./Leveling";
 import { Client as dagpiClient } from "dagpijs";
 import { DiscordTogether } from "discord-together";
 import DJSystem from "../modules/DJSystem";
+import WebServer from "./Server";
 import Economy from "discord-economy-super";
 import Enmap from "enmap";
 import DisTube from "distube";
@@ -17,6 +18,7 @@ import Functions from "./Functions";
 import config from "../config";
 import TwitchSystem from "../handlers/TwitchSystem";
 import Logger from "./Logger";
+import distubeEvents from "../events/distube-events";
 
 // Music Plugins
 import SpotifyPlugin from "@distube/spotify";
@@ -71,6 +73,7 @@ class Goose extends Client {
 	
 	// Additional Systems
 	public DJSystem: DJSystem = new DJSystem(this);
+	public web: WebServer = new WebServer({ port: 80 });
 
 	// Modules
 	public moderation: Moderation = new Moderation(this, {
@@ -189,6 +192,7 @@ class Goose extends Client {
 	async start() {
 		if (!this.application?.owner) await this.application?.fetch();
 
+		await distubeEvents(this);
 		await logs(this);
 		await this.handlers.loadEvents(this);
 		await this.handlers.loadCommands();

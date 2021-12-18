@@ -2,11 +2,9 @@ import { Webhook } from '@top-gg/sdk';
 import { AutoPoster } from 'topgg-autoposter';
 import { BasePoster } from 'topgg-autoposter/dist/structs/BasePoster';
 import { TextChannel } from 'discord.js';
-import express, { Express } from 'express';
 import Goose from '../classes/Goose';
 
 export = class TopGG {
-    public app: Express;
     public client: Goose;
     public webhook: Webhook;
     public poster: BasePoster;
@@ -18,7 +16,6 @@ export = class TopGG {
         if(!this.client.config.topgg.token) throw new Error('Cannot get Top-GG Authorization Token');
         if(!this.client.config.topgg.webhook_auth) throw new Error('Cannot get Top-GG Webhook Authorization Token');
 
-        this.app = express();
         this.poster = AutoPoster(this.client.config.topgg.token, this.client);
         this.webhook = new Webhook(this.client.config.topgg.webhook_auth);
 
@@ -26,7 +23,7 @@ export = class TopGG {
             this.client.logger.log('Posted Bot Stats into Top-GG!', 'Top-GG');
         });
 
-        this.app.post('/dblwebhook', this.webhook.listener((vote) => {
+        this.client.web.app.post('/dblwebhook', this.webhook.listener((vote) => {
             const user = this.client.users.cache.get(vote.user);
 
             if(!this.client.config.topgg.votesChannelID) {
@@ -44,7 +41,7 @@ export = class TopGG {
             }
         }));
 
-        this.app.listen(80, () => {
+        this.client.web.app.listen(80, () => {
             this.client.logger.log('Server started at port 80!', 'Top-GG');
         });
     }
