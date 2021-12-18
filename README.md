@@ -7,11 +7,8 @@ Akayo - one of the best Discord Bots in terms of functionality.</strong>
 2. Moderation - Akayo is able to moderate your server, can issue a warning / mute to the user (mute can be eternal and temporary, with 3 warnings the user is kicked out of the server, with 6 bans)
 3. Music - Akayo can play music from platforms such as YouTube, SoundCloud, Spotify. And Akayo tries to play them in the best quality!
 4. Customization - If desired, you can practically configure the bot the way you want (at the moment, changing some things is not available, but there will be more customization in the future). For more information, read to the end!
-5. Twitch Notifications - A completely new system in Akayo, this is a notification at the start of the broadcast on the Twitch streaming platform. The bot will check for the presence of a stream from the streamer every 30 seconds, if the broadcast is started, but the notification is not sent, the bot will send it to the channel pre-installed in the database! For more information, read to the end!
+5. Twitch Notifications - A completely new system in Akayo, this is a notification at the start of the broadcast on the Twitch streaming platform. The bot will check for the presence of a stream from the streamer every 30 seconds, if the broadcast is started, but the notification is not sent, the bot will send it to the channel pre-installed in the database!
 </strong>
-
-# Translation [![Crowdin](https://badges.crowdin.net/akayo-bot/localized.svg)](https://crowdin.com/project/akayo-bot)
-<strong>You can also help me with the translation of my bot using the Crowdin service: [Click here](https://crwd.in/akayo-bot)</strong>
 
 # Getting Started
 <strong>WARNING: Before installing, please note that you are not allowed to use the code of this bot as the main one! In this case, assistance will not be provided!</strong>
