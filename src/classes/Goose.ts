@@ -4,7 +4,7 @@ import { Moderation } from "discord-moderation";
 import { Leveling } from "./Leveling";
 import { Client as dagpiClient } from "dagpijs";
 import { DiscordTogether } from "discord-together";
-import DJSystem from "modules/DJSystem";
+import DJSystem from "../modules/DJSystem";
 import Economy from "discord-economy-super";
 import Enmap from "enmap";
 import DisTube from "distube";
