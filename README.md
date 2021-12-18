@@ -31,7 +31,7 @@ Akayo - one of the best Discord Bots in terms of functionality.</strong>
 3. <strong>Change all keys/tokens in `src/config.ts`</strong>
 4. <strong>Run `npm run build` to convert TS code into JS</strong> <br />
 4.1: <strong>Run `npm run start:ts` to run TS code using ts-node</strong>
-5. <strong>Run the bot: `npm run start:js`</strong> <br />
+5. <strong>Run the bot: `npm run start`</strong> <br />
 5.1: <strong>Run `npm run start:ts` to run TS code using ts-node</strong>
 
 # License
