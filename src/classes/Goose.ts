@@ -5,7 +5,6 @@ import { Leveling } from "./Leveling";
 import { Client as dagpiClient } from "dagpijs";
 import { DiscordTogether } from "discord-together";
 import DJSystem from "../modules/DJSystem";
-import TopGG from "../modules/TopGG";
 import Economy from "discord-economy-super";
 import Enmap from "enmap";
 import DisTube from "distube";
@@ -39,7 +38,7 @@ class Goose extends Client {
 	public owners: string[] = ["852921856800718908"];
 	public config: typeof config = config;
 	public twitchKey: string = "";
-	public version: string = "2.1.2";
+	public version: string = "2.1.3";
 
 	// Databases
 	public settings = new Enmap({
