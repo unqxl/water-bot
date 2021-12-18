@@ -5,6 +5,7 @@ import { Leveling } from "./Leveling";
 import { Client as dagpiClient } from "dagpijs";
 import { DiscordTogether } from "discord-together";
 import DJSystem from "../modules/DJSystem";
+import TopGG from "../modules/TopGG";
 import Economy from "discord-economy-super";
 import Enmap from "enmap";
 import DisTube from "distube";
@@ -68,7 +69,10 @@ class Goose extends Client {
 	public levels: Leveling = new Leveling(this);
 	public dagpi: dagpiClient = new dagpiClient(this.config.keys.dagpi_key);
 	public together: DiscordTogether<{}> = new DiscordTogether(this);
+	
+	// Additional Systems
 	public DJSystem: DJSystem = new DJSystem(this);
+	public TopGG: TopGG = new TopGG(this);
 
 	// Modules
 	public moderation: Moderation = new Moderation(this, {

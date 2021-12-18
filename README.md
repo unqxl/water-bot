@@ -39,3 +39,7 @@ Akayo - one of the best Discord Bots in terms of functionality.</strong>
 
 # License
 <strong>This repository uses the [Apache License](https://github.com/bad-boy-discord/akayo-bot/blob/master/LICENSE)!</strong>
+
+<a href="https://top.gg/bot/891819280318996501">
+  <img src="https://top.gg/api/widget/891819280318996501.svg">
+</a>

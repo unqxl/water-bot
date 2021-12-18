@@ -3,8 +3,14 @@ export = {
 		defaultPrefix: "!",
 		token: "NO-TOKEN",
 		testToken: "NO-TOKEN",
-		logsChannelID: "918178359949819944",
+		logsChannelID: "CHANNEL-ID",
 		test: true,
+	},
+
+	topgg: {
+		votesChannelID: "CHANNEL-ID",
+		token: "NO-TOKEN",
+		webhook_auth: "NO-TOKEN"
 	},
 
 	languages: ["ru-RU", "en-EN", "ru", "en"],
