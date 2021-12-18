@@ -40,9 +40,5 @@ export = class TopGG {
                 this.client.logger.log(`${user.tag} has voted me!`, 'Top-GG');
             }
         }));
-
-        this.client.web.app.listen(80, () => {
-            this.client.logger.log('Server started at port 80!', 'Top-GG');
-        });
     }
 }

@@ -19,6 +19,7 @@ import config from "../config";
 import TwitchSystem from "../handlers/TwitchSystem";
 import Logger from "./Logger";
 import distubeEvents from "../events/distube-events";
+import TopGG from "../modules/TopGG";
 
 // Music Plugins
 import SpotifyPlugin from "@distube/spotify";
@@ -198,6 +199,7 @@ class Goose extends Client {
 		await this.handlers.loadCommands();
 		await this.handlers.loadSlashCommands();
 		await this.functions.updateToken();
+		new TopGG(this);
 
 		if (this.config.bot.test) this.login(this.config.bot.testToken);
 		else this.login(this.config.bot.token);

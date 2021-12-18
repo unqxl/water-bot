@@ -3,14 +3,12 @@ import { RunFunction } from "../../interfaces/Event";
 import { bold } from "@discordjs/builders";
 import Goose from "../../classes/Goose";
 import deployCommands from "../../deploy-commands";
-import TopGG from "../../modules/TopGG";
 
 export const name: string = "ready";
 
 export const run: RunFunction = async (client) => {
 	if (!client?.application.owner) await client.application.fetch();
 
-	new TopGG(client);
 	await checkUp(client);
 	await deployCommands(client);
 
