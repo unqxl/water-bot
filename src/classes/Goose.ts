@@ -72,7 +72,6 @@ class Goose extends Client {
 	
 	// Additional Systems
 	public DJSystem: DJSystem = new DJSystem(this);
-	public TopGG: TopGG = new TopGG(this);
 
 	// Modules
 	public moderation: Moderation = new Moderation(this, {

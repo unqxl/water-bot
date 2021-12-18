@@ -26,7 +26,7 @@ export = class TopGG {
             this.client.logger.log('Posted Bot Stats into Top-GG!', 'Top-GG');
         });
 
-        this.app.get('/dblwebhook', this.webhook.listener((vote) => {
+        this.app.post('/dblwebhook', this.webhook.listener((vote) => {
             const user = this.client.users.cache.get(vote.user);
 
             if(!this.client.config.topgg.votesChannelID) {
