@@ -9,6 +9,7 @@ export const name: string = "ready";
 export const run: RunFunction = async (client) => {
 	if (!client?.application.owner) await client.application.fetch();
 
+	await client.web.start();
 	await checkUp(client);
 	await deployCommands(client);
 

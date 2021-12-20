@@ -106,7 +106,7 @@ export default class QueueCommand extends Command {
 			.map((song, i) => {
 				const title = Util.escapeMarkdown(song.name);
 
-				return `[${bold(i.toString())}]: ${bold(title)} [${bold(
+				return `[${bold((i + 1).toString())}]: ${bold(title)} [${bold(
 					song.formattedDuration
 				)} | ${song.user}]`;
 			})

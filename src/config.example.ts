@@ -13,6 +13,14 @@ export = {
 		webhook_auth: "NO-TOKEN"
 	},
 
+	web: {
+		client_id: "NO-ID",
+		client_secret: "NO-SECRET",
+		scopes: ["identify", "guilds"],
+		redirect_uri: "NO-URL",
+		session_secret: "NO-SECRET"
+	},
+
 	languages: ["ru-RU", "en-EN", "ru", "en"],
 
 	keys: {

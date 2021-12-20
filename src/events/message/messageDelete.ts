@@ -5,7 +5,7 @@ import { bold } from "@discordjs/builders";
 export const name: string = "messageDelete";
 
 export const run: RunFunction = async (client, message: Message) => {
-	if (message.author.bot) return;
+	if (!message || message.author.bot) return;
 	if (!message.guild) return;
 
 	const logChannelID = client.database.getSetting(

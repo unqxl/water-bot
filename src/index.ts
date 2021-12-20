@@ -10,14 +10,6 @@ P.Promise.config({
 
 const client = new Goose();
 client.start();
-client.web.start();
-
-client.web.app.get('/', (req, res) => {
-	res.status(200).json({
-		code: res.statusCode,
-		message: "Hello, World!"
-	});
-});
 
 client.on("ready", () => {
 	process.on("unhandledRejection", (error: Error) =>
