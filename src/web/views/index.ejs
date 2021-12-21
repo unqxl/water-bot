@@ -11,8 +11,9 @@
         <link rel="stylesheet" href="./styles/index.css">
 
         <!-- [JS] -->
-        <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-ka7Sk0Gln4gmtz2MlQnikT1wXgYsOg+OMhuP+IlRH9sENBO0LRn5q+8nbTov4+1p" crossorigin="anonymous"></script>
-        <script src="https://code.jquery.com/jquery-3.6.0.min.js" integrity="sha256-/xUj+3OJU5yExlq6GSYGSHk7tPXikynS7ogEvDej/m4=" crossorigin="anonymous"></script>
+        <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.10.2/dist/umd/popper.min.js" integrity="sha384-7+zCNj/IqJ95wo16oMtfsKbZ9ccEh31eOz1HGyDuCQ6wgnyJNSYdrPa03rtR1zdB" crossorigin="anonymous"></script>
+        <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.min.js" integrity="sha384-QJHtvGhmr9XOIpI6YVutG+2QOK9T+ZnN4kzFN1RtK3zEFEIsxhlmWl5/YESvpZ13" crossorigin="anonymous"></script>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.5.1/jquery.min.js" integrity="sha512-bLT0Qm9VnAYZDflyKcBaQ2gg0hSYNQrJ8RilYldYQ1FxQYoCLtUjuuRuZo+fjqhx/qtq/1itJ0C2ejDxltZVFg==" crossorigin="anonymous"></script>
         <script src='https://cdnjs.cloudflare.com/ajax/libs/countup.js/1.9.0/countUp.js'></script>
 
         <title><%= bot.user.username %> | Main</title>
@@ -27,14 +28,18 @@
                     <%= bot.user.username %>
                 </a>
 
-                <button class="navbar-toggler navbar-toggler-right" type="button" data-toggle="collapse" data-target="#navbar" aria-expanded="true">
+                <button class="navbar-toggler navbar-toggler-right" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
                     <span class="navbar-toggler-icon"></span>
                 </button>
     
-                <div id="navbar" class="navbar-collapse collapse hide">
+                <div class="collapse navbar-collapse" id="navbarSupportedContent">
                     <ul class="navbar-nav">
                         <li class="nav-item active">
                             <a class="nav-link" href="#">Home</a>
+                        </li>
+
+                        <li class="nav-item">
+                            <a class="nav-link" href="/guilds">Dashboard</a>
                         </li>
                     </ul>
               
@@ -49,18 +54,18 @@
                             <div class="dropdown">
                                 <button class="btn dropdown-toggle" type="button" id="dropdownMenuButton1" data-bs-toggle="dropdown" aria-expanded="false" style="background-color: #343a40;">
                                     <img src="<%= user.avatarURL %>"  width="40" height="40" alt="<%= user.tag %>" style="border-radius: 5px;">
-                                    <%= user.tag %>
+                                    <span class="text-white"><%= user.tag %></span>
                                 </button>
 
-                                <ul class="dropdown-menu" aria-labelledby="dropdownMenuButton1">
+                                <ul class="dropdown-menu bg-dark" aria-labelledby="dropdownMenuButton1">
                                     <li>
-                                        <a class="dropdown-item" href="/guilds">
+                                        <a class="dropdown-item text-white" href="/guilds">
                                             <i class="fas fa-cog"></i>
                                             Guilds
                                         </a>
                                     </li>
 
-                                    <hr>
+                                    <hr style="color: white;">
 
                                     <li>
                                         <a class="dropdown-item text-danger" href="/authorize/logout">
@@ -77,6 +82,7 @@
         </nav>
         <!-- [Navbar - End] -->
 
+        <!-- [Bot Stats - Start] -->
         <div class="container-fluid p-4">
             <div class="row">
                 <div class="col-md-4">
@@ -125,6 +131,64 @@
                 </div>
             </div>
         </div>
+        <!-- [Bot Stats - End] -->
+
+        <hr>
+
+        <!-- [Bot Information - Start] -->
+        <div class="container-fluid p-4">
+            <div class="row">
+                <div class="col-md-4">
+                    <div class="info-card bg-dark text-white">
+                        <p><strong><%= bot.user.username %></strong> - one of the best Discord Bots in terms of functionality.</p>
+                        <p>And one of is's main features - ability to change the language to Russian or English.</p>
+                        <p>Owner - <strong><a href="https://discord.com/users/852921856800718908/" style="text-decoration: none;">WhyMe#1126</a></strong>.</p>
+                    </div>
+                </div>
+
+                <div class="col-md-4">
+                    <div class="info-card bg-dark text-white">
+                        <strong><%= bot.user.username %></strong> includes the following features:
+                        <ul>
+                            <li><strong>Server Events Logging</strong></li>
+                            <li><strong>Server Moderation</strong></li>
+                            <li><strong>Music from YouTube/Spotify</strong></li>
+                            <li><strong>Post Twitch Notifications</strong></li>
+                        </ul>
+
+                        <p>And now, you can manage the bot settings <strong>directly on this site</strong>!</p>
+                    </div>
+                </div>
+
+                <div class="col-md-4">
+                    <div class="info-card bg-dark text-white">
+                        <div class="d-grid gap-2 col-6 mx-auto">
+                            <a class="btn btn-primary" type="button" href="/guilds">Go to Dashboard</a>
+                            <a class="btn btn-primary" type="button" href="https://github.com/bad-boy-discord/">Developer</a>
+                            <a class="btn btn-primary" type="button" href="https://github.com/bad-boy-discord/akayo-bot">View Source</a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <!-- [Bot Information - End] -->
+
+        <!-- [Footer - Start] -->
+        <div class="container">
+            <footer class="d-flex flex-wrap justify-content-between align-items-center py-3 my-4 border-top">
+                <p class="col-md-4 mb-0 text-muted">©️ <%= bot.user.username %>, All Rights Received</p>
+            
+                <a href="#" class="col-md-4 d-flex align-items-center justify-content-center mb-3 mb-md-0 me-md-auto link-dark text-decoration-none">
+                    <img src="<%= bot.user.displayAvatarURL({ dynamic: true, size: 2048 }) %>" width="100" height="100" style="border-radius: 5px;">
+                </a>
+            
+                <ul class="nav col-md-4 justify-content-end">
+                  <li class="nav-item"><a href="#" class="nav-link px-2 text-muted">Home</a></li>
+                  <li class="nav-item"><a href="/guilds" class="nav-link px-2 text-muted">Dashboard</a></li>
+                </ul>
+            </footer>
+        </div>
+        <!-- [Footer - End] -->
     </body>
 
     <script>
