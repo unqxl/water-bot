@@ -19,7 +19,7 @@
     "@distube/spotify": "^1.0.0",
     "bluebird": "^3.7.2",
     "canvacord": "^5.2.3",
-    "chalk": "^4.1.2",
+    "chalk": "^5.0.0",
     "dagpijs": "^2.0.1",
     "dayjs": "^1.10.7",
     "discord-api-types": "^0.25.2",
