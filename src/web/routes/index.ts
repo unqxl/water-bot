@@ -1,4 +1,5 @@
 import { Router } from "express";
+import { Permissions } from 'discord.js';
 import Goose from "classes/Goose";
 
 export = (client: Goose): Router => {
@@ -11,13 +12,14 @@ export = (client: Goose): Router => {
         });
     });
         
-    router.get('/guilds', (req, res) => {
+    router.get('/dashboard', (req, res) => {
         if(!req.session['user']) return res.redirect('/authorize');
 
-        return res.render('guilds', {
+        return res.render('dashboard', {
             user: req.session['user'],
             guilds: req.session['guilds'],
-            bot: client
+            bot: client,
+            Permissions: Permissions
         });
     });
 
