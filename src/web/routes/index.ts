@@ -11,10 +11,13 @@ export = (client: Goose): Router => {
         });
     });
         
-    router.get('/user', (req, res) => {
-        return res.json({
-            user: req.session['user'] || null,
-            guilds: req.session['guilds'] || null,
+    router.get('/guilds', (req, res) => {
+        if(!req.session['user']) return res.redirect('/authorize');
+
+        return res.render('guilds', {
+            user: req.session['user'],
+            guilds: req.session['guilds'],
+            bot: client
         });
     });
 

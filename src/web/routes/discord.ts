@@ -73,6 +73,7 @@ router.get('/callback', async (req, res) => {
 
         req.session['user'] = userResponse;
         req.session['guilds'] = guildResponse;
+        req.session['guilds'].map((guild) => guild['iconURL'] = guild['icon'] ? `https://cdn.discordapp.com/icons/${guild.id}/${guild.icon}` : "https://cdn.discordapp.com/attachments/765919453766352916/877787616974622770/wCfHtuoejLIbAAAAABJRU5ErkJggg.png")
 
         res.set('credentials', 'include');
         res.redirect('/');
