@@ -30,9 +30,9 @@ export const run: RunFunction = async (
 	if (audit.changes[0].key !== "$remove") return;
 
 	const lang = await client.functions.getLanguageFile(member.guild);
-	const title = lang.EVENTS.GUILD_EVENTS.MEMBER_UNBOOST.TITLE;
+	const title = lang.EVENTS.GUILD_EVENTS.ROLE_REMOVE.TITLE;
 	const description = bold(
-		lang.EVENTS.GUILD_EVENTS.MEMBER_UNBOOST.DESCRIPTION.replace(
+		lang.EVENTS.GUILD_EVENTS.ROLE_REMOVE.DESCRIPTION.replace(
 			"{member}",
 			member.toString()
 		)

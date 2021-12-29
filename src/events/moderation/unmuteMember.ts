@@ -3,7 +3,6 @@ import { Base } from "discord-moderation/src/typings/Base";
 import { RunFunction } from "../../interfaces/Event";
 import { bold } from "@discordjs/builders";
 import client from "../..";
-import ms from "ms";
 
 interface unMuteMember {
 	id: number;

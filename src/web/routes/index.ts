@@ -23,5 +23,42 @@ export = (client: Goose): Router => {
         });
     });
 
+    router.get('/dashboard/:guildID', (req, res) => {
+        if(!req.session['user']) return res.redirect('/authorize');
+
+        const guildID = req.params.guildID;
+        const guild = client.guilds.cache.get(guildID);
+        const member = guild.members.cache.get(req.session['user'].id);
+        const settings = client.database.getSettings(guild);
+
+        if(!guild) return res.redirect('/dashboard');
+        if(!member.permissions.has('MANAGE_GUILD')) return res.redirect('/dashboard');
+        guild.channels.cache.filter((c) => c.type === 'GUILD_TEXT')
+
+        return res.render('guild', {
+            user: req.session['user'],
+            bot: client,
+            guild: guild,
+            settings: settings,
+        });
+    });
+
+    router.post('/dashboard/:guildID', (req, res) => {
+        if(!req.session['user']) return res.redirect('/authorize');
+
+        const guildID = req.params.guildID;
+        const guild = client.guilds.cache.get(guildID);
+        const member = guild.members.cache.get(req.session['user'].id);
+
+        if(!guild) return res.redirect('/dashboard');
+        if(!member.permissions.has('MANAGE_GUILD')) return res.redirect('/dashboard');
+
+        if(req.body.prefix) client.database.set(guild, 'prefix', req.body.prefix);
+        else if(req.body.logChannel) client.database.set(guild, 'logChannel', req.body.logChannel);
+        else if(req.body.membersChannel) client.database.set(guild, 'membersChannel', req.body.membersChannel);
+
+        return setTimeout(() => res.redirect(`/dashboard/${guild.id}`), 1000);
+    });
+
     return router;
 };

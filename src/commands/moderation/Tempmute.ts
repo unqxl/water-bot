@@ -124,7 +124,7 @@ export default class TempmuteCommand extends Command {
 
 		const time = ms(args[1]);
 
-		var reason = args[2];
+		var reason = args.slice(2).join(' ');
 		if (!reason) reason = "-";
 
 		const [accept, decline, confirmText] = [
