@@ -6,7 +6,6 @@ import {
 	MessageActionRow,
 } from "discord.js";
 import { RunFunction } from "../../interfaces/Event";
-import { bold } from "@discordjs/builders";
 
 export const name: string = "messageUpdate";
 
@@ -15,8 +14,7 @@ export const run: RunFunction = async (
 	oldMSG: Message,
 	newMSG: Message
 ) => {
-	if (!oldMSG || !newMSG) return;
-	if (!oldMSG.guild || !newMSG.guild) return;
+	if (!oldMSG.inGuild()) return;
 	if (oldMSG.author.bot || newMSG.author.bot) return;
 	if (oldMSG.content === newMSG.content) return;
 

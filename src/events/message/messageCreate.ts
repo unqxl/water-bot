@@ -5,7 +5,7 @@ import random from "random";
 
 export const name: string = "messageCreate";
 export const run: RunFunction = async (client, message: Message) => {
-	if (message.author.bot || !message.guild) return;
+	if (message.author.bot || !message.inGuild()) return;
 	if (!message.guild.available) return;
 
 	const lang = await client.functions.getLanguageFile(message.guild);
