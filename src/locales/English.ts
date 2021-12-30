@@ -328,6 +328,7 @@ export default {
 			`Successfully deleted "${value}" from "${type}"`,
 		ENABLED: (type) => `Successfully enabled "${type}"`,
 		DISABLED: (type) => `Successfully disabled "${type}"`,
+		SHOW: (type, value) => `Server's "${type}" - ${value}`,
 
 		LANGUAGE_CHANGED_NOTE:
 			"If you did this by accident, then use the command 'language-reset'",

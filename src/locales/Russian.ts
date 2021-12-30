@@ -11,7 +11,7 @@ const Russian: typeof import("@locales/English").default = {
 		TIME_ERROR:
 			"Вы уже получили свою награду!\nПопробуйте ещё раз через {time}",
 		DAILY_REWARD: "Вы получили Ежедневные {{coins}} Коинов!",
-		WORK_REWARD: "Вы получили {{coins}} Коинов за работу!",
+		WORK_REWARD: "Вы получили {coins}} Коинов за работу!",
 		WEEKLY_REWARD: "Вы получили Еженедельные {{coins}} Коинов!",
 		BALANCE_ADDED: "Успешно добавлено {amount} Коинов на баланс {member}!",
 		BALANCE_SUBT: "Успешно убрано {amount} Коинов с баланса {member}!",
@@ -329,6 +329,7 @@ const Russian: typeof import("@locales/English").default = {
 		DELETED: (type, value) => `Успешно удалил "${value}" из "${type}"`,
 		ENABLED: (type) => `Успешно включил "${type}"`,
 		DISABLED: (type) => `Успешно выключил "${type}"`,
+		SHOW: (type, value) => `"${type}" Сервера - ${value}`,
 
 		LANGUAGE_CHANGED_NOTE:
 			"Если вы сделали это по-случайности, используйте команду 'language-reset'",

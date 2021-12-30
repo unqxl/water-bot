@@ -248,8 +248,8 @@ export default class HelpCommand extends Command {
 				`› ${bold(name)}: ${inlineCode(cmd.options.name)}`,
 				`› ${bold(description)}: ${inlineCode(
 					locale === "en-US"
-						? cmd.options.description.en
-						: cmd.options.description.ru
+						? cmd.options.description.en.replace('<prefix>', prefix)
+						: cmd.options.description.ru.replace('<prefix>', prefix)
 				)}`,
 				`› ${bold(usage)}: ${inlineCode(cmd.options.usage ?? None)}`,
 				`› ${bold(aliases)}: ${inlineCode(formattedAliases)}`,
