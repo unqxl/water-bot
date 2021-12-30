@@ -6,7 +6,6 @@ export const name: string = "messageDelete";
 
 export const run: RunFunction = async (client, message: Message) => {
 	if (!message.inGuild()) return;
-	if (!message || message.author.bot) return;
 
 	const logChannelID = client.database.getSetting(
 		message.guild,
@@ -22,13 +21,6 @@ export const run: RunFunction = async (client, message: Message) => {
 	const lang = await client.functions.getLanguageFile(message.guild);
 	const guildLocale = client.database.getSetting(message.guild, "language");
 
-	const audit = await message.guild
-		.fetchAuditLogs({
-			type: "MESSAGE_DELETE",
-			limit: 1,
-		})
-		.then((value) => value.entries.first());
-
 	// Texts
 	const [title, description] = [
 		lang.EVENTS.MESSAGE_EVENTS.DELETE.TITLE,
@@ -36,12 +28,8 @@ export const run: RunFunction = async (client, message: Message) => {
 			"{author}",
 			message.author.toString()
 		)
-			.replace(
-				"{executor}",
-				audit ? audit.executor.toString() : message.author.toString()
-			)
-			.replace("{content}", message.content ?? lang.GLOBAL.NONE)
-			.replace("{date}", new Date().toLocaleString(guildLocale)),
+		.replace("{content}", message.content ?? lang.GLOBAL.NONE)
+		.replace("{date}", new Date().toLocaleString(guildLocale)),
 	];
 
 	const embed = new MessageEmbed()

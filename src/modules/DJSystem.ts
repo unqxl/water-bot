@@ -19,17 +19,17 @@ export = class DJSystem {
 
 		for (const { roleID } of roles) {
 			const guildRole = message.guild.roles.cache.get(roleID);
-			if (!guildRole) return;
+			if (!guildRole) continue;
 
-			const memberRole = message.member.roles.cache.hasAny(roleID);
-			if (!memberRole) {
+			if (message.member.roles.cache.hasAny(...roles.map((r) => r.roleID))) {
+				return {
+					status: true,
+				};
+			} 
+			else {
 				return {
 					status: false,
 					message: lang.SYSTEMS.DJ_ROLES.HASNT_ANY,
-				};
-			} else {
-				return {
-					status: true,
 				};
 			}
 		}

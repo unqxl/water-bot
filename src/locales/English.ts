@@ -521,7 +521,7 @@ export default {
 			DELETE: {
 				TITLE: "🗑️ | Message Deleted!",
 				DESCRIPTION:
-					"Message from {author} has been deleted by {executor}!\n\n› Message Content: `{content}`\n› Deleted at: {date}",
+					"Message from {author} has been deleted!\n\n› Message Content: `{content}`\n› Deleted at: {date}",
 			},
 			UPDATE: {
 				TITLE: "⬆️ | Message Updated!",

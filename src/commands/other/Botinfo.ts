@@ -72,9 +72,7 @@ export default class BotinfoCommand extends Command {
 
 		const botInfo = {
 			guilds: this.client.functions.sp(this.client.guilds.cache.size),
-			users: this.client.functions.sp(
-				this.client.guilds.cache.reduce((a, b) => a + b.memberCount, 0)
-			),
+			users: this.client.functions.sp(this.client.users.cache.size),
 			emojis: this.client.functions.sp(this.client.emojis.cache.size),
 			channels: this.client.functions.sp(this.client.channels.cache.size),
 			commands: this.client.functions.sp(this.client.commands.size),

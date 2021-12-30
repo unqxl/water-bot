@@ -1,6 +1,6 @@
 {
   "name": "goose-rewrite",
-  "version": "2.1.4",
+  "version": "2.1.4.1",
   "description": "Multi-Purpose and Multilingual Discord Bot",
   "main": "dist/index.js",
   "scripts": {
