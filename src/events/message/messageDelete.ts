@@ -6,7 +6,7 @@ export const name: string = "messageDelete";
 
 export const run: RunFunction = async (client, message: Message) => {
 	if (!message.inGuild()) return;
-	if(message.author.bot) return;
+	if(message.author && message.author.bot) return;
 
 	const logChannelID = client.database.getSetting(
 		message.guild,
