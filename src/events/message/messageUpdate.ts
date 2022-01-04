@@ -51,10 +51,10 @@ export const run: RunFunction = async (
 	const row = new MessageActionRow().addComponents([RedirectButton]);
 	const embed = new MessageEmbed()
 		.setColor("BLURPLE")
-		.setAuthor(
-			newMSG.author.tag,
-			newMSG.author.displayAvatarURL({ dynamic: true })
-		)
+		.setAuthor({
+			name: newMSG.author.tag,
+			iconURL: newMSG.author.displayAvatarURL({ dynamic: true })
+		})
 		.setTitle(title)
 		.setDescription(description)
 		.setTimestamp();

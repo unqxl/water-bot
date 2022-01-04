@@ -61,10 +61,10 @@ export = async (
 
 	const ChooseCaseEmbed = new MessageEmbed()
 		.setColor("BLURPLE")
-		.setAuthor(
-			_msg.author.username,
-			_msg.author.displayAvatarURL({ dynamic: true })
-		)
+		.setAuthor({
+			name: _msg.author.username,
+			iconURL: _msg.author.displayAvatarURL({ dynamic: true })
+		})
 		.setDescription(embedDescription)
 		.setTimestamp();
 
@@ -94,10 +94,10 @@ export = async (
 				if (balance < chosenCase.cost) {
 					const embed = new MessageEmbed()
 						.setColor("BLURPLE")
-						.setAuthor(
-							_msg.author.username,
-							_msg.author.displayAvatarURL({ dynamic: true })
-						)
+						.setAuthor({
+							name: _msg.author.username,
+							iconURL: _msg.author.displayAvatarURL({ dynamic: true })
+						})
 						.setDescription(
 							bold(
 								lang.ERRORS.NOT_ENOUGH_MONEY(
@@ -143,10 +143,10 @@ export = async (
 				).replace("{prize}", prize.prize.toLocaleString());
 				const embed = new MessageEmbed()
 					.setColor("BLURPLE")
-					.setAuthor(
-						_msg.author.username,
-						_msg.author.displayAvatarURL({ dynamic: true })
-					)
+					.setAuthor({
+						name: _msg.author.username,
+						iconURL: _msg.author.displayAvatarURL({ dynamic: true })
+					})
 					.setDescription(bold(text))
 					.setTimestamp();
 
@@ -164,10 +164,10 @@ export = async (
 					const text = lang.ECONOMY.CASES.TIME_IS_OVER;
 					const embed = new MessageEmbed()
 						.setColor("BLURPLE")
-						.setAuthor(
-							_msg.author.username,
-							_msg.author.displayAvatarURL({ dynamic: true })
-						)
+						.setAuthor({
+							name: _msg.author.username,
+							iconURL: _msg.author.displayAvatarURL({ dynamic: true })
+						})
 						.setDescription(bold(text))
 						.setTimestamp();
 

@@ -146,10 +146,10 @@ export default class UnmuteCommand extends Command {
 
 		const confirmEmbed = new MessageEmbed()
 			.setColor("BLURPLE")
-			.setAuthor(
-				message.author.username,
-				message.author.displayAvatarURL({ dynamic: true })
-			)
+			.setAuthor({
+				name: message.author.username,
+				iconURL: message.author.displayAvatarURL({ dynamic: true })
+			})
 			.setDescription(bold(confirmText))
 			.setTimestamp();
 

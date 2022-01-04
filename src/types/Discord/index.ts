@@ -16,7 +16,10 @@ export class AkayoMessage extends Message {
     embed(color: ColorResolvable, text: string, footer: string | boolean, emoji: string | boolean, showAuthor: boolean, showTimestamp?: boolean): MessageEmbed {
         const embed = new MessageEmbed();
 
-        if(showAuthor === true) embed.setAuthor(this.author.username, this.author.displayAvatarURL({ dynamic: true }));
+        if(showAuthor === true) embed.setAuthor({
+            name: this.author.username, 
+            iconURL: this.author.displayAvatarURL({ dynamic: true })
+        });
         if(showTimestamp === true) embed.setTimestamp();
 
         embed.setColor(color);

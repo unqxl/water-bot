@@ -58,10 +58,10 @@ export default class LeaderboardCommand extends Command {
 
 		const embed = new MessageEmbed()
 			.setColor("BLURPLE")
-			.setAuthor(
-				message.guild.name,
-				message.guild.iconURL({ dynamic: true })
-			)
+			.setAuthor({
+				name: message.guild.name,
+				iconURL: message.guild.iconURL({ dynamic: true })
+			})
 			.setDescription(content + additionalContent)
 			.setTimestamp();
 

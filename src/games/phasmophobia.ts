@@ -217,10 +217,10 @@ export = async (
 	);
 	const firstEmbed = new MessageEmbed()
 		.setColor("BLURPLE")
-		.setAuthor(
-			msg.author.username,
-			msg.author.displayAvatarURL({ dynamic: true })
-		)
+		.setAuthor({
+			name: msg.author.username,
+			iconURL: msg.author.displayAvatarURL({ dynamic: true })
+		})
 		.setDescription(bold(description))
 		.setTimestamp();
 

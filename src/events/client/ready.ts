@@ -1,4 +1,4 @@
-import { MessageEmbed, TextChannel, Util } from "discord.js";
+import { Guild, MessageEmbed, TextChannel, Util } from "discord.js";
 import { RunFunction } from "../../interfaces/Event";
 import { bold } from "@discordjs/builders";
 import Goose from "../../classes/Goose";
@@ -27,36 +27,7 @@ export const run: RunFunction = async (client) => {
 
 	setInterval(async () => {
 		for (const [n, guild] of client.guilds.cache) {
-			const settings = client.database.getSettings(guild);
-			if (settings.logChannel === "0") return;
-
-			const birthdayCheck = client.functions.checkGuildBirthday(guild);
-			if (!birthdayCheck.status) return;
-
-			const channel = guild.channels.cache.get(settings.logChannel);
-			if (!channel) return;
-
-			const lang = await client.functions.getLanguageFile(guild);
-
-			const [more, notMore] = [
-				lang.EVENTS.GUILD_BIRTHDAY.YEARS,
-				lang.EVENTS.GUILD_BIRTHDAY.YEAR,
-			];
-
-			const description = lang.EVENTS.GUILD_BIRTHDAY.text
-				.replace("{name}", Util.escapeMarkdown(guild.name))
-				.replace("{years}", client.functions.sp(birthdayCheck.years))
-				.replace("{check}", birthdayCheck.years > 1 ? more : notMore);
-
-			const embed = new MessageEmbed()
-				.setColor("BLURPLE")
-				.setAuthor(guild.name, guild.iconURL({ dynamic: true }))
-				.setDescription(`🎉 | ${bold(description)}`)
-				.setTimestamp();
-
-			return (channel as TextChannel).send({
-				embeds: [embed],
-			});
+			await birthdayCheck(client, guild);
 		}
 	}, 3600000);
 };
@@ -78,4 +49,40 @@ async function checkUp(client: Goose) {
 	}
 
 	return true;
+}
+
+async function birthdayCheck(client: Goose, guild: Guild) {
+	const settings = client.database.getSettings(guild);
+	if (settings.logChannel === "0") return;
+
+	const birthdayCheck = client.functions.checkGuildBirthday(guild);
+	if (!birthdayCheck.status) return;
+
+	const channel = guild.channels.cache.get(settings.logChannel);
+	if (!channel) return;
+
+	const lang = await client.functions.getLanguageFile(guild);
+
+	const [more, notMore] = [
+		lang.EVENTS.GUILD_BIRTHDAY.YEARS,
+		lang.EVENTS.GUILD_BIRTHDAY.YEAR,
+	];
+
+	const description = lang.EVENTS.GUILD_BIRTHDAY.text
+		.replace("{name}", Util.escapeMarkdown(guild.name))
+		.replace("{years}", client.functions.sp(birthdayCheck.years))
+		.replace("{check}", birthdayCheck.years > 1 ? more : notMore);
+
+	const embed = new MessageEmbed()
+		.setColor("BLURPLE")
+		.setAuthor({
+			name: guild.name, 
+			iconURL: guild.iconURL({ dynamic: true })
+		})
+		.setDescription(`🎉 | ${bold(description)}`)
+		.setTimestamp();
+
+	return (channel as TextChannel).send({
+		embeds: [embed],
+	});
 }

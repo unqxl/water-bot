@@ -43,10 +43,10 @@ export const run: RunFunction = async (client, data: WarnsData) => {
 
 	const embed = new MessageEmbed()
 		.setColor("BLURPLE")
-		.setAuthor(
-			moderator.user.username,
-			moderator.user.displayAvatarURL({ dynamic: true })
-		)
+		.setAuthor({
+			name: moderator.user.username,
+			iconURL: moderator.user.displayAvatarURL({ dynamic: true })
+		})
 		.setTitle(title)
 		.setDescription(text)
 		.setTimestamp();

@@ -106,10 +106,10 @@ export default class ServerinfoCommand extends Command {
 		)}\n`;
 
 		embed.setColor("BLURPLE");
-		embed.setAuthor(
-			message.author.username,
-			message.author.displayAvatarURL({ dynamic: true })
-		);
+		embed.setAuthor({
+			name: message.author.username,
+			iconURL: message.author.displayAvatarURL({ dynamic: true })
+		});
 		embed.setTitle(title);
 		embed.setDescription(description);
 		embed.setThumbnail(message.guild.iconURL({ dynamic: true }));

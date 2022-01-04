@@ -25,10 +25,10 @@ export const run: RunFunction = async (client, data: NewLevelData) => {
 
 	const embed = new MessageEmbed()
 		.setColor("BLURPLE")
-		.setAuthor(
-			user.user.username,
-			user.user.displayAvatarURL({ dynamic: true })
-		)
+		.setAuthor({
+			name: user.user.username,
+			iconURL: user.user.displayAvatarURL({ dynamic: true })
+		})
 		.setDescription(text)
 		.setTimestamp();
 
