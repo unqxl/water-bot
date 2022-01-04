@@ -2,6 +2,7 @@ export default {
 	BOTOWNER: {
 		LEFT_GUILD: 'Successfully left Guild with ID "{id}"',
 		UPDATED_DB: "Successfully Updated all the Servers Configuration!",
+		COMMAND_RELOADED: (name) => `Command with name "${name}" successfully reloaded!`
 	},
 
 	ECONOMY: {
@@ -287,6 +288,10 @@ export default {
 				},
 			},
 		},
+
+		SOURCE: {
+			TEXT: (url) => `Recently, the bot's source code is available in my repository on GitHub: ${url}`
+		}
 	},
 
 	SLASH_COMMANDS: {
@@ -521,13 +526,16 @@ export default {
 		MESSAGE_EVENTS: {
 			DELETE: {
 				TITLE: "🗑️ | Message Deleted!",
-				DESCRIPTION:
-					"Message from {author} has been deleted!\n\n› Message Content: `{content}`\n› Deleted at: {date}",
+				DESCRIPTION: "Message from {author} has been deleted!\n\n› Message Content: `{content}`\n› Deleted at: {date}",
+
+				GHOST_PING: {
+					TITLE: "⚠️ | Ghost Ping Detected",
+					DESCRIPTION: "Looks like that message from {author} has member mentions!\n\n› Message Content: `{content}`",
+				}
 			},
 			UPDATE: {
 				TITLE: "⬆️ | Message Updated!",
-				DESCRIPTION:
-					"Message from {author} has been updated!\n\n› Old Message Content: `{oldContent}`\n› New Message Content: `{newContent}`\n› Changed at: {date}",
+				DESCRIPTION: "Message from {author} has been updated!\n\n› Old Message Content: `{oldContent}`\n› New Message Content: `{newContent}`\n› Changed at: {date}",
 				GO_TO: "Jump to Message",
 			},
 		},

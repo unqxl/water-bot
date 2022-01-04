@@ -22,26 +22,34 @@ export const run: RunFunction = async (client, message: Message) => {
 	const lang = await client.functions.getLanguageFile(message.guild);
 	const guildLocale = client.database.getSetting(message.guild, "language");
 
-	// Texts
-	const [title, description] = [
-		lang.EVENTS.MESSAGE_EVENTS.DELETE.TITLE,
-		lang.EVENTS.MESSAGE_EVENTS.DELETE.DESCRIPTION.replace(
-			"{author}",
-			message.author.toString()
-		)
+	var title, description;
+
+	const ghostPingCheck = await client.moderation.systems.ghostPing(message);
+	if(ghostPingCheck) {
+		// Texts
+		title = lang.EVENTS.MESSAGE_EVENTS.DELETE.GHOST_PING.TITLE,
+		description = lang.EVENTS.MESSAGE_EVENTS.DELETE.GHOST_PING.DESCRIPTION
+		.replace("{author}", message.author.toString())
 		.replace("{content}", message.content ?? lang.GLOBAL.NONE)
-		.replace("{date}", new Date().toLocaleString(guildLocale)),
-	];
+	}
+	else {
+		// Texts
+		title = lang.EVENTS.MESSAGE_EVENTS.DELETE.TITLE,
+		description = lang.EVENTS.MESSAGE_EVENTS.DELETE.DESCRIPTION
+		.replace("{author}", message.author.toString())
+		.replace("{content}", message.content ?? lang.GLOBAL.NONE)
+		.replace("{date}", new Date().toLocaleString(guildLocale));
+	};
 
 	const embed = new MessageEmbed()
-		.setColor("BLURPLE")
-		.setAuthor({
-			name: message.author.tag,
-			iconURL: message.author.displayAvatarURL({ dynamic: true })
-		})
-		.setTitle(title)
-		.setDescription(bold(description))
-		.setTimestamp();
+	.setColor("BLURPLE")
+	.setAuthor({
+		name: message.author.tag,
+		iconURL: message.author.displayAvatarURL({ dynamic: true })
+	})
+	.setTitle(title)
+	.setDescription(bold(description))
+	.setTimestamp();
 
 	return logChannel.send({
 		embeds: [embed],

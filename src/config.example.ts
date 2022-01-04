@@ -5,6 +5,7 @@ export = {
 		testToken: "NO-TOKEN",
 		logsChannelID: "CHANNEL-ID",
 		test: true,
+		github_link: "https://github.com/user/repo"
 	},
 
 	topgg: {
