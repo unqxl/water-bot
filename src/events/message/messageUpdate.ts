@@ -17,7 +17,7 @@ export const run: RunFunction = async (
 	if (!oldMSG.inGuild() || !newMSG.inGuild()) return;
 	if (!oldMSG || !newMSG) return;
 	if (oldMSG.content === newMSG.content) return;
-	if(oldMSG.author.bot || newMSG.author.bot) return;
+	if(oldMSG.author && oldMSG.author.bot || newMSG.author && newMSG.author.bot) return;
 
 	const logChannelID = client.database.getSetting(newMSG.guild, "logChannel");
 	if (logChannelID === "0") return;
