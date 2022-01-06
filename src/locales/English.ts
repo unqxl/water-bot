@@ -145,6 +145,7 @@ export default {
 		UNMUTED: "Successfully unmuted {target}!",
 		UNWARNED: "Successfully deleted last warn from {target}!",
 		WARNED: "Successfully warned {target}!\nReason: {reason}\nModerator: {moderator}",
+		EMOJI_CREATED: (name) => `Emoji with name "${name}" successfully created in this server!`
 	},
 
 	MUSIC: {
@@ -383,6 +384,9 @@ export default {
 			`"${value}" is not found in "${type}"!`,
 		ALREADY_IN_DB: (type, value) =>
 			`"${value}" is already placed in "${type}"`,
+		EMOJIS_LIMIT: "The limit on the number of emojis on the server has been reached!",
+		VALID_EMOJI: "Please provide a valid emoji!",
+		NORMAL_EMOJI: "You can use Normal Emoji without Adding in Server!"
 	},
 
 	FUNCTIONS: {
@@ -406,7 +410,7 @@ export default {
 		MANAGE_GUILD: "Manage Guild (Server)",
 		MANAGE_ROLES: "Manage Roles",
 		MANAGE_WEBHOOKS: "Manage Webhooks",
-		MANAGE_EMOJIS: "Manage Emojis",
+		MANAGE_EMOJIS_AND_STICKERS: "Manage Emojis and Stickers",
 		MANAGE_MESSAGES: "Manage Messages",
 		ADMINISTRATOR: "Administrator",
 		BAN_MEMBERS: "Ban Member",

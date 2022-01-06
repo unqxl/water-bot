@@ -42,7 +42,7 @@ class Goose extends Client {
 	public owners: string[] = ["852921856800718908"];
 	public config: typeof config = config;
 	public twitchKey: string = "";
-	public version: string = "2.1.43";
+	public version: string = "2.1.44";
 
 	// Databases
 	public settings = new Enmap({

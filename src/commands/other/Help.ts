@@ -16,7 +16,7 @@ interface PermissionsKey {
 	CONNECT: string;
 	MANAGE_ROLES: string;
 	MANAGE_WEBHOOKS: string;
-	MANAGE_EMOJIS: string;
+	MANAGE_EMOJIS_AND_STICKERS: string;
 }
 
 export default class HelpCommand extends Command {

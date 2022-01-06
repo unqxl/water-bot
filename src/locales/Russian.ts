@@ -137,6 +137,7 @@ const Russian: typeof import("@locales/English").default = {
 		UNMUTED: "Успешно размутил {target}!",
 		UNWARNED: "Успешно удалил последнее предупреждение у {target}!",
 		WARNED: "Успешно предупредил {target}!\nПричина: {reason}\nМодератор: {moderator}",
+		EMOJI_CREATED: (name) => `Эмодзи с названием "${name}" успешно создано на сервере!`
 	},
 
 	MUSIC: {
@@ -377,6 +378,9 @@ const Russian: typeof import("@locales/English").default = {
 		NOT_FOUND_IN_DB: (type, value) =>
 			`"${value}" не найден в списке "${type}"!`,
 		ALREADY_IN_DB: (type, value) => `"${value}" уже находится "${type}"`,
+		EMOJIS_LIMIT: "Достигнут лимит количества эмодзи на сервере!",
+		VALID_EMOJI: "Пожалуйста, укажите корректное эмодзи!",
+		NORMAL_EMOJI: "Вы можете использовать обычные эмодзи без добавления на сервер!"
 	},
 
 	FUNCTIONS: {
@@ -400,7 +404,7 @@ const Russian: typeof import("@locales/English").default = {
 		MANAGE_GUILD: "Управлять Сервером",
 		MANAGE_ROLES: "Управлять Ролями",
 		MANAGE_WEBHOOKS: "Управлять Вебхуками",
-		MANAGE_EMOJIS: "Управлять Эмоджи",
+		MANAGE_EMOJIS_AND_STICKERS: "Управлять Эмоджи и Стикерами",
 		MANAGE_MESSAGES: "Управлять Сообщениями",
 		ADMINISTRATOR: "Администратор",
 		BAN_MEMBERS: "Бан Участников",
