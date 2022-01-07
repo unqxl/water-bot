@@ -5,8 +5,8 @@ import { bold } from "@discordjs/builders";
 export const name: string = "messageDelete";
 
 export const run: RunFunction = async (client, message: Message) => {
-	if (message.author.bot) return;
-	if (!message.guild) return;
+	if (!message.inGuild()) return;
+	if(message.author && message.author.bot) return;
 
 	const logChannelID = client.database.getSetting(
 		message.guild,
@@ -22,37 +22,34 @@ export const run: RunFunction = async (client, message: Message) => {
 	const lang = await client.functions.getLanguageFile(message.guild);
 	const guildLocale = client.database.getSetting(message.guild, "language");
 
-	const audit = await message.guild
-		.fetchAuditLogs({
-			type: "MESSAGE_DELETE",
-			limit: 1,
-		})
-		.then((value) => value.entries.first());
+	var title, description;
 
-	// Texts
-	const [title, description] = [
-		lang.EVENTS.MESSAGE_EVENTS.DELETE.TITLE,
-		lang.EVENTS.MESSAGE_EVENTS.DELETE.DESCRIPTION.replace(
-			"{author}",
-			message.author.toString()
-		)
-			.replace(
-				"{executor}",
-				audit ? audit.executor.toString() : message.author.toString()
-			)
-			.replace("{content}", message.content ?? lang.GLOBAL.NONE)
-			.replace("{date}", new Date().toLocaleString(guildLocale)),
-	];
+	const ghostPingCheck = await client.moderation.systems.ghostPing(message);
+	if(ghostPingCheck) {
+		// Texts
+		title = lang.EVENTS.MESSAGE_EVENTS.DELETE.GHOST_PING.TITLE,
+		description = lang.EVENTS.MESSAGE_EVENTS.DELETE.GHOST_PING.DESCRIPTION
+		.replace("{author}", message.author.toString())
+		.replace("{content}", message.content ?? lang.GLOBAL.NONE)
+	}
+	else {
+		// Texts
+		title = lang.EVENTS.MESSAGE_EVENTS.DELETE.TITLE,
+		description = lang.EVENTS.MESSAGE_EVENTS.DELETE.DESCRIPTION
+		.replace("{author}", message.author.toString())
+		.replace("{content}", message.content ?? lang.GLOBAL.NONE)
+		.replace("{date}", new Date().toLocaleString(guildLocale));
+	};
 
 	const embed = new MessageEmbed()
-		.setColor("BLURPLE")
-		.setAuthor(
-			message.author.tag,
-			message.author.displayAvatarURL({ dynamic: true })
-		)
-		.setTitle(title)
-		.setDescription(bold(description))
-		.setTimestamp();
+	.setColor("BLURPLE")
+	.setAuthor({
+		name: message.author.tag,
+		iconURL: message.author.displayAvatarURL({ dynamic: true })
+	})
+	.setTitle(title)
+	.setDescription(bold(description))
+	.setTimestamp();
 
 	return logChannel.send({
 		embeds: [embed],

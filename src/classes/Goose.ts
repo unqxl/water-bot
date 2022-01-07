@@ -4,7 +4,8 @@ import { Moderation } from "discord-moderation";
 import { Leveling } from "./Leveling";
 import { Client as dagpiClient } from "dagpijs";
 import { DiscordTogether } from "discord-together";
-import DJSystem from "modules/DJSystem";
+import DJSystem from "../modules/DJSystem";
+import WebServer from "./Server";
 import Economy from "discord-economy-super";
 import Enmap from "enmap";
 import DisTube from "distube";
@@ -17,6 +18,9 @@ import Functions from "./Functions";
 import config from "../config";
 import TwitchSystem from "../handlers/TwitchSystem";
 import Logger from "./Logger";
+import distubeEvents from "../events/distube-events";
+import TopGG from "../modules/TopGG";
+import Website from "../web/index";
 
 // Music Plugins
 import SpotifyPlugin from "@distube/spotify";
@@ -38,7 +42,7 @@ class Goose extends Client {
 	public owners: string[] = ["852921856800718908"];
 	public config: typeof config = config;
 	public twitchKey: string = "";
-	public version: string = "2.1.2";
+	public version: string = "2.1.44";
 
 	// Databases
 	public settings = new Enmap({
@@ -68,7 +72,10 @@ class Goose extends Client {
 	public levels: Leveling = new Leveling(this);
 	public dagpi: dagpiClient = new dagpiClient(this.config.keys.dagpi_key);
 	public together: DiscordTogether<{}> = new DiscordTogether(this);
+	
+	// Additional Systems
 	public DJSystem: DJSystem = new DJSystem(this);
+	public web: WebServer = new WebServer({ port: 80 });
 
 	// Modules
 	public moderation: Moderation = new Moderation(this, {
@@ -187,11 +194,15 @@ class Goose extends Client {
 	async start() {
 		if (!this.application?.owner) await this.application?.fetch();
 
+		await distubeEvents(this);
 		await logs(this);
 		await this.handlers.loadEvents(this);
 		await this.handlers.loadCommands();
 		await this.handlers.loadSlashCommands();
 		await this.functions.updateToken();
+
+		new TopGG(this);
+		new Website(this);
 
 		if (this.config.bot.test) this.login(this.config.bot.testToken);
 		else this.login(this.config.bot.token);

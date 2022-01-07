@@ -96,7 +96,7 @@ export default class MuteCommand extends Command {
 			message.mentions.members.first() ||
 			message.guild.members.cache.get(args[0]);
 
-		var reason = args[1];
+		var reason = args.slice(1).join(' ');
 		if (!reason) reason = "-";
 
 		const [accept, decline, confirmText] = [
@@ -124,10 +124,10 @@ export default class MuteCommand extends Command {
 
 		const confirmEmbed = new MessageEmbed()
 			.setColor("BLURPLE")
-			.setAuthor(
-				message.author.username,
-				message.author.displayAvatarURL({ dynamic: true })
-			)
+			.setAuthor({
+				name: message.author.username,
+				iconURL: message.author.displayAvatarURL({ dynamic: true })
+			})
 			.setDescription(bold(confirmText))
 			.setTimestamp();
 

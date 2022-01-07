@@ -31,8 +31,12 @@ Akayo - one of the best Discord Bots in terms of functionality.</strong>
 3. <strong>Change all keys/tokens in `src/config.ts`</strong>
 4. <strong>Run `npm run build` to convert TS code into JS</strong> <br />
 4.1: <strong>Run `npm run start:ts` to run TS code using ts-node</strong>
-5. <strong>Run the bot: `npm run start:js`</strong> <br />
+5. <strong>Run the bot: `npm run start`</strong> <br />
 5.1: <strong>Run `npm run start:ts` to run TS code using ts-node</strong>
 
 # License
 <strong>This repository uses the [Apache License](https://github.com/bad-boy-discord/akayo-bot/blob/master/LICENSE)!</strong>
+
+<a href="https://top.gg/bot/891819280318996501">
+  <img src="https://top.gg/api/widget/891819280318996501.svg">
+</a>

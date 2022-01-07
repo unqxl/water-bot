@@ -41,10 +41,10 @@ export = async (client: Goose) => {
 
 			const embed = new MessageEmbed()
 				.setColor("BLURPLE")
-				.setAuthor(
-					song.user.username,
-					song.user.displayAvatarURL({ dynamic: true })
-				)
+				.setAuthor({
+					name: song.user.username,
+					iconURL: song.user.displayAvatarURL({ dynamic: true })
+				})
 				.setTitle(embed_title)
 				.setDescription(text)
 				.setTimestamp();
@@ -92,10 +92,10 @@ export = async (client: Goose) => {
 
 			const embed = new MessageEmbed()
 				.setColor("BLURPLE")
-				.setAuthor(
-					song.user.username,
-					song.user.displayAvatarURL({ dynamic: true })
-				)
+				.setAuthor({
+					name: song.user.username,
+					iconURL: song.user.displayAvatarURL({ dynamic: true })
+				})
 				.setTitle(embed_title)
 				.setDescription(text)
 				.setTimestamp();

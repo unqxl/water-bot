@@ -124,7 +124,7 @@ export default class TempmuteCommand extends Command {
 
 		const time = ms(args[1]);
 
-		var reason = args[2];
+		var reason = args.slice(2).join(' ');
 		if (!reason) reason = "-";
 
 		const [accept, decline, confirmText] = [
@@ -152,10 +152,10 @@ export default class TempmuteCommand extends Command {
 
 		const confirmEmbed = new MessageEmbed()
 			.setColor("BLURPLE")
-			.setAuthor(
-				message.author.username,
-				message.author.displayAvatarURL({ dynamic: true })
-			)
+			.setAuthor({
+				name: message.author.username,
+				iconURL: message.author.displayAvatarURL({ dynamic: true })
+			})
 			.setDescription(bold(confirmText))
 			.setTimestamp();
 

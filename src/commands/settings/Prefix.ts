@@ -31,10 +31,10 @@ export default class PrefixCommand extends Command {
 		);
 
 		if (!prefix) {
-			const currentText = lang.EVENTS.GUILD_PREFIX.replace(
-				"{name}",
-				message.guild.name
-			).replace("{prefix}", Util.escapeMarkdown(current_prefix));
+			const currentText = lang.EVENTS.GUILD_PREFIX
+			.replace("{guild}", message.guild.name)
+			.replace("{prefix}", Util.escapeMarkdown(current_prefix));
+			
 			const currentEmbed = this.client.functions.buildEmbed(
 				message,
 				"BLURPLE",

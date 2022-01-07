@@ -1,10 +1,13 @@
 import { GuildMember, MessageEmbed, TextChannel } from "discord.js";
 import { bold } from "@discordjs/builders";
 import { RunFunction } from "../../interfaces/Event";
+import Goose from "../../classes/Goose";
 
 export const name: string = "guildMemberAdd";
 
 export const run: RunFunction = async (client, member: GuildMember) => {
+	await autoRole(client, member);
+
 	const membersChannelID = client.database.getSetting(
 		member.guild,
 		"membersChannel"
@@ -29,10 +32,10 @@ export const run: RunFunction = async (client, member: GuildMember) => {
 
 	const embed = new MessageEmbed()
 		.setColor("BLURPLE")
-		.setAuthor(
-			member.user.tag,
-			member.user.displayAvatarURL({ dynamic: true })
-		)
+		.setAuthor({
+			name: member.user.tag,
+			iconURL: member.user.displayAvatarURL({ dynamic: true })
+		})
 		.setTitle(title)
 		.setDescription(bold(text))
 		.setTimestamp();
@@ -41,3 +44,17 @@ export const run: RunFunction = async (client, member: GuildMember) => {
 		embeds: [embed],
 	});
 };
+
+
+async function autoRole(client: Goose, member: GuildMember) {
+	const autoRoleID = client.database.getSetting(member.guild, 'autoRole');
+	if(autoRoleID === '0') return false;
+
+	const autoRole = member.guild.roles.cache.get(autoRoleID);
+	if(!autoRole) return false;
+
+	if(member.roles.cache.get(autoRole.id)) return false;
+	else await member.roles.add(autoRole);
+
+	return true;
+}

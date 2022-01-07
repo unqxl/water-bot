@@ -187,10 +187,10 @@ export default class UserinfoCommand extends Command {
 
 		const embed = new MessageEmbed()
 			.setColor("BLURPLE")
-			.setAuthor(
-				member.user.username,
-				member.user.displayAvatarURL({ dynamic: true })
-			)
+			.setAuthor({
+				name: member.user.username,
+				iconURL: member.user.displayAvatarURL({ dynamic: true })
+			})
 			.addField(
 				`[1] ${main}:`,
 				`› **${username}**: **${userInfo.name}**\n› **${tag}**: **${userInfo.tag}**\n› **${avatar}**: **[Click](${userInfo.avatar})**`

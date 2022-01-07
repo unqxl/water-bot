@@ -22,12 +22,14 @@ export = async (
 	const footer = lang.GAMES.RPS.FOOTER;
 	const AcceptEmbed = new MessageEmbed()
 		.setColor("BLURPLE")
-		.setAuthor(
-			message.author.username,
-			message.author.displayAvatarURL({ dynamic: true })
-		)
+		.setAuthor({
+			name: message.author.username,
+			iconURL: message.author.displayAvatarURL({ dynamic: true })
+		})
 		.setDescription(bold(acceptText))
-		.setFooter(footer)
+		.setFooter({
+			text: footer
+		})
 		.setTimestamp();
 
 	const AcceptButton = new MessageButton()
@@ -78,12 +80,14 @@ export = async (
 
 		const GameEmbed = new MessageEmbed()
 			.setColor("BLURPLE")
-			.setAuthor(
-				message.author.username,
-				message.author.displayAvatarURL({ dynamic: true })
-			)
+			.setAuthor({
+				name: message.author.username,
+				iconURL: message.author.displayAvatarURL({ dynamic: true })
+			})
 			.setDescription(bold(content))
-			.setFooter(footer)
+			.setFooter({
+				text: footer
+			})
 			.setTimestamp();
 
 		const rock = new MessageButton()
@@ -152,12 +156,14 @@ export = async (
 					const OverContent = lang.GAMES.RPS.TIMEOUT;
 					const OverEmbed = new MessageEmbed()
 						.setColor("BLURPLE")
-						.setAuthor(
-							message.author.username,
-							message.author.displayAvatarURL({ dynamic: true })
-						)
+						.setAuthor({
+							name: message.author.username,
+							iconURL: message.author.displayAvatarURL({ dynamic: true })
+						})
 						.setDescription(bold(OverContent))
-						.setFooter(footer)
+						.setFooter({
+							text: footer
+						})
 						.setTimestamp();
 
 					reply.edit({
@@ -175,11 +181,13 @@ export = async (
 					);
 					const winEmbed = new MessageEmbed()
 						.setColor("BLURPLE")
-						.setAuthor(
-							message.author.username,
-							message.author.displayAvatarURL({ dynamic: true })
-						)
-						.setFooter(footer)
+						.setAuthor({
+							name: message.author.username,
+							iconURL: message.author.displayAvatarURL({ dynamic: true })
+						})
+						.setFooter({
+							text: footer
+						})
 						.setTimestamp();
 
 					if (winner === "opponent") {
@@ -229,12 +237,14 @@ export = async (
 			);
 			const noAnswerEmbed = new MessageEmbed()
 				.setColor("BLURPLE")
-				.setAuthor(
-					message.author.username,
-					message.author.displayAvatarURL({ dynamic: true })
-				)
+				.setAuthor({
+					name: message.author.username,
+					iconURL: message.author.displayAvatarURL({ dynamic: true })
+				})
 				.setDescription(bold(noAnswerContent))
-				.setFooter(footer)
+				.setFooter({
+					text: footer
+				})
 				.setTimestamp();
 
 			reply.edit({
@@ -251,12 +261,14 @@ export = async (
 			);
 			const DeclinedEmbed = new MessageEmbed()
 				.setColor("BLURPLE")
-				.setAuthor(
-					message.author.username,
-					message.author.displayAvatarURL({ dynamic: true })
-				)
+				.setAuthor({
+					name: message.author.username,
+					iconURL: message.author.displayAvatarURL({ dynamic: true })
+				})
 				.setDescription(bold(DeclinedContent))
-				.setFooter(footer)
+				.setFooter({
+					text: footer
+				})
 				.setTimestamp();
 
 			reply.edit({

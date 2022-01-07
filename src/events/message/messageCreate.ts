@@ -5,8 +5,9 @@ import random from "random";
 
 export const name: string = "messageCreate";
 export const run: RunFunction = async (client, message: Message) => {
-	if (message.author.bot || !message.guild) return;
+	if (!message.inGuild()) return;
 	if (!message.guild.available) return;
+	if(message.author.bot) return;
 
 	const lang = await client.functions.getLanguageFile(message.guild);
 	const levelData = client.levels.getData(

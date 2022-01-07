@@ -2,6 +2,7 @@ export default {
 	BOTOWNER: {
 		LEFT_GUILD: 'Successfully left Guild with ID "{id}"',
 		UPDATED_DB: "Successfully Updated all the Servers Configuration!",
+		COMMAND_RELOADED: (name) => `Command with name "${name}" successfully reloaded!`
 	},
 
 	ECONOMY: {
@@ -144,6 +145,7 @@ export default {
 		UNMUTED: "Successfully unmuted {target}!",
 		UNWARNED: "Successfully deleted last warn from {target}!",
 		WARNED: "Successfully warned {target}!\nReason: {reason}\nModerator: {moderator}",
+		EMOJI_CREATED: (name) => `Emoji with name "${name}" successfully created in this server!`
 	},
 
 	MUSIC: {
@@ -287,6 +289,10 @@ export default {
 				},
 			},
 		},
+
+		SOURCE: {
+			TEXT: (url) => `Recently, the bot's source code is available in my repository on GitHub: ${url}`
+		}
 	},
 
 	SLASH_COMMANDS: {
@@ -328,6 +334,7 @@ export default {
 			`Successfully deleted "${value}" from "${type}"`,
 		ENABLED: (type) => `Successfully enabled "${type}"`,
 		DISABLED: (type) => `Successfully disabled "${type}"`,
+		SHOW: (type, value) => `Server's "${type}" - ${value}`,
 
 		LANGUAGE_CHANGED_NOTE:
 			"If you did this by accident, then use the command 'language-reset'",
@@ -377,6 +384,9 @@ export default {
 			`"${value}" is not found in "${type}"!`,
 		ALREADY_IN_DB: (type, value) =>
 			`"${value}" is already placed in "${type}"`,
+		EMOJIS_LIMIT: "The limit on the number of emojis on the server has been reached!",
+		VALID_EMOJI: "Please provide a valid emoji!",
+		NORMAL_EMOJI: "You can use Normal Emoji without Adding in Server!"
 	},
 
 	FUNCTIONS: {
@@ -400,7 +410,7 @@ export default {
 		MANAGE_GUILD: "Manage Guild (Server)",
 		MANAGE_ROLES: "Manage Roles",
 		MANAGE_WEBHOOKS: "Manage Webhooks",
-		MANAGE_EMOJIS: "Manage Emojis",
+		MANAGE_EMOJIS_AND_STICKERS: "Manage Emojis and Stickers",
 		MANAGE_MESSAGES: "Manage Messages",
 		ADMINISTRATOR: "Administrator",
 		BAN_MEMBERS: "Ban Member",
@@ -520,13 +530,16 @@ export default {
 		MESSAGE_EVENTS: {
 			DELETE: {
 				TITLE: "🗑️ | Message Deleted!",
-				DESCRIPTION:
-					"Message from {author} has been deleted by {executor}!\n\n› Message Content: `{content}`\n› Deleted at: {date}",
+				DESCRIPTION: "Message from {author} has been deleted!\n\n› Message Content: `{content}`\n› Deleted at: {date}",
+
+				GHOST_PING: {
+					TITLE: "⚠️ | Ghost Ping Detected",
+					DESCRIPTION: "Looks like that message from {author} has member mentions!\n\n› Message Content: `{content}`",
+				}
 			},
 			UPDATE: {
 				TITLE: "⬆️ | Message Updated!",
-				DESCRIPTION:
-					"Message from {author} has been updated!\n\n› Old Message Content: `{oldContent}`\n› New Message Content: `{newContent}`\n› Changed at: {date}",
+				DESCRIPTION: "Message from {author} has been updated!\n\n› Old Message Content: `{oldContent}`\n› New Message Content: `{newContent}`\n› Changed at: {date}",
 				GO_TO: "Jump to Message",
 			},
 		},

@@ -30,10 +30,10 @@ export const run: RunFunction = async (client, member: GuildMember) => {
 
 	const embed = new MessageEmbed()
 		.setColor("BLURPLE")
-		.setAuthor(
-			member.user.tag,
-			member.user.displayAvatarURL({ dynamic: true })
-		)
+		.setAuthor({
+			name: member.user.tag,
+			iconURL: member.user.displayAvatarURL({ dynamic: true })
+		})
 		.setTitle(title)
 		.setDescription(description)
 		.setTimestamp();

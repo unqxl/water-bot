@@ -3,8 +3,23 @@ export = {
 		defaultPrefix: "!",
 		token: "NO-TOKEN",
 		testToken: "NO-TOKEN",
-		logsChannelID: "918178359949819944",
+		logsChannelID: "CHANNEL-ID",
 		test: true,
+		github_link: "https://github.com/user/repo"
+	},
+
+	topgg: {
+		votesChannelID: "CHANNEL-ID",
+		token: "NO-TOKEN",
+		webhook_auth: "NO-TOKEN"
+	},
+
+	web: {
+		client_id: "NO-ID",
+		client_secret: "NO-SECRET",
+		scopes: ["identify", "guilds"],
+		redirect_uri: "NO-URL",
+		session_secret: "NO-SECRET"
 	},
 
 	languages: ["ru-RU", "en-EN", "ru", "en"],

@@ -71,7 +71,10 @@ class AnnounceEmbed extends MessageEmbed {
 		)}: ${bold(data.title)}\n› ${bold(startedAt)}: ${bold(startedDate)}`;
 
 		this.setColor("#6441a5");
-		this.setAuthor(data.name, data.picture);
+		this.setAuthor({ 
+			name: data.name, 
+			iconURL: data.picture 
+		});
 		this.setDescription(text);
 		this.setImage(data.thumbnail);
 		this.setThumbnail(

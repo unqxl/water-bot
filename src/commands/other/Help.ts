@@ -16,13 +16,14 @@ interface PermissionsKey {
 	CONNECT: string;
 	MANAGE_ROLES: string;
 	MANAGE_WEBHOOKS: string;
-	MANAGE_EMOJIS: string;
+	MANAGE_EMOJIS_AND_STICKERS: string;
 }
 
 export default class HelpCommand extends Command {
 	constructor(client: Goose) {
 		super(client, {
 			name: "help",
+			aliases: ['h', 'cmd', 'cmds'],
 
 			description: {
 				en: "Displays all the Bot Commands!",
@@ -251,7 +252,7 @@ export default class HelpCommand extends Command {
 						? cmd.options.description.en
 						: cmd.options.description.ru
 				)}`,
-				`› ${bold(usage)}: ${inlineCode(cmd.options.usage ?? None)}`,
+				`› ${bold(usage)}: ${inlineCode(cmd.options.usage.replace('<prefix>', prefix) ?? None)}`,
 				`› ${bold(aliases)}: ${inlineCode(formattedAliases)}`,
 				`› ${bold(category)}: ${inlineCode(categoryName)}`,
 				`› ${bold(botPermissions)}: ${inlineCode(

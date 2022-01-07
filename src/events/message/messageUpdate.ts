@@ -6,7 +6,6 @@ import {
 	MessageActionRow,
 } from "discord.js";
 import { RunFunction } from "../../interfaces/Event";
-import { bold } from "@discordjs/builders";
 
 export const name: string = "messageUpdate";
 
@@ -15,10 +14,10 @@ export const run: RunFunction = async (
 	oldMSG: Message,
 	newMSG: Message
 ) => {
+	if (!oldMSG.inGuild() || !newMSG.inGuild()) return;
 	if (!oldMSG || !newMSG) return;
-	if (!oldMSG.guild || !newMSG.guild) return;
-	if (oldMSG.author.bot || newMSG.author.bot) return;
 	if (oldMSG.content === newMSG.content) return;
+	if(oldMSG.author && oldMSG.author.bot || newMSG.author && newMSG.author.bot) return;
 
 	const logChannelID = client.database.getSetting(newMSG.guild, "logChannel");
 	if (logChannelID === "0") return;
@@ -52,10 +51,10 @@ export const run: RunFunction = async (
 	const row = new MessageActionRow().addComponents([RedirectButton]);
 	const embed = new MessageEmbed()
 		.setColor("BLURPLE")
-		.setAuthor(
-			newMSG.author.tag,
-			newMSG.author.displayAvatarURL({ dynamic: true })
-		)
+		.setAuthor({
+			name: newMSG.author.tag,
+			iconURL: newMSG.author.displayAvatarURL({ dynamic: true })
+		})
 		.setTitle(title)
 		.setDescription(description)
 		.setTimestamp();

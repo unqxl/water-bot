@@ -61,7 +61,10 @@ export const run: RunFunction = async (client, channel: GuildChannel) => {
 
 	const embed = new MessageEmbed()
 		.setColor("BLURPLE")
-		.setAuthor(channel.guild.name, channel.guild.iconURL({ dynamic: true }))
+		.setAuthor({
+			name: channel.guild.name, 
+			iconURL: channel.guild.iconURL({ dynamic: true })
+		})
 		.setTitle(title)
 		.setDescription(text)
 		.setTimestamp();

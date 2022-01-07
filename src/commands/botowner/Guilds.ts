@@ -101,9 +101,9 @@ export default class GuildsCommand extends Command {
 			false,
 			true
 		);
-		embed.setFooter(
-			`Page: ${page}/${Math.ceil(this.client.guilds.cache.size / 10)}`
-		);
+		embed.setFooter({
+			text: `Page: ${page}/${Math.ceil(this.client.guilds.cache.size / 10)}`
+		});
 
 		const msg = await message.channel.send({
 			embeds: [embed],
@@ -150,11 +150,11 @@ export default class GuildsCommand extends Command {
 						.join("\n");
 
 					embed.setDescription(description);
-					embed.setFooter(
-						`Page: ${page}/${Math.ceil(
+					embed.setFooter({
+						text: `Page: ${page}/${Math.ceil(
 							this.client.guilds.cache.size / 10
 						)}`
-					);
+					});
 
 					return btn.update({
 						embeds: [embed],
@@ -201,11 +201,11 @@ export default class GuildsCommand extends Command {
 						.join("\n");
 
 					embed.setDescription(description);
-					embed.setFooter(
-						`Page: ${page}/${Math.ceil(
+					embed.setFooter({
+						text: `Page: ${page}/${Math.ceil(
 							this.client.guilds.cache.size / 10
 						)}`
-					);
+					});
 
 					return btn.update({
 						embeds: [embed],

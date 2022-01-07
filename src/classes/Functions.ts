@@ -33,20 +33,20 @@ export = class Functions {
 
 		if (showAuthor === true) {
 			if (message instanceof Message)
-				embed.setAuthor(
-					message.author.username,
-					message.author.displayAvatarURL({ dynamic: true })
-				);
+				embed.setAuthor({
+					name: message.author.username,
+					iconURL: message.author.displayAvatarURL({ dynamic: true })
+				});
 			else if (message instanceof CommandInteraction)
-				embed.setAuthor(
-					message.user.username,
-					message.user.displayAvatarURL({ dynamic: true })
-				);
+				embed.setAuthor({
+					name: message.user.username,
+					iconURL: message.user.displayAvatarURL({ dynamic: true })
+				});
 			else
-				embed.setAuthor(
-					message.author.username,
-					message.author.displayAvatarURL({ dynamic: true })
-				);
+				embed.setAuthor({
+					name: message.author.username,
+					iconURL: message.author.displayAvatarURL({ dynamic: true })
+				});
 		}
 
 		embed.setColor(color);

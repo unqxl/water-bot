@@ -81,7 +81,8 @@ export default class ConfigCommand extends Command {
 
 				roles.push(role.toString());
 			}
-		};
+		}
+		else roles.push('-');
 
 		const autoRole = message.guild.roles.cache.get(config.autoRole) || "-";
 		const muteRole = message.guild.roles.cache.get(config.muteRole) || "-";
