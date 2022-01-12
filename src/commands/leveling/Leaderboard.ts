@@ -2,10 +2,10 @@ import { Message, MessageEmbed } from "discord.js";
 import { bold, inlineCode } from "@discordjs/builders";
 import { Command } from "../../types/Command/Command";
 import { Categories } from "../../types/Command/BaseCommand";
-import Goose from "../../classes/Goose";
+import Bot from "../../classes/Bot";
 
 export default class LeaderboardCommand extends Command {
-	constructor(client: Goose) {
+	constructor(client: Bot) {
 		super(client, {
 			name: "leaderboard",
 			aliases: ["lb"],
@@ -60,7 +60,7 @@ export default class LeaderboardCommand extends Command {
 			.setColor("BLURPLE")
 			.setAuthor({
 				name: message.guild.name,
-				iconURL: message.guild.iconURL({ dynamic: true })
+				iconURL: message.guild.iconURL({ dynamic: true }),
 			})
 			.setDescription(content + additionalContent)
 			.setTimestamp();

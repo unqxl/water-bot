@@ -1,15 +1,12 @@
 import { Message, MessageButton, MessageActionRow } from "discord.js";
-import {
-	ValidateReturn,
-	Categories,
-} from "../../types/Command/BaseCommand";
+import { ValidateReturn, Categories } from "../../types/Command/BaseCommand";
 import { Command } from "../../types/Command/Command";
 import { get } from "sourcebin";
 import { bold } from "@discordjs/builders";
 import { transpile } from "typescript";
 import { inspect } from "util";
 import { Type } from "@anishshobith/deeptype";
-import Goose from "../../classes/Goose";
+import Bot from "../../classes/Bot";
 
 const classified = [
 	"this.client.token",
@@ -22,7 +19,7 @@ const classified = [
 ];
 
 export default class EvalCommand extends Command {
-	constructor(client: Goose) {
+	constructor(client: Bot) {
 		super(client, {
 			name: "eval",
 			category: Categories.BOTOWNER,

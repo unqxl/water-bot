@@ -2,10 +2,10 @@ import { Guild, Message, MessageEmbed } from "discord.js";
 import { Command } from "../../types/Command/Command";
 import { Categories } from "../../types/Command/BaseCommand";
 import { bold, inlineCode } from "@discordjs/builders";
-import Goose from "../../classes/Goose";
+import Bot from "../../classes/Bot";
 
 export default class ServerinfoCommand extends Command {
-	constructor(client: Goose) {
+	constructor(client: Bot) {
 		super(client, {
 			name: "serverinfo",
 			aliases: ["si", "serveri", "sinfo"],
@@ -108,7 +108,7 @@ export default class ServerinfoCommand extends Command {
 		embed.setColor("BLURPLE");
 		embed.setAuthor({
 			name: message.author.username,
-			iconURL: message.author.displayAvatarURL({ dynamic: true })
+			iconURL: message.author.displayAvatarURL({ dynamic: true }),
 		});
 		embed.setTitle(title);
 		embed.setDescription(description);

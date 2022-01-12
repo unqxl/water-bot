@@ -1,7 +1,4 @@
-import {
-	Categories,
-	ValidateReturn,
-} from "../../types/Command/BaseCommand";
+import { Categories, ValidateReturn } from "../../types/Command/BaseCommand";
 import {
 	ButtonInteraction,
 	Message,
@@ -11,11 +8,11 @@ import {
 } from "discord.js";
 import { Command } from "../../types/Command/Command";
 import { bold } from "@discordjs/builders";
-import Goose from "../../classes/Goose";
+import Bot from "../../classes/Bot";
 import ms from "ms";
 
 export default class TempmuteCommand extends Command {
-	constructor(client: Goose) {
+	constructor(client: Bot) {
 		super(client, {
 			name: "tempmute",
 
@@ -124,7 +121,7 @@ export default class TempmuteCommand extends Command {
 
 		const time = ms(args[1]);
 
-		var reason = args.slice(2).join(' ');
+		var reason = args.slice(2).join(" ");
 		if (!reason) reason = "-";
 
 		const [accept, decline, confirmText] = [
@@ -154,7 +151,7 @@ export default class TempmuteCommand extends Command {
 			.setColor("BLURPLE")
 			.setAuthor({
 				name: message.author.username,
-				iconURL: message.author.displayAvatarURL({ dynamic: true })
+				iconURL: message.author.displayAvatarURL({ dynamic: true }),
 			})
 			.setDescription(bold(confirmText))
 			.setTimestamp();

@@ -1,8 +1,8 @@
-import Goose from "../classes/Goose";
+import Bot from "../classes/Bot";
 import { EventEmitter } from "events";
 
 export interface RunFunction {
-	(client: Goose, ...param: unknown[]): Promise<unknown>;
+	(client: Bot, ...param: unknown[]): Promise<unknown>;
 }
 
 export interface Event {

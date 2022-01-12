@@ -1,3 +1,5 @@
+import "reflect-metadata";
+
 import { Client, Collection } from "discord.js";
 import { EnmapGiveaways } from "./EnmapGiveaways";
 import { Moderation } from "discord-moderation";
@@ -18,31 +20,39 @@ import Functions from "./Functions";
 import config from "../config";
 import TwitchSystem from "../handlers/TwitchSystem";
 import Logger from "./Logger";
-import distubeEvents from "../events/distube-events";
+// import distubeEvents from "../events/distube-events";
 import TopGG from "../modules/TopGG";
-import Website from "../web/index";
 
 // Music Plugins
 import SpotifyPlugin from "@distube/spotify";
 import SoundCloudPlugin from "@distube/soundcloud";
 
 // Interfaces and Structures
-import { Event } from "../interfaces/Event";
 import { Command } from "../types/Command/Command";
 import { SlashCommand } from "types/Command/SlashCommand";
+import Event from "../types/Event/Event";
 
-class Goose extends Client {
+// MySQL
+import { createConnection, getRepository } from "typeorm";
+import { GuildConfiguration } from "../typeorm/entities/GuildConfiguration";
+import { GuildBan } from "../typeorm/entities/GuildBan";
+
+// WebSocket
+import { io, Socket } from "socket.io-client";
+
+class Bot extends Client {
 	// Collections
 	public commands: Collection<string, Command> = new Collection();
 	public slashCommands: Collection<string, SlashCommand> = new Collection();
 	public aliases: Collection<string, string> = new Collection();
 	public events: Collection<string, Event> = new Collection();
+	public _configs: Collection<string, GuildConfiguration> = new Collection();
 
 	// Other
 	public owners: string[] = ["852921856800718908"];
 	public config: typeof config = config;
 	public twitchKey: string = "";
-	public version: string = "2.1.44";
+	public version: string = "2.1.5";
 
 	// Databases
 	public settings = new Enmap({
@@ -72,10 +82,13 @@ class Goose extends Client {
 	public levels: Leveling = new Leveling(this);
 	public dagpi: dagpiClient = new dagpiClient(this.config.keys.dagpi_key);
 	public together: DiscordTogether<{}> = new DiscordTogether(this);
-	
+
 	// Additional Systems
 	public DJSystem: DJSystem = new DJSystem(this);
 	public web: WebServer = new WebServer({ port: 80 });
+
+	// WebSocket
+	public socket: Socket = io("http://localhost:3001");
 
 	// Modules
 	public moderation: Moderation = new Moderation(this, {
@@ -194,7 +207,30 @@ class Goose extends Client {
 	async start() {
 		if (!this.application?.owner) await this.application?.fetch();
 
-		await distubeEvents(this);
+		//! [MySQL Setup - Start]
+		await createConnection({
+			type: "mysql",
+			host: this.config.mysql.host,
+			port: 3306,
+			username: this.config.mysql.username,
+			password: this.config.mysql.password,
+			database: this.config.mysql.database,
+			synchronize: true,
+			entities: [GuildConfiguration, GuildBan],
+		});
+
+		const configRepo = getRepository(GuildConfiguration);
+		const guildConfigs = await configRepo.find();
+		const configMappings = new Collection<string, GuildConfiguration>();
+
+		for (const config of guildConfigs) {
+			configMappings.set(config.guild_id, config);
+		}
+
+		this.configs = configMappings;
+		//! [MySQL Setup - End]
+
+		// await distubeEvents(this);
 		await logs(this);
 		await this.handlers.loadEvents(this);
 		await this.handlers.loadCommands();
@@ -202,7 +238,6 @@ class Goose extends Client {
 		await this.functions.updateToken();
 
 		new TopGG(this);
-		new Website(this);
 
 		if (this.config.bot.test) this.login(this.config.bot.testToken);
 		else this.login(this.config.bot.token);
@@ -211,6 +246,14 @@ class Goose extends Client {
 	async wait(ms: number) {
 		return new Promise((res) => setTimeout(res, ms));
 	}
+
+	get configs(): Collection<string, GuildConfiguration> {
+		return this._configs;
+	}
+
+	set configs(guildConfigs: Collection<string, GuildConfiguration>) {
+		this._configs = guildConfigs;
+	}
 }
 
-export = Goose;
+export = Bot;

@@ -2,12 +2,12 @@ import { Message } from "discord.js";
 import { Command } from "../../types/Command/Command";
 import { Categories } from "../../types/Command/BaseCommand";
 import { bold } from "@discordjs/builders";
-import Goose from "../../classes/Goose";
+import Bot from "../../classes/Bot";
 import random from "random";
 import fetch from "node-fetch";
 
 export default class GuessTheFlagCommand extends Command {
-	constructor(client: Goose) {
+	constructor(client: Bot) {
 		super(client, {
 			name: "guesstheflag",
 			aliases: ["gtf"],

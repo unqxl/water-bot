@@ -1,7 +1,4 @@
-import {
-	Categories,
-	ValidateReturn,
-} from "../../types/Command/BaseCommand";
+import { Categories, ValidateReturn } from "../../types/Command/BaseCommand";
 import {
 	ButtonInteraction,
 	Message,
@@ -11,10 +8,10 @@ import {
 } from "discord.js";
 import { Command } from "../../types/Command/Command";
 import { bold } from "@discordjs/builders";
-import Goose from "../../classes/Goose";
+import Bot from "../../classes/Bot";
 
 export default class KickCommand extends Command {
-	constructor(client: Goose) {
+	constructor(client: Bot) {
 		super(client, {
 			name: "kick",
 
@@ -93,7 +90,7 @@ export default class KickCommand extends Command {
 			message.mentions.members.first() ||
 			message.guild.members.cache.get(args[0]);
 
-		var reason = args.slice(1).join(' ');
+		var reason = args.slice(1).join(" ");
 		if (!reason) reason = "-";
 
 		const [accept, decline, confirmText] = [
@@ -123,7 +120,7 @@ export default class KickCommand extends Command {
 			.setColor("BLURPLE")
 			.setAuthor({
 				name: message.author.username,
-				iconURL: message.author.displayAvatarURL({ dynamic: true })
+				iconURL: message.author.displayAvatarURL({ dynamic: true }),
 			})
 			.setDescription(bold(confirmText))
 			.setTimestamp();

@@ -1,11 +1,11 @@
 import { Guild } from "discord.js";
 import { GuildData } from "../interfaces/Guild";
-import Goose from "./Goose";
+import Bot from "./Bot";
 
 export = class DBManager {
-	public client: Goose;
+	public client: Bot;
 
-	constructor(client: Goose) {
+	constructor(client: Bot) {
 		this.client = client;
 	}
 

@@ -1,29 +1,29 @@
-import { Message, Util } from 'discord.js';
-import { Categories, ValidateReturn } from '../../types/Command/BaseCommand';
-import { Command } from '../../types/Command/Command';
-import { parse } from 'twemoji-parser';
-import { bold } from '@discordjs/builders';
-import Goose from '../../classes/Goose';
+import { Message, Util } from "discord.js";
+import { Categories, ValidateReturn } from "../../types/Command/BaseCommand";
+import { Command } from "../../types/Command/Command";
+import { parse } from "twemoji-parser";
+import { bold } from "@discordjs/builders";
+import Bot from "../../classes/Bot";
 
 export default class StealEmojiCommand extends Command {
-    constructor(client: Goose) {
-        super(client, {
-            name: 'stealemoji',
+	constructor(client: Bot) {
+		super(client, {
+			name: "stealemoji",
 
-            description: {
-                en: "Allows you to copy an emoji from another server to yours.",
-                ru: "Позволяет скопировать эмодзи с другого сервера на ваш."
-            },
+			description: {
+				en: "Allows you to copy an emoji from another server to yours.",
+				ru: "Позволяет скопировать эмодзи с другого сервера на ваш.",
+			},
 
-            category: Categories.MODERATION,
-            usage: "<prefix>stealemoji <emoji>",
+			category: Categories.MODERATION,
+			usage: "<prefix>stealemoji <emoji>",
 
-            memberPermissions: ['MANAGE_GUILD'],
-            botPermissions: ['MANAGE_EMOJIS_AND_STICKERS']
-        });
-    }
+			memberPermissions: ["MANAGE_GUILD"],
+			botPermissions: ["MANAGE_EMOJIS_AND_STICKERS"],
+		});
+	}
 
-    async validate(
+	async validate(
 		message: Message,
 		args: string[],
 		lang: typeof import("@locales/English").default
@@ -52,7 +52,7 @@ export default class StealEmojiCommand extends Command {
 			};
 		}
 
-        if (!name) {
+		if (!name) {
 			const text = lang.ERRORS.ARGS_MISSING.replace(
 				"{cmd_name}",
 				"stealemoji"
@@ -78,16 +78,20 @@ export default class StealEmojiCommand extends Command {
 		};
 	}
 
-    async run(message: Message, args: string[], lang: typeof import('@locales/English').default) {
-        var discordEmojiURL = "https://cdn.discordapp.com/emojis";
+	async run(
+		message: Message,
+		args: string[],
+		lang: typeof import("@locales/English").default
+	) {
+		var discordEmojiURL = "https://cdn.discordapp.com/emojis";
 
-        const emoji = args[0];
-        const name = args[1];
+		const emoji = args[0];
+		const name = args[1];
 
-        if(emoji.startsWith(discordEmojiURL)) {
-            await message.guild?.emojis.create(emoji, name);
+		if (emoji.startsWith(discordEmojiURL)) {
+			await message.guild?.emojis.create(emoji, name);
 
-            const text = lang.MODERATION.EMOJI_CREATED(name);
+			const text = lang.MODERATION.EMOJI_CREATED(name);
 			const embed = this.client.functions.buildEmbed(
 				message,
 				"BLURPLE",
@@ -96,33 +100,33 @@ export default class StealEmojiCommand extends Command {
 				true
 			);
 
-            return message.channel.send({
-                embeds: [embed]
-            });
-        }
+			return message.channel.send({
+				embeds: [embed],
+			});
+		}
 
-        const customEmoji = Util.parseEmoji(emoji);
-        if(customEmoji?.id) {
-            const emojiURL = `${discordEmojiURL}/${customEmoji.id}.${
-                customEmoji.animated ? 'gif' : 'png'
-            }`;
+		const customEmoji = Util.parseEmoji(emoji);
+		if (customEmoji?.id) {
+			const emojiURL = `${discordEmojiURL}/${customEmoji.id}.${
+				customEmoji.animated ? "gif" : "png"
+			}`;
 
-            const msg = await this.createEmoji(message, emojiURL, name, lang);
-            if(msg) {
-                const embed = this.client.functions.buildEmbed(
-                    message,
-                    "BLURPLE",
-                    bold(msg),
-                    "❌",
-                    true
-                );
+			const msg = await this.createEmoji(message, emojiURL, name, lang);
+			if (msg) {
+				const embed = this.client.functions.buildEmbed(
+					message,
+					"BLURPLE",
+					bold(msg),
+					"❌",
+					true
+				);
 
-                return message.channel.send({
-                    embeds: [embed]
-                });
-            }
+				return message.channel.send({
+					embeds: [embed],
+				});
+			}
 
-            const text = lang.MODERATION.EMOJI_CREATED(name);
+			const text = lang.MODERATION.EMOJI_CREATED(name);
 			const embed = this.client.functions.buildEmbed(
 				message,
 				"BLURPLE",
@@ -131,14 +135,14 @@ export default class StealEmojiCommand extends Command {
 				true
 			);
 
-            return message.channel.send({
-                embeds: [embed]
-            });
-        }
+			return message.channel.send({
+				embeds: [embed],
+			});
+		}
 
-        const foundEmoji = parse(emoji, { assetType: 'png' });
-        if(!foundEmoji[0]) {
-            const text = lang.ERRORS.VALID_EMOJI;
+		const foundEmoji = parse(emoji, { assetType: "png" });
+		if (!foundEmoji[0]) {
+			const text = lang.ERRORS.VALID_EMOJI;
 			const embed = this.client.functions.buildEmbed(
 				message,
 				"BLURPLE",
@@ -147,35 +151,41 @@ export default class StealEmojiCommand extends Command {
 				true
 			);
 
-            return message.channel.send({
-                embeds: [embed]
-            });
-        }
+			return message.channel.send({
+				embeds: [embed],
+			});
+		}
 
-        const text = lang.ERRORS.NORMAL_EMOJI;
-        const embed = this.client.functions.buildEmbed(
-            message,
-            "BLURPLE",
-            bold(text),
-            "❌",
-            true
-        );
+		const text = lang.ERRORS.NORMAL_EMOJI;
+		const embed = this.client.functions.buildEmbed(
+			message,
+			"BLURPLE",
+			bold(text),
+			"❌",
+			true
+		);
 
-        return message.channel.send({
-            embeds: [embed]
-        });
-    }
+		return message.channel.send({
+			embeds: [embed],
+		});
+	}
 
-    async createEmoji(message: Message, url: string, name: string, lang: typeof import('@locales/English').default) {
-        try {
-            await message.guild?.emojis.create(url, name);
-        } 
-        catch (error) {
-            if(
-                String(error).includes("DiscordAPIError: Maximum number of emojis reached")
-            ) {
-                return lang.ERRORS.EMOJIS_LIMIT;
-            }
-        }
-    }
+	async createEmoji(
+		message: Message,
+		url: string,
+		name: string,
+		lang: typeof import("@locales/English").default
+	) {
+		try {
+			await message.guild?.emojis.create(url, name);
+		} catch (error) {
+			if (
+				String(error).includes(
+					"DiscordAPIError: Maximum number of emojis reached"
+				)
+			) {
+				return lang.ERRORS.EMOJIS_LIMIT;
+			}
+		}
+	}
 }

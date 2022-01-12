@@ -1,7 +1,7 @@
 import { Guild, TextChannel } from "discord.js";
 import fetch from "node-fetch";
-import twitchLive from "../events/twitchLive";
-import Goose from "../classes/Goose";
+// import twitchLive from "../events/twitchLive";
+import Bot from "../classes/Bot";
 
 interface TwitchData {
 	name: string;
@@ -12,16 +12,16 @@ interface TwitchData {
 }
 
 export = class TwitchSystem {
-	public client: Goose;
+	public client: Bot;
 
-	constructor(client: Goose) {
+	constructor(client: Bot) {
 		this.client = client;
 	}
 
 	async send(channel: TextChannel, data: TwitchData) {
 		const lang = await this.client.functions.getLanguageFile(channel.guild);
 
-		return await twitchLive(this.client, lang, channel, data);
+		// return await twitchLive(this.client, lang, channel, data);
 	}
 
 	async check(guild: Guild) {

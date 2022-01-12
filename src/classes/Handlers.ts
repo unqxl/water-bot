@@ -1,5 +1,5 @@
-import { Event } from "../interfaces/Event";
-import Goose from "./Goose";
+import Event from "../types/Event/Event";
+import Bot from "./Bot";
 import path from "path";
 
 // Storage
@@ -17,9 +17,9 @@ import { SlashCommand } from "../types/Command/SlashCommand";
 type Structures = Command | SlashCommand;
 
 export = class Handlers {
-	public client: Goose;
+	public client: Bot;
 
-	constructor(client: Goose) {
+	constructor(client: Bot) {
 		this.client = client;
 	}
 
@@ -27,19 +27,21 @@ export = class Handlers {
 		return `${path.dirname(require.main.filename)}${path.sep}`;
 	}
 
-	async loadEvents(client: Goose) {
+	async loadEvents(client: Bot) {
 		const eventFiles: string[] = await glob(
 			process.env.BUILD_PATH ? `./events/**/*.js` : `./src/events/**/*.ts`
 		);
 
 		for (const file of eventFiles) {
-			const evt: Event = await import(
+			const EventFile = await import(
 				process.env.BUILD_PATH ? `../${file}` : `../../${file}`
 			);
 
-			client.events.set(evt.name, evt);
-			(evt.emitter || client).on(evt.name, async (...args) =>
-				evt.run(client, ...args)
+			const File: Event = new EventFile.default();
+
+			client.events.set(File.getName(), File);
+			(File.getEmitter() || client).on(File.getName(), async (...args) =>
+				File.run(client, ...args)
 			);
 		}
 	}
@@ -87,7 +89,7 @@ export = class Handlers {
 		}
 	}
 
-	async resolveFile<T>(file: string, client: Goose): Promise<T | null> {
+	async resolveFile<T>(file: string, client: Bot): Promise<T | null> {
 		const resolvedPath = resolve(file);
 		const File = await (await import(resolvedPath)).default;
 

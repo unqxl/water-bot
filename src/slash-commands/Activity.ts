@@ -2,10 +2,10 @@ import { SlashCommand } from "../types/Command/SlashCommand";
 import { ValidateReturn } from "types/Command/BaseSlashCommand";
 import { CommandInteraction, GuildMember } from "discord.js";
 import { bold } from "@discordjs/builders";
-import Goose from "classes/Goose";
+import Bot from "classes/Bot";
 
 export default class ActivitySlashCommand extends SlashCommand {
-	constructor(client: Goose) {
+	constructor(client: Bot) {
 		super(client, {
 			name: "activity",
 			description: "Let's Play!",
