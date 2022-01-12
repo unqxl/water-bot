@@ -1,7 +1,7 @@
 import { Message, MessageEmbed } from "discord.js";
 import { Command } from "../../types/Command/Command";
 import { Categories } from "../../types/Command/BaseCommand";
-import Goose from "../../classes/Goose";
+import Bot from "../../classes/Bot";
 
 // DayJS
 import dayjs from "dayjs";
@@ -12,7 +12,7 @@ import("dayjs/locale/en");
 import("dayjs/locale/ru");
 
 export default class UserinfoCommand extends Command {
-	constructor(client: Goose) {
+	constructor(client: Bot) {
 		super(client, {
 			name: "userinfo",
 			aliases: ["ui"],
@@ -189,7 +189,7 @@ export default class UserinfoCommand extends Command {
 			.setColor("BLURPLE")
 			.setAuthor({
 				name: member.user.username,
-				iconURL: member.user.displayAvatarURL({ dynamic: true })
+				iconURL: member.user.displayAvatarURL({ dynamic: true }),
 			})
 			.addField(
 				`[1] ${main}:`,
@@ -215,12 +215,7 @@ export default class UserinfoCommand extends Command {
 	}
 }
 
-function timeSince(
-	client: Goose,
-	message: Message,
-	date: number,
-	ws?: boolean
-) {
+function timeSince(client: Bot, message: Message, date: number, ws?: boolean) {
 	const locale = client.database.getSetting(message.guild, "language");
 
 	if (locale === "en-US") dayjs.locale("en");

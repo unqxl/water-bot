@@ -6,11 +6,11 @@ import {
 	MessageEmbed,
 } from "discord.js";
 import { bold } from "@discordjs/builders";
-import Goose from "../classes/Goose";
+import Bot from "../classes/Bot";
 import cases from "../data/cases.json";
 
 export = async (
-	client: Goose,
+	client: Bot,
 	_msg: Message,
 	message: Message,
 	lang: typeof import("@locales/English").default

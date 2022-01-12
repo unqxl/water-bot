@@ -1,8 +1,8 @@
 import { GiveawaysManager } from "discord-giveaways";
-import Goose from "./Goose";
+import Bot from "./Bot";
 
 export class EnmapGiveaways extends GiveawaysManager {
-	public declare client: Goose;
+	public declare client: Bot;
 
 	async getAllGiveaways() {
 		return this.client.giveawaysDB.fetchEverything().array();

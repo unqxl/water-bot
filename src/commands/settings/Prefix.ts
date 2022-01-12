@@ -2,10 +2,17 @@ import { Message, Util } from "discord.js";
 import { Command } from "../../types/Command/Command";
 import { Categories } from "../../types/Command/BaseCommand";
 import { bold } from "@discordjs/builders";
-import Goose from "../../classes/Goose";
+import { getRepository } from "typeorm";
+import { GuildConfiguration } from "../../typeorm/entities/GuildConfiguration";
+import Bot from "../../classes/Bot";
 
 export default class PrefixCommand extends Command {
-	constructor(client: Goose) {
+	constructor(
+		client: Bot,
+		private readonly guildConfigRepository = getRepository(
+			GuildConfiguration
+		)
+	) {
 		super(client, {
 			name: "prefix",
 
@@ -24,17 +31,17 @@ export default class PrefixCommand extends Command {
 		args: string[],
 		lang: typeof import("@locales/English").default
 	) {
-		const prefix = args[0];
-		const current_prefix = this.client.database.getSetting(
-			message.guild,
-			"prefix"
-		);
+		const config = await this.guildConfigRepository.findOne({
+			guild_id: message.guild.id,
+		});
 
+		const prefix = args[0];
 		if (!prefix) {
-			const currentText = lang.EVENTS.GUILD_PREFIX
-			.replace("{guild}", message.guild.name)
-			.replace("{prefix}", Util.escapeMarkdown(current_prefix));
-			
+			const currentText = lang.EVENTS.GUILD_PREFIX.replace(
+				"{guild}",
+				message.guild.name
+			).replace("{prefix}", Util.escapeMarkdown(config.prefix));
+
 			const currentEmbed = this.client.functions.buildEmbed(
 				message,
 				"BLURPLE",
@@ -57,7 +64,12 @@ export default class PrefixCommand extends Command {
 				true
 			);
 
-			this.client.database.set(message.guild, "prefix", "-");
+			const updatedConfig = await this.guildConfigRepository.save({
+				...config,
+				prefix: "-",
+			});
+
+			this.client.configs.set(message.guild.id, updatedConfig);
 
 			return message.channel.send({
 				embeds: [resetEmbed],
@@ -73,7 +85,12 @@ export default class PrefixCommand extends Command {
 				true
 			);
 
-			this.client.database.set(message.guild, "prefix", prefix);
+			const updatedConfig = await this.guildConfigRepository.save({
+				...config,
+				prefix: prefix,
+			});
+
+			this.client.configs.set(message.guild.id, updatedConfig);
 
 			return message.channel.send({
 				embeds: [changedEmbed],

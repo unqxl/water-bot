@@ -2,7 +2,7 @@ import { Message, Permissions } from "discord.js";
 import { Command } from "../../types/Command/Command";
 import { Categories } from "../../types/Command/BaseCommand";
 import { bold, inlineCode } from "@discordjs/builders";
-import Goose from "../../classes/Goose";
+import Bot from "../../classes/Bot";
 
 interface PermissionsKey {
 	MANAGE_GUILD: string;
@@ -20,10 +20,10 @@ interface PermissionsKey {
 }
 
 export default class HelpCommand extends Command {
-	constructor(client: Goose) {
+	constructor(client: Bot) {
 		super(client, {
 			name: "help",
-			aliases: ['h', 'cmd', 'cmds'],
+			aliases: ["h", "cmd", "cmds"],
 
 			description: {
 				en: "Displays all the Bot Commands!",
@@ -164,12 +164,12 @@ export default class HelpCommand extends Command {
 			embed.addField(`[📝] ${Other}`, OtherCommands);
 			embed.addField(`[⭐] ${Leveling}`, LevelingCommands);
 			embed.addField(`[⚙️] ${Settings}`, SettingsCommands);
-			embed.setFooter(
-				`${Length}: ${this.client.functions.sp(
+			embed.setFooter({
+				text: `${Length}: ${this.client.functions.sp(
 					this.client.commands.size
 				)}`,
-				this.client.user.displayAvatarURL({ dynamic: true })
-			);
+				iconURL: this.client.user.displayAvatarURL({ dynamic: true }),
+			});
 
 			if (this.client.functions.checkOwner(message.author))
 				embed.addField(`[👑] ${BotOwner}`, BotOwnerCommands);
@@ -252,7 +252,9 @@ export default class HelpCommand extends Command {
 						? cmd.options.description.en
 						: cmd.options.description.ru
 				)}`,
-				`› ${bold(usage)}: ${inlineCode(cmd.options.usage.replace('<prefix>', prefix) ?? None)}`,
+				`› ${bold(usage)}: ${inlineCode(
+					cmd.options.usage.replace("<prefix>", prefix) ?? None
+				)}`,
 				`› ${bold(aliases)}: ${inlineCode(formattedAliases)}`,
 				`› ${bold(category)}: ${inlineCode(categoryName)}`,
 				`› ${bold(botPermissions)}: ${inlineCode(

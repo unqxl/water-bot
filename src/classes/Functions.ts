@@ -12,13 +12,13 @@ import {
 	User,
 } from "discord.js";
 import { codeBlock } from "@discordjs/builders";
-import Goose from "./Goose";
+import Bot from "./Bot";
 import fetch from "node-fetch";
 
 export = class Functions {
-	public client: Goose;
+	public client: Bot;
 
-	constructor(client: Goose) {
+	constructor(client: Bot) {
 		this.client = client;
 	}
 
@@ -35,17 +35,17 @@ export = class Functions {
 			if (message instanceof Message)
 				embed.setAuthor({
 					name: message.author.username,
-					iconURL: message.author.displayAvatarURL({ dynamic: true })
+					iconURL: message.author.displayAvatarURL({ dynamic: true }),
 				});
 			else if (message instanceof CommandInteraction)
 				embed.setAuthor({
 					name: message.user.username,
-					iconURL: message.user.displayAvatarURL({ dynamic: true })
+					iconURL: message.user.displayAvatarURL({ dynamic: true }),
 				});
 			else
 				embed.setAuthor({
 					name: message.author.username,
-					iconURL: message.author.displayAvatarURL({ dynamic: true })
+					iconURL: message.author.displayAvatarURL({ dynamic: true }),
 				});
 		}
 
@@ -184,6 +184,8 @@ export = class Functions {
 			if (error?.message.includes("Missing Access")) return;
 			if (error?.message.includes("Missing Permissions")) return;
 			if (error?.message.includes("Unknown Message")) return;
+			if (error?.message.includes("Members didn't arrive in time."))
+				return;
 
 			const channelID = this.client.config.bot.logsChannelID as
 				| Snowflake

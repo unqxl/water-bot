@@ -1,14 +1,11 @@
 import { Message, MessageButton, MessageActionRow, Util } from "discord.js";
-import {
-	Categories,
-	ValidateReturn,
-} from "../../types/Command/BaseCommand";
+import { Categories, ValidateReturn } from "../../types/Command/BaseCommand";
 import { Command } from "../../types/Command/Command";
 import { bold, inlineCode } from "@discordjs/builders";
-import Goose from "../../classes/Goose";
+import Bot from "../../classes/Bot";
 
 export default class GuildsCommand extends Command {
-	constructor(client: Goose) {
+	constructor(client: Bot) {
 		super(client, {
 			name: "guilds",
 
@@ -102,7 +99,9 @@ export default class GuildsCommand extends Command {
 			true
 		);
 		embed.setFooter({
-			text: `Page: ${page}/${Math.ceil(this.client.guilds.cache.size / 10)}`
+			text: `Page: ${page}/${Math.ceil(
+				this.client.guilds.cache.size / 10
+			)}`,
 		});
 
 		const msg = await message.channel.send({
@@ -153,7 +152,7 @@ export default class GuildsCommand extends Command {
 					embed.setFooter({
 						text: `Page: ${page}/${Math.ceil(
 							this.client.guilds.cache.size / 10
-						)}`
+						)}`,
 					});
 
 					return btn.update({
@@ -204,7 +203,7 @@ export default class GuildsCommand extends Command {
 					embed.setFooter({
 						text: `Page: ${page}/${Math.ceil(
 							this.client.guilds.cache.size / 10
-						)}`
+						)}`,
 					});
 
 					return btn.update({

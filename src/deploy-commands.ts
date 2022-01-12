@@ -1,7 +1,7 @@
 import { ApplicationCommandData } from "discord.js";
-import Goose from "./classes/Goose";
+import Bot from "./classes/Bot";
 
-export = async (client: Goose) => {
+export = async (client: Bot) => {
 	if (!client.slashCommands.size)
 		return client.logger.warn(
 			"No Slash Commands Found!",

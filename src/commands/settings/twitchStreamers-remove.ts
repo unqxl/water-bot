@@ -1,14 +1,11 @@
-import {
-	Categories,
-	ValidateReturn,
-} from "../../types/Command/BaseCommand";
+import { Categories, ValidateReturn } from "../../types/Command/BaseCommand";
 import { Message } from "discord.js";
 import { Command } from "../../types/Command/Command";
 import { bold } from "@discordjs/builders";
-import Goose from "../../classes/Goose";
+import Bot from "../../classes/Bot";
 
 export default class TwitchStreamersRemoveCommand extends Command {
-	constructor(client: Goose) {
+	constructor(client: Bot) {
 		super(client, {
 			name: "twitchstreamers-remove",
 			aliases: ["ts-remove"],
@@ -133,8 +130,11 @@ export default class TwitchStreamersRemoveCommand extends Command {
 			});
 		}
 
-		streamers.filter((streamer) => streamer.name !== channel);
-		this.client.database.set(message.guild, "twitchStreamers", streamers);
+		this.client.database.set(
+			message.guild,
+			"twitchStreamers",
+			streamers.filter((streamer) => streamer.name !== channel)
+		);
 
 		const type = lang.SETTINGS.CONFIG.TYPES.TWITCH_CHANNEL;
 		const text = lang.SETTINGS.DELETED(type, streamer);

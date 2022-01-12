@@ -2,10 +2,10 @@ import { Message } from "discord.js";
 import { Command } from "../../types/Command/Command";
 import { Categories } from "../../types/Command/BaseCommand";
 import { bold, inlineCode } from "@discordjs/builders";
-import Goose from "../../classes/Goose";
+import Bot from "../../classes/Bot";
 
 export default class ConfigCommand extends Command {
-	constructor(client: Goose) {
+	constructor(client: Bot) {
 		super(client, {
 			name: "config",
 
@@ -72,17 +72,19 @@ export default class ConfigCommand extends Command {
 
 		// Roles
 		const roles = [];
-		const DJRoles = this.client.database.getSetting(message.guild, 'djRoles');
-		
-		if(DJRoles.length) {
-			for(const { roleID } of DJRoles) {
+		const DJRoles = this.client.database.getSetting(
+			message.guild,
+			"djRoles"
+		);
+
+		if (DJRoles.length) {
+			for (const { roleID } of DJRoles) {
 				const role = message.guild.roles.cache.get(roleID);
-				if(!role) continue;
+				if (!role) continue;
 
 				roles.push(role.toString());
 			}
-		}
-		else roles.push('-');
+		} else roles.push("-");
 
 		const autoRole = message.guild.roles.cache.get(config.autoRole) || "-";
 		const muteRole = message.guild.roles.cache.get(config.muteRole) || "-";
@@ -113,7 +115,7 @@ export default class ConfigCommand extends Command {
 		)}\n\n`;
 		text += `› ${bold(autorole)}: ${bold(autoRole.toString())}\n`;
 		text += `› ${bold(muterole)}: ${bold(muteRole.toString())}\n`;
-		text += `› ${bold(djroles)}: ${bold(roles.join(', '))}\n\n`;
+		text += `› ${bold(djroles)}: ${bold(roles.join(", "))}\n\n`;
 		text += `› ${bold(antilink)}: ${bold(antiLink)}\n`;
 		text += `› ${bold(antispam)}: ${bold(antiSpam)}\n`;
 		text += `› ${bold(antiinvite)}: ${bold(antiInvite)}\n`;

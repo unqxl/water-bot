@@ -1,5 +1,5 @@
 import { Message, MessageOptions, PermissionString } from "discord.js";
-import Goose from "../../classes/Goose";
+import Bot from "../../classes/Bot";
 
 export enum Categories {
 	BOTOWNER = 0,
@@ -37,10 +37,10 @@ export abstract class BaseCommand<
 	TOptions extends BaseCommandOptions = BaseCommandOptions
 > {
 	protected _options: TOptions;
-	client: Goose;
+	client: Bot;
 	name: string;
 
-	constructor(client: Goose, options: TOptions) {
+	constructor(client: Bot, options: TOptions) {
 		this.client = client;
 		this.name = options.name;
 		this._options = options;
