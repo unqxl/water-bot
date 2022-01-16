@@ -8,14 +8,14 @@ export default class TwitchChannelCommand extends Command {
 	constructor(client: Bot) {
 		super(client, {
 			name: "twitchchannel",
-			aliases: ["tc"],
+			aliases: ["twitch-c"],
 
 			description: {
 				en: "Shows/Sets/Removes Server's Twitch Notifications Channel!",
-				ru: "Показывает/Ставит/Удаляет Канал для Twitch Уведомлений Сервера!",
+				ru: "Показывает/Ставит/Удаляет Канал для Уведомлений Twitch Сервера!",
 			},
 
-			usage: "<prefix>twitchchannel <show|set|reset> [role]",
+			usage: "<prefix>twitchchannel <show|set|reset> [channel]",
 			category: Categories.SETTINGS,
 			memberPermissions: ["ADMINISTRATOR"],
 		});
@@ -25,6 +25,8 @@ export default class TwitchChannelCommand extends Command {
 		args: string[],
 		lang: typeof import("@locales/English").default
 	) {
+		const config = await this.client.database.getGuild(message.guild.id);
+
 		var actions = ["show", "set", "reset"];
 		var action = args[0];
 
@@ -32,12 +34,9 @@ export default class TwitchChannelCommand extends Command {
 		if (!actions.includes(action)) action = "show";
 
 		if (action === "show") {
-			var channel = this.client.database.getSetting(
-				message.guild,
-				"twitchChannelID"
-			);
+			var channel = config.twitch_channel;
 
-			if (channel === "0") channel = lang.GLOBAL.NONE;
+			if (!channel) channel = lang.GLOBAL.NONE;
 			else channel = message.guild.channels.cache.get(channel).toString();
 
 			const type = lang.SETTINGS.CONFIG.TYPES.TWITCH_CHANNEL;
@@ -76,9 +75,9 @@ export default class TwitchChannelCommand extends Command {
 				});
 			}
 
-			this.client.database.set(
-				message.guild,
-				"twitchСhannelID",
+			await this.client.database.set(
+				message.guild.id,
+				"twitch_channel",
 				channel.id
 			);
 
@@ -96,7 +95,11 @@ export default class TwitchChannelCommand extends Command {
 				embeds: [embed],
 			});
 		} else if (action === "reset") {
-			this.client.database.set(message.guild, "twitchChannelID", "0");
+			await this.client.database.set(
+				message.guild.id,
+				"twitch_channel",
+				null
+			);
 
 			const type = lang.SETTINGS.CONFIG.TYPES.TWITCH_CHANNEL;
 			const text = lang.SETTINGS.RESETTED(type);

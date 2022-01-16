@@ -7,15 +7,14 @@ import { Leveling } from "./Leveling";
 import { Client as dagpiClient } from "dagpijs";
 import { DiscordTogether } from "discord-together";
 import DJSystem from "../modules/DJSystem";
-import WebServer from "./Server";
 import Economy from "discord-economy-super";
 import Enmap from "enmap";
 import DisTube from "distube";
 import logs from "discord-logs";
 
 // Other
+import { DBManager } from "./DBManager";
 import Handlers from "./Handlers";
-import DBManager from "./DBManager";
 import Functions from "./Functions";
 import config from "../config";
 import TwitchSystem from "../handlers/TwitchSystem";
@@ -85,9 +84,6 @@ class Bot extends Client {
 
 	// Additional Systems
 	public DJSystem: DJSystem = new DJSystem(this);
-	public web: WebServer = new WebServer({ port: 80 });
-
-	// WebSocket
 	public socket: Socket = io("http://localhost:3001");
 
 	// Modules

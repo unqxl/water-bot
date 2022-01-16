@@ -1,102 +1,79 @@
 import { Guild } from "discord.js";
+import { getRepository } from "typeorm";
 import { GuildData } from "../interfaces/Guild";
+import { GuildConfiguration } from "../typeorm/entities/GuildConfiguration";
 import Bot from "./Bot";
 
-export = class DBManager {
+export class DBManager {
 	public client: Bot;
 
-	constructor(client: Bot) {
+	constructor(
+		client: Bot,
+		private readonly guildConfigRepository = getRepository(
+			GuildConfiguration
+		)
+	) {
 		this.client = client;
 	}
 
-	getGuild(guild: Guild): GuildData {
-		var data = this.client.settings.has(`server-${guild.id}`);
-		if (!data) this.createGuild(guild);
+	async getGuild(guild_id: string): Promise<GuildConfiguration> {
+		const config = await this.guildConfigRepository.findOne({ guild_id });
+		if (!config) return await this.createGuild(guild_id);
 
-		return this.client.settings.fetch(`server-${guild.id}`);
+		return await this.guildConfigRepository.findOne({ guild_id });
 	}
 
-	createGuild(guild: Guild): GuildData {
-		this.client.settings.set(`server-${guild.id}`, {
-			prefix: "-",
-			language: "en-US",
+	async createGuild(guild_id: string): Promise<GuildConfiguration> {
+		const config = await this.guildConfigRepository.findOne({ guild_id });
+		if (config) return config;
 
-			starboardChannel: "0",
-			welcomeChannel: "0",
-			byeChannel: "0",
-			logChannel: "0",
-			levelsChannel: "0",
+		const newConfig = await this.guildConfigRepository.create({ guild_id });
+		this.guildConfigRepository.save(newConfig);
 
-			autoRole: "0",
-			muteRole: "0",
-
-			antilink: "0",
-			antispam: "0",
-			antiinvite: "0",
-
-			djRoles: [],
-			immunityUsers: [],
-
-			welcomeText: {
-				en: "Welcome, {user_mention}!\nServer is now including **{members} members**!",
-				ru: "Добро пожаловать, {user_mention}!\nСервер включает в себя **{members}** участников!",
-			},
-
-			byeText: {
-				en: "{user_mention} left this server!\nServer is now including **{members} members**!",
-				ru: "{user_mention} покинул данный сервер!\nСервер включает в себя **{members}** участников!",
-			},
-
-			twitchEnabled: "0",
-			twitchChannelID: "0",
-			twitchStreamers: [],
-		});
-
-		return this.client.settings.fetch(`server-${guild.id}`);
+		return newConfig;
 	}
 
-	deleteGuild(guild: Guild | string) {
-		const guildData = this.client.settings.has(
-			`server-${guild instanceof Guild ? guild.id : guild}`
-		);
+	async deleteGuild(guild_id: string): Promise<boolean> {
+		const config = await this.guildConfigRepository.findOne({ guild_id });
+		if (!config) return false;
 
-		if (guildData) {
-			this.client.settings.delete(
-				`server-${guild instanceof Guild ? guild.id : guild}`
-			);
-		}
-
+		this.guildConfigRepository.delete({ guild_id });
 		return true;
 	}
 
-	getSetting<K extends keyof GuildData>(guild: Guild, key: K): GuildData[K] {
-		var _data = this.client.settings.has(`server-${guild.id}`);
-		if (!_data) this.createGuild(guild);
+	async getSetting<K extends keyof GuildConfiguration>(
+		guild_id: string,
+		key: K
+	): Promise<GuildConfiguration[K]> {
+		var config = await this.guildConfigRepository.findOne({ guild_id });
+		if (!config) config = await this.createGuild(guild_id);
 
-		const data: GuildData = this.getGuild(guild);
-		const value = data[key];
-
-		if (value === undefined) return;
-		else return value;
+		return config[key];
 	}
 
-	getSettings(guild: Guild): GuildData {
-		var _data = this.client.settings.has(`server-${guild.id}`);
-		if (!_data) this.createGuild(guild);
+	async getSettings(guild_id: string): Promise<GuildConfiguration> {
+		var config = await this.guildConfigRepository.findOne({ guild_id });
+		if (!config) config = await this.createGuild(guild_id);
 
-		const data: GuildData = this.getGuild(guild);
-		return data;
+		return config;
 	}
 
-	set(guild: Guild, key: string, value: any): boolean {
-		var _data = this.client.settings.has(`server-${guild.id}`);
-		if (!_data) this.createGuild(guild);
+	async set<K extends keyof GuildConfiguration>(
+		guild_id: string,
+		key: K,
+		value: any
+	): Promise<boolean> {
+		var config = await this.guildConfigRepository.findOne({ guild_id });
+		if (!config) config = await this.createGuild(guild_id);
 
-		const data = this.getGuild(guild);
+		var newConfigData = {
+			...config,
+		};
+		Object.defineProperty(newConfigData, key, value);
 
-		data[key] = value;
-		this.client.settings.set(`server-${guild.id}`, data);
+		var newConfig = await this.guildConfigRepository.save(newConfigData);
+		this.client.configs.set(guild_id, newConfig);
 
 		return true;
 	}
-};
+}

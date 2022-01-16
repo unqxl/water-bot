@@ -2,17 +2,10 @@ import { Categories } from "../../types/Command/BaseCommand";
 import { Message } from "discord.js";
 import { Command } from "../../types/Command/Command";
 import { bold } from "@discordjs/builders";
-import { GuildConfiguration } from "../../typeorm/entities/GuildConfiguration";
-import { getRepository } from "typeorm";
 import Bot from "../../classes/Bot";
 
 export default class MembersChannelCommand extends Command {
-	constructor(
-		client: Bot,
-		private readonly guildConfigRepository = getRepository(
-			GuildConfiguration
-		)
-	) {
+	constructor(client: Bot) {
 		super(client, {
 			name: "memberschannel",
 			aliases: ["mc"],
@@ -22,7 +15,7 @@ export default class MembersChannelCommand extends Command {
 				ru: "Показывает/Ставит/Удаляет Канал для Участников Сервера!",
 			},
 
-			usage: "<prefix>memberschannel <show|set|reset> [role]",
+			usage: "<prefix>memberschannel <show|set|reset> [channel]",
 			category: Categories.SETTINGS,
 			memberPermissions: ["ADMINISTRATOR"],
 		});
@@ -32,9 +25,7 @@ export default class MembersChannelCommand extends Command {
 		args: string[],
 		lang: typeof import("@locales/English").default
 	) {
-		const config = await this.guildConfigRepository.findOne({
-			guild_id: message.guild.id,
-		});
+		const config = await this.client.database.getGuild(message.guild.id);
 
 		var actions = ["show", "set", "reset"];
 		var action = args[0];
@@ -84,12 +75,11 @@ export default class MembersChannelCommand extends Command {
 				});
 			}
 
-			const updatedConfig = await this.guildConfigRepository.save({
-				...config,
-				members_channel: channel.id,
-			});
-
-			this.client.configs.set(message.guild.id, updatedConfig);
+			await this.client.database.set(
+				message.guild.id,
+				"members_channel",
+				channel.id
+			);
 
 			const type = lang.SETTINGS.CONFIG.TYPES.MEMBERS_CHANNEL;
 			const text = lang.SETTINGS.SETTED(type, channel.toString());
@@ -105,12 +95,11 @@ export default class MembersChannelCommand extends Command {
 				embeds: [embed],
 			});
 		} else if (action === "reset") {
-			const updatedConfig = await this.guildConfigRepository.save({
-				...config,
-				members_channel: null,
-			});
-
-			this.client.configs.set(message.guild.id, updatedConfig);
+			await this.client.database.set(
+				message.guild.id,
+				"members_channel",
+				null
+			);
 
 			const type = lang.SETTINGS.CONFIG.TYPES.MEMBERS_CHANNEL;
 			const text = lang.SETTINGS.RESETTED(type);

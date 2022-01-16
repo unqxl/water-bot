@@ -25,4 +25,10 @@ export class GuildConfiguration {
 
 	@Column({ nullable: true })
 	levels_channel: string;
+
+	@Column({ nullable: true })
+	auto_role: string;
+
+	@Column({ nullable: true })
+	mute_role: string;
 }

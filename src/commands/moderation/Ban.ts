@@ -8,14 +8,16 @@ import {
 } from "discord.js";
 import { Command } from "../../types/Command/Command";
 import { bold } from "@discordjs/builders";
-import { Repository } from "typeorm";
+import { getRepository, Repository } from "typeorm";
 import { GuildBan } from "../../typeorm/entities/GuildBan";
 import Bot from "../../classes/Bot";
 
 export default class BanCommand extends Command {
 	constructor(
 		client: Bot,
-		private readonly banRepository: Repository<GuildBan>
+		private readonly banRepository: Repository<GuildBan> = getRepository(
+			GuildBan
+		)
 	) {
 		super(client, {
 			name: "ban",

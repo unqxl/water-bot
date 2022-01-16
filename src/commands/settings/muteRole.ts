@@ -8,7 +8,7 @@ export default class MuteRoleCommand extends Command {
 	constructor(client: Bot) {
 		super(client, {
 			name: "muterole",
-			aliases: ["mr"],
+			aliases: ["mr", "m-role"],
 
 			description: {
 				en: "Shows/Sets/Removes Server's Mute Role!",
@@ -25,6 +25,8 @@ export default class MuteRoleCommand extends Command {
 		args: string[],
 		lang: typeof import("@locales/English").default
 	) {
+		const config = await this.client.database.getGuild(message.guild.id);
+
 		var actions = ["show", "set", "reset"];
 		var action = args[0];
 
@@ -32,12 +34,9 @@ export default class MuteRoleCommand extends Command {
 		if (!actions.includes(action)) action = "show";
 
 		if (action === "show") {
-			var role = this.client.database.getSetting(
-				message.guild,
-				"muteRole"
-			);
+			var role = config.mute_role;
 
-			if (role === "0") role = lang.GLOBAL.NONE;
+			if (!role) role = lang.GLOBAL.NONE;
 			else role = message.guild.roles.cache.get(role).toString();
 
 			const type = lang.SETTINGS.CONFIG.TYPES.MUTE_ROLE;
@@ -76,7 +75,11 @@ export default class MuteRoleCommand extends Command {
 				});
 			}
 
-			this.client.database.set(message.guild, "muteRole", role.id);
+			await this.client.database.set(
+				message.guild.id,
+				"mute_role",
+				role.id
+			);
 
 			const type = lang.SETTINGS.CONFIG.TYPES.MUTE_ROLE;
 			const text = lang.SETTINGS.SETTED(type, role.toString());
@@ -92,7 +95,7 @@ export default class MuteRoleCommand extends Command {
 				embeds: [embed],
 			});
 		} else if (action === "reset") {
-			this.client.database.set(message.guild, "muteRole", "0");
+			await this.client.database.set(message.guild.id, "mute_role", null);
 
 			const type = lang.SETTINGS.CONFIG.TYPES.MUTE_ROLE;
 			const text = lang.SETTINGS.RESETTED(type);

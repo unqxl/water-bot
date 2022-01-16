@@ -4,18 +4,18 @@ import { Command } from "../../types/Command/Command";
 import { bold } from "@discordjs/builders";
 import Bot from "../../classes/Bot";
 
-export default class LogChannelCommand extends Command {
+export default class LogsChannelCommand extends Command {
 	constructor(client: Bot) {
 		super(client, {
-			name: "logchannel",
+			name: "logschannel",
 			aliases: ["lc"],
 
 			description: {
-				en: "Shows/Sets/Removes Server's Log Channel!",
+				en: "Shows/Sets/Removes Server's Logs Channel!",
 				ru: "Показывает/Ставит/Удаляет Канал для Логов Сервера!",
 			},
 
-			usage: "<prefix>logchannel <show|set|reset> [role]",
+			usage: "<prefix>logschannel <show|set|reset> [channel]",
 			category: Categories.SETTINGS,
 			memberPermissions: ["ADMINISTRATOR"],
 		});
@@ -25,6 +25,8 @@ export default class LogChannelCommand extends Command {
 		args: string[],
 		lang: typeof import("@locales/English").default
 	) {
+		const config = await this.client.database.getGuild(message.guild.id);
+
 		var actions = ["show", "set", "reset"];
 		var action = args[0];
 
@@ -32,12 +34,9 @@ export default class LogChannelCommand extends Command {
 		if (!actions.includes(action)) action = "show";
 
 		if (action === "show") {
-			var channel = this.client.database.getSetting(
-				message.guild,
-				"logChannel"
-			);
+			var channel = config.log_channel;
 
-			if (channel === "0") channel = lang.GLOBAL.NONE;
+			if (!channel) channel = lang.GLOBAL.NONE;
 			else channel = message.guild.channels.cache.get(channel).toString();
 
 			const type = lang.SETTINGS.CONFIG.TYPES.LOG_CHANNEL;
@@ -61,7 +60,7 @@ export default class LogChannelCommand extends Command {
 			if (!channel) {
 				const text = lang.ERRORS.ARGS_MISSING.replace(
 					"{cmd_name}",
-					"logchannel"
+					"logschannel"
 				);
 				const embed = this.client.functions.buildEmbed(
 					message,
@@ -76,9 +75,13 @@ export default class LogChannelCommand extends Command {
 				});
 			}
 
-			this.client.database.set(message.guild, "logChannel", channel.id);
+			await this.client.database.set(
+				message.guild.id,
+				"log_channel",
+				channel.id
+			);
 
-			const type = lang.SETTINGS.CONFIG.TYPES.LOG_CHANNEL;
+			const type = lang.SETTINGS.CONFIG.TYPES.MEMBERS_CHANNEL;
 			const text = lang.SETTINGS.SETTED(type, channel.toString());
 			const embed = this.client.functions.buildEmbed(
 				message,
@@ -92,9 +95,13 @@ export default class LogChannelCommand extends Command {
 				embeds: [embed],
 			});
 		} else if (action === "reset") {
-			this.client.database.set(message.guild, "logChannel", "0");
+			await this.client.database.set(
+				message.guild.id,
+				"log_channel",
+				null
+			);
 
-			const type = lang.SETTINGS.CONFIG.TYPES.LOG_CHANNEL;
+			const type = lang.SETTINGS.CONFIG.TYPES.MEMBERS_CHANNEL;
 			const text = lang.SETTINGS.RESETTED(type);
 			const embed = this.client.functions.buildEmbed(
 				message,
