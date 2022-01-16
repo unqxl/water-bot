@@ -144,7 +144,10 @@ export = class Functions {
 	async getLanguageFile(
 		guild: Guild
 	): Promise<typeof import("../locales/English").default> {
-		const language = this.client.database.getSetting(guild, "language");
+		const language = await this.client.database.getSetting(
+			guild.id,
+			"locale"
+		);
 
 		return import(
 			`../locales/${language === "en-US" ? "English" : "Russian"}`

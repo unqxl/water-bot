@@ -40,10 +40,13 @@ export default class HelpCommand extends Command {
 		args: string[],
 		lang: typeof import("@locales/English").default
 	) {
-		const prefix = this.client.database.getSetting(message.guild, "prefix");
-		const locale = this.client.database.getSetting(
-			message.guild,
-			"language"
+		const prefix = await this.client.database.getSetting(
+			message.guild.id,
+			"prefix"
+		);
+		const locale = await this.client.database.getSetting(
+			message.guild.id,
+			"locale"
 		);
 		const command = args[0];
 

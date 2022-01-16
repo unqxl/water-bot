@@ -14,7 +14,7 @@ export default class GuildCreateEvent extends Event {
 	}
 
 	async run(client: Bot, guild: Guild) {
-		await client.database.createGuild(guild);
+		await client.database.createGuild(guild.id);
 
 		const config = await this.guildConfigRepository.findOne({
 			guild_id: guild.id,

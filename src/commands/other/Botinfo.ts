@@ -32,9 +32,9 @@ export default class BotinfoCommand extends Command {
 		args: string[],
 		lang: typeof import("@locales/English").default
 	) {
-		const guildLocale = this.client.database.getSetting(
-			message.guild,
-			"language"
+		const guildLocale = await this.client.database.getSetting(
+			message.guild.id,
+			"locale"
 		);
 
 		if (guildLocale === "en-US") dayjs.locale("en");

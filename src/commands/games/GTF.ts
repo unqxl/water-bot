@@ -28,9 +28,9 @@ export default class GuessTheFlagCommand extends Command {
 		lang: typeof import("@locales/English").default
 	) {
 		const reward = random.int(100, 190);
-		const locale = this.client.database.getSetting(
-			message.guild,
-			"language"
+		const locale = await this.client.database.getSetting(
+			message.guild.id,
+			"locale"
 		);
 		const { Data, flag } = await fetch("https://api.dagpi.xyz/data/flag", {
 			headers: {

@@ -1,18 +1,13 @@
-import { Guild } from "discord.js";
-import { getRepository } from "typeorm";
-import { GuildData } from "../interfaces/Guild";
+import { getRepository, Repository } from "typeorm";
 import { GuildConfiguration } from "../typeorm/entities/GuildConfiguration";
 import Bot from "./Bot";
 
-export class DBManager {
+export default class DBManager {
 	public client: Bot;
+	private readonly guildConfigRepository: Repository<GuildConfiguration> =
+		getRepository(GuildConfiguration);
 
-	constructor(
-		client: Bot,
-		private readonly guildConfigRepository = getRepository(
-			GuildConfiguration
-		)
-	) {
+	constructor(client: Bot) {
 		this.client = client;
 	}
 

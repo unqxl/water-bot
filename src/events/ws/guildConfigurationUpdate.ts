@@ -9,6 +9,7 @@ export default class GuildConfigurationUpdateEvent extends Event {
 	}
 
 	async run(client: Bot, config: GuildConfiguration) {
+		console.log("Config updated!");
 		client.configs.set(config.guild_id, config);
 	}
 }

@@ -32,9 +32,9 @@ export default class UserinfoCommand extends Command {
 		args: string[],
 		lang: typeof import("@locales/English").default
 	) {
-		const locale = this.client.database.getSetting(
-			message.guild,
-			"language"
+		const locale = await this.client.database.getSetting(
+			message.guild.id,
+			"locale"
 		);
 
 		// Statuses
@@ -107,12 +107,12 @@ export default class UserinfoCommand extends Command {
 				locale === "en-US" ? "en-US" : "ru-RU"
 			),
 
-			regTimeAgo: timeSince(
+			regTimeAgo: await timeSince(
 				this.client,
 				message,
 				member.user.createdTimestamp
 			),
-			joinTimeAgo: timeSince(
+			joinTimeAgo: await timeSince(
 				this.client,
 				message,
 				member.joinedTimestamp
@@ -215,8 +215,13 @@ export default class UserinfoCommand extends Command {
 	}
 }
 
-function timeSince(client: Bot, message: Message, date: number, ws?: boolean) {
-	const locale = client.database.getSetting(message.guild, "language");
+async function timeSince(
+	client: Bot,
+	message: Message,
+	date: number,
+	ws?: boolean
+) {
+	const locale = await client.database.getSetting(message.guild.id, "locale");
 
 	if (locale === "en-US") dayjs.locale("en");
 	else if (locale === "ru-RU") dayjs.locale("ru");

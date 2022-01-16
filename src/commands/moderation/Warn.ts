@@ -55,9 +55,9 @@ export default class WarnCommand extends Command {
 			};
 		}
 
-		const muteRole = this.client.database.getSetting(
-			message.guild,
-			"muteRole"
+		const muteRole = await this.client.database.getSetting(
+			message.guild.id,
+			"mute_role"
 		);
 
 		if (muteRole === "0") {
