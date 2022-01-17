@@ -61,12 +61,9 @@ export default class DBManager {
 		var config = await this.guildConfigRepository.findOne({ guild_id });
 		if (!config) config = await this.createGuild(guild_id);
 
-		var newConfigData = {
-			...config,
-		};
-		Object.defineProperty(newConfigData, key, value);
+		config[key] = value;
 
-		var newConfig = await this.guildConfigRepository.save(newConfigData);
+		var newConfig = await this.guildConfigRepository.save(config);
 		this.client.configs.set(guild_id, newConfig);
 
 		return true;

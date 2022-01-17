@@ -8,7 +8,7 @@
 		"build:test": "tsc -p tsconfig.json --noEmit",
 		"prepare": "is-ci || husky install",
 		"start": "npm run build && node dist/index.js",
-		"start:ts": "ts-node src/index.ts"
+		"start:dev": "nodemon src/index.ts"
 	},
 	"dependencies": {
 		"@anishshobith/deeptype": "^1.1.0",

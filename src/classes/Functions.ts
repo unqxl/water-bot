@@ -142,10 +142,10 @@ export = class Functions {
 	}
 
 	async getLanguageFile(
-		guild: Guild
+		guild_id: string
 	): Promise<typeof import("../locales/English").default> {
 		const language = await this.client.database.getSetting(
-			guild.id,
+			guild_id,
 			"locale"
 		);
 
@@ -237,6 +237,7 @@ export = class Functions {
 				false,
 				true
 			);
+
 			embed.setDescription(codeBlock(stack as string));
 			embed.addField("Name", name, true);
 			embed.addField("Code", code.toString(), true);
@@ -244,7 +245,7 @@ export = class Functions {
 			embed.addField("Timestamp", new Date().toLocaleString("ru"), true);
 			embed.addField(
 				"Request Data",
-				codeBlock(jsonString?.substring(0, 2045), "json"),
+				codeBlock("json", jsonString?.substring(0, 2045)),
 				false
 			);
 
