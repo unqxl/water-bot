@@ -12,6 +12,7 @@ export default class MessageCreateEvent extends Event {
 		if (message.author && message.author.bot) return;
 
 		const config = client.configs.get(message.guild.id);
+		const lang = await client.functions.getLanguageFile(message.guild.id);
 
 		if (!message.content.startsWith(config.prefix)) return;
 		const [name, ...args] = message.content
@@ -19,13 +20,16 @@ export default class MessageCreateEvent extends Event {
 			.trim()
 			.split(" ");
 
-		const command = client.commands.get(name);
+		const command =
+			client.commands.get(name) ||
+			client.commands.get(client.aliases.get(name));
+
 		if (command) {
-			command.run(
-				message,
-				args,
-				await client.functions.getLanguageFile(message.guild)
-			);
+			if (command.validate) {
+				return await command.validate(message, args, lang);
+			}
+
+			return command.run(message, args, lang);
 		}
 	}
 }
