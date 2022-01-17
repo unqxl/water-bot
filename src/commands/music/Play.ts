@@ -1,5 +1,5 @@
 import { Categories, ValidateReturn } from "../../types/Command/BaseCommand";
-import { Message } from "discord.js";
+import { Message, TextChannel } from "discord.js";
 import { Command } from "../../types/Command/Command";
 import { bold } from "@discordjs/builders";
 import Bot from "../../classes/Bot";
@@ -97,6 +97,11 @@ export default class PlayCommand extends Command {
 		lang: typeof import("@locales/English").default
 	) {
 		const song = args.join(" ");
-		return this.client.music.play(message, song);
+		return this.client.music.play(message.member.voice.channel, song, {
+			skip: false,
+			member: message.member,
+			textChannel: message.channel as TextChannel,
+			message: message,
+		});
 	}
 }

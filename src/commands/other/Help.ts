@@ -288,8 +288,9 @@ export default class HelpCommand extends Command {
 
 	async formatBotPermissions(message: Message, command: Command) {
 		const language = await this.client.functions.getLanguageFile(
-			message.guild
+			message.guild.id
 		);
+
 		const PermsObj: PermissionsKey = language.PERMISSIONS;
 
 		if (command.options.botPermissions) {
@@ -304,8 +305,9 @@ export default class HelpCommand extends Command {
 
 	async formatMemberPermissions(message: Message, command: Command) {
 		const language = await this.client.functions.getLanguageFile(
-			message.guild
+			message.guild.id
 		);
+
 		const PermsObj: PermissionsKey = language.PERMISSIONS;
 
 		if (command.options.memberPermissions) {

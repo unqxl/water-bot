@@ -30,8 +30,7 @@ export default class AutoRoleCommand extends Command {
 		var actions = ["show", "set", "reset"];
 		var action = args[0];
 
-		if (!action) action = "show";
-		if (!actions.includes(action)) action = "show";
+		if (!action || !actions.includes(action)) action = "show";
 
 		if (action === "show") {
 			var role = config.auto_role;
