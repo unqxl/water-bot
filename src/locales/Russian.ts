@@ -309,6 +309,7 @@ const Russian: typeof import("@locales/English").default = {
 	SETTINGS: {
 		CONFIG: {
 			TYPES: {
+				CUSTOM_COMMANDS: "Кастом Команды",
 				LANGUAGE: "Язык Сервера",
 				MEMBERS_CHANNEL: "Канал для Участников",
 				LOG_CHANNEL: "Канал для Логов",

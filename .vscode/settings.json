@@ -1,6 +1,5 @@
 {
 	"typescript.tsdk": "node_modules\\typescript\\lib",
-	"editor.tabSize": 4,
 	"typescript.preferences.importModuleSpecifier": "relative",
 	"editor.defaultFormatter": "esbenp.prettier-vscode",
 	"editor.formatOnSave": true,

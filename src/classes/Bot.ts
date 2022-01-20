@@ -1,7 +1,7 @@
 import "reflect-metadata";
 
 import { Client, Collection } from "discord.js";
-import { EnmapGiveaways } from "./EnmapGiveaways";
+import { SQLGiveaways } from "./SQLGiveaways";
 import { Moderation } from "discord-moderation";
 import { Leveling } from "./Leveling";
 import { Client as dagpiClient } from "dagpijs";
@@ -28,7 +28,8 @@ import SoundCloudPlugin from "@distube/soundcloud";
 
 // Interfaces and Structures
 import { Command } from "../types/Command/Command";
-import { SlashCommand } from "types/Command/SlashCommand";
+import { SlashCommand } from "../types/Command/SlashCommand";
+import { CustomCommand } from "../types/types";
 import Event from "../types/Event/Event";
 
 // MySQL
@@ -54,23 +55,17 @@ class Bot extends Client {
 	public version: string = "2.1.5";
 
 	// Databases
-	public settings = new Enmap({
-		name: "settings",
+	public custom_commands: Enmap<string, CustomCommand[]> = new Enmap({
+		name: "custom_commands",
 		dataDir: process.env.BUILD_PATH ? "./db" : "./src/db",
 		wal: false,
-	}); // Guild Settings Database
-
-	public giveawaysDB = new Enmap({
-		name: "giveaways",
-		dataDir: process.env.BUILD_PATH ? "./db" : "./src/db",
-		wal: false,
-	}); // Giveaways Database
+	});
 
 	public leveling = new Enmap({
 		name: "leveling",
 		dataDir: process.env.BUILD_PATH ? "./db" : "./src/db",
 		wal: false,
-	}); // Leveling Database
+	});
 
 	// Classes
 	public handlers: Handlers = new Handlers(this);
@@ -80,7 +75,6 @@ class Bot extends Client {
 	//public twitchSystem: TwitchSystem = new TwitchSystem(this);
 	public levels: Leveling = new Leveling(this);
 	public dagpi: dagpiClient = new dagpiClient(this.config.keys.dagpi_key);
-	public together: DiscordTogether<{}> = new DiscordTogether(this);
 
 	// Additional Systems
 	public web: WebServer = new WebServer({ port: 80 });
@@ -147,22 +141,8 @@ class Bot extends Client {
 		updateYouTubeDL: true,
 	});
 
-	public giveaways: EnmapGiveaways = new EnmapGiveaways(this, {
-		endedGiveawaysLifetime: 60000 * 60 * 24,
-
-		default: {
-			botsCanWin: false,
-			embedColor: "BLURPLE",
-			embedColorEnd: "GREEN",
-			reaction: "🎉",
-
-			lastChance: {
-				enabled: true,
-				embedColor: "YELLOW",
-				content: "Last Chance to Enter!",
-			},
-		},
-	});
+	public giveaways: SQLGiveaways = null;
+	public together: DiscordTogether<{}> = new DiscordTogether(this);
 
 	constructor() {
 		super({
@@ -225,7 +205,24 @@ class Bot extends Client {
 		}
 
 		this.configs = configMappings;
+
 		this.database = new DBManager(this);
+		this.giveaways = new SQLGiveaways(this, {
+			endedGiveawaysLifetime: 60000 * 60 * 24,
+
+			default: {
+				botsCanWin: false,
+				embedColor: "BLURPLE",
+				embedColorEnd: "GREEN",
+				reaction: "🎉",
+
+				lastChance: {
+					enabled: true,
+					embedColor: "YELLOW",
+					content: "Last Chance to Enter!",
+				},
+			},
+		});
 		//! [MySQL Setup - End]
 
 		// await distubeEvents(this);

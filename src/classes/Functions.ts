@@ -51,7 +51,9 @@ export = class Functions {
 
 		embed.setColor(color);
 		embed.setDescription(
-			emoji === true ? `${emoji} | ${description}` : description
+			typeof emoji === "string"
+				? `${emoji} | ${description}`
+				: description
 		);
 
 		return embed;

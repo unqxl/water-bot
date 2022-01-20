@@ -30,6 +30,22 @@ export default class MessageCreateEvent extends Event {
 			}
 
 			return command.run(message, args, lang);
+		} else {
+			try {
+				const custom_commands = client.custom_commands.get(
+					message.guild.id
+				);
+				if (!custom_commands.length) return;
+
+				const custom_command = custom_commands.find(
+					(x) => x.name === name
+				);
+				if (!custom_commands) return;
+
+				return message.channel.send(custom_command.response);
+			} catch (err) {
+				return;
+			}
 		}
 	}
 }

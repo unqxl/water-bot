@@ -307,6 +307,7 @@ export default {
 	SETTINGS: {
 		CONFIG: {
 			TYPES: {
+				CUSTOM_COMMANDS: "Custom Commands",
 				LANGUAGE: "Guild Language",
 				MEMBERS_CHANNEL: "Members Channel",
 				LOG_CHANNEL: "Log Channel",

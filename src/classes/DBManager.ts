@@ -4,6 +4,7 @@ import Bot from "./Bot";
 
 export default class DBManager {
 	public client: Bot;
+
 	private readonly guildConfigRepository: Repository<GuildConfiguration> =
 		getRepository(GuildConfiguration);
 
@@ -25,6 +26,9 @@ export default class DBManager {
 		const newConfig = await this.guildConfigRepository.create({ guild_id });
 		this.guildConfigRepository.save(newConfig);
 
+		this.client.configs.set(guild_id, newConfig);
+		this.client.custom_commands.set(guild_id, []);
+
 		return newConfig;
 	}
 
@@ -33,6 +37,9 @@ export default class DBManager {
 		if (!config) return false;
 
 		this.guildConfigRepository.delete({ guild_id });
+		this.client.configs.delete(guild_id);
+		this.client.custom_commands.delete(guild_id);
+
 		return true;
 	}
 
