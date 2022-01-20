@@ -30,6 +30,7 @@ export default class DBManager {
 		this.client.custom_commands.set(guild_id, []);
 		this.client.configurations.set(guild_id, {
 			djRoles: [],
+			twitchSystem: false,
 			twitchStreamers: [],
 		});
 
