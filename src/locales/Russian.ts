@@ -322,7 +322,7 @@ const Russian: typeof import("@locales/English").default = {
 				ANTISPAM: "Анти-Спам",
 				ANTILINK: "Анти-Ссылка",
 				ANTIINVITE: "Анти-Приглашение",
-				TWITCH_ENABLED: "Система Twitch Оповещений",
+				TWITCH_SYSTEM: "Twitch Оповещения",
 				TWITCH_STREAMERS: "Twitch Стримеры",
 				PREFIX: "Префикс",
 			},

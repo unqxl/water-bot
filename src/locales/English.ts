@@ -320,7 +320,7 @@ export default {
 				ANTISPAM: "Anti-Spam",
 				ANTILINK: "Anti-Link",
 				ANTIINVITE: "Anti-Invite",
-				TWITCH_ENABLED: "Twitch System",
+				TWITCH_SYSTEM: "Twitch System",
 				TWITCH_STREAMERS: "Twitch Streamers",
 				PREFIX: "Prefix",
 			},

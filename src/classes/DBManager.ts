@@ -28,6 +28,10 @@ export default class DBManager {
 
 		this.client.configs.set(guild_id, newConfig);
 		this.client.custom_commands.set(guild_id, []);
+		this.client.configurations.set(guild_id, {
+			djRoles: [],
+			twitchStreamers: [],
+		});
 
 		return newConfig;
 	}
@@ -39,6 +43,7 @@ export default class DBManager {
 		this.guildConfigRepository.delete({ guild_id });
 		this.client.configs.delete(guild_id);
 		this.client.custom_commands.delete(guild_id);
+		this.client.configurations.delete(guild_id);
 
 		return true;
 	}

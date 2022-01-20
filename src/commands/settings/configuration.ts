@@ -27,16 +27,25 @@ export default class ConfigurationCommand extends Command {
 		const settings = await this.client.database.getSettings(
 			message.guild.id
 		);
+
+		const custom_commands = this.client.custom_commands.get(
+			message.guild.id
+		);
+
+		const config = this.client.configurations.get(message.guild.id);
+
 		const {
 			LANGUAGE,
+			CUSTOM_COMMANDS,
 			MEMBERS_CHANNEL,
 			LOG_CHANNEL,
 			TWITCH_CHANNEL,
 			AUTO_ROLE,
 			MUTE_ROLE,
 			PREFIX,
+			TWITCH_SYSTEM,
 		} = lang.SETTINGS.CONFIG.TYPES;
-		const { NONE } = lang.GLOBAL;
+		const { NONE, ENABLED, DISABLED } = lang.GLOBAL;
 
 		//? Channels
 		const membersChannel = settings.members_channel
@@ -66,12 +75,20 @@ export default class ConfigurationCommand extends Command {
 		text += `› ${bold(PREFIX)}: ${bold(settings.prefix)}\n`;
 		text += `› ${bold(LANGUAGE)}: ${bold(settings.locale)}\n`;
 		text += "\n";
+		text += `› ${bold(TWITCH_SYSTEM)}: ${bold(
+			config.twitchSystem === true ? ENABLED : DISABLED
+		)}\n`;
+		text += "\n";
 		text += `› ${bold(MEMBERS_CHANNEL)}: ${bold(membersChannel)}\n`;
 		text += `› ${bold(LOG_CHANNEL)}: ${bold(logsChannel)}\n`;
 		text += `› ${bold(TWITCH_CHANNEL)}: ${bold(twitchChannel)}\n`;
 		text += "\n";
 		text += `› ${bold(AUTO_ROLE)}: ${bold(autoRole)}\n`;
-		text += `› ${bold(MUTE_ROLE)}: ${bold(muteRole)}`;
+		text += `› ${bold(MUTE_ROLE)}: ${bold(muteRole)}\n`;
+		text += "\n";
+		text += `› ${bold(CUSTOM_COMMANDS)}: ${bold(
+			custom_commands.length.toString()
+		)} (${bold(`${settings.prefix}custom-commands`)})`;
 
 		//? Sending Message
 		const embed = this.client.functions.buildEmbed(

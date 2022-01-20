@@ -29,7 +29,7 @@ import SoundCloudPlugin from "@distube/soundcloud";
 // Interfaces and Structures
 import { Command } from "../types/Command/Command";
 import { SlashCommand } from "../types/Command/SlashCommand";
-import { CustomCommand } from "../types/types";
+import { CustomCommand, GuildConfig } from "../types/types";
 import Event from "../types/Event/Event";
 
 // MySQL
@@ -57,6 +57,12 @@ class Bot extends Client {
 	// Databases
 	public custom_commands: Enmap<string, CustomCommand[]> = new Enmap({
 		name: "custom_commands",
+		dataDir: process.env.BUILD_PATH ? "./db" : "./src/db",
+		wal: false,
+	});
+
+	public configurations: Enmap<string, GuildConfig> = new Enmap({
+		name: "configurations",
 		dataDir: process.env.BUILD_PATH ? "./db" : "./src/db",
 		wal: false,
 	});

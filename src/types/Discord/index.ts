@@ -1,6 +1,6 @@
 import { ColorResolvable, Guild, Message, MessageEmbed } from "discord.js";
+import { GuildConfiguration } from "../../typeorm/entities/GuildConfiguration";
 import { RawGuildData, RawMessageData } from "discord.js/typings/rawDataTypes";
-import { GuildData } from "../../interfaces/Guild";
 import { bold } from "@discordjs/builders";
 import Bot from "classes/Bot";
 
@@ -48,11 +48,11 @@ export class AkayoGuild extends Guild {
 		super(client, data);
 	}
 
-	get settings(): GuildData {
-		return this.client.database.getSettings(this);
+	get settings(): Promise<GuildConfiguration> {
+		return this.client.database.getSettings(this.id);
 	}
 
-	get language(): string {
-		return this.client.database.getSetting(this, "language");
+	get language(): Promise<string> {
+		return this.client.database.getSetting(this.id, "locale");
 	}
 }
