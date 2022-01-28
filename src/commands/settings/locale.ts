@@ -4,18 +4,18 @@ import { Command } from "../../types/Command/Command";
 import { bold } from "@discordjs/builders";
 import Bot from "../../classes/Bot";
 
-export default class LogsChannelCommand extends Command {
+export default class LocaleCommand extends Command {
 	constructor(client: Bot) {
 		super(client, {
-			name: "logschannel",
-			aliases: ["lc"],
+			name: "locale",
+			aliases: ["l"],
 
 			description: {
-				en: "Shows/Sets/Removes Server's Logs Channel!",
-				ru: "Показывает/Ставит/Удаляет Канал для Логов Сервера!",
+				en: "Shows/Changes Server's Language!",
+				ru: "Показывает/Меняет Язык Сервера!",
 			},
 
-			usage: "<prefix>logschannel <show|set|reset> [channel]",
+			usage: "<prefix>locale <show|set|reset> [ru|en]",
 			category: Categories.SETTINGS,
 			memberPermissions: ["ADMINISTRATOR"],
 		});
@@ -34,13 +34,9 @@ export default class LogsChannelCommand extends Command {
 		if (!actions.includes(action)) action = "show";
 
 		if (action === "show") {
-			var channel = config.log_channel;
-
-			if (!channel) channel = lang.GLOBAL.NONE;
-			else channel = message.guild.channels.cache.get(channel).toString();
-
-			const type = lang.SETTINGS.CONFIG.TYPES.LOG_CHANNEL;
-			const text = lang.SETTINGS.SHOW(type, channel);
+			const locale = config.locale;
+			const type = lang.SETTINGS.CONFIG.TYPES.LANGUAGE;
+			const text = lang.SETTINGS.SHOW(type, locale);
 			const embed = this.client.functions.buildEmbed(
 				message,
 				"BLURPLE",
@@ -53,14 +49,12 @@ export default class LogsChannelCommand extends Command {
 				embeds: [embed],
 			});
 		} else if (action === "set") {
-			const channel =
-				message.mentions.channels.first() ||
-				message.guild.channels.cache.get(args[1]);
+			const locale = args[1];
 
-			if (!channel) {
+			if (!locale) {
 				const text = lang.ERRORS.ARGS_MISSING.replace(
 					"{cmd_name}",
-					"logschannel"
+					"locale"
 				);
 				const embed = this.client.functions.buildEmbed(
 					message,
@@ -75,14 +69,33 @@ export default class LogsChannelCommand extends Command {
 				});
 			}
 
-			await this.client.database.set(
-				message.guild.id,
-				"log_channel",
-				channel.id
+			if (!this.client.config.languages.includes(locale)) {
+				const text = lang.ERRORS.MISSING_IN_LIST(
+					locale,
+					this.client.config.languages.join(", ")
+				).replace("{cmd_name}", "locale");
+
+				const embed = this.client.functions.buildEmbed(
+					message,
+					"BLURPLE",
+					bold(text),
+					"❌",
+					true
+				);
+
+				return message.channel.send({
+					embeds: [embed],
+				});
+			}
+
+			await this.client.database.set(message.guild.id, "locale", locale);
+
+			const type = lang.SETTINGS.CONFIG.TYPES.LANGUAGE;
+			const text = lang.SETTINGS.SETTED(
+				type,
+				locale === "en" || locale === "en-US" ? "English" : "Русский"
 			);
 
-			const type = lang.SETTINGS.CONFIG.TYPES.LOG_CHANNEL;
-			const text = lang.SETTINGS.SETTED(type, channel.toString());
 			const embed = this.client.functions.buildEmbed(
 				message,
 				"BLURPLE",
@@ -95,13 +108,9 @@ export default class LogsChannelCommand extends Command {
 				embeds: [embed],
 			});
 		} else if (action === "reset") {
-			await this.client.database.set(
-				message.guild.id,
-				"log_channel",
-				null
-			);
+			await this.client.database.set(message.guild.id, "locale", "ru-RU");
 
-			const type = lang.SETTINGS.CONFIG.TYPES.LOG_CHANNEL;
+			const type = lang.SETTINGS.CONFIG.TYPES.LANGUAGE;
 			const text = lang.SETTINGS.RESETTED(type);
 			const embed = this.client.functions.buildEmbed(
 				message,

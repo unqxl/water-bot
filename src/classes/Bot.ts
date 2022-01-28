@@ -21,6 +21,7 @@ import TwitchSystem from "../handlers/TwitchSystem";
 import Logger from "./Logger";
 // import distubeEvents from "../events/distube-events";
 import TopGG from "../modules/TopGG";
+import DJSystem from "../modules/DJSystem";
 
 // Music Plugins
 import SpotifyPlugin from "@distube/spotify";
@@ -91,6 +92,7 @@ class Bot extends Client {
 	// Additional Systems
 	public web: WebServer = new WebServer({ port: 80 });
 	public socket: Socket = io("http://localhost:3001");
+	public DJSystem: DJSystem = new DJSystem(this);
 
 	// Modules
 	public moderation: Moderation = new Moderation(this, {

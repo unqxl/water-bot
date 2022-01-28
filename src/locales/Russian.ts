@@ -226,6 +226,7 @@ const Russian: typeof import("@locales/English").default = {
 			TITLE: "Информация Сервера",
 
 			FIELDS: {
+				ZERO: "Информация",
 				FIRST: "Статусы Пользователей",
 				SECOND: "Участники",
 				THIRD: "Каналы",
@@ -254,6 +255,7 @@ const Russian: typeof import("@locales/English").default = {
 				GUILD_ID: "ID Сервера",
 				OWNER: "Владелец",
 				MEMBER_COUNT: "Участников",
+				CREATED_AT: "Создан",
 			},
 		},
 

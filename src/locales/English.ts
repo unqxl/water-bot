@@ -224,6 +224,7 @@ export default {
 			TITLE: "Server Information",
 
 			FIELDS: {
+				ZERO: "Information",
 				FIRST: "Presences",
 				SECOND: "Members",
 				THIRD: "Channel",
@@ -252,6 +253,7 @@ export default {
 				GUILD_ID: "Guild ID",
 				OWNER: "Owner",
 				MEMBER_COUNT: "Members",
+				CREATED_AT: "Created At",
 			},
 		},
 
