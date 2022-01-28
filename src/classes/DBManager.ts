@@ -1,5 +1,6 @@
 import { getRepository, Repository } from "typeorm";
 import { GuildConfiguration } from "../typeorm/entities/GuildConfiguration";
+import { GuildConfig } from "../types/types";
 import Bot from "./Bot";
 
 export default class DBManager {
@@ -78,6 +79,20 @@ export default class DBManager {
 
 		var newConfig = await this.guildConfigRepository.save(config);
 		this.client.configs.set(guild_id, newConfig);
+
+		return true;
+	}
+
+	async setConfigProp<K extends keyof GuildConfig>(
+		guild_id: string,
+		key: K,
+		value: any
+	): Promise<boolean> {
+		var config = await this.client.configurations.get(guild_id);
+		if (!config) return;
+
+		config[key] = value;
+		this.client.configurations.set(guild_id, config);
 
 		return true;
 	}

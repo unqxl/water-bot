@@ -33,6 +33,8 @@ export = class Handlers {
 		);
 
 		for (const file of eventFiles) {
+			if (file.includes("twitchLive")) continue;
+
 			const EventFile = await import(
 				process.env.BUILD_PATH ? `../${file}` : `../../${file}`
 			);

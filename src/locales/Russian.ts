@@ -343,6 +343,34 @@ const Russian: typeof import("@locales/English").default = {
 			"Если вы сделали это по-случайности, используйте команду 'language-reset'",
 	},
 
+	GIVEAWAYS: {
+		PROMPTS: {
+			CREATE_WINNERS: "Напишите кол-во победителей (10сек)",
+			CREATE_PRIZE: "Напишите приз розыгрыша (20сек)",
+			CREATE_TIME: "Напишите время розыгрыша (20сек | 2d, 10m)",
+		},
+
+		ERRORS: {
+			ERROR_WINNERS: "Вы не указали кол-во победителей!",
+			ERROR_PRIZE: "Вы не указали приз розыгрыша!",
+			ERROR_TIME: "Вы не указали время розыгрыша!",
+		},
+
+		MESSAGES: {
+			giveaway: "🎉 Розыгрыш 🎉",
+			giveawayEnded: "🎉 Розыгрыш окончен 🎉",
+			inviteToParticipate: "Нажмите на 🎉 для участия!",
+			dropMessage: "Будьте первым, нажав на 🎉!",
+			drawing: "Итоги: {timestamp}",
+			winMessage:
+				"Поздравляем, {winners}!\nВы победили: **{this.prize}**",
+			embedFooter: "Розыгрыши",
+			hostedBy: "Хост: {this.hostedBy}",
+			winners: "Победитель(-и):",
+			endedAt: "Окончен",
+		},
+	},
+
 	ERRORS: {
 		NO_ACCESS: "У вас нет доступа к данной команде!",
 		MEMBER_MISSINGPERMS:
@@ -667,6 +695,15 @@ const Russian: typeof import("@locales/English").default = {
 				MODERATOR: "Модератор",
 				DATE: "Дата удаления",
 			},
+		},
+	},
+
+	MODULES: {
+		STEAMID: {
+			NOT_STEAMID:
+				"Аргумент, который вы указали, не похож на SteamID/SteamID3/SteamID64!",
+			ANSWER: (steam_id, steam_id64, steam_id3, url) =>
+				`SteamID: ${steam_id}\nSteamID64: ${steam_id64}\nSteamID3: ${steam_id3}\nПрофиль: [Click](${url})`,
 		},
 	},
 };

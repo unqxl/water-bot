@@ -11,6 +11,7 @@ export enum Categories {
 	OTHER = 6,
 	SETTINGS = 7,
 	LEVELING = 8,
+	GIVEAWAYS = 9,
 }
 
 export interface BaseCommandOptions {

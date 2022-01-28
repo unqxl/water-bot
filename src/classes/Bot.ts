@@ -1,7 +1,7 @@
 import "reflect-metadata";
 
 import { Client, Collection } from "discord.js";
-import { SQLGiveaways } from "./SQLGiveaways";
+import { EnmapGiveaways } from "./EnmapGiveaways";
 import { Moderation } from "discord-moderation";
 import { Leveling } from "./Leveling";
 import { Client as dagpiClient } from "dagpijs";
@@ -17,7 +17,7 @@ import DBManager from "./DBManager";
 import Handlers from "./Handlers";
 import Functions from "./Functions";
 import config from "../config";
-//import TwitchSystem from "../handlers/TwitchSystem";
+import TwitchSystem from "../handlers/TwitchSystem";
 import Logger from "./Logger";
 // import distubeEvents from "../events/distube-events";
 import TopGG from "../modules/TopGG";
@@ -73,12 +73,18 @@ class Bot extends Client {
 		wal: false,
 	});
 
+	public giveawaysDB = new Enmap({
+		name: "giveaways",
+		dataDir: process.env.BUILD_PATH ? "./db" : "./src/db",
+		wal: false,
+	});
+
 	// Classes
 	public handlers: Handlers = new Handlers(this);
 	public functions: Functions = new Functions(this);
 	public database: DBManager = null;
 	public logger: Logger = new Logger();
-	//public twitchSystem: TwitchSystem = new TwitchSystem(this);
+	public twitchSystem: TwitchSystem = new TwitchSystem(this);
 	public levels: Leveling = new Leveling(this);
 	public dagpi: dagpiClient = new dagpiClient(this.config.keys.dagpi_key);
 
@@ -147,7 +153,22 @@ class Bot extends Client {
 		updateYouTubeDL: true,
 	});
 
-	public giveaways: SQLGiveaways = null;
+	public giveaways: EnmapGiveaways = new EnmapGiveaways(this, {
+		endedGiveawaysLifetime: 60000 * 60 * 24,
+
+		default: {
+			botsCanWin: false,
+			embedColor: "BLURPLE",
+			embedColorEnd: "GREEN",
+			reaction: "🎉",
+
+			lastChance: {
+				enabled: true,
+				embedColor: "YELLOW",
+				content: "Last Chance to Enter!",
+			},
+		},
+	});
 	public together: DiscordTogether<{}> = new DiscordTogether(this);
 
 	constructor() {
@@ -211,24 +232,7 @@ class Bot extends Client {
 		}
 
 		this.configs = configMappings;
-
 		this.database = new DBManager(this);
-		this.giveaways = new SQLGiveaways(this, {
-			endedGiveawaysLifetime: 60000 * 60 * 24,
-
-			default: {
-				botsCanWin: false,
-				embedColor: "BLURPLE",
-				embedColorEnd: "GREEN",
-				reaction: "🎉",
-
-				lastChance: {
-					enabled: true,
-					embedColor: "YELLOW",
-					content: "Last Chance to Enter!",
-				},
-			},
-		});
 		//! [MySQL Setup - End]
 
 		// await distubeEvents(this);

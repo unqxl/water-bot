@@ -1,6 +1,6 @@
 import { Guild, TextChannel } from "discord.js";
 import fetch from "node-fetch";
-// import twitchLive from "../events/twitchLive";
+import twitchLive from "../events/twitchLive";
 import Bot from "../classes/Bot";
 
 interface TwitchData {
@@ -19,31 +19,28 @@ export = class TwitchSystem {
 	}
 
 	async send(channel: TextChannel, data: TwitchData) {
-		const lang = await this.client.functions.getLanguageFile(channel.guild);
+		const lang = await this.client.functions.getLanguageFile(
+			channel.guild.id
+		);
 
-		// return await twitchLive(this.client, lang, channel, data);
+		return await twitchLive(this.client, lang, channel, data);
 	}
 
 	async check(guild: Guild) {
-		const twitchStatus = this.client.database.getSetting(
-			guild,
-			"twitchEnabled"
-		);
-		if (twitchStatus === "0") return;
+		const { twitchSystem, twitchStreamers } =
+			await this.client.configurations.get(guild.id);
 
-		const twitchChannel = this.client.database.getSetting(
-			guild,
-			"twitchChannelID"
+		const twitchChannel = await this.client.database.getSetting(
+			guild.id,
+			"twitch_channel"
 		);
+
+		if (!twitchSystem) return;
 		if (!twitchChannel) return;
 
 		const channel = guild.channels.cache.get(twitchChannel) as TextChannel;
-		if (!channel) return;
 
-		const twitchStreamers = this.client.database.getSetting(
-			guild,
-			"twitchStreamers"
-		);
+		if (!channel) return;
 		if (!twitchStreamers.length) return;
 
 		for (let i = 0; i < twitchStreamers.length; i++) {
@@ -88,14 +85,17 @@ export = class TwitchSystem {
 	}
 
 	async sync(guild: Guild, username: string, latestStream: string) {
-		const streamers = this.client.database.getSetting(
-			guild,
-			"twitchStreamers"
+		const { twitchStreamers } = await this.client.configurations.get(
+			guild.id
 		);
 
-		var streamer = streamers.find((x) => x.name === username);
+		var streamer = twitchStreamers.find((x) => x.name === username);
 		streamer.latestStream = latestStream;
 
-		return this.client.database.set(guild, "twitchStreamers", streamers);
+		return this.client.database.setConfigProp(
+			guild.id,
+			"twitchStreamers",
+			twitchStreamers
+		);
 	}
 };

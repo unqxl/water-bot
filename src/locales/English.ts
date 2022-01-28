@@ -342,6 +342,34 @@ export default {
 			"If you did this by accident, then use the command 'language-reset'",
 	},
 
+	GIVEAWAYS: {
+		PROMPTS: {
+			CREATE_WINNERS: "Write the Count of Winners (10s)",
+			CREATE_PRIZE: "Write the Prize of Giveaway (20s)",
+			CREATE_TIME: "Write the Time of Giveaway (20s | 2d, 10m)",
+		},
+
+		ERRORS: {
+			ERROR_WINNERS: "You didn't specify the Count of Winners!",
+			ERROR_PRIZE: "You didn't specify the Prize of Giveaway!",
+			ERROR_TIME: "You didn't specify the Time of Giveaway!",
+		},
+
+		MESSAGES: {
+			giveaway: "🎉 Giveaway 🎉",
+			giveawayEnded: "🎉 Giveaway Ended 🎉",
+			inviteToParticipate: "React with 🎉 to participate!",
+			dropMessage: "Be first to react with 🎉!",
+			drawing: "Drawing: {timestamp}",
+			winMessage:
+				"Congradulations, {winners}!\nYou won: **{this.prize}**",
+			embedFooter: "Giveaways",
+			hostedBy: "Hosted By: {this.hostedBy}",
+			winners: "Winner(s):",
+			endedAt: "Ended At",
+		},
+	},
+
 	ERRORS: {
 		NO_ACCESS: "You have not access to use this command!",
 		MEMBER_MISSINGPERMS:
@@ -666,6 +694,15 @@ export default {
 				MODERATOR: "Moderator",
 				DATE: "Deleted At",
 			},
+		},
+	},
+
+	MODULES: {
+		STEAMID: {
+			NOT_STEAMID:
+				"The argument you specified is not like SteamID/SteamID3/SteamID64!",
+			ANSWER: (steam_id, steam_id64, steam_id3, url) =>
+				`SteamID: ${steam_id}\nSteamID64: ${steam_id64}\nSteamID3: ${steam_id3}\nProfile: [Click](${url})`,
 		},
 	},
 };

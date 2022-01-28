@@ -26,7 +26,14 @@ export default class MessageCreateEvent extends Event {
 
 		if (command) {
 			if (command.validate) {
-				return await command.validate(message, args, lang);
+				const { ok, error } = await command.validate(
+					message,
+					args,
+					lang
+				);
+				if (ok && !error) return command.run(message, args, lang);
+
+				return message.channel.send(error);
 			}
 
 			return command.run(message, args, lang);
