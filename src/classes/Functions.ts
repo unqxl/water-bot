@@ -12,8 +12,8 @@ import {
 	User,
 } from "discord.js";
 import { codeBlock } from "@discordjs/builders";
+import { request } from "undici";
 import Bot from "./Bot";
-import fetch from "node-fetch";
 
 export = class Functions {
 	public client: Bot;
@@ -75,13 +75,13 @@ export = class Functions {
 		const secret = this.client.config.twitch.client_secret;
 
 		const data = await (
-			await fetch(
+			await request(
 				`https://id.twitch.tv/oauth2/token?client_id=${id}&client_secret=${secret}&grant_type=client_credentials`,
 				{
 					method: "POST",
 				}
 			)
-		).json();
+		).body.json();
 
 		this.client.twitchKey = data["access_token"];
 

@@ -1,5 +1,5 @@
 import { Guild, TextChannel } from "discord.js";
-import fetch from "node-fetch";
+import { request } from "undici";
 import twitchLive from "../events/twitchLive";
 import Bot from "../classes/Bot";
 
@@ -47,19 +47,25 @@ export = class TwitchSystem {
 			const URL = `https://api.twitch.tv/helix/streams?first=1&user_login=${twitchStreamers[i].name}`;
 			const streamerURL = `https://api.twitch.tv/helix/users?login=${twitchStreamers[i].name}`;
 
-			const twitchData = await fetch(URL, {
-				headers: {
-					Authorization: `Bearer ${this.client.twitchKey}`,
-					"Client-ID": this.client.config.twitch.client_id,
-				},
-			}).then((res) => res.json());
+			const twitchData = await (
+				await request(URL, {
+					headers: {
+						Authorization: `Bearer ${this.client.twitchKey}`,
+						"Client-ID": this.client.config.twitch.client_id,
+					},
+					method: "GET",
+				})
+			).body.json();
 
-			const streamerData = await fetch(streamerURL, {
-				headers: {
-					Authorization: `Bearer ${this.client.twitchKey}`,
-					"Client-ID": this.client.config.twitch.client_id,
-				},
-			}).then((res) => res.json());
+			const streamerData = await (
+				await request(streamerURL, {
+					headers: {
+						Authorization: `Bearer ${this.client.twitchKey}`,
+						"Client-ID": this.client.config.twitch.client_id,
+					},
+					method: "GET",
+				})
+			).body.json();
 
 			if (!twitchData || !streamerData) continue;
 			if (!twitchData.data?.length) continue;

@@ -17,11 +17,11 @@ import DBManager from "./DBManager";
 import Handlers from "./Handlers";
 import Functions from "./Functions";
 import config from "../config";
-import TwitchSystem from "../handlers/TwitchSystem";
+import TwitchSystem from "../modules/TwitchSystem";
 import Logger from "./Logger";
-// import distubeEvents from "../events/distube-events";
 import TopGG from "../modules/TopGG";
 import DJSystem from "../modules/DJSystem";
+import distubeEvents from "../events/distubeEvents";
 
 // Music Plugins
 import SpotifyPlugin from "@distube/spotify";
@@ -237,7 +237,7 @@ class Bot extends Client {
 		this.database = new DBManager(this);
 		//! [MySQL Setup - End]
 
-		// await distubeEvents(this);
+		await distubeEvents(this);
 		await logs(this);
 		await this.handlers.loadEvents(this);
 		await this.handlers.loadCommands();

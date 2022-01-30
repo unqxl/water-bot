@@ -205,6 +205,7 @@ export default {
 				SETTINGS: "Settings",
 				GAMES: "Games",
 				LEVELING: "Leveling",
+				GIVEAWAYS: "Giveaways",
 			},
 
 			COMMAND: {
@@ -298,6 +299,18 @@ export default {
 			TEXT: (url) =>
 				`Recently, the bot's source code is available in my repository on GitHub: ${url}`,
 		},
+
+		COVID: {
+			CASES: "Cases",
+			RECOVERED: "Recovered",
+			DEATHS: "Deaths",
+			TOTAL: "Total",
+			TODAY: "Today",
+			CRITICAL: "Critical",
+			TESTS: "Tests",
+			LAST_UPDATED: "Last updated",
+			TOTAL_POPULATION: "Population",
+		},
 	},
 
 	SLASH_COMMANDS: {
@@ -370,6 +383,11 @@ export default {
 			winners: "Winner(s):",
 			endedAt: "Ended At",
 		},
+
+		RESPONSES: {
+			ENDED: (id: string) =>
+				`Giveaway with ID "\`${id}\`" successfully ended!`,
+		},
 	},
 
 	ERRORS: {
@@ -420,6 +438,12 @@ export default {
 			"The limit on the number of emojis on the server has been reached!",
 		VALID_EMOJI: "Please provide a valid emoji!",
 		NORMAL_EMOJI: "You can use Normal Emoji without Adding in Server!",
+		GIVEAWAY_NOT_FOUND: (id: string) =>
+			`Giveaway with ID "\`${id}\`" not found!`,
+		GIVEAWAY_ENDED: (id: string) =>
+			`Giveaway with ID "\`${id}\`" already ended!`,
+		COVID_NOT_FOUND: (name: string) =>
+			`Cannot get COVID-19 data for "${name}"`,
 	},
 
 	FUNCTIONS: {

@@ -88,7 +88,11 @@ export default class LocaleCommand extends Command {
 				});
 			}
 
-			await this.client.database.set(message.guild.id, "locale", locale);
+			await this.client.database.set(
+				message.guild.id,
+				"locale",
+				locale === "en" || locale === "en-US" ? "en-US" : "ru-RU"
+			);
 
 			const type = lang.SETTINGS.CONFIG.TYPES.LANGUAGE;
 			const text = lang.SETTINGS.SETTED(

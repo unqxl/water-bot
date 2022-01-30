@@ -55,8 +55,7 @@ export default class RPSCommand extends Command {
 		args: string[],
 		lang: typeof import("@locales/English").default
 	) {
-		await message.channel.send("...").then(async (msg) => {
-			return await rps(msg, message, lang);
-		});
+		const msg = await message.channel.send("...");
+		return await rps(msg, message, lang);
 	}
 }

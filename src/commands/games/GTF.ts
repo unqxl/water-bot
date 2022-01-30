@@ -2,9 +2,9 @@ import { Message } from "discord.js";
 import { Command } from "../../types/Command/Command";
 import { Categories } from "../../types/Command/BaseCommand";
 import { bold } from "@discordjs/builders";
+import { request } from "undici";
 import Bot from "../../classes/Bot";
 import random from "random";
-import fetch from "node-fetch";
 
 export default class GuessTheFlagCommand extends Command {
 	constructor(client: Bot) {
@@ -32,11 +32,14 @@ export default class GuessTheFlagCommand extends Command {
 			message.guild.id,
 			"locale"
 		);
-		const { Data, flag } = await fetch("https://api.dagpi.xyz/data/flag", {
-			headers: {
-				Authorization: this.client.config.keys.dagpi_key,
-			},
-		}).then((res) => res.json());
+		const { Data, flag } = await (
+			await request("https://api.dagpi.xyz/data/flag", {
+				headers: {
+					authorization: this.client.config.keys.dagpi_key,
+				},
+				method: "GET",
+			})
+		).body.json();
 
 		var common_name = Data.name.common;
 		var official_name = Data.name.official;

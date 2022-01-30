@@ -207,6 +207,7 @@ const Russian: typeof import("@locales/English").default = {
 				SETTINGS: "Настройки",
 				GAMES: "Игры",
 				LEVELING: "Уровни",
+				GIVEAWAYS: "Розыгрыши",
 			},
 
 			COMMAND: {
@@ -300,6 +301,18 @@ const Russian: typeof import("@locales/English").default = {
 			TEXT: (url) =>
 				`С недавних пор, исходный код бота доступен в моём репозитории на GitHub: ${url}`,
 		},
+
+		COVID: {
+			CASES: "Случаев",
+			RECOVERED: "Спасено",
+			DEATHS: "Умерло",
+			TOTAL: "Всего",
+			TODAY: "Сегодня",
+			CRITICAL: "В критическом состоянии",
+			TESTS: "Тестов",
+			LAST_UPDATED: "Дата обновления",
+			TOTAL_POPULATION: "Население",
+		},
 	},
 
 	SLASH_COMMANDS: {
@@ -371,6 +384,11 @@ const Russian: typeof import("@locales/English").default = {
 			winners: "Победитель(-и):",
 			endedAt: "Окончен",
 		},
+
+		RESPONSES: {
+			ENDED: (id: string) =>
+				`Розыгрыш с ID "\`${id}\`" успешно закончен!`,
+		},
 	},
 
 	ERRORS: {
@@ -423,6 +441,12 @@ const Russian: typeof import("@locales/English").default = {
 		VALID_EMOJI: "Пожалуйста, укажите корректное эмодзи!",
 		NORMAL_EMOJI:
 			"Вы можете использовать обычные эмодзи без добавления на сервер!",
+		GIVEAWAY_NOT_FOUND: (id: string) =>
+			`Розыгрыш с ID "\`${id}\`" не найден!`,
+		GIVEAWAY_ENDED: (id: string) =>
+			`Розыгрыш с ID "\`${id}\`" уже закончился!`,
+		COVID_NOT_FOUND: (name: string) =>
+			`Неудалось получить информацию о COVID-19 для "${name}"`,
 	},
 
 	FUNCTIONS: {

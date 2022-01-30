@@ -24,8 +24,7 @@ export default class PhasmaphobiaCommand extends Command {
 		args: string[],
 		lang: typeof import("@locales/English").default
 	) {
-		await message.channel.send("...").then(async (msg) => {
-			return await phasmophobia(message, msg, lang);
-		});
+		const msg = await message.channel.send("...");
+		return await phasmophobia(message, msg, lang);
 	}
 }

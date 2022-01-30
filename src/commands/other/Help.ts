@@ -62,6 +62,7 @@ export default class HelpCommand extends Command {
 			Settings,
 			Games,
 			Leveling,
+			Giveaways,
 		] = [
 			lang.GLOBAL.NONE,
 			lang.OTHER.HELP.CATEGORIES.BOT_OWNER,
@@ -73,6 +74,7 @@ export default class HelpCommand extends Command {
 			lang.OTHER.HELP.CATEGORIES.SETTINGS,
 			lang.OTHER.HELP.CATEGORIES.GAMES,
 			lang.OTHER.HELP.CATEGORIES.LEVELING,
+			lang.OTHER.HELP.CATEGORIES.GIVEAWAYS,
 		];
 
 		const Length = lang.OTHER.HELP.COMMANDS_LENGTH;
@@ -151,6 +153,16 @@ export default class HelpCommand extends Command {
 					})
 					.join(", ") || bold(None);
 
+			const GiveawaysCommands =
+				this.client.commands
+					.filter(
+						(cmd) => cmd.options.category === Categories.GIVEAWAYS
+					)
+					.map((cmd) => {
+						return inlineCode(prefix + cmd.options.name);
+					})
+					.join(", ") || bold(None);
+
 			const embed = this.client.functions.buildEmbed(
 				message,
 				"BLURPLE",
@@ -166,6 +178,7 @@ export default class HelpCommand extends Command {
 			embed.addField(`[🎵] ${Music}`, MusicCommands);
 			embed.addField(`[📝] ${Other}`, OtherCommands);
 			embed.addField(`[⭐] ${Leveling}`, LevelingCommands);
+			embed.addField(`[🎉] ${Giveaways}`, GiveawaysCommands);
 			embed.addField(`[⚙️] ${Settings}`, SettingsCommands);
 			embed.setFooter({
 				text: `${Length}: ${this.client.functions.sp(
@@ -235,6 +248,8 @@ export default class HelpCommand extends Command {
 				categoryName = Other;
 			else if (cmd.options.category === Categories.SETTINGS)
 				categoryName = Settings;
+			else if (cmd.options.category === Categories.GIVEAWAYS)
+				categoryName = Giveaways;
 
 			const botPermissionsRequired = await this.formatBotPermissions(
 				message,
