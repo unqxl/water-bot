@@ -22,6 +22,7 @@ import Logger from "./Logger";
 import TopGG from "../modules/TopGG";
 import DJSystem from "../modules/DJSystem";
 import distubeEvents from "../events/distubeEvents";
+import NekoClient from "nekos.life";
 
 // Music Plugins
 import SpotifyPlugin from "@distube/spotify";
@@ -88,6 +89,7 @@ class Bot extends Client {
 	public twitchSystem: TwitchSystem = new TwitchSystem(this);
 	public levels: Leveling = new Leveling(this);
 	public dagpi: dagpiClient = new dagpiClient(this.config.keys.dagpi_key);
+	public nekos: NekoClient = new NekoClient();
 
 	// Additional Systems
 	public web: WebServer = new WebServer({ port: 80 });

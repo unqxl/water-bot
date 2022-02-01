@@ -1,13 +1,19 @@
 {
 	"base-event": {
-	  "prefix": ["event", "base-event"],
-	  "body": [
-		  "import { RunFunction } from '../../interfaces/Event'",
-		  "",
-		  "export const name: string = 'ready';",
-		  "",
-		  "export const run: RunFunction = async(client) => {}"
+		"prefix": ["event", "base-event"],
+		"body": [
+			"import Event from \"../../types/Event/Event\";",
+			"import Bot from \"../../classes/Bot\";",
+			"",
+			"export default class EventNameEvent extends Event {",
+			"constructor() {",
+			"super(\"\");",
+			"}",
+			"",
+			"async run(client: Bot) {}",
+			"}",
+			""
 		],
-	  "description": "Generate Base Event Code."
+		"description": "Generate Base Event Code."
 	}
-  }
+}

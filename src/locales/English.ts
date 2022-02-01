@@ -206,6 +206,7 @@ export default {
 				GAMES: "Games",
 				LEVELING: "Leveling",
 				GIVEAWAYS: "Giveaways",
+				ROLEPLAY: "Role Play",
 			},
 
 			COMMAND: {
@@ -390,6 +391,23 @@ export default {
 		},
 	},
 
+	ROLEPLAY: {
+		ACTIONS: {
+			TICKLE: (author, target) => `${author} tickled ${target}!`,
+			BAKA: (author, target) => `${author} hates ${target}!`,
+			SLAP: (author, target) => `${author} slapped ${target}!`,
+			POKE: (author, target) => `${author} pokked into ${target}!`,
+			PAT: (author, target) => `${author} patted ${target}!`,
+			KISS: (author, target) => `${author} kissed ${target}!`,
+			HUG: (author, target) => `${author} hugged ${target}!`,
+		},
+
+		OTHER: {
+			CLICK_IF_NOT: (url) =>
+				`Click [here](${url}) if You don't see the picture!`,
+		},
+	},
+
 	ERRORS: {
 		NO_ACCESS: "You have not access to use this command!",
 		MEMBER_MISSINGPERMS:
@@ -511,51 +529,62 @@ export default {
 	},
 
 	EVENTS: {
-		GUILD_PREFIX: 'Prefix for "{guild}": `{prefix}`',
+		GUILD_PREFIX: (guild_name, prefix) =>
+			`Prefix for "${guild_name}": "\`${prefix}\`"`,
+		HAPPEND_AT: (date) => `Happend at: ${date}`,
 
 		GUILD_BIRTHDAY: {
-			text: '"{name}" are celebrating their birthday today! This server is already {years} {check} old!',
+			TEXT: (name, years, decl) =>
+				`🎉 | "${name}" are celebrating their birthday today! This server is already ${years} ${decl}!`,
 			YEAR: "year",
 			YEARS: "years",
 		},
 
 		GUILD_EVENTS: {
 			//guildMemberAdd | guildMemberRemove
-			MEMBER_ADD: "⬆️ | New Member on the Server!",
-			MEMBER_REMOVE: "⬇️ | Member left this Server!",
+			MEMBER_ADD: {
+				TITLE: "⬆️ | New Member on the Server!",
+				DESCRIPTION: (member) => `${member} just joined this server!`,
+			},
+			MEMBER_REMOVE: {
+				TITLE: "⬇️ | Member left this Server!",
+				DESCRIPTION: (member) => `${member} just left this server!`,
+			},
 
 			//guildMemberBoost | guildMemberUnboost
 			MEMBER_BOOST: {
 				TITLE: "🎉 | Member boosted this Server!",
-				DESCRIPTION:
-					"{member} just boosted this server!\nServer Boosts: {boosts}",
+				DESCRIPTION: (member, boosts) =>
+					`${member} just boosted this server!\nServer Boosts: ${boosts}`,
 			},
 			MEMBER_UNBOOST: {
 				TITLE: "😔 | Member unboosted this Server!",
-				DESCRIPTION:
-					"{member} just unboosted this server!\nServer Boosts: {boosts}",
+				DESCRIPTION: (member, boosts) =>
+					`${member} just unboosted this server!\nServer Boosts: ${boosts}`,
 			},
 
 			//guildMemberRoleAdd | guildMemberRoleRemove
 			ROLE_ADD: {
 				TITLE: "⬆️ | Member Got a Role!",
-				DESCRIPTION:
-					"{member} just got a {role} role!\nModerator: {moderator}",
+				DESCRIPTION: (member, role, moderator) =>
+					`${member} just got a ${role} role by moderator ${moderator}`,
 			},
 			ROLE_REMOVE: {
 				TITLE: "⬇️ | Member Lost a Role!",
-				DESCRIPTION:
-					"{member} just lost a {role} role!\nModerator: {moderator}",
+				DESCRIPTION: (member, role, moderator) =>
+					`${member} just lost a ${role} role by moderator ${moderator}`,
 			},
 
 			//guildBoostLevelUp | guildBoostLevelDown
 			LEVEL_UP: {
 				TITLE: "🎉 | Server Boost Level Upped!",
-				DESCRIPTION: "This Server just got new {newLevel} boost level!",
+				DESCRIPTION: (new_level) =>
+					`This Server just got new ${new_level} boost level!`,
 			},
 			LEVEL_DOWN: {
 				TITLE: "😔 | Server Boost Level Downed!",
-				DESCRIPTION: "Server boost level downed to {newLevel} level!",
+				DESCRIPTION: (new_level) =>
+					`Server boost level downed to ${new_level} level!`,
 			},
 
 			//guildPartnerAdd | guildPartnerRemove
@@ -579,28 +608,41 @@ export default {
 				TITLE: "😔 | Server got UnPartnered!",
 				DESCRIPTION: 'Server just lost "Verified" Status right now!',
 			},
+
+			//guildBanAdd | guildBanRemove
+			BAN_ADD: {
+				TITLE: "🛡️ | User gor Banned!",
+				DESCRIPTION: (member, tag, moderator, reason) =>
+					`${member} (${tag}) just got banned by moderator ${moderator}\n› Reason: ${reason}`,
+			},
+			BAN_REMOVE: {
+				TITLE: "🛡️ | User gor Unbanned!",
+				DESCRIPTION: (member, tag, moderator, reason) =>
+					`${member} (${tag}) just got unbanned by moderator ${moderator}\n› Ban Reason: ${reason}`,
+			},
 		},
 
 		LEVELING: {
-			NEWLEVEL: "🎉 | {user} has raised it's level to {level}",
+			NEWLEVEL: (user, level) =>
+				`🎉 | ${user} has raised it's level to ${level}`,
 		},
 
 		MESSAGE_EVENTS: {
 			DELETE: {
 				TITLE: "🗑️ | Message Deleted!",
-				DESCRIPTION:
-					"Message from {author} has been deleted!\n\n› Message Content: `{content}`\n› Deleted at: {date}",
+				DESCRIPTION: (author, content) =>
+					`Message from ${author} has been deleted!\n\n› Message Content: \`${content}\``,
 
 				GHOST_PING: {
 					TITLE: "⚠️ | Ghost Ping Detected",
-					DESCRIPTION:
-						"Looks like that message from {author} has member mentions!\n\n› Message Content: `{content}`",
+					DESCRIPTION: (author, content) =>
+						`Looks like that message from ${author} contains member mentions!\n\n› Message Content: \`${content}\``,
 				},
 			},
 			UPDATE: {
 				TITLE: "⬆️ | Message Updated!",
-				DESCRIPTION:
-					"Message from {author} has been updated!\n\n› Old Message Content: `{oldContent}`\n› New Message Content: `{newContent}`\n› Changed at: {date}",
+				DESCRIPTION: (author, old_content, new_content) =>
+					`Message from ${author} has been updated!\n\n› Old Message Content: \`${old_content}\`\n› New Message Content: \`${new_content}\``,
 				GO_TO: "Jump to Message",
 			},
 		},

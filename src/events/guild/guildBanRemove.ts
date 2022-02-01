@@ -2,9 +2,9 @@ import { GuildBan, MessageEmbed, TextChannel } from "discord.js";
 import Bot from "../../classes/Bot";
 import Event from "../../types/Event/Event";
 
-export default class GuildBanAddEvent extends Event {
+export default class GuildBanRemoveEvent extends Event {
 	constructor() {
-		super("guildBanAdd");
+		super("guildBanRemove");
 	}
 
 	async run(client: Bot, ban: GuildBan) {
@@ -19,18 +19,19 @@ export default class GuildBanAddEvent extends Event {
 		const lang_file = await client.functions.getLanguageFile(ban.guild.id);
 		const { target, executor, reason } = await (
 			await ban.guild.fetchAuditLogs({
-				type: "MEMBER_BAN_ADD",
+				type: "MEMBER_BAN_REMOVE",
 				limit: 1,
 			})
 		).entries.first();
 
-		const title = lang_file.EVENTS.GUILD_EVENTS.BAN_ADD.TITLE;
-		const description = lang_file.EVENTS.GUILD_EVENTS.BAN_ADD.DESCRIPTION(
-			target.toString(),
-			target.tag,
-			executor.toString(),
-			reason
-		);
+		const title = lang_file.EVENTS.GUILD_EVENTS.BAN_REMOVE.TITLE;
+		const description =
+			lang_file.EVENTS.GUILD_EVENTS.BAN_REMOVE.DESCRIPTION(
+				target.toString(),
+				target.tag,
+				executor.toString(),
+				reason
+			);
 
 		const happend_at = lang_file.EVENTS.HAPPEND_AT(
 			new Date().toLocaleString(settings.locale)

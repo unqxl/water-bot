@@ -63,6 +63,7 @@ export default class HelpCommand extends Command {
 			Games,
 			Leveling,
 			Giveaways,
+			RolePlay,
 		] = [
 			lang.GLOBAL.NONE,
 			lang.OTHER.HELP.CATEGORIES.BOT_OWNER,
@@ -75,6 +76,7 @@ export default class HelpCommand extends Command {
 			lang.OTHER.HELP.CATEGORIES.GAMES,
 			lang.OTHER.HELP.CATEGORIES.LEVELING,
 			lang.OTHER.HELP.CATEGORIES.GIVEAWAYS,
+			lang.OTHER.HELP.CATEGORIES.ROLEPLAY,
 		];
 
 		const Length = lang.OTHER.HELP.COMMANDS_LENGTH;
@@ -163,6 +165,16 @@ export default class HelpCommand extends Command {
 					})
 					.join(", ") || bold(None);
 
+			const RolePlayCommands =
+				this.client.commands
+					.filter(
+						(cmd) => cmd.options.category === Categories.ROLEPLAY
+					)
+					.map((cmd) => {
+						return inlineCode(prefix + cmd.options.name);
+					})
+					.join(", ") || bold(None);
+
 			const embed = this.client.functions.buildEmbed(
 				message,
 				"BLURPLE",
@@ -179,7 +191,8 @@ export default class HelpCommand extends Command {
 			embed.addField(`[📝] ${Other}`, OtherCommands);
 			embed.addField(`[⭐] ${Leveling}`, LevelingCommands);
 			embed.addField(`[🎉] ${Giveaways}`, GiveawaysCommands);
-			embed.addField(`[⚙️] ${Settings}`, SettingsCommands);
+			embed.addField(`[🎉] ${Giveaways}`, GiveawaysCommands);
+			embed.addField(`[🎭] ${RolePlay}`, RolePlayCommands);
 			embed.setFooter({
 				text: `${Length}: ${this.client.functions.sp(
 					this.client.commands.size

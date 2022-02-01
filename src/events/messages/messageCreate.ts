@@ -14,6 +14,18 @@ export default class MessageCreateEvent extends Event {
 		const config = client.configs.get(message.guild.id);
 		const lang = await client.functions.getLanguageFile(message.guild.id);
 
+		if (client.functions.checkBotMention(message)) {
+			const embed = client.functions.buildEmbed(
+				message,
+				"BLURPLE",
+				lang.EVENTS.GUILD_PREFIX(message.guild.name, config.prefix)
+			);
+
+			return message.channel.send({
+				embeds: [embed],
+			});
+		}
+
 		if (!message.content.startsWith(config.prefix)) return;
 		const [name, ...args] = message.content
 			.slice(config.prefix.length)
