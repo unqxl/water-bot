@@ -223,8 +223,7 @@ class Bot extends Client {
 			username: this.config.mysql.username,
 			password: this.config.mysql.password,
 			database: this.config.mysql.database,
-			synchronize: true,
-			entities: [GuildConfiguration, GuildBan],
+			entities: [GuildConfiguration],
 		});
 
 		const configRepo = getRepository(GuildConfiguration);

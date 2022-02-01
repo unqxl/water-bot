@@ -41,6 +41,7 @@
 		"express": "^4.17.2",
 		"glob": "^7.1.7",
 		"module-alias": "^2.2.2",
+		"mysql": "^2.18.1",
 		"nekos.life": "^2.0.9",
 		"random": "^3.0.6",
 		"reflect-metadata": "^0.1.13",
