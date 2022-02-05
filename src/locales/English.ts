@@ -2,7 +2,8 @@ export default {
 	BOTOWNER: {
 		LEFT_GUILD: 'Successfully left Guild with ID "{id}"',
 		UPDATED_DB: "Successfully Updated all the Servers Configuration!",
-		COMMAND_RELOADED: (name) => `Command with name "${name}" successfully reloaded!`
+		COMMAND_RELOADED: (name) =>
+			`Command with name "${name}" successfully reloaded!`,
 	},
 
 	ECONOMY: {
@@ -145,7 +146,8 @@ export default {
 		UNMUTED: "Successfully unmuted {target}!",
 		UNWARNED: "Successfully deleted last warn from {target}!",
 		WARNED: "Successfully warned {target}!\nReason: {reason}\nModerator: {moderator}",
-		EMOJI_CREATED: (name) => `Emoji with name "${name}" successfully created in this server!`
+		EMOJI_CREATED: (name) =>
+			`Emoji with name "${name}" successfully created in this server!`,
 	},
 
 	MUSIC: {
@@ -203,6 +205,8 @@ export default {
 				SETTINGS: "Settings",
 				GAMES: "Games",
 				LEVELING: "Leveling",
+				GIVEAWAYS: "Giveaways",
+				ROLEPLAY: "Role Play",
 			},
 
 			COMMAND: {
@@ -222,6 +226,7 @@ export default {
 			TITLE: "Server Information",
 
 			FIELDS: {
+				ZERO: "Information",
 				FIRST: "Presences",
 				SECOND: "Members",
 				THIRD: "Channel",
@@ -250,6 +255,7 @@ export default {
 				GUILD_ID: "Guild ID",
 				OWNER: "Owner",
 				MEMBER_COUNT: "Members",
+				CREATED_AT: "Created At",
 			},
 		},
 
@@ -291,8 +297,21 @@ export default {
 		},
 
 		SOURCE: {
-			TEXT: (url) => `Recently, the bot's source code is available in my repository on GitHub: ${url}`
-		}
+			TEXT: (url) =>
+				`Recently, the bot's source code is available in my repository on GitHub: ${url}`,
+		},
+
+		COVID: {
+			CASES: "Cases",
+			RECOVERED: "Recovered",
+			DEATHS: "Deaths",
+			TOTAL: "Total",
+			TODAY: "Today",
+			CRITICAL: "Critical",
+			TESTS: "Tests",
+			LAST_UPDATED: "Last updated",
+			TOTAL_POPULATION: "Population",
+		},
 	},
 
 	SLASH_COMMANDS: {
@@ -304,8 +323,9 @@ export default {
 	SETTINGS: {
 		CONFIG: {
 			TYPES: {
+				CUSTOM_COMMANDS: "Custom Commands",
 				LANGUAGE: "Guild Language",
-				MEMBERS_CHANNEL: "Members Channel¹",
+				MEMBERS_CHANNEL: "Members Channel",
 				LOG_CHANNEL: "Log Channel",
 				LEVELS_CHANNEL: "Levels Channel",
 				TWITCH_CHANNEL: "Twitch Notifications Channel",
@@ -316,12 +336,10 @@ export default {
 				ANTISPAM: "Anti-Spam",
 				ANTILINK: "Anti-Link",
 				ANTIINVITE: "Anti-Invite",
-				TWITCH_ENABLED: "Twitch System",
+				TWITCH_SYSTEM: "Twitch System",
 				TWITCH_STREAMERS: "Twitch Streamers",
 				PREFIX: "Prefix",
 			},
-
-			WIKI: "¹ - This channel is intended for Notifications about Participants (their joins and leaves from the server)",
 		},
 
 		SETTED: (type, value) => `Successfully changed "${type}" to "${value}"`,
@@ -338,6 +356,56 @@ export default {
 
 		LANGUAGE_CHANGED_NOTE:
 			"If you did this by accident, then use the command 'language-reset'",
+	},
+
+	GIVEAWAYS: {
+		PROMPTS: {
+			CREATE_WINNERS: "Write the Count of Winners (10s)",
+			CREATE_PRIZE: "Write the Prize of Giveaway (20s)",
+			CREATE_TIME: "Write the Time of Giveaway (20s | 2d, 10m)",
+		},
+
+		ERRORS: {
+			ERROR_WINNERS: "You didn't specify the Count of Winners!",
+			ERROR_PRIZE: "You didn't specify the Prize of Giveaway!",
+			ERROR_TIME: "You didn't specify the Time of Giveaway!",
+		},
+
+		MESSAGES: {
+			giveaway: "🎉 Giveaway 🎉",
+			giveawayEnded: "🎉 Giveaway Ended 🎉",
+			inviteToParticipate: "React with 🎉 to participate!",
+			dropMessage: "Be first to react with 🎉!",
+			drawing: "Drawing: {timestamp}",
+			winMessage:
+				"Congradulations, {winners}!\nYou won: **{this.prize}**",
+			embedFooter: "Giveaways",
+			hostedBy: "Hosted By: {this.hostedBy}",
+			winners: "Winner(s):",
+			endedAt: "Ended At",
+		},
+
+		RESPONSES: {
+			ENDED: (id: string) =>
+				`Giveaway with ID "\`${id}\`" successfully ended!`,
+		},
+	},
+
+	ROLEPLAY: {
+		ACTIONS: {
+			TICKLE: (author, target) => `${author} tickled ${target}!`,
+			BAKA: (author, target) => `${author} hates ${target}!`,
+			SLAP: (author, target) => `${author} slapped ${target}!`,
+			POKE: (author, target) => `${author} pokked into ${target}!`,
+			PAT: (author, target) => `${author} patted ${target}!`,
+			KISS: (author, target) => `${author} kissed ${target}!`,
+			HUG: (author, target) => `${author} hugged ${target}!`,
+		},
+
+		OTHER: {
+			CLICK_IF_NOT: (url) =>
+				`Click [here](${url}) if You don't see the picture!`,
+		},
 	},
 
 	ERRORS: {
@@ -384,9 +452,16 @@ export default {
 			`"${value}" is not found in "${type}"!`,
 		ALREADY_IN_DB: (type, value) =>
 			`"${value}" is already placed in "${type}"`,
-		EMOJIS_LIMIT: "The limit on the number of emojis on the server has been reached!",
+		EMOJIS_LIMIT:
+			"The limit on the number of emojis on the server has been reached!",
 		VALID_EMOJI: "Please provide a valid emoji!",
-		NORMAL_EMOJI: "You can use Normal Emoji without Adding in Server!"
+		NORMAL_EMOJI: "You can use Normal Emoji without Adding in Server!",
+		GIVEAWAY_NOT_FOUND: (id: string) =>
+			`Giveaway with ID "\`${id}\`" not found!`,
+		GIVEAWAY_ENDED: (id: string) =>
+			`Giveaway with ID "\`${id}\`" already ended!`,
+		COVID_NOT_FOUND: (name: string) =>
+			`Cannot get COVID-19 data for "${name}"`,
 	},
 
 	FUNCTIONS: {
@@ -448,56 +523,68 @@ export default {
 		},
 
 		DJ_ROLES: {
-			HASNT_ANY: "You can't use this command because You don't have any DJ Role!"
+			HASNT_ANY:
+				"You can't use this command because You don't have any DJ Role!",
 		},
 	},
 
 	EVENTS: {
-		GUILD_PREFIX: 'Prefix for "{guild}": `{prefix}`',
+		GUILD_PREFIX: (guild_name, prefix) =>
+			`Prefix for "${guild_name}": "\`${prefix}\`"`,
+		HAPPEND_AT: (date) => `Happend at: ${date}`,
 
 		GUILD_BIRTHDAY: {
-			text: '"{name}" are celebrating their birthday today! This server is already {years} {check} old!',
+			TEXT: (name, years, decl) =>
+				`🎉 | "${name}" are celebrating their birthday today! This server is already ${years} ${decl}!`,
 			YEAR: "year",
 			YEARS: "years",
 		},
 
 		GUILD_EVENTS: {
 			//guildMemberAdd | guildMemberRemove
-			MEMBER_ADD: "⬆️ | New Member on the Server!",
-			MEMBER_REMOVE: "⬇️ | Member left this Server!",
+			MEMBER_ADD: {
+				TITLE: "⬆️ | New Member on the Server!",
+				DESCRIPTION: (member) => `${member} just joined this server!`,
+			},
+			MEMBER_REMOVE: {
+				TITLE: "⬇️ | Member left this Server!",
+				DESCRIPTION: (member) => `${member} just left this server!`,
+			},
 
 			//guildMemberBoost | guildMemberUnboost
 			MEMBER_BOOST: {
 				TITLE: "🎉 | Member boosted this Server!",
-				DESCRIPTION:
-					"{member} just boosted this server!\nServer Boosts: {boosts}",
+				DESCRIPTION: (member, boosts) =>
+					`${member} just boosted this server!\nServer Boosts: ${boosts}`,
 			},
 			MEMBER_UNBOOST: {
 				TITLE: "😔 | Member unboosted this Server!",
-				DESCRIPTION:
-					"{member} just unboosted this server!\nServer Boosts: {boosts}",
+				DESCRIPTION: (member, boosts) =>
+					`${member} just unboosted this server!\nServer Boosts: ${boosts}`,
 			},
 
 			//guildMemberRoleAdd | guildMemberRoleRemove
 			ROLE_ADD: {
 				TITLE: "⬆️ | Member Got a Role!",
-				DESCRIPTION:
-					"{member} just got a {role} role!\nModerator: {moderator}",
+				DESCRIPTION: (member, role, moderator) =>
+					`${member} just got a ${role} role by moderator ${moderator}`,
 			},
 			ROLE_REMOVE: {
 				TITLE: "⬇️ | Member Lost a Role!",
-				DESCRIPTION:
-					"{member} just lost a {role} role!\nModerator: {moderator}",
+				DESCRIPTION: (member, role, moderator) =>
+					`${member} just lost a ${role} role by moderator ${moderator}`,
 			},
 
 			//guildBoostLevelUp | guildBoostLevelDown
 			LEVEL_UP: {
 				TITLE: "🎉 | Server Boost Level Upped!",
-				DESCRIPTION: "This Server just got new {newLevel} boost level!",
+				DESCRIPTION: (new_level) =>
+					`This Server just got new ${new_level} boost level!`,
 			},
 			LEVEL_DOWN: {
 				TITLE: "😔 | Server Boost Level Downed!",
-				DESCRIPTION: "Server boost level downed to {newLevel} level!",
+				DESCRIPTION: (new_level) =>
+					`Server boost level downed to ${new_level} level!`,
 			},
 
 			//guildPartnerAdd | guildPartnerRemove
@@ -521,25 +608,41 @@ export default {
 				TITLE: "😔 | Server got UnPartnered!",
 				DESCRIPTION: 'Server just lost "Verified" Status right now!',
 			},
+
+			//guildBanAdd | guildBanRemove
+			BAN_ADD: {
+				TITLE: "🛡️ | User gor Banned!",
+				DESCRIPTION: (member, tag, moderator, reason) =>
+					`${member} (${tag}) just got banned by moderator ${moderator}\n› Reason: ${reason}`,
+			},
+			BAN_REMOVE: {
+				TITLE: "🛡️ | User gor Unbanned!",
+				DESCRIPTION: (member, tag, moderator, reason) =>
+					`${member} (${tag}) just got unbanned by moderator ${moderator}\n› Ban Reason: ${reason}`,
+			},
 		},
 
 		LEVELING: {
-			NEWLEVEL: "🎉 | {user} has raised it's level to {level}",
+			NEWLEVEL: (user, level) =>
+				`🎉 | ${user} has raised it's level to ${level}`,
 		},
 
 		MESSAGE_EVENTS: {
 			DELETE: {
 				TITLE: "🗑️ | Message Deleted!",
-				DESCRIPTION: "Message from {author} has been deleted!\n\n› Message Content: `{content}`\n› Deleted at: {date}",
+				DESCRIPTION: (author, content) =>
+					`Message from ${author} has been deleted!\n\n› Message Content: \`${content}\``,
 
 				GHOST_PING: {
 					TITLE: "⚠️ | Ghost Ping Detected",
-					DESCRIPTION: "Looks like that message from {author} has member mentions!\n\n› Message Content: `{content}`",
-				}
+					DESCRIPTION: (author, content) =>
+						`Looks like that message from ${author} contains member mentions!\n\n› Message Content: \`${content}\``,
+				},
 			},
 			UPDATE: {
 				TITLE: "⬆️ | Message Updated!",
-				DESCRIPTION: "Message from {author} has been updated!\n\n› Old Message Content: `{oldContent}`\n› New Message Content: `{newContent}`\n› Changed at: {date}",
+				DESCRIPTION: (author, old_content, new_content) =>
+					`Message from ${author} has been updated!\n\n› Old Message Content: \`${old_content}\`\n› New Message Content: \`${new_content}\``,
 				GO_TO: "Jump to Message",
 			},
 		},
@@ -659,6 +762,15 @@ export default {
 				MODERATOR: "Moderator",
 				DATE: "Deleted At",
 			},
+		},
+	},
+
+	MODULES: {
+		STEAMID: {
+			NOT_STEAMID:
+				"The argument you specified is not like SteamID/SteamID3/SteamID64!",
+			ANSWER: (steam_id, steam_id64, steam_id3, url) =>
+				`SteamID: ${steam_id}\nSteamID64: ${steam_id64}\nSteamID3: ${steam_id3}\nProfile: [Click](${url})`,
 		},
 	},
 };

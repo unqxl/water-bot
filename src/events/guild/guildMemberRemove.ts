@@ -1,43 +1,48 @@
+import Event from "../../types/Event/Event";
+import Bot from "../../classes/Bot";
 import { GuildMember, MessageEmbed, TextChannel } from "discord.js";
-import { bold } from "@discordjs/builders";
-import { RunFunction } from "../../interfaces/Event";
 
-export const name: string = "guildMemberRemove";
+export default class GuildMemberRemoveEvent extends Event {
+	constructor() {
+		super("guildMemberRemove");
+	}
 
-export const run: RunFunction = async (client, member: GuildMember) => {
-	const membersChannelID = client.database.getSetting(
-		member.guild,
-		"membersChannel"
-	);
-	if (membersChannelID === "0") return;
+	async run(client: Bot, member: GuildMember) {
+		const settings = await client.database.getSettings(member.guild.id);
+		if (!settings.log_channel) return;
 
-	const membersChannel = member.guild.channels.cache.get(
-		membersChannelID
-	) as TextChannel;
-	if (!membersChannel) return;
+		const members_channel = member.guild.channels.cache.get(
+			settings.members_channel
+		) as TextChannel;
+		if (!members_channel) return;
 
-	const lang = await client.functions.getLanguageFile(member.guild);
-	const locale = client.database.getSetting(member.guild, "language");
-	const texts = client.database.getSetting(member.guild, "byeText");
-	const title = lang.EVENTS.GUILD_EVENTS.MEMBER_REMOVE;
-	const text = locale === "en-US" ? texts.en : texts.ru;
+		const lang_file = await client.functions.getLanguageFile(
+			member.guild.id
+		);
+		const title = lang_file.EVENTS.GUILD_EVENTS.MEMBER_REMOVE.TITLE;
+		const description =
+			lang_file.EVENTS.GUILD_EVENTS.MEMBER_REMOVE.DESCRIPTION(
+				member.user.tag
+			);
 
-	text.replace("{user_mention}", member.toString()).replace(
-		"{members}",
-		member.guild.memberCount.toLocaleString()
-	);
+		const happend_at = lang_file.EVENTS.HAPPEND_AT(
+			new Date().toLocaleString(settings.locale)
+		);
 
-	const embed = new MessageEmbed()
-		.setColor("BLURPLE")
-		.setAuthor({
-			name: member.user.tag,
-			iconURL: member.user.displayAvatarURL({ dynamic: true })
-		})
-		.setTitle(title)
-		.setDescription(bold(text))
-		.setTimestamp();
+		const embed = new MessageEmbed()
+			.setColor("BLURPLE")
+			.setAuthor({
+				name: member.user.tag,
+				iconURL: member.user.displayAvatarURL({ dynamic: true }),
+			})
+			.setTitle(title)
+			.setDescription(description)
+			.setFooter({
+				text: happend_at,
+			});
 
-	return membersChannel.send({
-		embeds: [embed],
-	});
-};
+		return members_channel.send({
+			embeds: [embed],
+		});
+	}
+}

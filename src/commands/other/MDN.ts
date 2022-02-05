@@ -1,15 +1,12 @@
-import {
-	Categories,
-	ValidateReturn,
-} from "../../types/Command/BaseCommand";
+import { Categories, ValidateReturn } from "../../types/Command/BaseCommand";
 import { Message, MessageEmbed } from "discord.js";
 import { Command } from "../../types/Command/Command";
 import { bold } from "@discordjs/builders";
-import Goose from "../../classes/Goose";
-import fetch from "node-fetch";
+import { request } from "undici";
+import Bot from "../../classes/Bot";
 
 export default class MDNCommand extends Command {
-	constructor(client: Goose) {
+	constructor(client: Bot) {
 		super(client, {
 			name: "mdn",
 
@@ -60,7 +57,7 @@ export default class MDNCommand extends Command {
 		const url = "https://mdn.gideonbot.com/embed?q=";
 		const query = args[0];
 
-		const data = await fetch(`${url}${query}`).then((res) => res.json());
+		const data = await (await request(`${url}${query}`)).body.json();
 		if (data.code && data.code === 404) {
 			const text = lang.ERRORS.NOT_FOUND("MDN");
 			const embed = this.client.functions.buildEmbed(
@@ -77,6 +74,7 @@ export default class MDNCommand extends Command {
 		}
 
 		const embed = new MessageEmbed(data);
+
 		return message.channel.send({
 			embeds: [embed],
 		});

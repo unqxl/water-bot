@@ -13,7 +13,7 @@
 		"allowSyntheticDefaultImports": true,
 		"skipLibCheck": true,
 		"skipDefaultLibCheck": true,
-		"declaration": true,
+		"declaration": false,
 		"resolveJsonModule": true,
 
 		"baseUrl": "./src",
@@ -21,7 +21,7 @@
 			"@locales/*": ["locales/*"]
 		}
 	},
-  
+
 	"include": ["src"],
 	"exclude": ["node_modules", ".github", ".vscode"]
 }

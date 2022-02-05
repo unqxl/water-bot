@@ -1,15 +1,16 @@
 import { ApplicationCommandData } from "discord.js";
-import Goose from "./classes/Goose";
+import Bot from "./classes/Bot";
 
-export = async (client: Goose) => {
-	if (!client.slashCommands.size)
+export = async (client: Bot) => {
+	if (!client.slashCommands.size) {
 		return client.logger.warn(
 			"No Slash Commands Found!",
 			"deploy-commands"
 		);
-	const commands = client.slashCommands.map((x) => x.options);
+	}
 
 	try {
+		const commands = client.slashCommands.map((x) => x.options);
 		client.application.commands.set(commands as ApplicationCommandData[]);
 		client.logger.log("Slash Commands Deployed!", "deploy-commands");
 	} catch (error) {

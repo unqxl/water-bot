@@ -2,11 +2,11 @@ import { Message, Util } from "discord.js";
 import { bold, hyperlink } from "@discordjs/builders";
 import { Command } from "../../types/Command/Command";
 import { Categories } from "../../types/Command/BaseCommand";
-import Goose from "../../classes/Goose";
+import Bot from "../../classes/Bot";
 import random from "random";
 
 export default class GuessTheLogoCommand extends Command {
-	constructor(client: Goose) {
+	constructor(client: Bot) {
 		super(client, {
 			name: "guessthelogo",
 			aliases: ["gtl"],

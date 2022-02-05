@@ -1,56 +1,58 @@
+import Event from "../../types/Event/Event";
+import Bot from "../../classes/Bot";
 import { GuildMember, MessageEmbed, Role, TextChannel } from "discord.js";
-import { RunFunction } from "../../interfaces/Event";
-import { bold } from "@discordjs/builders";
 
-export const name: string = "guildMemberRoleRemove";
+export default class GuildMemberRoleRemoveEvent extends Event {
+	constructor() {
+		super("guildMemberRoleRemove");
+	}
 
-export const run: RunFunction = async (
-	client,
-	member: GuildMember,
-	role: Role
-) => {
-	const logsChannelID = client.database.getSetting(
-		member.guild,
-		"logChannel"
-	);
-	if (logsChannelID === "0") return;
+	async run(client: Bot, member: GuildMember, role: Role) {
+		const settings = await client.database.getSettings(member.guild.id);
+		if (!settings.log_channel) return;
 
-	const logsChannel = member.guild.channels.cache.get(
-		logsChannelID
-	) as TextChannel;
-	if (!logsChannel) return;
+		const log_channel = member.guild.channels.cache.get(
+			settings.log_channel
+		) as TextChannel;
+		if (!log_channel) return;
 
-	const audit = await member.guild
-		.fetchAuditLogs({
-			type: "MEMBER_ROLE_UPDATE",
-			limit: 1,
-		})
-		.then((value) => value.entries.first());
+		const { executor, changes } = await (
+			await member.guild.fetchAuditLogs({
+				type: "MEMBER_ROLE_UPDATE",
+				limit: 1,
+			})
+		).entries.first();
+		if (changes[0].key !== "$remove") return;
 
-	if (audit.changes[0].key !== "$remove") return;
+		const lang_file = await client.functions.getLanguageFile(
+			member.guild.id
+		);
+		const title = lang_file.EVENTS.GUILD_EVENTS.ROLE_REMOVE.TITLE;
+		const description =
+			lang_file.EVENTS.GUILD_EVENTS.ROLE_REMOVE.DESCRIPTION(
+				member.toString(),
+				role.toString(),
+				executor.toString()
+			);
 
-	const lang = await client.functions.getLanguageFile(member.guild);
-	const title = lang.EVENTS.GUILD_EVENTS.ROLE_REMOVE.TITLE;
-	const description = bold(
-		lang.EVENTS.GUILD_EVENTS.ROLE_REMOVE.DESCRIPTION.replace(
-			"{member}",
-			member.toString()
-		)
-			.replace("{role}", role.toString())
-			.replace("{moderator}", audit.executor.toString())
-	);
+		const happend_at = lang_file.EVENTS.HAPPEND_AT(
+			new Date().toLocaleString(settings.locale)
+		);
 
-	const embed = new MessageEmbed()
-		.setColor("BLURPLE")
-		.setAuthor({
-			name: member.user.tag,
-			iconURL: member.user.displayAvatarURL({ dynamic: true })
-		})
-		.setTitle(title)
-		.setDescription(description)
-		.setTimestamp();
+		const embed = new MessageEmbed()
+			.setColor("BLURPLE")
+			.setAuthor({
+				name: member.user.tag,
+				iconURL: member.user.displayAvatarURL({ dynamic: true }),
+			})
+			.setTitle(title)
+			.setDescription(description)
+			.setFooter({
+				text: happend_at,
+			});
 
-	return logsChannel.send({
-		embeds: [embed],
-	});
-};
+		return log_channel.send({
+			embeds: [embed],
+		});
+	}
+}

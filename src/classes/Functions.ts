@@ -12,13 +12,13 @@ import {
 	User,
 } from "discord.js";
 import { codeBlock } from "@discordjs/builders";
-import Goose from "./Goose";
-import fetch from "node-fetch";
+import { request } from "undici";
+import Bot from "./Bot";
 
 export = class Functions {
-	public client: Goose;
+	public client: Bot;
 
-	constructor(client: Goose) {
+	constructor(client: Bot) {
 		this.client = client;
 	}
 
@@ -35,23 +35,25 @@ export = class Functions {
 			if (message instanceof Message)
 				embed.setAuthor({
 					name: message.author.username,
-					iconURL: message.author.displayAvatarURL({ dynamic: true })
+					iconURL: message.author.displayAvatarURL({ dynamic: true }),
 				});
 			else if (message instanceof CommandInteraction)
 				embed.setAuthor({
 					name: message.user.username,
-					iconURL: message.user.displayAvatarURL({ dynamic: true })
+					iconURL: message.user.displayAvatarURL({ dynamic: true }),
 				});
 			else
 				embed.setAuthor({
 					name: message.author.username,
-					iconURL: message.author.displayAvatarURL({ dynamic: true })
+					iconURL: message.author.displayAvatarURL({ dynamic: true }),
 				});
 		}
 
 		embed.setColor(color);
 		embed.setDescription(
-			emoji === true ? `${emoji} | ${description}` : description
+			typeof emoji === "string"
+				? `${emoji} | ${description}`
+				: description
 		);
 
 		return embed;
@@ -73,13 +75,13 @@ export = class Functions {
 		const secret = this.client.config.twitch.client_secret;
 
 		const data = await (
-			await fetch(
+			await request(
 				`https://id.twitch.tv/oauth2/token?client_id=${id}&client_secret=${secret}&grant_type=client_credentials`,
 				{
 					method: "POST",
 				}
 			)
-		).json();
+		).body.json();
 
 		this.client.twitchKey = data["access_token"];
 
@@ -142,9 +144,12 @@ export = class Functions {
 	}
 
 	async getLanguageFile(
-		guild: Guild
+		guild_id: string
 	): Promise<typeof import("../locales/English").default> {
-		const language = this.client.database.getSetting(guild, "language");
+		const language = await this.client.database.getSetting(
+			guild_id,
+			"locale"
+		);
 
 		return import(
 			`../locales/${language === "en-US" ? "English" : "Russian"}`
@@ -184,6 +189,8 @@ export = class Functions {
 			if (error?.message.includes("Missing Access")) return;
 			if (error?.message.includes("Missing Permissions")) return;
 			if (error?.message.includes("Unknown Message")) return;
+			if (error?.message.includes("Members didn't arrive in time."))
+				return;
 
 			const channelID = this.client.config.bot.logsChannelID as
 				| Snowflake
@@ -232,6 +239,7 @@ export = class Functions {
 				false,
 				true
 			);
+
 			embed.setDescription(codeBlock(stack as string));
 			embed.addField("Name", name, true);
 			embed.addField("Code", code.toString(), true);
@@ -239,7 +247,7 @@ export = class Functions {
 			embed.addField("Timestamp", new Date().toLocaleString("ru"), true);
 			embed.addField(
 				"Request Data",
-				codeBlock(jsonString?.substring(0, 2045), "json"),
+				codeBlock("json", jsonString?.substring(0, 2045)),
 				false
 			);
 
@@ -253,6 +261,25 @@ export = class Functions {
 
 			console.warn(e);
 		}
+	}
+
+	declOfNum(n: number, text_forms: string[]) {
+		n = Math.abs(n) % 100;
+		var n1 = n % 10;
+
+		if (n > 10 && n < 20) {
+			return text_forms[2];
+		}
+
+		if (n1 > 1 && n1 < 5) {
+			return text_forms[1];
+		}
+
+		if (n1 == 1) {
+			return text_forms[0];
+		}
+
+		return text_forms[2];
 	}
 };
 

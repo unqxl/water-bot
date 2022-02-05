@@ -2,7 +2,7 @@ import { Message } from "discord.js";
 import { Command } from "../../types/Command/Command";
 import { Categories } from "../../types/Command/BaseCommand";
 import { bold } from "@discordjs/builders";
-import Goose from "../../classes/Goose";
+import Bot from "../../classes/Bot";
 
 // DayJS
 import dayjs from "dayjs";
@@ -13,7 +13,7 @@ import("dayjs/locale/en");
 import("dayjs/locale/ru");
 
 export default class BotinfoCommand extends Command {
-	constructor(client: Goose) {
+	constructor(client: Bot) {
 		super(client, {
 			name: "botinfo",
 			aliases: ["bi"],
@@ -32,9 +32,9 @@ export default class BotinfoCommand extends Command {
 		args: string[],
 		lang: typeof import("@locales/English").default
 	) {
-		const guildLocale = this.client.database.getSetting(
-			message.guild,
-			"language"
+		const guildLocale = await this.client.database.getSetting(
+			message.guild.id,
+			"locale"
 		);
 
 		if (guildLocale === "en-US") dayjs.locale("en");

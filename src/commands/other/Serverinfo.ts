@@ -2,10 +2,10 @@ import { Guild, Message, MessageEmbed } from "discord.js";
 import { Command } from "../../types/Command/Command";
 import { Categories } from "../../types/Command/BaseCommand";
 import { bold, inlineCode } from "@discordjs/builders";
-import Goose from "../../classes/Goose";
+import Bot from "../../classes/Bot";
 
 export default class ServerinfoCommand extends Command {
-	constructor(client: Goose) {
+	constructor(client: Bot) {
 		super(client, {
 			name: "serverinfo",
 			aliases: ["si", "serveri", "sinfo"],
@@ -28,8 +28,9 @@ export default class ServerinfoCommand extends Command {
 		const embed = new MessageEmbed();
 
 		// Embed Title and Field Names
-		const [title, precences, members, channels] = [
+		const [title, information, precences, members, channels] = [
 			lang.OTHER.SERVER_INFO.TITLE,
+			lang.OTHER.SERVER_INFO.FIELDS.ZERO,
 			lang.OTHER.SERVER_INFO.FIELDS.FIRST,
 			lang.OTHER.SERVER_INFO.FIELDS.SECOND,
 			lang.OTHER.SERVER_INFO.FIELDS.THIRD,
@@ -58,61 +59,68 @@ export default class ServerinfoCommand extends Command {
 		];
 
 		// Other
-		const [guild_id, owner, member_count] = [
+		const [guild_id, owner, member_count, createdAt] = [
 			lang.OTHER.SERVER_INFO.OTHER.GUILD_ID,
 			lang.OTHER.SERVER_INFO.OTHER.OWNER,
 			lang.OTHER.SERVER_INFO.OTHER.MEMBER_COUNT,
+			lang.OTHER.SERVER_INFO.OTHER.CREATED_AT,
 		];
-
-		var description = "";
-
-		(description += `› ${bold(guild_id)}: ${bold(
-			inlineCode(info.id)
-		)}\n\n`),
-			(description += `› ${bold(owner)}: ${bold(
-				inlineCode(info.owner.user.username)
-			)}\n`),
-			(description += `› ${bold(member_count)}: ${bold(
-				inlineCode(info.members)
-			)}\n\n`),
-			(description += `› ${bold(precences)}:\n`);
-		description += `» ${bold(online)}: ${bold(
-			inlineCode(info.onlineUsers)
-		)}\n`;
-		description += `» ${bold(idle)}: ${bold(inlineCode(info.idleUsers))}\n`;
-		description += `» ${bold(dnd)}: ${bold(inlineCode(info.dndUsers))}\n\n`;
-		description += `› ${bold(members)}:\n`;
-		description += `» ${bold(humans)}: ${bold(
-			inlineCode(info.users.humans)
-		)} (${bold(inlineCode(String(info.users.humansPercent) + "%"))})\n`;
-		description += `» ${bold(bots)}: ${bold(
-			inlineCode(info.users.bots)
-		)} (${bold(inlineCode(String(info.users.botsPercent) + "%"))})\n\n`;
-		description += `› ${bold(channels)}:\n`;
-		description += `› ${bold(text)}: ${bold(
-			inlineCode(String(info.channels.textChannels))
-		)}\n`;
-		description += `› ${bold(news)}: ${bold(
-			inlineCode(String(info.channels.newsChannels))
-		)}\n`;
-		description += `› ${bold(voice)}: ${bold(
-			inlineCode(String(info.channels.voiceChannels))
-		)}\n`;
-		description += `› ${bold(stage)}: ${bold(
-			inlineCode(String(info.channels.stagesChannels))
-		)}\n`;
-		description += `› ${bold(categories)}: ${bold(
-			inlineCode(String(info.channels.categoriesChannels))
-		)}\n`;
 
 		embed.setColor("BLURPLE");
 		embed.setAuthor({
 			name: message.author.username,
-			iconURL: message.author.displayAvatarURL({ dynamic: true })
+			iconURL: message.author.displayAvatarURL({ dynamic: true }),
 		});
 		embed.setTitle(title);
-		embed.setDescription(description);
 		embed.setThumbnail(message.guild.iconURL({ dynamic: true }));
+
+		embed.addField(
+			`› ${bold(information)}:`,
+			[
+				`» ${bold(guild_id)}: ${bold(inlineCode(info.id))}`,
+				`» ${bold(owner)}: ${bold(info.owner.toString())}`,
+				`» ${bold(member_count)}: ${bold(inlineCode(info.members))}`,
+				`» ${bold(createdAt)}: ${bold(info.created_at)}`,
+			].join("\n")
+		);
+
+		embed.addField(
+			`› ${bold(precences)}:`,
+			[
+				`» ${bold(online)}: ${bold(inlineCode(info.onlineUsers))}`,
+				`» ${bold(idle)}: ${bold(inlineCode(info.idleUsers))}`,
+				`» ${bold(dnd)}: ${bold(inlineCode(info.dndUsers))}`,
+			].join("\n")
+		);
+
+		embed.addField(
+			`› ${bold(members)}:`,
+			[
+				`» ${bold(humans)}: ${bold(inlineCode(info.users.humans))}`,
+				`» ${bold(bots)}: ${bold(inlineCode(info.users.bots))}`,
+			].join("\n")
+		);
+
+		embed.addField(
+			`› ${bold(channels)}:`,
+			[
+				`» ${bold(text)}: ${bold(
+					inlineCode(info.channels.textChannels)
+				)}`,
+				`» ${bold(news)}: ${bold(
+					inlineCode(info.channels.newsChannels)
+				)}`,
+				`» ${bold(voice)}: ${bold(
+					inlineCode(info.channels.voiceChannels)
+				)}`,
+				`» ${bold(stage)}: ${bold(
+					inlineCode(info.channels.stagesChannels)
+				)}`,
+				`» ${bold(categories)}: ${bold(
+					inlineCode(info.channels.categoriesChannels)
+				)}`,
+			].join("\n")
+		);
 
 		return message.channel.send({
 			embeds: [embed],
@@ -192,10 +200,13 @@ export default class ServerinfoCommand extends Command {
 		humansPercent = this.calculatePercent(humans, members.size);
 		botsPercent = this.calculatePercent(bots, members.size);
 
+		var createdAt = Math.floor(guild.createdTimestamp / 1000);
+
 		return {
 			name: guild.name,
 			id: guild.id,
 			owner: await guild.fetchOwner(),
+			created_at: `<t:${createdAt}> (<t:${createdAt}:R>)`,
 
 			members: guild.memberCount.toLocaleString(),
 			onlineUsers: online.toLocaleString(),
@@ -203,19 +214,16 @@ export default class ServerinfoCommand extends Command {
 			dndUsers: dnd.toLocaleString(),
 
 			users: {
-				humans: humans.toLocaleString(),
-				humansPercent: humansPercent,
-
-				bots: bots.toLocaleString(),
-				botsPercent: botsPercent,
+				humans: `${humans.toLocaleString()} (${humansPercent}%)`,
+				bots: `${bots.toLocaleString()} (${botsPercent}%)`,
 			},
 
 			channels: {
-				textChannels: text_channels,
-				newsChannels: news_channels,
-				voiceChannels: voice_channels,
-				stagesChannels: stages_channels,
-				categoriesChannels: categories_channels,
+				textChannels: String(text_channels),
+				newsChannels: String(news_channels),
+				voiceChannels: String(voice_channels),
+				stagesChannels: String(stages_channels),
+				categoriesChannels: String(categories_channels),
 			},
 
 			emojis: emotes,

@@ -2,13 +2,13 @@ import { Categories } from "../../types/Command/BaseCommand";
 import { Message } from "discord.js";
 import { Command } from "../../types/Command/Command";
 import { bold } from "@discordjs/builders";
-import Goose from "../../classes/Goose";
+import Bot from "../../classes/Bot";
 
 export default class AutoRoleCommand extends Command {
-	constructor(client: Goose) {
+	constructor(client: Bot) {
 		super(client, {
 			name: "autorole",
-			aliases: ["ar"],
+			aliases: ["ar", "a-role"],
 
 			description: {
 				en: "Shows/Sets/Removes Server's Auto Role!",
@@ -25,87 +25,90 @@ export default class AutoRoleCommand extends Command {
 		args: string[],
 		lang: typeof import("@locales/English").default
 	) {
-        var actions = ['show', 'set', 'reset'];
+		const config = await this.client.database.getGuild(message.guild.id);
+
+		var actions = ["show", "set", "reset"];
 		var action = args[0];
 
-        if(!action) action = 'show';
-        if(!actions.includes(action)) action = 'show';
+		if (!action || !actions.includes(action)) action = "show";
 
-        if(action === 'show') {
-            var role = this.client.database.getSetting(message.guild, 'autoRole');
+		if (action === "show") {
+			var role = config.auto_role;
 
-            if(role === '0') role = lang.GLOBAL.NONE;
-            else role = message.guild.roles.cache.get(role).toString();
+			if (!role) role = lang.GLOBAL.NONE;
+			else role = message.guild.roles.cache.get(role).toString();
 
-            const type = lang.SETTINGS.CONFIG.TYPES.AUTO_ROLE;
-            const text = lang.SETTINGS.SHOW(type, role);
-            const embed = this.client.functions.buildEmbed(
-                message,
-                "BLURPLE",
-                bold(text),
-                false,
-                true
-            );
+			const type = lang.SETTINGS.CONFIG.TYPES.AUTO_ROLE;
+			const text = lang.SETTINGS.SHOW(type, role);
+			const embed = this.client.functions.buildEmbed(
+				message,
+				"BLURPLE",
+				bold(text),
+				false,
+				true
+			);
 
-            return message.channel.send({
-                embeds: [embed],
-            });
-        }
-        else if(action === 'set') {
-            const role =
-                message.mentions.roles.first() ||
-                message.guild.roles.cache.get(args[1]);
+			return message.channel.send({
+				embeds: [embed],
+			});
+		} else if (action === "set") {
+			const role =
+				message.mentions.roles.first() ||
+				message.guild.roles.cache.get(args[1]);
 
-            if (!role) {
-                const text = lang.ERRORS.ARGS_MISSING.replace(
-                    "{cmd_name}",
-                    "autorole"
-                );
-                const embed = this.client.functions.buildEmbed(
-                    message,
-                    "BLURPLE",
-                    bold(text),
-                    "❌",
-                    true
-                );
-    
-                return message.channel.send({
-                    embeds: [embed]
-                });
-            }
+			if (!role) {
+				const text = lang.ERRORS.ARGS_MISSING.replace(
+					"{cmd_name}",
+					"autorole"
+				);
+				const embed = this.client.functions.buildEmbed(
+					message,
+					"BLURPLE",
+					bold(text),
+					"❌",
+					true
+				);
 
-            this.client.database.set(message.guild, "autoRole", role.id);
+				return message.channel.send({
+					embeds: [embed],
+				});
+			}
 
-            const type = lang.SETTINGS.CONFIG.TYPES.AUTO_ROLE;
-            const text = lang.SETTINGS.SETTED(type, role.toString());
-            const embed = this.client.functions.buildEmbed(
-                message,
-                "BLURPLE",
-                bold(text),
-                "✅",
-                true
-            );
+			await this.client.database.set(
+				message.guild.id,
+				"auto_role",
+				role.id
+			);
 
-            return message.channel.send({
-                embeds: [embed],
-            });
-        }
-        else if(action === 'reset') {
-            this.client.database.set(message.guild, "autoRole", "0");
+			const type = lang.SETTINGS.CONFIG.TYPES.AUTO_ROLE;
+			const text = lang.SETTINGS.SETTED(type, role.toString());
+			const embed = this.client.functions.buildEmbed(
+				message,
+				"BLURPLE",
+				bold(text),
+				"✅",
+				true
+			);
 
-            const type = lang.SETTINGS.CONFIG.TYPES.AUTO_ROLE;
-            const text = lang.SETTINGS.RESETTED(type);
-            const embed = this.client.functions.buildEmbed(
-                message,
-                "BLURPLE",
-                bold(text),
-                "✅",
-                true
-            );
+			return message.channel.send({
+				embeds: [embed],
+			});
+		} else if (action === "reset") {
+			await this.client.database.set(message.guild.id, "auto_role", null);
 
-            return message.channel.send({
-                embeds: [embed],
-            });
-        }
+			const type = lang.SETTINGS.CONFIG.TYPES.AUTO_ROLE;
+			const text = lang.SETTINGS.RESETTED(type);
+			const embed = this.client.functions.buildEmbed(
+				message,
+				"BLURPLE",
+				bold(text),
+				"✅",
+				true
+			);
+
+			return message.channel.send({
+				embeds: [embed],
+			});
+		}
 	}
 }

@@ -1,38 +1,55 @@
+import Event from "../../types/Event/Event";
+import Bot from "../../classes/Bot";
+import index from "../../index";
 import { MessageEmbed, TextChannel } from "discord.js";
-import { RunFunction } from "../../interfaces/Event";
-import { EventEmitter } from "events";
-import client from "../../index";
 
-interface NewLevelData {
+interface INewLevelData {
 	userID: string;
 	guildID: string;
 	channelID: string;
 	level: number;
 }
 
-export const name: string = "newLevel";
-export const emitter: EventEmitter = client.levels;
+export default class NewLevelEvent extends Event {
+	constructor() {
+		super("newLevel", index.levels);
+	}
 
-export const run: RunFunction = async (client, data: NewLevelData) => {
-	const guild = client.guilds.cache.get(data.guildID);
-	const user = guild.members.cache.get(data.userID);
-	const channel = guild.channels.cache.get(data.channelID) as TextChannel;
-	const lang = await client.functions.getLanguageFile(guild);
-	var text = lang.EVENTS.LEVELING.NEWLEVEL.replace(
-		"{user}",
-		user.toString()
-	).replace("{level}", client.functions.sp(data.level));
+	async run(client: Bot, data: INewLevelData) {
+		const guild = client.guilds.cache.get(data.guildID);
+		if (!guild) return;
 
-	const embed = new MessageEmbed()
-		.setColor("BLURPLE")
-		.setAuthor({
-			name: user.user.username,
-			iconURL: user.user.displayAvatarURL({ dynamic: true })
-		})
-		.setDescription(text)
-		.setTimestamp();
+		const settings = await client.database.getSettings(guild.id);
 
-	return channel.send({
-		embeds: [embed],
-	});
-};
+		const member = guild.members.cache.get(data.userID);
+		if (!member) return;
+
+		const channel = guild.channels.cache.get(data.channelID) as TextChannel;
+		if (!channel) return;
+
+		const lang_file = await client.functions.getLanguageFile(guild.id);
+		const description = lang_file.EVENTS.LEVELING.NEWLEVEL(
+			member.toString(),
+			client.functions.sp(data.level)
+		);
+
+		const happend_at = lang_file.EVENTS.HAPPEND_AT(
+			new Date().toLocaleString(settings.locale)
+		);
+
+		const embed = new MessageEmbed()
+			.setColor("BLURPLE")
+			.setAuthor({
+				name: member.user.tag,
+				iconURL: member.user.displayAvatarURL({ dynamic: true }),
+			})
+			.setDescription(description)
+			.setFooter({
+				text: happend_at,
+			});
+
+		return channel.send({
+			embeds: [embed],
+		});
+	}
+}

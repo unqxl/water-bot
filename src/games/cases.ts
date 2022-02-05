@@ -6,11 +6,11 @@ import {
 	MessageEmbed,
 } from "discord.js";
 import { bold } from "@discordjs/builders";
-import Goose from "../classes/Goose";
+import Bot from "../classes/Bot";
 import cases from "../data/cases.json";
 
 export = async (
-	client: Goose,
+	client: Bot,
 	_msg: Message,
 	message: Message,
 	lang: typeof import("@locales/English").default
@@ -55,7 +55,7 @@ export = async (
 		`($${cases[1].cost})`
 	)}\n`;
 	embedDescription += `[**3**] ${bold(goldenName)} ${bold(
-		`($${cases[3].cost})`
+		`($${cases[2].cost})`
 	)}\n\n`;
 	embedDescription += note;
 
@@ -63,7 +63,7 @@ export = async (
 		.setColor("BLURPLE")
 		.setAuthor({
 			name: _msg.author.username,
-			iconURL: _msg.author.displayAvatarURL({ dynamic: true })
+			iconURL: _msg.author.displayAvatarURL({ dynamic: true }),
 		})
 		.setDescription(embedDescription)
 		.setTimestamp();
@@ -96,7 +96,9 @@ export = async (
 						.setColor("BLURPLE")
 						.setAuthor({
 							name: _msg.author.username,
-							iconURL: _msg.author.displayAvatarURL({ dynamic: true })
+							iconURL: _msg.author.displayAvatarURL({
+								dynamic: true,
+							}),
 						})
 						.setDescription(
 							bold(
@@ -145,7 +147,9 @@ export = async (
 					.setColor("BLURPLE")
 					.setAuthor({
 						name: _msg.author.username,
-						iconURL: _msg.author.displayAvatarURL({ dynamic: true })
+						iconURL: _msg.author.displayAvatarURL({
+							dynamic: true,
+						}),
 					})
 					.setDescription(bold(text))
 					.setTimestamp();
@@ -166,7 +170,9 @@ export = async (
 						.setColor("BLURPLE")
 						.setAuthor({
 							name: _msg.author.username,
-							iconURL: _msg.author.displayAvatarURL({ dynamic: true })
+							iconURL: _msg.author.displayAvatarURL({
+								dynamic: true,
+							}),
 						})
 						.setDescription(bold(text))
 						.setTimestamp();

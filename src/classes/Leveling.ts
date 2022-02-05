@@ -1,12 +1,12 @@
 import { Message } from "discord.js/typings/index.js";
 import { UserLeveling } from "../interfaces/Guild";
 import { EventEmitter } from "events";
-import Goose from "./Goose";
+import Bot from "./Bot";
 
 export class Leveling extends EventEmitter {
-	public client: Goose;
+	public client: Bot;
 
-	constructor(client: Goose) {
+	constructor(client: Bot) {
 		super();
 
 		this.client = client;

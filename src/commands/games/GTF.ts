@@ -2,12 +2,12 @@ import { Message } from "discord.js";
 import { Command } from "../../types/Command/Command";
 import { Categories } from "../../types/Command/BaseCommand";
 import { bold } from "@discordjs/builders";
-import Goose from "../../classes/Goose";
+import { request } from "undici";
+import Bot from "../../classes/Bot";
 import random from "random";
-import fetch from "node-fetch";
 
 export default class GuessTheFlagCommand extends Command {
-	constructor(client: Goose) {
+	constructor(client: Bot) {
 		super(client, {
 			name: "guesstheflag",
 			aliases: ["gtf"],
@@ -28,15 +28,18 @@ export default class GuessTheFlagCommand extends Command {
 		lang: typeof import("@locales/English").default
 	) {
 		const reward = random.int(100, 190);
-		const locale = this.client.database.getSetting(
-			message.guild,
-			"language"
+		const locale = await this.client.database.getSetting(
+			message.guild.id,
+			"locale"
 		);
-		const { Data, flag } = await fetch("https://api.dagpi.xyz/data/flag", {
-			headers: {
-				Authorization: this.client.config.keys.dagpi_key,
-			},
-		}).then((res) => res.json());
+		const { Data, flag } = await (
+			await request("https://api.dagpi.xyz/data/flag", {
+				headers: {
+					authorization: this.client.config.keys.dagpi_key,
+				},
+				method: "GET",
+			})
+		).body.json();
 
 		var common_name = Data.name.common;
 		var official_name = Data.name.official;

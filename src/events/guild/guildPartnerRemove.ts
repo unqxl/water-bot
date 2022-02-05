@@ -1,30 +1,44 @@
+import Event from "../../types/Event/Event";
+import Bot from "../../classes/Bot";
 import { Guild, MessageEmbed, TextChannel } from "discord.js";
-import { RunFunction } from "../../interfaces/Event";
-import { bold } from "@discordjs/builders";
 
-export const name: string = "guildPartnerRemove";
+export default class GuildPartnerRemoveEvent extends Event {
+	constructor() {
+		super("guildPartnerRemove");
+	}
 
-export const run: RunFunction = async (client, guild: Guild) => {
-	const logsChannelID = client.database.getSetting(guild, "logChannel");
-	if (logsChannelID === "0") return;
+	async run(client: Bot, guild: Guild) {
+		const settings = await client.database.getSettings(guild.id);
+		if (!settings.log_channel) return;
 
-	const logsChannel = guild.channels.cache.get(logsChannelID) as TextChannel;
+		const log_channel = guild.channels.cache.get(
+			settings.log_channel
+		) as TextChannel;
+		if (!log_channel) return;
 
-	const lang = await client.functions.getLanguageFile(guild);
-	const title = lang.EVENTS.GUILD_EVENTS.UNPARTNERED.TITLE;
-	const description = bold(lang.EVENTS.GUILD_EVENTS.UNPARTNERED.DESCRIPTION);
+		const lang_file = await client.functions.getLanguageFile(guild.id);
+		const title = lang_file.EVENTS.GUILD_EVENTS.UNPARTNERED.TITLE;
+		const description =
+			lang_file.EVENTS.GUILD_EVENTS.UNPARTNERED.DESCRIPTION;
 
-	const embed = new MessageEmbed()
-		.setColor("BLURPLE")
-		.setAuthor({
-			name: guild.name, 
-			iconURL: guild.iconURL({ dynamic: true })
-		})
-		.setTitle(title)
-		.setDescription(description)
-		.setTimestamp();
+		const happend_at = lang_file.EVENTS.HAPPEND_AT(
+			new Date().toLocaleString(settings.locale)
+		);
 
-	return logsChannel.send({
-		embeds: [embed],
-	});
-};
+		const embed = new MessageEmbed()
+			.setColor("BLURPLE")
+			.setAuthor({
+				name: guild.name,
+				iconURL: guild.iconURL({ dynamic: true }),
+			})
+			.setTitle(title)
+			.setDescription(description)
+			.setFooter({
+				text: happend_at,
+			});
+
+		return log_channel.send({
+			embeds: [embed],
+		});
+	}
+}

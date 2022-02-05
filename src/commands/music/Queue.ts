@@ -1,14 +1,11 @@
-import {
-	Categories,
-	ValidateReturn,
-} from "../../types/Command/BaseCommand";
+import { Categories, ValidateReturn } from "../../types/Command/BaseCommand";
 import { Message, Util } from "discord.js";
 import { Command } from "../../types/Command/Command";
 import { bold } from "@discordjs/builders";
-import Goose from "../../classes/Goose";
+import Bot from "../../classes/Bot";
 
 export default class QueueCommand extends Command {
-	constructor(client: Goose) {
+	constructor(client: Bot) {
 		super(client, {
 			name: "queue",
 			aliases: ["songs"],
@@ -28,6 +25,30 @@ export default class QueueCommand extends Command {
 		args: string[],
 		lang: typeof import("@locales/English").default
 	): Promise<ValidateReturn> {
+		const { djRoles } = this.client.configurations.get(message.guild.id);
+		if (djRoles.length) {
+			const { status, message: error } = await this.client.DJSystem.check(
+				message
+			);
+			if (!status) {
+				const text = bold(error);
+				const embed = this.client.functions.buildEmbed(
+					message,
+					"BLURPLE",
+					bold(text),
+					"❌",
+					true
+				);
+
+				return {
+					ok: false,
+					error: {
+						embeds: [embed],
+					},
+				};
+			}
+		}
+
 		const [error, voice_error] = await Promise.all([
 			lang.ERRORS.NOT_JOINED_VOICE,
 			lang.ERRORS.JOIN_BOT_VOICE,

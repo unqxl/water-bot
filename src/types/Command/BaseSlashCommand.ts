@@ -4,7 +4,7 @@ import {
 	CommandInteraction,
 	MessageOptions,
 } from "discord.js";
-import Goose from "../../classes/Goose";
+import Bot from "../../classes/Bot";
 
 export interface BaseSlashCommandOptions {
 	name: string;
@@ -23,10 +23,10 @@ export abstract class BaseSlashCommand<
 	TOptions extends BaseSlashCommandOptions = BaseSlashCommandOptions
 > {
 	protected _options: TOptions;
-	client: Goose;
+	client: Bot;
 	name: string;
 
-	constructor(client: Goose, options: TOptions) {
+	constructor(client: Bot, options: TOptions) {
 		this.client = client;
 		this.name = options.name;
 		this._options = options;

@@ -1,44 +1,49 @@
+import Event from "../../types/Event/Event";
+import Bot from "../../classes/Bot";
 import { GuildMember, MessageEmbed, TextChannel } from "discord.js";
-import { RunFunction } from "../../interfaces/Event";
-import { bold } from "@discordjs/builders";
 
-export const name: string = "guildMemberBoost";
+export default class GuildMemberBoostEvent extends Event {
+	constructor() {
+		super("guildMemberBoost");
+	}
 
-export const run: RunFunction = async (client, member: GuildMember) => {
-	const logsChannelID = client.database.getSetting(
-		member.guild,
-		"logChannel"
-	);
-	if (logsChannelID === "0") return;
+	async run(client: Bot, member: GuildMember) {
+		const settings = await client.database.getSettings(member.guild.id);
+		if (!settings.log_channel) return;
 
-	const logsChannel = member.guild.channels.cache.get(
-		logsChannelID
-	) as TextChannel;
-	if (!logsChannel) return;
+		const log_channel = member.guild.channels.cache.get(
+			settings.log_channel
+		) as TextChannel;
+		if (!log_channel) return;
 
-	const lang = await client.functions.getLanguageFile(member.guild);
-	const title = lang.EVENTS.GUILD_EVENTS.MEMBER_BOOST.TITLE;
-	const description = bold(
-		lang.EVENTS.GUILD_EVENTS.MEMBER_BOOST.DESCRIPTION.replace(
-			"{member}",
-			member.toString()
-		).replace(
-			"{boosts}",
-			client.functions.sp(member.guild.premiumSubscriptionCount)
-		)
-	);
+		const lang_file = await client.functions.getLanguageFile(
+			member.guild.id
+		);
+		const title = lang_file.EVENTS.GUILD_EVENTS.MEMBER_BOOST.TITLE;
+		const description =
+			lang_file.EVENTS.GUILD_EVENTS.MEMBER_BOOST.DESCRIPTION(
+				member.user.tag,
+				client.functions.sp(member.guild.premiumSubscriptionCount)
+			);
 
-	const embed = new MessageEmbed()
-		.setColor("BLURPLE")
-		.setAuthor({
-			name: member.user.tag,
-			iconURL: member.user.displayAvatarURL({ dynamic: true })
-		})
-		.setTitle(title)
-		.setDescription(description)
-		.setTimestamp();
+		const happend_at = lang_file.EVENTS.HAPPEND_AT(
+			new Date().toLocaleString(settings.locale)
+		);
 
-	return logsChannel.send({
-		embeds: [embed],
-	});
-};
+		const embed = new MessageEmbed()
+			.setColor("BLURPLE")
+			.setAuthor({
+				name: member.user.tag,
+				iconURL: member.user.displayAvatarURL({ dynamic: true }),
+			})
+			.setTitle(title)
+			.setDescription(description)
+			.setFooter({
+				text: happend_at,
+			});
+
+		return log_channel.send({
+			embeds: [embed],
+		});
+	}
+}

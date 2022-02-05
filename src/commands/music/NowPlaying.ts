@@ -1,14 +1,11 @@
-import {
-	Categories,
-	ValidateReturn,
-} from "../../types/Command/BaseCommand";
+import { Categories, ValidateReturn } from "../../types/Command/BaseCommand";
 import { Message, Util } from "discord.js";
 import { Command } from "../../types/Command/Command";
 import { bold } from "@discordjs/builders";
-import Goose from "../../classes/Goose";
+import Bot from "../../classes/Bot";
 
 export default class NowPlayingCommand extends Command {
-	constructor(client: Goose) {
+	constructor(client: Bot) {
 		super(client, {
 			name: "nowplaying",
 			aliases: ["np"],

@@ -2,10 +2,10 @@ import { Message, MessageAttachment } from "discord.js";
 import { Command } from "../../types/Command/Command";
 import { Categories } from "../../types/Command/BaseCommand";
 import { Rank } from "canvacord";
-import Goose from "../../classes/Goose";
+import Bot from "../../classes/Bot";
 
 export default class RankCommand extends Command {
-	constructor(client: Goose) {
+	constructor(client: Bot) {
 		super(client, {
 			name: "rank",
 			aliases: ["card"],

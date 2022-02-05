@@ -1,14 +1,11 @@
-import {
-	Categories,
-	ValidateReturn,
-} from "../../types/Command/BaseCommand";
+import { Categories, ValidateReturn } from "../../types/Command/BaseCommand";
 import { Message } from "discord.js";
 import { Command } from "../../types/Command/Command";
 import { bold } from "@discordjs/builders";
-import Goose from "../../classes/Goose";
+import Bot from "../../classes/Bot";
 
 export default class ResumeCommand extends Command {
-	constructor(client: Goose) {
+	constructor(client: Bot) {
 		super(client, {
 			name: "resume",
 
@@ -27,10 +24,12 @@ export default class ResumeCommand extends Command {
 		args: string[],
 		lang: typeof import("@locales/English").default
 	): Promise<ValidateReturn> {
-		const roles = this.client.database.getSetting(message.guild, 'djRoles');
-		if(roles.length) {
-			const { status, message: error } = await this.client.DJSystem.check(message);
-			if(!status) {
+		const { djRoles } = this.client.configurations.get(message.guild.id);
+		if (djRoles.length) {
+			const { status, message: error } = await this.client.DJSystem.check(
+				message
+			);
+			if (!status) {
 				const text = bold(error);
 				const embed = this.client.functions.buildEmbed(
 					message,
@@ -39,7 +38,7 @@ export default class ResumeCommand extends Command {
 					"❌",
 					true
 				);
-	
+
 				return {
 					ok: false,
 					error: {
@@ -47,8 +46,8 @@ export default class ResumeCommand extends Command {
 					},
 				};
 			}
-		};
-		
+		}
+
 		const [error, voice_error] = await Promise.all([
 			lang.ERRORS.NOT_JOINED_VOICE,
 			lang.ERRORS.JOIN_BOT_VOICE,

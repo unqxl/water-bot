@@ -6,7 +6,7 @@ import {
 	TextChannel,
 } from "discord.js";
 import { bold, hyperlink } from "@discordjs/builders";
-import Goose from "classes/Goose";
+import Bot from "classes/Bot";
 
 interface TwitchData {
 	name: string;
@@ -17,7 +17,7 @@ interface TwitchData {
 }
 
 export = async (
-	client: Goose,
+	client: Bot,
 	lang: typeof import("@locales/English").default,
 	channel: TextChannel,
 	data: TwitchData
@@ -51,7 +51,7 @@ class AnnounceEmbed extends MessageEmbed {
 	}
 
 	async build(
-		client: Goose,
+		client: Bot,
 		lang: typeof import("@locales/English").default,
 		data: TwitchData,
 		guild: Guild
@@ -63,7 +63,7 @@ class AnnounceEmbed extends MessageEmbed {
 			lang.TWITCH_HANDLER.GO_TO,
 		];
 
-		const locale = client.database.getSetting(guild, "language");
+		const locale = await client.database.getSetting(guild.id, "locale");
 		const startedDate = new Date(data.date).toLocaleString(locale);
 		const hyperLink = hyperlink(goTo, `https://twitch.tv/${data.name}`);
 		const text = `${bold(newStream)}\n${bold(hyperLink)}\n\n› ${bold(
@@ -71,9 +71,9 @@ class AnnounceEmbed extends MessageEmbed {
 		)}: ${bold(data.title)}\n› ${bold(startedAt)}: ${bold(startedDate)}`;
 
 		this.setColor("#6441a5");
-		this.setAuthor({ 
-			name: data.name, 
-			iconURL: data.picture 
+		this.setAuthor({
+			name: data.name,
+			iconURL: data.picture,
 		});
 		this.setDescription(text);
 		this.setImage(data.thumbnail);

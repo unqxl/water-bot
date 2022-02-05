@@ -1,14 +1,11 @@
 import { Command } from "../../types/Command/Command";
-import {
-	Categories,
-	ValidateReturn,
-} from "../../types/Command/BaseCommand";
+import { Categories, ValidateReturn } from "../../types/Command/BaseCommand";
 import { Message } from "discord.js";
 import { bold } from "@discordjs/builders";
-import Goose from "../../classes/Goose";
+import Bot from "../../classes/Bot";
 
 export default class BankSubtactCommand extends Command {
-	constructor(client: Goose) {
+	constructor(client: Bot) {
 		super(client, {
 			name: "bank-subtract",
 			aliases: ["bank-sub"],

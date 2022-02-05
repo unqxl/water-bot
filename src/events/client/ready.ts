@@ -1,85 +1,88 @@
-import { Guild, MessageEmbed, TextChannel, Util } from "discord.js";
-import { RunFunction } from "../../interfaces/Event";
-import { bold } from "@discordjs/builders";
-import Goose from "../../classes/Goose";
+import Bot from "classes/Bot";
+import Event from "../../types/Event/Event";
 import deployCommands from "../../deploy-commands";
+import { Job } from "../../plugins/Job";
+import { Guild, MessageEmbed, TextChannel, Util } from "discord.js";
+import { bold } from "@discordjs/builders";
 
-export const name: string = "ready";
+export default class ReadyEvent extends Event {
+	constructor() {
+		super("ready");
+	}
 
-export const run: RunFunction = async (client) => {
-	if (!client?.application.owner) await client.application.fetch();
+	async run(client: Bot) {
+		if (!client.application.owner) await client.application.fetch();
 
-	await client.web.start();
-	await checkUp(client);
-	await deployCommands(client);
+		await client.web.start();
+		await deployCommands(client);
+		await checkUp(client);
 
-	console.log(`${client.user.username} logged in!`);
+		console.log(`${client.user.username} logged in!`);
 
-	setInterval(async () => {
-		for (const [n, guild] of client.guilds.cache) {
-			await client.twitchSystem.check(guild);
-		}
-	}, 30000);
+		const job = new Job(
+			client,
+			"Birthday Check",
+			"0 10 0 * * *",
+			async () => {
+				for (const guild of client.guilds.cache.values()) {
+					await birthdayCheck(client, guild);
+				}
+			},
+			null,
+			true,
+			"Europe/Moscow"
+		);
 
-	setInterval(async () => {
-		await client.functions.updateToken();
-	}, 600000);
+		job.start();
+	}
+}
 
-	setInterval(async () => {
-		for (const [n, guild] of client.guilds.cache) {
-			await birthdayCheck(client, guild);
-		}
-	}, 3600000);
-};
-
-async function checkUp(client: Goose) {
-	const settingsOBJ = client.settings.keys();
-	const guildIDS: string[] = [];
-
-	for (const name of settingsOBJ) {
-		const guildID = name.toString().slice("server-".length);
-		guildIDS.push(guildID);
+async function checkUp(client: Bot) {
+	const guildIDS = [];
+	for (const id of client.guilds.cache.keys()) {
+		guildIDS.push(id);
 	}
 
 	for (const guildID of guildIDS) {
 		const guild = client.guilds.cache.get(guildID);
 
 		if (!guild) await client.database.deleteGuild(guildID);
-		else await client.database.getGuild(guild);
+		else await client.database.getGuild(guild.id);
 	}
 
 	return true;
 }
 
-async function birthdayCheck(client: Goose, guild: Guild) {
-	const settings = client.database.getSettings(guild);
-	if (settings.logChannel === "0") return;
+async function birthdayCheck(client: Bot, guild: Guild) {
+	const settings = await client.database.getSettings(guild.id);
+	if (!settings.log_channel) return;
 
 	const birthdayCheck = client.functions.checkGuildBirthday(guild);
 	if (!birthdayCheck.status) return;
 
-	const channel = guild.channels.cache.get(settings.logChannel);
+	const channel = guild.channels.cache.get(settings.log_channel);
 	if (!channel) return;
 
-	const lang = await client.functions.getLanguageFile(guild);
+	const lang_file = await client.functions.getLanguageFile(guild.id);
 
-	const [more, notMore] = [
-		lang.EVENTS.GUILD_BIRTHDAY.YEARS,
-		lang.EVENTS.GUILD_BIRTHDAY.YEAR,
+	const [years, year] = [
+		lang_file.EVENTS.GUILD_BIRTHDAY.YEARS,
+		lang_file.EVENTS.GUILD_BIRTHDAY.YEAR,
 	];
 
-	const description = lang.EVENTS.GUILD_BIRTHDAY.text
-		.replace("{name}", Util.escapeMarkdown(guild.name))
-		.replace("{years}", client.functions.sp(birthdayCheck.years))
-		.replace("{check}", birthdayCheck.years > 1 ? more : notMore);
+	const description = lang_file.EVENTS.GUILD_BIRTHDAY.TEXT(
+		Util.escapeMarkdown(guild.name),
+		client.functions.sp(birthdayCheck.years),
+		birthdayCheck.years > 1 ? years : year
+	);
 
 	const embed = new MessageEmbed()
 		.setColor("BLURPLE")
 		.setAuthor({
-			name: guild.name, 
-			iconURL: guild.iconURL({ dynamic: true })
+			name: guild.name,
+			iconURL: guild.iconURL({ dynamic: true }),
 		})
-		.setDescription(`🎉 | ${bold(description)}`)
+		.setDescription(bold(description))
 		.setTimestamp();
 
 	return (channel as TextChannel).send({

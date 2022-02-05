@@ -2,7 +2,7 @@ import { Message, Permissions } from "discord.js";
 import { Command } from "../../types/Command/Command";
 import { Categories } from "../../types/Command/BaseCommand";
 import { bold, inlineCode } from "@discordjs/builders";
-import Goose from "../../classes/Goose";
+import Bot from "../../classes/Bot";
 
 interface PermissionsKey {
 	MANAGE_GUILD: string;
@@ -20,10 +20,10 @@ interface PermissionsKey {
 }
 
 export default class HelpCommand extends Command {
-	constructor(client: Goose) {
+	constructor(client: Bot) {
 		super(client, {
 			name: "help",
-			aliases: ['h', 'cmd', 'cmds'],
+			aliases: ["h", "cmd", "cmds"],
 
 			description: {
 				en: "Displays all the Bot Commands!",
@@ -40,10 +40,13 @@ export default class HelpCommand extends Command {
 		args: string[],
 		lang: typeof import("@locales/English").default
 	) {
-		const prefix = this.client.database.getSetting(message.guild, "prefix");
-		const locale = this.client.database.getSetting(
-			message.guild,
-			"language"
+		const prefix = await this.client.database.getSetting(
+			message.guild.id,
+			"prefix"
+		);
+		const locale = await this.client.database.getSetting(
+			message.guild.id,
+			"locale"
 		);
 		const command = args[0];
 
@@ -59,6 +62,8 @@ export default class HelpCommand extends Command {
 			Settings,
 			Games,
 			Leveling,
+			Giveaways,
+			RolePlay,
 		] = [
 			lang.GLOBAL.NONE,
 			lang.OTHER.HELP.CATEGORIES.BOT_OWNER,
@@ -70,6 +75,8 @@ export default class HelpCommand extends Command {
 			lang.OTHER.HELP.CATEGORIES.SETTINGS,
 			lang.OTHER.HELP.CATEGORIES.GAMES,
 			lang.OTHER.HELP.CATEGORIES.LEVELING,
+			lang.OTHER.HELP.CATEGORIES.GIVEAWAYS,
+			lang.OTHER.HELP.CATEGORIES.ROLEPLAY,
 		];
 
 		const Length = lang.OTHER.HELP.COMMANDS_LENGTH;
@@ -148,6 +155,26 @@ export default class HelpCommand extends Command {
 					})
 					.join(", ") || bold(None);
 
+			const GiveawaysCommands =
+				this.client.commands
+					.filter(
+						(cmd) => cmd.options.category === Categories.GIVEAWAYS
+					)
+					.map((cmd) => {
+						return inlineCode(prefix + cmd.options.name);
+					})
+					.join(", ") || bold(None);
+
+			const RolePlayCommands =
+				this.client.commands
+					.filter(
+						(cmd) => cmd.options.category === Categories.ROLEPLAY
+					)
+					.map((cmd) => {
+						return inlineCode(prefix + cmd.options.name);
+					})
+					.join(", ") || bold(None);
+
 			const embed = this.client.functions.buildEmbed(
 				message,
 				"BLURPLE",
@@ -163,13 +190,15 @@ export default class HelpCommand extends Command {
 			embed.addField(`[🎵] ${Music}`, MusicCommands);
 			embed.addField(`[📝] ${Other}`, OtherCommands);
 			embed.addField(`[⭐] ${Leveling}`, LevelingCommands);
-			embed.addField(`[⚙️] ${Settings}`, SettingsCommands);
-			embed.setFooter(
-				`${Length}: ${this.client.functions.sp(
+			embed.addField(`[🎉] ${Giveaways}`, GiveawaysCommands);
+			embed.addField(`[🎉] ${Giveaways}`, GiveawaysCommands);
+			embed.addField(`[🎭] ${RolePlay}`, RolePlayCommands);
+			embed.setFooter({
+				text: `${Length}: ${this.client.functions.sp(
 					this.client.commands.size
 				)}`,
-				this.client.user.displayAvatarURL({ dynamic: true })
-			);
+				iconURL: this.client.user.displayAvatarURL({ dynamic: true }),
+			});
 
 			if (this.client.functions.checkOwner(message.author))
 				embed.addField(`[👑] ${BotOwner}`, BotOwnerCommands);
@@ -232,6 +261,8 @@ export default class HelpCommand extends Command {
 				categoryName = Other;
 			else if (cmd.options.category === Categories.SETTINGS)
 				categoryName = Settings;
+			else if (cmd.options.category === Categories.GIVEAWAYS)
+				categoryName = Giveaways;
 
 			const botPermissionsRequired = await this.formatBotPermissions(
 				message,
@@ -252,7 +283,9 @@ export default class HelpCommand extends Command {
 						? cmd.options.description.en
 						: cmd.options.description.ru
 				)}`,
-				`› ${bold(usage)}: ${inlineCode(cmd.options.usage.replace('<prefix>', prefix) ?? None)}`,
+				`› ${bold(usage)}: ${inlineCode(
+					cmd.options.usage.replace("<prefix>", prefix) ?? None
+				)}`,
 				`› ${bold(aliases)}: ${inlineCode(formattedAliases)}`,
 				`› ${bold(category)}: ${inlineCode(categoryName)}`,
 				`› ${bold(botPermissions)}: ${inlineCode(
@@ -283,8 +316,9 @@ export default class HelpCommand extends Command {
 
 	async formatBotPermissions(message: Message, command: Command) {
 		const language = await this.client.functions.getLanguageFile(
-			message.guild
+			message.guild.id
 		);
+
 		const PermsObj: PermissionsKey = language.PERMISSIONS;
 
 		if (command.options.botPermissions) {
@@ -299,8 +333,9 @@ export default class HelpCommand extends Command {
 
 	async formatMemberPermissions(message: Message, command: Command) {
 		const language = await this.client.functions.getLanguageFile(
-			message.guild
+			message.guild.id
 		);
+
 		const PermsObj: PermissionsKey = language.PERMISSIONS;
 
 		if (command.options.memberPermissions) {
