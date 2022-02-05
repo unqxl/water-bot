@@ -37,7 +37,6 @@ import Event from "../types/Event/Event";
 // MySQL
 import { createConnection, getRepository } from "typeorm";
 import { GuildConfiguration } from "../typeorm/entities/GuildConfiguration";
-import { GuildBan } from "../typeorm/entities/GuildBan";
 
 // WebSocket
 import { io, Socket } from "socket.io-client";
@@ -97,6 +96,7 @@ class Bot extends Client {
 	public DJSystem: DJSystem = new DJSystem(this);
 
 	// Modules
+	// @ts-expect-error
 	public moderation: Moderation = new Moderation(this, {
 		dbPath: process.env.BUILD_PATH ? "./db/" : "./src/db/",
 		locale: "en-US",
@@ -173,6 +173,7 @@ class Bot extends Client {
 			},
 		},
 	});
+	// @ts-expect-error
 	public together: DiscordTogether<{}> = new DiscordTogether(this);
 
 	constructor() {
