@@ -28,6 +28,7 @@ export = {
 		steam_key: "NO-TOKEN",
 		osu_key: "NO-TOKEN",
 		dagpi_key: "NO-TOKEN",
+		imdb_key: "NO-TOKEN",
 	},
 
 	twitch: {

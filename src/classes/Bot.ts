@@ -1,11 +1,12 @@
 import "reflect-metadata";
 
-import { Client, Collection } from "discord.js";
+import { Client, Collection, Intents } from "discord.js";
 import { EnmapGiveaways } from "./EnmapGiveaways";
 import { Moderation } from "discord-moderation";
 import { Leveling } from "./Leveling";
 import { Client as dagpiClient } from "dagpijs";
 import { DiscordTogether } from "discord-together";
+import { Client as IMDBClient } from "imdb-api";
 import WebServer from "./Server";
 import Economy from "discord-economy-super";
 import Enmap from "enmap";
@@ -42,63 +43,69 @@ import { GuildConfiguration } from "../typeorm/entities/GuildConfiguration";
 import { io, Socket } from "socket.io-client";
 
 class Bot extends Client {
-	// Collections
+	//? [Collections]
 	public commands: Collection<string, Command> = new Collection();
 	public slashCommands: Collection<string, SlashCommand> = new Collection();
 	public aliases: Collection<string, string> = new Collection();
 	public events: Collection<string, Event> = new Collection();
 	public _configs: Collection<string, GuildConfiguration> = new Collection();
 
-	// Other
+	//? [Other]
 	public owners: string[] = ["852921856800718908"];
 	public config: typeof config = config;
 	public twitchKey: string = "";
 	public version: string = "2.1.5";
 
-	// Databases
+	//? [Storages]
 	public custom_commands: Enmap<string, CustomCommand[]> = new Enmap({
 		name: "custom_commands",
 		dataDir: process.env.BUILD_PATH ? "./db" : "./src/db",
 		wal: false,
-	});
+	}); //? Custom Commands Storage
 
 	public configurations: Enmap<string, GuildConfig> = new Enmap({
 		name: "configurations",
 		dataDir: process.env.BUILD_PATH ? "./db" : "./src/db",
 		wal: false,
-	});
+	}); //? Configurations Storage
 
 	public leveling = new Enmap({
 		name: "leveling",
 		dataDir: process.env.BUILD_PATH ? "./db" : "./src/db",
 		wal: false,
-	});
+	}); //? Leveling Storage
 
 	public giveawaysDB = new Enmap({
 		name: "giveaways",
 		dataDir: process.env.BUILD_PATH ? "./db" : "./src/db",
 		wal: false,
-	});
+	}); //? Giveaways Storage
 
-	// Classes
-	public handlers: Handlers = new Handlers(this);
-	public functions: Functions = new Functions(this);
-	public database: DBManager = null;
-	public logger: Logger = new Logger();
-	public twitchSystem: TwitchSystem = new TwitchSystem(this);
-	public levels: Leveling = new Leveling(this);
+	//? [APIs]
 	public dagpi: dagpiClient = new dagpiClient(this.config.keys.dagpi_key);
 	public nekos: NekoClient = new NekoClient();
+	public imdb: IMDBClient = new IMDBClient({
+		apiKey: this.config.keys.imdb_key,
+	});
+	//@ts-expect-error
+	public together: DiscordTogether<{}> = new DiscordTogether(this);
 
-	// Additional Systems
+	public handlers: Handlers = new Handlers(this);
+	public functions: Functions = new Functions(this);
+
+	//? [Systems]
 	public web: WebServer = new WebServer({ port: 80 });
 	public socket: Socket = io("http://localhost:3001");
 	public DJSystem: DJSystem = new DJSystem(this);
+	public levels: Leveling = new Leveling(this);
+	public logger: Logger = new Logger();
+	public twitchSystem: TwitchSystem = new TwitchSystem(this);
+	public database: DBManager = null;
 
-	// Modules
+	//? [Modules]
 	// @ts-expect-error
 	public moderation: Moderation = new Moderation(this, {
-		dbPath: process.env.BUILD_PATH ? "./db/" : "./src/db/",
+		dbPath: "./db/",
 		locale: "en-US",
 
 		systems: {
@@ -112,9 +119,7 @@ class Bot extends Client {
 	});
 
 	public economy: Economy = new Economy({
-		storagePath: process.env.BUILD_PATH
-			? "./db/economy.json"
-			: "./src/db/economy.json",
+		storagePath: "./db/economy.json",
 
 		dailyCooldown: 60000 * 60 * 24,
 		workCooldown: 60000 * 60,
@@ -173,8 +178,6 @@ class Bot extends Client {
 			},
 		},
 	});
-	// @ts-expect-error
-	public together: DiscordTogether<{}> = new DiscordTogether(this);
 
 	constructor() {
 		super({
@@ -187,14 +190,14 @@ class Bot extends Client {
 			],
 
 			intents: [
-				"GUILDS",
-				"GUILD_MEMBERS",
-				"GUILD_MESSAGES",
-				"GUILD_VOICE_STATES",
-				"GUILD_BANS",
-				"GUILD_EMOJIS_AND_STICKERS",
-				"GUILD_MESSAGE_REACTIONS",
-				"GUILD_PRESENCES",
+				Intents.FLAGS.GUILDS,
+				Intents.FLAGS.GUILD_MEMBERS,
+				Intents.FLAGS.GUILD_MESSAGES,
+				Intents.FLAGS.GUILD_VOICE_STATES,
+				Intents.FLAGS.GUILD_BANS,
+				Intents.FLAGS.GUILD_EMOJIS_AND_STICKERS,
+				Intents.FLAGS.GUILD_MESSAGE_REACTIONS,
+				Intents.FLAGS.GUILD_PRESENCES,
 			],
 
 			presence: {
@@ -215,7 +218,7 @@ class Bot extends Client {
 	async start() {
 		if (!this.application?.owner) await this.application?.fetch();
 
-		//! [MySQL Setup - Start]
+		//? [MySQL Setup - Start]
 		await createConnection({
 			name: "default",
 			type: "mysql",
@@ -237,7 +240,7 @@ class Bot extends Client {
 
 		this.configs = configMappings;
 		this.database = new DBManager(this);
-		//! [MySQL Setup - End]
+		//? [MySQL Setup - End]
 
 		await distubeEvents(this);
 		await logs(this);
@@ -248,8 +251,9 @@ class Bot extends Client {
 
 		new TopGG(this);
 
-		if (this.config.bot.test) this.login(this.config.bot.testToken);
-		else this.login(this.config.bot.token);
+		this.config.bot.test
+			? this.login(this.config.bot.testToken)
+			: this.login(this.config.bot.token);
 	}
 
 	async wait(ms: number) {

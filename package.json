@@ -9,7 +9,7 @@
 		"prepare": "is-ci || husky install",
 		"start": "npm run build && node dist/index.js",
 		"start:dev": "nodemon src/index.ts",
-		"preinstall": "ncu"
+		"check": "ncu"
 	},
 	"dependencies": {
 		"@anishshobith/deeptype": "^1.1.0",
@@ -41,9 +41,11 @@
 		"enmap": "^5.8.7",
 		"express": "^4.17.2",
 		"glob": "^7.2.0",
+		"imdb-api": "^4.4.1",
 		"module-alias": "^2.2.2",
 		"mysql": "^2.18.1",
 		"nekos.life": "^2.0.9",
+		"osu-api-extended": "^2.0.8",
 		"random": "^3.0.6",
 		"reflect-metadata": "^0.1.13",
 		"socket.io-client": "^4.4.1",
@@ -62,13 +64,15 @@
 		"@types/glob": "^7.2.0",
 		"@types/ms": "^0.7.31",
 		"@types/twemoji-parser": "^13.1.1",
+		"bufferutil": "^4.0.6",
 		"ffmpeg-static": "^4.4.1",
 		"husky": "^7.0.4",
 		"is-ci": "^3.0.1",
 		"libsodium-wrappers": "^0.7.9",
 		"lint-staged": "^12.3.3",
 		"npm-check-updates": "^12.2.1",
-		"rimraf": "^3.0.2"
+		"rimraf": "^3.0.2",
+		"utf-8-validate": "^5.0.8"
 	},
 	"repository": {
 		"type": "git",
