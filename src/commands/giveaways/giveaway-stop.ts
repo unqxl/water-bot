@@ -1,7 +1,6 @@
-import { Message } from "discord.js";
-import { Command } from "../../types/Command/Command";
 import { Categories, ValidateReturn } from "../../types/Command/BaseCommand";
-import { bold } from "@discordjs/builders";
+import { Command } from "../../types/Command/Command";
+import { Message } from "discord.js";
 import Bot from "../../classes/Bot";
 
 export default class StopGiveawayCommand extends Command {
@@ -17,7 +16,7 @@ export default class StopGiveawayCommand extends Command {
 			category: Categories.GIVEAWAYS,
 			usage: "<prefix>giveaway-stop <message_id>",
 
-			memberPermissions: ["MANAGE_GUILD"],
+			memberPermissions: ["ManageGuild"],
 		});
 	}
 
@@ -28,15 +27,12 @@ export default class StopGiveawayCommand extends Command {
 	): Promise<ValidateReturn> {
 		const message_id = args[0];
 		if (!message_id) {
-			const text = lang.ERRORS.ARGS_MISSING.replace(
-				"{cmd_name}",
-				"giveaway-stop"
-			);
-
+			const text = lang.ERRORS.ARGS_MISSING("giveaway-stop");
 			const embed = this.client.functions.buildEmbed(
 				message,
-				"BLURPLE",
-				bold(text),
+				"Red",
+				text,
+				false,
 				"❌",
 				true
 			);
@@ -57,8 +53,9 @@ export default class StopGiveawayCommand extends Command {
 			const text = lang.ERRORS.GIVEAWAY_NOT_FOUND(message_id);
 			const embed = this.client.functions.buildEmbed(
 				message,
-				"BLURPLE",
-				bold(text),
+				"Red",
+				text,
+				false,
 				"❌",
 				true
 			);
@@ -90,9 +87,10 @@ export default class StopGiveawayCommand extends Command {
 			const text = lang.GIVEAWAYS.RESPONSES.ENDED(message_id);
 			const embed = this.client.functions.buildEmbed(
 				message,
-				"BLURPLE",
-				bold(text),
-				"❌",
+				"Blurple",
+				text,
+				false,
+				"✅",
 				true
 			);
 

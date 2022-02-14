@@ -1,7 +1,6 @@
-import { Message } from "discord.js";
-import { Command } from "../../types/Command/Command";
 import { Categories, ValidateReturn } from "../../types/Command/BaseCommand";
-import { bold } from "@discordjs/builders";
+import { Command } from "../../types/Command/Command";
+import { Message } from "discord.js";
 import Bot from "../../classes/Bot";
 
 export default class TickleCommand extends Command {
@@ -26,15 +25,12 @@ export default class TickleCommand extends Command {
 	): Promise<ValidateReturn> {
 		const member = message.mentions.members.first();
 		if (!member) {
-			const text = lang.ERRORS.ARGS_MISSING.replace(
-				"{cmd_name}",
-				"tickle"
-			);
-
+			const text = lang.ERRORS.ARGS_MISSING("tickle");
 			const embed = this.client.functions.buildEmbed(
 				message,
-				"BLURPLE",
-				bold(text),
+				"Red",
+				text,
+				false,
 				"❌",
 				true
 			);
@@ -67,9 +63,11 @@ export default class TickleCommand extends Command {
 
 		const embed = this.client.functions.buildEmbed(
 			message,
-			"BLURPLE",
+			"Blurple",
 			text,
-			"😂"
+			false,
+			"😂",
+			true
 		);
 		embed.setImage(url);
 

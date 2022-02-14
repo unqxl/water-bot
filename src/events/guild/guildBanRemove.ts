@@ -1,4 +1,4 @@
-import { GuildBan, MessageEmbed, TextChannel } from "discord.js";
+import { GuildBan, Embed, TextChannel, Util } from "discord.js";
 import Bot from "../../classes/Bot";
 import Event from "../../types/Event/Event";
 
@@ -19,7 +19,7 @@ export default class GuildBanRemoveEvent extends Event {
 		const lang_file = await client.functions.getLanguageFile(ban.guild.id);
 		const { target, executor, reason } = await (
 			await ban.guild.fetchAuditLogs({
-				type: "MEMBER_BAN_REMOVE",
+				type: "MemberBanRemove",
 				limit: 1,
 			})
 		).entries.first();
@@ -37,11 +37,11 @@ export default class GuildBanRemoveEvent extends Event {
 			new Date().toLocaleString(settings.locale)
 		);
 
-		const embed = new MessageEmbed()
-			.setColor("BLURPLE")
+		const embed = new Embed()
+			.setColor(Util.resolveColor("Blurple"))
 			.setAuthor({
 				name: target.tag,
-				iconURL: target.displayAvatarURL({ dynamic: true }),
+				iconURL: target.displayAvatarURL(),
 			})
 			.setTitle(title)
 			.setDescription(description)

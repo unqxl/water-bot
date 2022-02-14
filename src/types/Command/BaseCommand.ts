@@ -1,4 +1,5 @@
-import { Message, MessageOptions, PermissionString } from "discord.js";
+import { MessageOptions, PermissionsString } from "discord.js";
+import { Message } from "discord.js";
 import Bot from "../../classes/Bot";
 
 export enum Categories {
@@ -21,8 +22,8 @@ export interface BaseCommandOptions {
 	aliases?: string[];
 	description?: Description;
 	usage?: string;
-	memberPermissions?: PermissionString[];
-	botPermissions?: PermissionString[];
+	memberPermissions?: PermissionsString[];
+	botPermissions?: PermissionsString[];
 }
 
 interface Description {

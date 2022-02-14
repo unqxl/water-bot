@@ -1,8 +1,8 @@
-import { Message, MessageButton, MessageActionRow } from "discord.js";
+import { ButtonComponent, ActionRow, ComponentType } from "discord.js";
 import { ValidateReturn, Categories } from "../../types/Command/BaseCommand";
+import { Message } from "discord.js";
 import { Command } from "../../types/Command/Command";
 import { get } from "sourcebin";
-import { bold } from "@discordjs/builders";
 import { transpile } from "typescript";
 import { inspect } from "util";
 import { Type } from "@anishshobith/deeptype";
@@ -43,8 +43,9 @@ export default class EvalCommand extends Command {
 
 		const embed = this.client.functions.buildEmbed(
 			message,
-			"BLURPLE",
-			bold(text),
+			"Red",
+			text,
+			false,
 			"❌",
 			true
 		);
@@ -60,12 +61,12 @@ export default class EvalCommand extends Command {
 		}
 
 		if (!code) {
-			const text = lang.ERRORS.ARGS_MISSING.replace("{cmd_name}", "eval");
-
+			const text = lang.ERRORS.ARGS_MISSING("eval");
 			const embed = this.client.functions.buildEmbed(
 				message,
-				"BLURPLE",
-				bold(text),
+				"Blurple",
+				text,
+				false,
 				"❌",
 				true
 			);
@@ -116,8 +117,9 @@ export default class EvalCommand extends Command {
 			const error = lang.ERRORS.EVAL_CANCELED;
 			const embed = this.client.functions.buildEmbed(
 				message,
-				"RED",
-				`**${error}**`,
+				"Red",
+				error,
+				false,
 				"❌",
 				true
 			);
@@ -146,17 +148,17 @@ export default class EvalCommand extends Command {
 			}ms\`\`\``,
 		].join("\n");
 
-		const deleteBTN = new MessageButton()
+		const deleteBTN = new ButtonComponent()
 			.setCustomId("delete")
-			.setStyle("PRIMARY")
-			.setEmoji("❌");
+			.setStyle(1)
+			.setEmoji({ name: "❌" });
 
-		const row = new MessageActionRow().addComponents([deleteBTN]);
-
+		const row = new ActionRow().addComponents(deleteBTN);
 		const embed = this.client.functions.buildEmbed(
 			message,
-			"BLURPLE",
+			"Blurple",
 			res,
+			false,
 			false,
 			true
 		);
@@ -170,7 +172,7 @@ export default class EvalCommand extends Command {
 			filter: (btn) =>
 				btn.user.id === message.author.id && btn.customId === "delete",
 			max: 1,
-			componentType: "BUTTON",
+			componentType: ComponentType.Button,
 			time: 60000 * 60,
 		});
 

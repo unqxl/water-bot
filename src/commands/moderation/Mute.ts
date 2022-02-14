@@ -1,14 +1,12 @@
-import { Categories, ValidateReturn } from "../../types/Command/BaseCommand";
 import {
 	ButtonInteraction,
-	Message,
-	MessageActionRow,
-	MessageButton,
-	MessageEmbed,
-	TextChannel,
+	ActionRow,
+	ButtonComponent,
+	ComponentType,
 } from "discord.js";
+import { Categories, ValidateReturn } from "../../types/Command/BaseCommand";
 import { Command } from "../../types/Command/Command";
-import { bold } from "@discordjs/builders";
+import { Message } from "discord.js";
 import Bot from "../../classes/Bot";
 
 export default class MuteCommand extends Command {
@@ -24,8 +22,8 @@ export default class MuteCommand extends Command {
 			category: Categories.MODERATION,
 			usage: "<prefix>mute <member> [reason]",
 
-			memberPermissions: ["MANAGE_MESSAGES"],
-			botPermissions: ["MANAGE_ROLES"],
+			memberPermissions: ["ManageMessages"],
+			botPermissions: ["ManageRoles"],
 		});
 	}
 
@@ -39,11 +37,12 @@ export default class MuteCommand extends Command {
 			message.guild.members.cache.get(args[0]);
 
 		if (!member) {
-			const text = lang.ERRORS.ARGS_MISSING.replace("{cmd_name}", "mute");
+			const text = lang.ERRORS.ARGS_MISSING("mute");
 			const embed = this.client.functions.buildEmbed(
 				message,
-				"BLURPLE",
-				bold(text),
+				"Red",
+				text,
+				false,
 				"❌",
 				true
 			);
@@ -65,8 +64,9 @@ export default class MuteCommand extends Command {
 			const text = lang.ERRORS.NO_MUTEROLE;
 			const embed = this.client.functions.buildEmbed(
 				message,
-				"BLURPLE",
-				bold(text),
+				"Red",
+				text,
+				false,
 				"❌",
 				true
 			);
@@ -102,31 +102,31 @@ export default class MuteCommand extends Command {
 			lang.FUNCTIONS.VERIFICATION.TEXT,
 		];
 
-		const confirmButton = new MessageButton()
+		const confirmButton = new ButtonComponent()
 			.setCustomId("confirm")
-			.setStyle("SUCCESS")
+			.setStyle(3)
 			.setLabel(accept)
-			.setEmoji("✅");
+			.setEmoji({ name: "✅" });
 
-		const cancelButton = new MessageButton()
+		const cancelButton = new ButtonComponent()
 			.setCustomId("cancel")
-			.setStyle("DANGER")
+			.setStyle(4)
 			.setLabel(decline)
-			.setEmoji("❌");
+			.setEmoji({ name: "❌" });
 
-		const confirmRow = new MessageActionRow().addComponents([
+		const confirmRow = new ActionRow().addComponents(
 			confirmButton,
-			cancelButton,
-		]);
+			cancelButton
+		);
 
-		const confirmEmbed = new MessageEmbed()
-			.setColor("BLURPLE")
-			.setAuthor({
-				name: message.author.username,
-				iconURL: message.author.displayAvatarURL({ dynamic: true }),
-			})
-			.setDescription(bold(confirmText))
-			.setTimestamp();
+		const confirmEmbed = this.client.functions.buildEmbed(
+			message,
+			"Blurple",
+			confirmText,
+			false,
+			"✉️",
+			true
+		);
 
 		const msg = await message.channel.send({
 			embeds: [confirmEmbed],
@@ -135,7 +135,7 @@ export default class MuteCommand extends Command {
 
 		const collector = await msg.createMessageComponentCollector({
 			filter: (btn) => btn.user.id === message.author.id,
-			componentType: "BUTTON",
+			componentType: ComponentType.Button,
 			max: 1,
 			time: 20000,
 		});
@@ -144,22 +144,22 @@ export default class MuteCommand extends Command {
 			if (btn.customId === "confirm") {
 				await this.client.moderation.mute(
 					"mute",
+					// @ts-expect-error
 					message,
 					member,
 					reason
 				);
 
-				const text = lang.MODERATION.MUTED.replace(
-					"{target}",
-					member.toString()
-				)
-					.replace("{reason}", reason)
-					.replace("{moderator}", message.author.toString());
-
+				const text = lang.MODERATION.MUTED(
+					member.toString(),
+					reason,
+					message.author.toString()
+				);
 				const embed = this.client.functions.buildEmbed(
 					message,
-					"BLURPLE",
-					bold(text),
+					"Blurple",
+					text,
+					false,
 					"✅",
 					true
 				);

@@ -17,8 +17,11 @@ export default class MessageCreateEvent extends Event {
 		if (client.functions.checkBotMention(message)) {
 			const embed = client.functions.buildEmbed(
 				message,
-				"BLURPLE",
-				lang.EVENTS.GUILD_PREFIX(message.guild.name, config.prefix)
+				"Blurple",
+				lang.EVENTS.GUILD_PREFIX(message.guild.name, config.prefix),
+				false,
+				"✉️",
+				true
 			);
 
 			return message.channel.send({
@@ -48,7 +51,7 @@ export default class MessageCreateEvent extends Event {
 				return message.channel.send(error);
 			}
 
-			return command.run(message, args, lang);
+			return command.run(message as Message, args, lang);
 		} else {
 			try {
 				const custom_commands = client.custom_commands.get(

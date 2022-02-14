@@ -1,7 +1,6 @@
 import { Message } from "discord.js";
 import { Command } from "../../types/Command/Command";
 import { Categories } from "../../types/Command/BaseCommand";
-import { bold } from "@discordjs/builders";
 import { request } from "undici";
 import Bot from "../../classes/Bot";
 import random from "random";
@@ -46,43 +45,36 @@ export default class GuessTheFlagCommand extends Command {
 		var russian_name = Data.translations.rus.common;
 		var languages = Object.values(Data.languages);
 
-		const text = lang.GAMES.GUESS_THE_FLAG.DESCRIPTION.replace(
-			"{reward}",
-			reward.toString()
-		);
+		const text = lang.GAMES.GUESS_THE_FLAG.DESCRIPTION(reward.toString());
 		const embed = this.client.functions.buildEmbed(
 			message,
-			"BLURPLE",
-			"...",
+			"Blurple",
+			text,
+			lang.GAMES.GUESS_THE_FLAG.FOOTER,
 			false,
 			true
 		);
-		embed.setDescription(bold(text));
 		embed.setImage(flag);
-		embed.setFooter(lang.GAMES.GUESS_THE_FLAG.FOOTER);
 
 		const answer = await this.client.functions.promptMessage(message, {
 			embeds: [embed],
 		});
 
 		if (!answer) {
-			const text = lang.GAMES.GUESS_THE_FLAG.TIMEOUT.replace(
-				"{name}",
-				locale === "en-US" ? common_name : Data.translations.rus.common
-			)
-				.replace(
-					"{official_name}",
-					locale === "en-US"
-						? official_name
-						: Data.translations.rus.official
-				)
-				.replace("{currency}", Data.currency.join(", "))
-				.replace("{languages}", languages.join(", "));
+			const text = lang.GAMES.GUESS_THE_FLAG.DEFEAT(
+				locale === "en-US" ? common_name : Data.translations.rus.common,
+				locale === "en-US"
+					? official_name
+					: Data.translations.rus.official,
+				Data.currency.join(", "),
+				languages.join(", ")
+			);
 
 			const embed = this.client.functions.buildEmbed(
 				message,
-				"BLURPLE",
-				bold(text),
+				"Red",
+				text,
+				false,
 				"❌",
 				true
 			);
@@ -106,23 +98,20 @@ export default class GuessTheFlagCommand extends Command {
 				message.guild.id
 			);
 
-			const text = lang.GAMES.GUESS_THE_FLAG.WIN.replace(
-				"{name}",
-				locale === "en-US" ? common_name : Data.translations.rus.common
-			)
-				.replace(
-					"{official_name}",
-					locale === "en-US"
-						? official_name
-						: Data.translations.rus.official
-				)
-				.replace("{currency}", Data.currency.join(", "))
-				.replace("{languages}", languages.join(", "));
+			const text = lang.GAMES.GUESS_THE_FLAG.DEFEAT(
+				locale === "en-US" ? common_name : Data.translations.rus.common,
+				locale === "en-US"
+					? official_name
+					: Data.translations.rus.official,
+				Data.currency.join(", "),
+				languages.join(", ")
+			);
 
 			const embed = this.client.functions.buildEmbed(
 				message,
-				"BLURPLE",
-				bold(text),
+				"Blurple",
+				text,
+				false,
 				"✅",
 				true
 			);
@@ -130,23 +119,20 @@ export default class GuessTheFlagCommand extends Command {
 				embeds: [embed],
 			});
 		} else {
-			const text = lang.GAMES.GUESS_THE_FLAG.DEFEAT.replace(
-				"{name}",
-				locale === "en-US" ? common_name : Data.translations.rus.common
-			)
-				.replace(
-					"{official_name}",
-					locale === "en-US"
-						? official_name
-						: Data.translations.rus.official
-				)
-				.replace("{currency}", Data.currency.join(", "))
-				.replace("{languages}", languages.join(", "));
+			const text = lang.GAMES.GUESS_THE_FLAG.DEFEAT(
+				locale === "en-US" ? common_name : Data.translations.rus.common,
+				locale === "en-US"
+					? official_name
+					: Data.translations.rus.official,
+				Data.currency.join(", "),
+				languages.join(", ")
+			);
 
 			const embed = this.client.functions.buildEmbed(
 				message,
-				"BLURPLE",
-				bold(text),
+				"Red",
+				text,
+				false,
 				"❌",
 				true
 			);

@@ -1,7 +1,6 @@
 import { Categories, ValidateReturn } from "../../types/Command/BaseCommand";
-import { Message } from "discord.js";
 import { Command } from "../../types/Command/Command";
-import { bold } from "@discordjs/builders";
+import { Message } from "discord.js";
 import Bot from "../../classes/Bot";
 
 export default class PauseCommand extends Command {
@@ -30,11 +29,11 @@ export default class PauseCommand extends Command {
 				message
 			);
 			if (!status) {
-				const text = bold(error);
 				const embed = this.client.functions.buildEmbed(
 					message,
-					"BLURPLE",
-					bold(text),
+					"Red",
+					error,
+					false,
 					"❌",
 					true
 				);
@@ -56,8 +55,9 @@ export default class PauseCommand extends Command {
 		if (!message.member.voice.channel) {
 			const embed = this.client.functions.buildEmbed(
 				message,
-				"BLURPLE",
-				bold(error),
+				"Red",
+				error,
+				false,
 				"❌",
 				true
 			);
@@ -77,8 +77,9 @@ export default class PauseCommand extends Command {
 		) {
 			const embed = this.client.functions.buildEmbed(
 				message,
-				"BLURPLE",
-				bold(voice_error),
+				"Red",
+				voice_error,
+				false,
 				"❌",
 				true
 			);
@@ -96,8 +97,9 @@ export default class PauseCommand extends Command {
 			const text = lang.ERRORS.QUEUE_EMPTY;
 			const embed = this.client.functions.buildEmbed(
 				message,
-				"BLURPLE",
-				bold(text),
+				"Red",
+				text,
+				false,
 				"❌",
 				true
 			);
@@ -114,8 +116,9 @@ export default class PauseCommand extends Command {
 			const text = lang.ERRORS.PAUSED;
 			const embed = this.client.functions.buildEmbed(
 				message,
-				"BLURPLE",
-				bold(text),
+				"Red",
+				text,
+				false,
 				"❌",
 				true
 			);
@@ -144,8 +147,9 @@ export default class PauseCommand extends Command {
 		const text = lang.MUSIC.PAUSED;
 		const embed = this.client.functions.buildEmbed(
 			message,
-			"BLURPLE",
-			bold(text),
+			"Blurple",
+			text,
+			false,
 			"✅",
 			true
 		);

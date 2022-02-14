@@ -1,4 +1,4 @@
-import { Message } from "discord.js/typings/index.js";
+import { Message } from "discord.js";
 import { UserLeveling } from "../interfaces/Guild";
 import { EventEmitter } from "events";
 import Bot from "./Bot";

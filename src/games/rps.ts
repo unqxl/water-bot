@@ -1,10 +1,12 @@
 import {
 	ButtonInteraction,
-	Message,
-	MessageActionRow,
-	MessageButton,
-	MessageEmbed,
+	ComponentType,
+	ActionRow,
+	ButtonComponent,
+	Embed,
+	Util,
 } from "discord.js";
+import { Message } from "discord.js";
 import { bold } from "@discordjs/builders";
 
 const IDS = new Set();
@@ -15,45 +17,42 @@ export = async (
 	lang: typeof import("@locales/English").default
 ) => {
 	const opponent = message.mentions.users.first();
-	const acceptText = lang.GAMES.RPS.WAITING_FOR_OPPONENT.replace(
-		"{opponent}",
-		opponent.toString()
-	);
+	const acceptText = lang.GAMES.RPS.WAITING_FOR_OPPONENT(opponent.toString());
 	const footer = lang.GAMES.RPS.FOOTER;
-	const AcceptEmbed = new MessageEmbed()
-		.setColor("BLURPLE")
+	const AcceptEmbed = new Embed()
+		.setColor(Util.resolveColor("Blurple"))
 		.setAuthor({
 			name: message.author.username,
-			iconURL: message.author.displayAvatarURL({ dynamic: true })
+			iconURL: message.author.displayAvatarURL(),
 		})
 		.setDescription(bold(acceptText))
 		.setFooter({
-			text: footer
+			text: footer,
 		})
 		.setTimestamp();
 
-	const AcceptButton = new MessageButton()
-		.setStyle("SUCCESS")
+	const AcceptButton = new ButtonComponent()
+		.setStyle(3)
 		.setCustomId("accept")
 		.setLabel(lang.GLOBAL.ACCEPT)
-		.setEmoji("✅");
+		.setEmoji({ name: "✅" });
 
-	const DeclineButton = new MessageButton()
-		.setStyle("DANGER")
+	const DeclineButton = new ButtonComponent()
+		.setStyle(4)
 		.setCustomId("decline")
 		.setLabel(lang.GLOBAL.DECLINE)
-		.setEmoji("❌");
+		.setEmoji({ name: "❌" });
 
-	const ChooseRow = new MessageActionRow().addComponents([
+	const ChooseRow = new ActionRow().addComponents(
 		AcceptButton,
-		DeclineButton,
-	]);
+		DeclineButton
+	);
 
 	const reply = await msg.edit({
-		content: lang.GAMES.RPS.ACCEPT_CHALLENGE.replace(
-			"{opponent}",
-			opponent.toString()
-		).replace("{author}", message.author.toString()),
+		content: lang.GAMES.RPS.ACCEPT_CHALLENGE(
+			opponent.toString(),
+			message.author.toString()
+		),
 		embeds: [AcceptEmbed],
 		components: [ChooseRow],
 	});
@@ -61,7 +60,7 @@ export = async (
 	const filter = (button) => button.user.id === opponent.id;
 	const collector = await reply.createMessageComponentCollector({
 		filter: filter,
-		componentType: "BUTTON",
+		componentType: ComponentType.Button,
 		time: 30000,
 	});
 
@@ -72,47 +71,43 @@ export = async (
 			return collector.stop("declined");
 		}
 
-		var content = lang.GAMES.RPS.VERSUS.replace(
-			"{opponent}",
-			opponent.toString()
-		).replace("{author}", message.author.toString());
+		var content = lang.GAMES.RPS.VERSUS(
+			opponent.toString(),
+			message.author.toString()
+		);
 		await button.deferUpdate();
 
-		const GameEmbed = new MessageEmbed()
-			.setColor("BLURPLE")
+		const GameEmbed = new Embed()
+			.setColor(Util.resolveColor("Blurple"))
 			.setAuthor({
 				name: message.author.username,
-				iconURL: message.author.displayAvatarURL({ dynamic: true })
+				iconURL: message.author.displayAvatarURL(),
 			})
 			.setDescription(bold(content))
 			.setFooter({
-				text: footer
+				text: footer,
 			})
 			.setTimestamp();
 
-		const rock = new MessageButton()
-			.setStyle("SECONDARY")
+		const rock = new ButtonComponent()
+			.setStyle(2)
 			.setCustomId("rock")
 			.setLabel(lang.GAMES.RPS.ITEMS.ROCK)
-			.setEmoji("🪨");
+			.setEmoji({ name: "🪨" });
 
-		const paper = new MessageButton()
-			.setStyle("SUCCESS")
+		const paper = new ButtonComponent()
+			.setStyle(3)
 			.setCustomId("paper")
 			.setLabel(lang.GAMES.RPS.ITEMS.PAPER)
-			.setEmoji("📄");
+			.setEmoji({ name: "📄" });
 
-		const scissors = new MessageButton()
-			.setStyle("DANGER")
+		const scissors = new ButtonComponent()
+			.setStyle(4)
 			.setCustomId("scissors")
 			.setLabel(lang.GAMES.RPS.ITEMS.SCISSORS)
-			.setEmoji("✂");
+			.setEmoji({ name: "✂" });
 
-		const ItemsRow = new MessageActionRow().addComponents([
-			rock,
-			paper,
-			scissors,
-		]);
+		const ItemsRow = new ActionRow().addComponents(rock, paper, scissors);
 
 		await reply.edit({
 			content: null,
@@ -130,7 +125,7 @@ export = async (
 
 		const SecondCollector = await reply.createMessageComponentCollector({
 			filter: (btn) => IDS.has(btn.user.id),
-			componentType: "BUTTON",
+			componentType: ComponentType.Button,
 			time: 30000,
 		});
 
@@ -154,15 +149,15 @@ export = async (
 			switch (reason) {
 				case "time": {
 					const OverContent = lang.GAMES.RPS.TIMEOUT;
-					const OverEmbed = new MessageEmbed()
-						.setColor("BLURPLE")
+					const OverEmbed = new Embed()
+						.setColor(Util.resolveColor("Blurple"))
 						.setAuthor({
 							name: message.author.username,
-							iconURL: message.author.displayAvatarURL({ dynamic: true })
+							iconURL: message.author.displayAvatarURL(),
 						})
 						.setDescription(bold(OverContent))
 						.setFooter({
-							text: footer
+							text: footer,
 						})
 						.setTimestamp();
 
@@ -179,14 +174,14 @@ export = async (
 						opponentChoose,
 						authorChoose
 					);
-					const winEmbed = new MessageEmbed()
-						.setColor("BLURPLE")
+					const winEmbed = new Embed()
+						.setColor(Util.resolveColor("Blurple"))
 						.setAuthor({
 							name: message.author.username,
-							iconURL: message.author.displayAvatarURL({ dynamic: true })
+							iconURL: message.author.displayAvatarURL(),
 						})
 						.setFooter({
-							text: footer
+							text: footer,
 						})
 						.setTimestamp();
 
@@ -231,19 +226,19 @@ export = async (
 
 	collector.on("end", async (collected, reason) => {
 		if (reason === "time") {
-			const noAnswerContent = lang.GAMES.RPS.NO_ANSWER.replace(
-				"{opponent}",
+			const noAnswerContent = lang.GAMES.RPS.NO_ANSWER(
 				opponent.toString()
 			);
-			const noAnswerEmbed = new MessageEmbed()
-				.setColor("BLURPLE")
+
+			const noAnswerEmbed = new Embed()
+				.setColor(Util.resolveColor("Blurple"))
 				.setAuthor({
 					name: message.author.username,
-					iconURL: message.author.displayAvatarURL({ dynamic: true })
+					iconURL: message.author.displayAvatarURL(),
 				})
 				.setDescription(bold(noAnswerContent))
 				.setFooter({
-					text: footer
+					text: footer,
 				})
 				.setTimestamp();
 
@@ -255,19 +250,19 @@ export = async (
 
 			return;
 		} else if (reason === "declined") {
-			const DeclinedContent = lang.GAMES.RPS.DECLINED.replace(
-				"{opponent}",
+			const DeclinedContent = lang.GAMES.RPS.DECLINED(
 				opponent.toString()
 			);
-			const DeclinedEmbed = new MessageEmbed()
-				.setColor("BLURPLE")
+
+			const DeclinedEmbed = new Embed()
+				.setColor(Util.resolveColor("Blurple"))
 				.setAuthor({
 					name: message.author.username,
-					iconURL: message.author.displayAvatarURL({ dynamic: true })
+					iconURL: message.author.displayAvatarURL(),
 				})
 				.setDescription(bold(DeclinedContent))
 				.setFooter({
-					text: footer
+					text: footer,
 				})
 				.setTimestamp();
 

@@ -1,8 +1,8 @@
-import { Message } from "discord.js";
 import { Command } from "../../types/Command/Command";
 import { Categories } from "../../types/Command/BaseCommand";
+import { Message } from "discord.js";
 import Bot from "../../classes/Bot";
-import phasmophobia from "../../games/phasmophobia";
+import Phasmophobia from "../../games/phasmophobia";
 
 export default class PhasmaphobiaCommand extends Command {
 	constructor(client: Bot) {
@@ -24,7 +24,8 @@ export default class PhasmaphobiaCommand extends Command {
 		args: string[],
 		lang: typeof import("@locales/English").default
 	) {
-		const msg = await message.channel.send("...");
-		return await phasmophobia(message, msg, lang);
+		return await message.channel.send("...").then(async (msg: Message) => {
+			return await Phasmophobia(message, msg, lang);
+		});
 	}
 }

@@ -1,10 +1,12 @@
 import {
 	ButtonInteraction,
-	Message,
-	MessageActionRow,
-	MessageButton,
-	MessageEmbed,
+	ComponentType,
+	ActionRow,
+	ButtonComponent,
+	Embed,
+	Util,
 } from "discord.js";
+import { Message } from "discord.js";
 import { bold } from "@discordjs/builders";
 import Bot from "../classes/Bot";
 import cases from "../data/cases.json";
@@ -19,29 +21,29 @@ export = async (
 	const silverName = lang.ECONOMY.CASES.SILVER;
 	const goldenName = lang.ECONOMY.CASES.GOLD;
 
-	const bronzeCase = new MessageButton()
-		.setStyle("SECONDARY")
+	const bronzeCase = new ButtonComponent()
+		.setStyle(2)
 		.setLabel(bronzeName)
 		.setCustomId("bronze_case")
-		.setEmoji("1️⃣");
+		.setEmoji({ name: "1️⃣" });
 
-	const silverCase = new MessageButton()
-		.setStyle("SECONDARY")
+	const silverCase = new ButtonComponent()
+		.setStyle(2)
 		.setLabel(silverName)
 		.setCustomId("silver_case")
-		.setEmoji("2️⃣");
+		.setEmoji({ name: "2️⃣" });
 
-	const goldenCase = new MessageButton()
-		.setStyle("SECONDARY")
+	const goldenCase = new ButtonComponent()
+		.setStyle(2)
 		.setLabel(goldenName)
 		.setCustomId("golden_case")
-		.setEmoji("3️⃣");
+		.setEmoji({ name: "3️⃣" });
 
-	const casesRow = new MessageActionRow().addComponents([
+	const casesRow = new ActionRow().addComponents(
 		bronzeCase,
 		silverCase,
-		goldenCase,
-	]);
+		goldenCase
+	);
 
 	const description = bold(lang.ECONOMY.CASES.CHOOSE_TEXT);
 	const note = bold(lang.ECONOMY.CASES.NOTE);
@@ -59,11 +61,11 @@ export = async (
 	)}\n\n`;
 	embedDescription += note;
 
-	const ChooseCaseEmbed = new MessageEmbed()
-		.setColor("BLURPLE")
+	const ChooseCaseEmbed = new Embed()
+		.setColor(Util.resolveColor("Blurple"))
 		.setAuthor({
 			name: _msg.author.username,
-			iconURL: _msg.author.displayAvatarURL({ dynamic: true }),
+			iconURL: _msg.author.displayAvatarURL(),
 		})
 		.setDescription(embedDescription)
 		.setTimestamp();
@@ -77,7 +79,7 @@ export = async (
 		.then(async (msg) => {
 			const collector = await msg.createMessageComponentCollector({
 				filter: (btn) => btn.user.id === _msg.author.id,
-				componentType: "BUTTON",
+				componentType: ComponentType.Button,
 				time: 30000,
 			});
 
@@ -92,13 +94,11 @@ export = async (
 				if (!chosenCase) return;
 
 				if (balance < chosenCase.cost) {
-					const embed = new MessageEmbed()
-						.setColor("BLURPLE")
+					const embed = new Embed()
+						.setColor(Util.resolveColor("Blurple"))
 						.setAuthor({
 							name: _msg.author.username,
-							iconURL: _msg.author.displayAvatarURL({
-								dynamic: true,
-							}),
+							iconURL: _msg.author.displayAvatarURL(),
 						})
 						.setDescription(
 							bold(
@@ -139,17 +139,17 @@ export = async (
 						: chosenCase.id === 3
 						? goldenName
 						: "";
-				const text = lang.ECONOMY.CASES.PRIZE_TEXT.replace(
-					"{case}",
-					case_name
-				).replace("{prize}", prize.prize.toLocaleString());
-				const embed = new MessageEmbed()
-					.setColor("BLURPLE")
+
+				const text = lang.ECONOMY.CASES.PRIZE_TEXT(
+					case_name,
+					prize.prize.toLocaleString("be")
+				);
+
+				const embed = new Embed()
+					.setColor(Util.resolveColor("Blurple"))
 					.setAuthor({
 						name: _msg.author.username,
-						iconURL: _msg.author.displayAvatarURL({
-							dynamic: true,
-						}),
+						iconURL: _msg.author.displayAvatarURL(),
 					})
 					.setDescription(bold(text))
 					.setTimestamp();
@@ -166,13 +166,11 @@ export = async (
 			collector.on("end", async (collected, reason) => {
 				if (reason === "time") {
 					const text = lang.ECONOMY.CASES.TIME_IS_OVER;
-					const embed = new MessageEmbed()
-						.setColor("BLURPLE")
+					const embed = new Embed()
+						.setColor(Util.resolveColor("Blurple"))
 						.setAuthor({
 							name: _msg.author.username,
-							iconURL: _msg.author.displayAvatarURL({
-								dynamic: true,
-							}),
+							iconURL: _msg.author.displayAvatarURL(),
 						})
 						.setDescription(bold(text))
 						.setTimestamp();

@@ -1,7 +1,6 @@
 export default {
 	BOTOWNER: {
-		LEFT_GUILD: 'Successfully left Guild with ID "{id}"',
-		UPDATED_DB: "Successfully Updated all the Servers Configuration!",
+		LEFT_GUILD: (id) => `Successfully left Guild with ID "${id}"`,
 		COMMAND_RELOADED: (name) =>
 			`Command with name "${name}" successfully reloaded!`,
 	},
@@ -10,17 +9,27 @@ export default {
 		COINS: "Coins",
 		BALANCE: "Balance",
 		BANK: "Bank",
-		TIME_ERROR: "You've already received your reward!\nTry again in {time}",
-		DAILY_REWARD: "You've received {coins} coins as a Daily Reward!",
-		WORK_REWARD: "You've received {coins} coins as a Work Reward!",
-		WEEKLY_REWARD: "You've received {coins} coins as a Weekly Reward!",
-		BALANCE_ADDED: "Successfully added {amount} Coins to {member} Balance!",
-		BALANCE_SUBT:
-			"Successfully subtracted {amount} Coins from the {member} Balance!",
-		BANK_DEPOSITED: "Successfully deposited {amount} Coins to Your Bank!",
-		BANK_WITHDREW: "Successfully withdrew {amount} Coins from Your Bank!",
-		BALANCE_INFO: "Balance: {balance} coins,\nBank Balance: {bank} coins.",
-		GIFTED: "Successfully gifted {amount} coins to {user}!\n\nYour Balance: {current_balance} coins\n{user} Balance: {user_balance} coins",
+
+		TIME_ERROR: (time) =>
+			`You've already received your reward!\nTry again in ${time}`,
+		DAILY_REWARD: (coins) =>
+			`You've received ${coins} coins as a Daily Reward!`,
+		WORK_REWARD: (coins) =>
+			`You've received ${coins} coins as a Work Reward!`,
+		WEEKLY_REWARD: (coins) =>
+			`You've received ${coins} coins as a Weekly Reward!`,
+		BALANCE_ADDED: (amount, member) =>
+			`Successfully added ${amount} Coins to ${member} Balance!`,
+		BALANCE_SUBT: (amount, member) =>
+			`Successfully subtracted ${amount} Coins from the ${member} Balance!`,
+		BANK_DEPOSITED: (amount) =>
+			`Successfully deposited ${amount} Coins to Your Bank!`,
+		BANK_WITHDREW: (amount) =>
+			`Successfully withdrew ${amount} Coins from Your Bank!`,
+		BALANCE_INFO: (balance, bank) =>
+			`Balance: ${balance} coins,\nBank Balance: ${bank} coins.`,
+		GIFTED: (amount, user, balance) =>
+			`Successfully gifted ${amount} coins to ${user}!\n\nYour Balance: ${balance} coins`,
 
 		CASES: {
 			BRONZE: "Bronze Case",
@@ -29,7 +38,8 @@ export default {
 
 			CHOOSE_TEXT: "To continue, choose one of three availiable cases!",
 			NOTE: "You have 30 seconds to choose case!",
-			PRIZE_TEXT: "You openned {case} and won {prize} coins!",
+			PRIZE_TEXT: (case_name, prize) =>
+				`You openned ${case_name} and won ${prize} coins!`,
 			TIME_IS_OVER: "Time is over!",
 		},
 	},
@@ -43,10 +53,11 @@ export default {
 
 	GAMES: {
 		CAPTCHA: {
-			TEXT: "Solve the Captcha to Earn {reward} coins!\nYou have 15 seconds!",
+			TEXT: (reward) =>
+				`Solve the Captcha to Earn ${reward} coins!\nYou have 15 seconds!`,
 			WRONG_ANSWER: "Your answer was incorrect, the game is ended!",
-			CORRECT_ANSWER:
-				"Your answer was correct, You got {coins} coins to Your Balance!",
+			CORRECT_ANSWER: (coins) =>
+				`Your answer was correct, You got ${coins} coins to Your Balance!`,
 			TIMEOUT: "Time's up, the game is ended!",
 		},
 
@@ -85,10 +96,11 @@ export default {
 				SPIRIT_BOX: "Spirit Box",
 			},
 
-			WELCOME:
-				"Welcome to the Phasmophobia in Discord!\nIn this game you will get ghost type and you need to choose correct evidences for this ghost!\n\nIf you choose correct evidence - you will get 500 coins.\nIf not - ghost will eat you :3\nYou have 30 seconds to choose!\n\nLet's start! Your ghost type is {type}, choose correct evidences to win!",
-			WIN: "Congratulations!\nYou won this game and got 500 coins into your Balance!",
-			DEFEAT: "You're lost!\nYou lose this game and ghost eat you :3!\nCorrect Evidences: {correct}",
+			WELCOME: (type) =>
+				`Welcome to the Phasmophobia in Discord!\nIn this game you will get ghost type and you need to choose correct evidences for this ghost!\n\nIf you choose correct evidence - you will get 500 coins.\nIf not - ghost will eat you :3\nYou have 30 seconds to choose!\n\nLet's start! Your ghost type is ${type}, choose correct evidences to win!`,
+			WIN: "Congratulations!\nYou won this game and got 150 coins into your Balance!",
+			DEFEAT: (correct) =>
+				`You're lost!\nYou lose this game and ghost eat you :3!\nCorrect Evidences: ${correct}`,
 			TIMEOUT: "Time is over, ghost eat you :3!",
 		},
 
@@ -99,53 +111,64 @@ export default {
 				SCISSORS: "Scissors",
 			},
 
-			WAITING_FOR_OPPONENT: "Waiting for {opponent}...",
+			WAITING_FOR_OPPONENT: (opponent) => `Waiting for ${opponent}...`,
 			FOOTER: "Game: Rock-Paper-Scissors",
-			ACCEPT_CHALLENGE:
-				"Hey, {opponent}!\n{author} invited you to play Rock-Paper-Scissors!",
-			VERSUS: "{opponent} VS {author}",
+			ACCEPT_CHALLENGE: (opponent, author) =>
+				`Hey, ${opponent}!\n${author} invited you to play Rock-Paper-Scissors!`,
+			VERSUS: (opponent, author) => `${opponent} VS ${author}`,
 			TIMEOUT: "Game is ended!\nOne of players didn't make a move!",
 			FINAL: (winner) =>
 				`Winner of this game is ${winner}, congratulations!`,
 			DRAW: "Draw, congratulations!",
-			NO_ANSWER: `{opponent} hasn't responded to your offer to play!`,
-			DECLINED: `{opponent} refused to play with you!`,
+			NO_ANSWER: (opponent) =>
+				`${opponent} hasn't responded to your offer to play!`,
+			DECLINED: (opponent) => `${opponent} refused to play with you!`,
 		},
 
 		GUESS_THE_FLAG: {
-			DESCRIPTION: "Guess the Flag to earn {reward} coins!",
-			WIN: "Congratulations, you won this game!\n\n› Name: {name} ({official_name})\n› Currency: {currency}\n› Languages: {languages}",
-			DEFEAT: "Wrong answer!\n\n› Name: {name} ({official_name})\n› Currency: {currency}\n› Languages: {languages}",
-			TIMEOUT:
-				"Time is out!\n\n› Name: {name} ({official_name})\n› Currency: {currency}\n› Languages: {languages}",
+			DESCRIPTION: (reward) => `Guess the Flag to earn ${reward} coins!`,
+			WIN: (name, official_name, currency, languages) =>
+				`Congratulations, you won this game!\n\n› Name: ${name} (${official_name})\n› Currency: ${currency}\n› Languages: ${languages}`,
+			DEFEAT: (name, official_name, currency, languages) =>
+				`Wrong answer!\n\n› Name: ${name} (${official_name})\n› Currency: ${currency}\n› Languages: ${languages}`,
+			TIMEOUT: (name, official_name, currency, languages) =>
+				`Time is out!\n\n› Name: ${name} (${official_name})\n› Currency: ${currency}\n› Languages: ${languages}`,
 			FOOTER: "Game: Guess the Flag",
 		},
 
 		GUESS_THE_LOGO: {
-			DESCRIPTION:
-				"Guess the Flag to earn {reward} coins!\n\n› Clue: {clue}\n› Hint: {hint}",
-			WIN: "Congratulations, you won this game!\n\n› Brand: {brand}\n› Wiki: {wiki}",
-			DEFEAT: "Wrong answer!\n\n› Brand: {brand}\n› Wiki: {wiki}",
-			TIMEOUT: "Time is out!\n\n› Brand: {brand}\n› Wiki: {wiki}",
+			DESCRIPTION: (reward, clue, hint) =>
+				`Guess the Logo to earn ${reward} coins!\n\n› Clue: ${clue}\n› Hint: ${hint}`,
+			WIN: (brand, wiki) =>
+				`Congratulations, you won this game!\n\n› Brand: ${brand}\n› Wiki: ${wiki}`,
+			DEFEAT: (brand, wiki) =>
+				`Wrong answer!\n\n› Brand: ${brand}\n› Wiki: ${wiki}`,
+			TIMEOUT: (brand, wiki) =>
+				`Time is out!\n\n› Brand: ${brand}\n› Wiki: ${wiki}`,
 			FOOTER: "Game: Guess the Logo",
 		},
 	},
 
 	LEVELING: {
-		ADDED_LEVEL: "Successfully added {level} level(s) to {target}!",
-		ADDED_XP: "Successfully added {xp} XP to {target}!",
+		ADDED_LEVEL: (level, target) =>
+			`Successfully added ${level} level(s) to ${target}!`,
+		ADDED_XP: (xp, target) => `Successfully added ${xp} XP to ${target}!`,
 	},
 
 	MODERATION: {
-		BANNED: "Successfully banned {target}!\nReason: {reason}\nModerator: {moderator}",
-		KICKED: "Successfully kicked {target}!\nReason: {reason}\nModerator: {moderator}",
-		MUTED: "Successfully muted {target}!\nReason: {reason}\nModerator: {moderator}",
-		CLEARED: "Successfully deleted {amount} messages!",
-		TEMPMUTED:
-			"Successfully temporary muted {target}!\nTime: {time}\nReason: {reason}\nModerator: {moderator}",
-		UNMUTED: "Successfully unmuted {target}!",
-		UNWARNED: "Successfully deleted last warn from {target}!",
-		WARNED: "Successfully warned {target}!\nReason: {reason}\nModerator: {moderator}",
+		BANNED: (target, reason, moderator) =>
+			`Successfully banned ${target}!\nReason: ${reason}\nModerator: ${moderator}`,
+		KICKED: (target, reason, moderator) =>
+			`Successfully kicked ${target}!\nReason: ${reason}\nModerator: ${moderator}`,
+		MUTED: (target, reason, moderator) =>
+			`Successfully muted ${target}!\nReason: ${reason}\nModerator: ${moderator}`,
+		CLEARED: (amount) => `Successfully deleted ${amount} messages!`,
+		TEMPMUTED: (target, time, reason, moderator) =>
+			`Successfully temporary muted ${target}!\nTime: ${time}\nReason: ${reason}\nModerator: ${moderator}`,
+		UNMUTED: (target) => `Successfully unmuted ${target}!`,
+		UNWARNED: (target) => `Successfully deleted last warn from ${target}!`,
+		WARNED: (target, reason, moderator) =>
+			`Successfully warned ${target}!\nReason: ${reason}\nModerator: ${moderator}`,
 		EMOJI_CREATED: (name) =>
 			`Emoji with name "${name}" successfully created in this server!`,
 	},
@@ -156,9 +179,10 @@ export default {
 			SONG: "Song",
 			QUEUE: "Queue",
 		},
-		LOOP_CHANGES: (mode) => `Repeat Mode changed to ${mode}`,
 
+		LOOP_CHANGES: (mode) => `Repeat Mode changed to ${mode}`,
 		NOW_PLAYING: (name) => `Now Playing - \`${name}\``,
+
 		SONG_INFO: {
 			NAME: "Song Name",
 			URL: "Song URL",
@@ -327,15 +351,10 @@ export default {
 				LANGUAGE: "Guild Language",
 				MEMBERS_CHANNEL: "Members Channel",
 				LOG_CHANNEL: "Log Channel",
-				LEVELS_CHANNEL: "Levels Channel",
 				TWITCH_CHANNEL: "Twitch Notifications Channel",
-				STARBOARD_CHANNEL: "Starboard Channel",
 				AUTO_ROLE: "Auto Role",
 				MUTE_ROLE: "Mute Role",
 				DJ_ROLES: "DJ Roles",
-				ANTISPAM: "Anti-Spam",
-				ANTILINK: "Anti-Link",
-				ANTIINVITE: "Anti-Invite",
 				TWITCH_SYSTEM: "Twitch System",
 				TWITCH_STREAMERS: "Twitch Streamers",
 				PREFIX: "Prefix",
@@ -410,26 +429,25 @@ export default {
 
 	ERRORS: {
 		NO_ACCESS: "You have not access to use this command!",
-		MEMBER_MISSINGPERMS:
-			"You don't have the following Permissions for this command: {perms}",
-		BOT_MISSINGPERMS:
-			"I don't have the following Permissions for this command: {perms}",
-		ARGS_MISSING:
-			'You missed an important argument!\nUse the "help {cmd_name}" command to get a usage example!',
+		MEMBER_MISSINGPERMS: (perms) =>
+			`You don't have the following Permissions for this command: ${perms}`,
+		BOT_MISSINGPERMS: (perms) =>
+			`I don't have the following Permissions for this command: ${perms}`,
+		ARGS_MISSING: (cmd_name) =>
+			`You missed an important argument!\nUse the \`help ${cmd_name}\` command to get a usage example!`,
 		EVAL_CANCELED:
 			"The code processing process was canceled ahead of time, as the response may contain personal information!",
-		GUILD_NOT_FOUND: 'Guild with ID "{id}" isn\'t found!',
-		IS_NAN: '"{input}" is not a Number!',
-		USER_BOT: "{target} is a Bot!",
+		GUILD_NOT_FOUND: (id) => `Guild with ID \`${id}\` isn\`t found!`,
+		IS_NAN: (input) => `\`${input}\` is not a Number!`,
+		USER_BOT: (target) => `${target} is a Bot!`,
 		NOT_ENOUGH_MONEY: (action) => `You have not enough coins to ${action}`,
-		MEMBER_NOT_BANNABLE:
-			"Cannot ban {target} because he has Immunity for this!",
-		MEMBER_NOT_KICKABLE:
-			"Cannot kick {target} because he has Immunity for this!",
+		MEMBER_NOT_BANNABLE: (target) =>
+			`Cannot ban ${target} because he has Immunity for this!`,
+		MEMBER_NOT_KICKABLE: (target) =>
+			`Cannot kick ${target} because he has Immunity for this!`,
 		NO_MUTEROLE: "To use this command, Server must have a Mute Role!",
-		CLEAR_LIMIT: "Bot can delete a maximum of 100 messages per use!",
-		NO_MUTE: "{member} has not any type of active mute!",
-		NO_WARNS: "{member} has not any warns!",
+		NO_MUTE: (member) => `${member} has not any type of active mute!`,
+		NO_WARNS: (member) => `${member} has not any warns!`,
 		NOT_JOINED_VOICE: "To use this command You need to join Voice Channel!",
 		JOIN_BOT_VOICE:
 			"To use this command You need to join Bot Voice Channel!",
@@ -465,12 +483,12 @@ export default {
 	},
 
 	FUNCTIONS: {
-		TRIMARRAY: "{len} more...",
+		TRIMARRAY: (len) => `${len} more...`,
 
 		VERIFICATION: {
 			ACCEPT: "Accept",
 			DECLINE: "Decline",
-			TEXT: "To complete, you need to confirm that you did not mix up anything.\nClick on the green button to continue or click on the red button to cancel the action!",
+			TEXT: "To complete, you need to confirm that you did not miss up anything.\nClick on the green button to continue or click on the red button to cancel the action!",
 		},
 	},
 
@@ -482,18 +500,18 @@ export default {
 	},
 
 	PERMISSIONS: {
-		MANAGE_GUILD: "Manage Guild (Server)",
-		MANAGE_ROLES: "Manage Roles",
-		MANAGE_WEBHOOKS: "Manage Webhooks",
-		MANAGE_EMOJIS_AND_STICKERS: "Manage Emojis and Stickers",
-		MANAGE_MESSAGES: "Manage Messages",
-		ADMINISTRATOR: "Administrator",
-		BAN_MEMBERS: "Ban Member",
-		KICK_MEMBERS: "Kick Members",
-		CREATE_INSANT_INVITE: "Create Instant Invite",
-		EMBED_LINKS: "Embed Links",
-		SPEAK: "Speak",
-		CONNECT: "Connect",
+		ManageGuild: "Manage Guild (Server)",
+		ManageRoles: "Manage Roles",
+		ManageWebhooks: "Manage Webhooks",
+		ManageMessages: "Manage Messages",
+		ManageEmojisAndStickers: "Manage Emojis and Stickers",
+		Administrator: "Administrator",
+		BanMembers: "Ban Member",
+		KickMembers: "Kick Members",
+		CreateInstantInvite: "Create Instant Invite",
+		EmbedLinks: "Embed Links",
+		Speak: "Speak",
+		Connect: "Connect",
 	},
 
 	GLOBAL: {
@@ -516,12 +534,6 @@ export default {
 	},
 
 	SYSTEMS: {
-		STARBOARDS: {
-			CLICK_HERE: "Jump to the Message",
-			NEW_STAR: "New Star Message!",
-			MSG_ATTACH: "Attachments",
-		},
-
 		DJ_ROLES: {
 			HASNT_ANY:
 				"You can't use this command because You don't have any DJ Role!",
@@ -605,18 +617,18 @@ export default {
 					'This Server just got "Verified" Status right now!',
 			},
 			UNVERIFIED: {
-				TITLE: "😔 | Server got UnPartnered!",
+				TITLE: "😔 | Server got UnVerified!",
 				DESCRIPTION: 'Server just lost "Verified" Status right now!',
 			},
 
 			//guildBanAdd | guildBanRemove
 			BAN_ADD: {
-				TITLE: "🛡️ | User gor Banned!",
+				TITLE: "🛡️ | User got Banned!",
 				DESCRIPTION: (member, tag, moderator, reason) =>
 					`${member} (${tag}) just got banned by moderator ${moderator}\n› Reason: ${reason}`,
 			},
 			BAN_REMOVE: {
-				TITLE: "🛡️ | User gor Unbanned!",
+				TITLE: "🛡️ | User got Unbanned!",
 				DESCRIPTION: (member, tag, moderator, reason) =>
 					`${member} (${tag}) just got unbanned by moderator ${moderator}\n› Ban Reason: ${reason}`,
 			},
@@ -644,56 +656,6 @@ export default {
 				DESCRIPTION: (author, old_content, new_content) =>
 					`Message from ${author} has been updated!\n\n› Old Message Content: \`${old_content}\`\n› New Message Content: \`${new_content}\``,
 				GO_TO: "Jump to Message",
-			},
-		},
-
-		MODERATION: {
-			MUTE_TYPES: {
-				DEFAULT: "Default",
-				TEMPORARY: "Temporary",
-			},
-
-			MUTE_MEMBER: {
-				TYPE: "Type",
-				MEMBER: "Member",
-				MODERATOR: "Moderator",
-				CHANNEL: "Channel",
-				REASON: "Reason",
-				TIME: "Time",
-				UNMUTING_AT: "Unmuting At",
-
-				DEFAULT_TITLE: "New Mute!",
-				TEMPORARY_TITLE: "New Temporary Mute!",
-			},
-
-			UNMUTE_MEMBER: {
-				TYPE: "Type",
-				MEMBER: "Member",
-				MODERATOR: "Moderator",
-				CHANNEL: "Channel",
-				REASON: "Reason",
-				TIME: "Time",
-
-				DEFAULT_TITLE: "End of Mute!",
-				TEMPORARY_TITLE: "End of Temporary Mute!",
-			},
-
-			WARN_ADD: {
-				MEMBER: "Member",
-				MODERATOR: "Moderator",
-				CHANNEL: "Channel",
-				REASON: "Reason",
-				WARNS: "Warns",
-				TITLE: "Warn Added!",
-			},
-
-			WARN_REMOVE: {
-				MEMBER: "Member",
-				MODERATOR: "Moderator",
-				CHANNEL: "Channel",
-				REASON: "Reason",
-				WARNS: "Warns",
-				TITLE: "Warn Removed!",
 			},
 		},
 
@@ -732,36 +694,6 @@ export default {
 			FINISH: "Music Queue is Over, bot left Voice Channel!",
 			EMPTY: "Voice Channel is empty, bot left Voice Channel!",
 			ERROR: (message) => `Oops, there's an error: ${message}`,
-		},
-
-		CHANNEL_EVENTS: {
-			CHANNEL_TYPES: {
-				TEXT: "Text Channel",
-				VOICE: "Voice Channel",
-				CATEGORY: "Category",
-				NEWS: "News Channel",
-				STORE: "Store Channel",
-				NEWS_THREAD: "News Thread",
-				PUBLIC_THREAD: "Public Thread",
-				PRIVATE_THREAD: "Private Thread",
-				STAGE: "Stage Channel",
-			},
-
-			CREATE: {
-				TITLE: "🆕 | New Channel",
-				TYPE: "Type",
-				CHANNEL: "Channel",
-				MODERATOR: "Moderator",
-				DATE: "Created At",
-			},
-
-			DELETE: {
-				TITLE: "⬇️ | Channel Deleted",
-				TYPE: "Type",
-				CHANNEL: "Channel",
-				MODERATOR: "Moderator",
-				DATE: "Deleted At",
-			},
 		},
 	},
 

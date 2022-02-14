@@ -1,5 +1,5 @@
 import { bold, hyperlink } from "@discordjs/builders";
-import { MessageEmbed } from "discord.js";
+import { Embed, Util } from "discord.js";
 import Bot from "../classes/Bot";
 
 export = async (client: Bot) => {
@@ -40,11 +40,11 @@ export = async (client: Bot) => {
 				client.functions.sp(queue.songs.length)
 			)}\n`;
 
-			const embed = new MessageEmbed()
-				.setColor("BLURPLE")
+			const embed = new Embed()
+				.setColor(Util.resolveColor("Blurple"))
 				.setAuthor({
 					name: song.user.username,
-					iconURL: song.user.displayAvatarURL({ dynamic: true }),
+					iconURL: song.user.displayAvatarURL(),
 				})
 				.setTitle(embed_title)
 				.setDescription(text)
@@ -92,11 +92,11 @@ export = async (client: Bot) => {
 				client.functions.sp(queue.songs.length)
 			)}\n`;
 
-			const embed = new MessageEmbed()
-				.setColor("BLURPLE")
+			const embed = new Embed()
+				.setColor(Util.resolveColor("Blurple"))
 				.setAuthor({
 					name: song.user.username,
-					iconURL: song.user.displayAvatarURL({ dynamic: true }),
+					iconURL: song.user.displayAvatarURL(),
 				})
 				.setTitle(embed_title)
 				.setDescription(text)
@@ -154,8 +154,8 @@ export = async (client: Bot) => {
 				playlist.user.toString()
 			)}\n`;
 
-			const embed = new MessageEmbed()
-				.setColor("BLURPLE")
+			const embed = new Embed()
+				.setColor(Util.resolveColor("Blurple"))
 				.setTitle(embed_title)
 				.setDescription(text)
 				.setTimestamp();
@@ -172,8 +172,8 @@ export = async (client: Bot) => {
 			);
 
 			const text = lang.EVENTS.MUSIC_EVENTS.FINISH;
-			const embed = new MessageEmbed()
-				.setColor("BLURPLE")
+			const embed = new Embed()
+				.setColor(Util.resolveColor("Blurple"))
 				.setDescription(bold(text))
 				.setTimestamp();
 
@@ -189,8 +189,8 @@ export = async (client: Bot) => {
 			);
 
 			const text = lang.EVENTS.MUSIC_EVENTS.ERROR(error.message);
-			const embed = new MessageEmbed()
-				.setColor("RED")
+			const embed = new Embed()
+				.setColor(Util.resolveColor("Red"))
 				.setDescription(bold(text))
 				.setTimestamp();
 
@@ -206,8 +206,8 @@ export = async (client: Bot) => {
 			);
 
 			const text = lang.EVENTS.MUSIC_EVENTS.EMPTY;
-			const embed = new MessageEmbed()
-				.setColor("RED")
+			const embed = new Embed()
+				.setColor(Util.resolveColor("Red"))
 				.setDescription(bold(text))
 				.setTimestamp();
 

@@ -1,11 +1,6 @@
-import {
-	BaseCommand,
-	Categories,
-	ValidateReturn,
-} from "../../types/Command/BaseCommand";
-import { Message } from "discord.js";
+import { Categories, ValidateReturn } from "../../types/Command/BaseCommand";
 import { Command } from "../../types/Command/Command";
-import { bold } from "@discordjs/builders";
+import { Message } from "discord.js";
 import Bot from "../../classes/Bot";
 
 export default class ReloadCommand extends Command {
@@ -30,11 +25,11 @@ export default class ReloadCommand extends Command {
 	): Promise<ValidateReturn> {
 		const isOwner = this.client.functions.checkOwner(message.author);
 		const text = lang.ERRORS.NO_ACCESS;
-
 		const embed = this.client.functions.buildEmbed(
 			message,
-			"BLURPLE",
-			bold(text),
+			"Red",
+			text,
+			false,
 			"❌",
 			true
 		);
@@ -52,15 +47,12 @@ export default class ReloadCommand extends Command {
 		}
 
 		if (!category) {
-			const text = lang.ERRORS.ARGS_MISSING.replace(
-				"{cmd_name}",
-				"reload"
-			);
-
+			const text = lang.ERRORS.ARGS_MISSING("reload");
 			const embed = this.client.functions.buildEmbed(
 				message,
-				"BLURPLE",
-				bold(text),
+				"Red",
+				text,
+				false,
 				"❌",
 				true
 			);
@@ -74,15 +66,12 @@ export default class ReloadCommand extends Command {
 		}
 
 		if (!name) {
-			const text = lang.ERRORS.ARGS_MISSING.replace(
-				"{cmd_name}",
-				"reload"
-			);
-
+			const text = lang.ERRORS.ARGS_MISSING("reload");
 			const embed = this.client.functions.buildEmbed(
 				message,
-				"BLURPLE",
-				bold(text),
+				"Red",
+				text,
+				false,
 				"❌",
 				true
 			);
@@ -113,8 +102,9 @@ export default class ReloadCommand extends Command {
 			const text = lang.ERRORS.NOT_FOUND("command list");
 			const embed = this.client.functions.buildEmbed(
 				message,
-				"BLURPLE",
-				bold(text),
+				"Red",
+				text,
+				false,
 				"❌",
 				true
 			);
@@ -131,6 +121,7 @@ export default class ReloadCommand extends Command {
 			const command = new (require(`../${category}/${name}`).default)(
 				this.client
 			) as Command;
+
 			this.client.commands.set(command.name, command);
 
 			if (command.options?.aliases) {
@@ -142,8 +133,9 @@ export default class ReloadCommand extends Command {
 			const text = lang.BOTOWNER.COMMAND_RELOADED(name);
 			const embed = this.client.functions.buildEmbed(
 				message,
-				"BLURPLE",
-				bold(text),
+				"Blurple",
+				text,
+				false,
 				"✅",
 				true
 			);
@@ -156,8 +148,9 @@ export default class ReloadCommand extends Command {
 
 			const embed = this.client.functions.buildEmbed(
 				message,
-				"BLURPLE",
-				bold(error.message),
+				"Red",
+				error.message,
+				false,
 				"❌",
 				true
 			);

@@ -1,7 +1,6 @@
 import { Categories, ValidateReturn } from "../../types/Command/BaseCommand";
-import { Message } from "discord.js";
 import { Command } from "../../types/Command/Command";
-import { bold } from "@discordjs/builders";
+import { Message } from "discord.js";
 import Bot from "../../classes/Bot";
 
 export default class AddXPCommand extends Command {
@@ -16,7 +15,7 @@ export default class AddXPCommand extends Command {
 
 			category: Categories.LEVELING,
 			usage: "<prefix>addxp <user> <amount>",
-			memberPermissions: ["ADMINISTRATOR"],
+			memberPermissions: ["Administrator"],
 		});
 	}
 
@@ -30,14 +29,12 @@ export default class AddXPCommand extends Command {
 			message.guild.members.cache.get(args[0]);
 
 		if (!member) {
-			const text = lang.ERRORS.ARGS_MISSING.replace(
-				"{cmd_name}",
-				"addxp"
-			);
+			const text = lang.ERRORS.ARGS_MISSING("addxp");
 			const embed = this.client.functions.buildEmbed(
 				message,
-				"BLURPLE",
-				bold(text),
+				"Red",
+				text,
+				false,
 				"❌",
 				true
 			);
@@ -52,14 +49,12 @@ export default class AddXPCommand extends Command {
 
 		const amount = args[1];
 		if (!amount) {
-			const text = lang.ERRORS.ARGS_MISSING.replace(
-				"{cmd_name}",
-				"addxp"
-			);
+			const text = lang.ERRORS.ARGS_MISSING("addxp");
 			const embed = this.client.functions.buildEmbed(
 				message,
-				"BLURPLE",
-				bold(text),
+				"Red",
+				text,
+				false,
 				"❌",
 				true
 			);
@@ -73,11 +68,12 @@ export default class AddXPCommand extends Command {
 		}
 
 		if (!Number(amount)) {
-			const text = lang.ERRORS.IS_NAN.replace("{input}", amount);
+			const text = lang.ERRORS.IS_NAN(amount);
 			const embed = this.client.functions.buildEmbed(
 				message,
-				"BLURPLE",
-				bold(text),
+				"Red",
+				text,
+				false,
 				"❌",
 				true
 			);
@@ -107,14 +103,15 @@ export default class AddXPCommand extends Command {
 		const amount = Number(args[1]);
 		await this.client.levels.addXP(message.guild.id, member.id, amount);
 
-		const text = lang.LEVELING.ADDED_XP.replace(
-			"{xp}",
-			this.client.functions.sp(amount)
-		).replace("{target}", member.toString());
+		const text = lang.LEVELING.ADDED_XP(
+			this.client.functions.sp(amount),
+			member.toString()
+		);
 		const embed = this.client.functions.buildEmbed(
 			message,
-			"BLURPLE",
-			bold(text),
+			"Blurple",
+			text,
+			false,
 			"✅",
 			true
 		);

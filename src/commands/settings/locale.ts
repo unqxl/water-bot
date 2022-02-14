@@ -1,7 +1,6 @@
 import { Categories } from "../../types/Command/BaseCommand";
-import { Message } from "discord.js";
 import { Command } from "../../types/Command/Command";
-import { bold } from "@discordjs/builders";
+import { Message } from "discord.js";
 import Bot from "../../classes/Bot";
 
 export default class LocaleCommand extends Command {
@@ -17,7 +16,7 @@ export default class LocaleCommand extends Command {
 
 			usage: "<prefix>locale <show|set|reset> [ru|en]",
 			category: Categories.SETTINGS,
-			memberPermissions: ["ADMINISTRATOR"],
+			memberPermissions: ["Administrator"],
 		});
 	}
 	async run(
@@ -39,9 +38,10 @@ export default class LocaleCommand extends Command {
 			const text = lang.SETTINGS.SHOW(type, locale);
 			const embed = this.client.functions.buildEmbed(
 				message,
-				"BLURPLE",
-				bold(text),
+				"Blurple",
+				text,
 				false,
+				"✉️",
 				true
 			);
 
@@ -52,14 +52,12 @@ export default class LocaleCommand extends Command {
 			const locale = args[1];
 
 			if (!locale) {
-				const text = lang.ERRORS.ARGS_MISSING.replace(
-					"{cmd_name}",
-					"locale"
-				);
+				const text = lang.ERRORS.ARGS_MISSING("locale");
 				const embed = this.client.functions.buildEmbed(
 					message,
-					"BLURPLE",
-					bold(text),
+					"Red",
+					text,
+					false,
 					"❌",
 					true
 				);
@@ -74,11 +72,11 @@ export default class LocaleCommand extends Command {
 					locale,
 					this.client.config.languages.join(", ")
 				).replace("{cmd_name}", "locale");
-
 				const embed = this.client.functions.buildEmbed(
 					message,
-					"BLURPLE",
-					bold(text),
+					"Red",
+					text,
+					false,
 					"❌",
 					true
 				);
@@ -99,11 +97,11 @@ export default class LocaleCommand extends Command {
 				type,
 				locale === "en" || locale === "en-US" ? "English" : "Русский"
 			);
-
 			const embed = this.client.functions.buildEmbed(
 				message,
-				"BLURPLE",
-				bold(text),
+				"Blurple",
+				text,
+				false,
 				"✅",
 				true
 			);
@@ -118,8 +116,9 @@ export default class LocaleCommand extends Command {
 			const text = lang.SETTINGS.RESETTED(type);
 			const embed = this.client.functions.buildEmbed(
 				message,
-				"BLURPLE",
-				bold(text),
+				"Blurple",
+				text,
+				false,
 				"✅",
 				true
 			);

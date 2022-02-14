@@ -1,13 +1,14 @@
-import { bold } from "@discordjs/builders";
 import {
 	ButtonInteraction,
-	Message,
-	MessageActionRow,
-	MessageButton,
-	MessageEmbed,
+	ActionRow,
+	ButtonComponent,
+	Embed,
+	Util,
 } from "discord.js";
-import client from "..";
+import { Message } from "discord.js";
+import { bold } from "@discordjs/builders";
 import ghosts from "../data/phasmaphobia_ghosts.json";
+import client from "..";
 
 interface FakeEvidence {
 	first: string;
@@ -211,15 +212,12 @@ export = async (
 			break;
 	}
 
-	const description = lang.GAMES.PHASMOPHOBIA.WELCOME.replace(
-		"{type}",
-		ghostType
-	);
-	const firstEmbed = new MessageEmbed()
-		.setColor("BLURPLE")
+	const description = lang.GAMES.PHASMOPHOBIA.WELCOME(ghostType);
+	const firstEmbed = new Embed()
+		.setColor(Util.resolveColor("Blurple"))
 		.setAuthor({
 			name: msg.author.username,
-			iconURL: msg.author.displayAvatarURL({ dynamic: true })
+			iconURL: msg.author.displayAvatarURL(),
 		})
 		.setDescription(bold(description))
 		.setTimestamp();
@@ -256,23 +254,23 @@ export = async (
 		}
 	});
 
-	const buttons = new MessageActionRow();
+	const buttons = new ActionRow();
 	buttons.addComponents(
-		shuffle(
-			new MessageButton()
-				.setStyle("SECONDARY")
+		...shuffle(
+			new ButtonComponent()
+				.setStyle(2)
 				.setCustomId("success")
 				.setLabel(successEvidences.join(", ")),
 
-			new MessageButton()
-				.setStyle("SECONDARY")
+			new ButtonComponent()
+				.setStyle(2)
 				.setCustomId("fake")
 				.setLabel(
 					`${firstFake.first}, ${firstFake.second}, ${firstFake.third}`
 				),
 
-			new MessageButton()
-				.setStyle("SECONDARY")
+			new ButtonComponent()
+				.setStyle(2)
 				.setCustomId("fake_1")
 				.setLabel(
 					`${secondFake.first}, ${secondFake.second}, ${secondFake.third}`
@@ -299,14 +297,15 @@ export = async (
 						const success = lang.GAMES.PHASMOPHOBIA.WIN;
 						const embed = client.functions.buildEmbed(
 							msg,
-							"BLURPLE",
-							bold(success),
+							"Blurple",
+							success,
+							false,
 							"🎉",
 							true
 						);
 
 						client.economy.balance.add(
-							500,
+							150,
 							msg.author.id,
 							message.guild.id
 						);
@@ -320,14 +319,15 @@ export = async (
 
 					case "fake":
 					case "fake_1": {
-						const failure = lang.GAMES.PHASMOPHOBIA.DEFEAT.replace(
-							"{correct}",
+						const failure = lang.GAMES.PHASMOPHOBIA.DEFEAT(
 							successEvidences.join(", ")
 						);
+
 						const embed = client.functions.buildEmbed(
 							msg,
-							"BLURPLE",
-							bold(failure),
+							"Red",
+							failure,
+							false,
 							"❌",
 							true
 						);
@@ -346,8 +346,9 @@ export = async (
 					const timeout = lang.GAMES.PHASMOPHOBIA.TIMEOUT;
 					const embed = client.functions.buildEmbed(
 						msg,
-						"BLURPLE",
-						bold(timeout),
+						"Red",
+						timeout,
+						false,
 						"❌",
 						true
 					);

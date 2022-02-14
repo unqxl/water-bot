@@ -1,7 +1,6 @@
-import { Message } from "discord.js";
 import { Command } from "../../types/Command/Command";
 import { Categories } from "../../types/Command/BaseCommand";
-import { bold } from "@discordjs/builders";
+import { Message } from "discord.js";
 import Bot from "../../classes/Bot";
 
 export default class BalanceGetCommand extends Command {
@@ -33,14 +32,15 @@ export default class BalanceGetCommand extends Command {
 			message.guild.id
 		);
 
-		const text = lang.ECONOMY.BALANCE_INFO.replace(
-			"{balance}",
-			this.client.functions.sp(balance)
-		).replace("{bank}", this.client.functions.sp(bank));
+		const text = lang.ECONOMY.BALANCE_INFO(
+			this.client.functions.sp(balance),
+			this.client.functions.sp(bank)
+		);
 		const embed = this.client.functions.buildEmbed(
 			message,
-			"BLURPLE",
-			bold(text),
+			"Blurple",
+			text,
+			false,
 			false,
 			true
 		);

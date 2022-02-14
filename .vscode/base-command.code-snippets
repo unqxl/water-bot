@@ -2,7 +2,7 @@
 	"base-command": {
 		"prefix": ["base-command", "command"],
 		"body": [
-			"import { Message } from 'discord.js';",
+			"import { Message } from '../../types/Discord/index';",
 			"import { Command } from '../../types/Command/Command';",
 			"import { Categories } from '../../types/Command/BaseCommand';",
 			"import Bot from '../../classes/Bot';",

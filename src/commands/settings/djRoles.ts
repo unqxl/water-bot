@@ -1,6 +1,6 @@
 import { Categories } from "../../types/Command/BaseCommand";
-import { Message } from "discord.js";
 import { Command } from "../../types/Command/Command";
+import { Message } from "discord.js";
 import { bold } from "@discordjs/builders";
 import Bot from "../../classes/Bot";
 
@@ -17,7 +17,7 @@ export default class DJRolesCommand extends Command {
 
 			usage: "<prefix>djroles <show|add|delete> [role]",
 			category: Categories.SETTINGS,
-			memberPermissions: ["ADMINISTRATOR"],
+			memberPermissions: ["Administrator"],
 		});
 	}
 	async run(
@@ -48,8 +48,9 @@ export default class DJRolesCommand extends Command {
 
 			const embed = this.client.functions.buildEmbed(
 				message,
-				"BLURPLE",
+				"Blurple",
 				text,
+				false,
 				false,
 				true
 			);
@@ -63,14 +64,12 @@ export default class DJRolesCommand extends Command {
 				message.guild.roles.cache.get(args[1]);
 
 			if (!role) {
-				const text = lang.ERRORS.ARGS_MISSING.replace(
-					"{cmd_name}",
-					"djroles"
-				);
+				const text = lang.ERRORS.ARGS_MISSING("djroles");
 				const embed = this.client.functions.buildEmbed(
 					message,
-					"BLURPLE",
-					bold(text),
+					"Red",
+					text,
+					false,
 					"❌",
 					true
 				);
@@ -85,8 +84,9 @@ export default class DJRolesCommand extends Command {
 				const text = lang.ERRORS.CANNOT_BE_EVERYONE(type);
 				const embed = this.client.functions.buildEmbed(
 					message,
-					"BLURPLE",
-					bold(text),
+					"Red",
+					text,
+					false,
 					"❌",
 					true
 				);
@@ -101,8 +101,9 @@ export default class DJRolesCommand extends Command {
 				const text = lang.ERRORS.ALREADY_IN_DB(type, role.toString());
 				const embed = this.client.functions.buildEmbed(
 					message,
-					"BLURPLE",
-					bold(text),
+					"Red",
+					text,
+					false,
 					"❌",
 					true
 				);
@@ -119,8 +120,9 @@ export default class DJRolesCommand extends Command {
 			const text = lang.SETTINGS.ADDED(type, role.toString());
 			const embed = this.client.functions.buildEmbed(
 				message,
-				"BLURPLE",
-				bold(text),
+				"Blurple",
+				text,
+				false,
 				"✅",
 				true
 			);
@@ -134,14 +136,12 @@ export default class DJRolesCommand extends Command {
 				message.guild.roles.cache.get(args[1]);
 
 			if (!role) {
-				const text = lang.ERRORS.ARGS_MISSING.replace(
-					"{cmd_name}",
-					"djroles"
-				);
+				const text = lang.ERRORS.ARGS_MISSING("djroles");
 				const embed = this.client.functions.buildEmbed(
 					message,
-					"BLURPLE",
-					bold(text),
+					"Red",
+					text,
+					false,
 					"❌",
 					true
 				);
@@ -156,8 +156,9 @@ export default class DJRolesCommand extends Command {
 				const text = lang.ERRORS.CANNOT_BE_EVERYONE(type);
 				const embed = this.client.functions.buildEmbed(
 					message,
-					"BLURPLE",
-					bold(text),
+					"Red",
+					text,
+					false,
 					"❌",
 					true
 				);
@@ -172,8 +173,9 @@ export default class DJRolesCommand extends Command {
 				const text = lang.ERRORS.NOT_FOUND_IN_DB(type, role.toString());
 				const embed = this.client.functions.buildEmbed(
 					message,
-					"BLURPLE",
-					bold(text),
+					"Red",
+					text,
+					false,
 					"❌",
 					true
 				);
@@ -193,8 +195,9 @@ export default class DJRolesCommand extends Command {
 			const text = lang.SETTINGS.DELETED(type, role.toString());
 			const embed = this.client.functions.buildEmbed(
 				message,
-				"BLURPLE",
-				bold(text),
+				"Blurple",
+				text,
+				false,
 				"✅",
 				true
 			);

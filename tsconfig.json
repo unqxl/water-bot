@@ -15,6 +15,7 @@
 		"skipDefaultLibCheck": true,
 		"declaration": false,
 		"resolveJsonModule": true,
+		"typeRoots": ["./src/types/index.d.ts"],
 
 		"baseUrl": "./src",
 		"paths": {

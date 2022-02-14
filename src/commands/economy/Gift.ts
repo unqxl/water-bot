@@ -1,7 +1,6 @@
-import { Message } from "discord.js";
-import { Command } from "../../types/Command/Command";
 import { Categories, ValidateReturn } from "../../types/Command/BaseCommand";
-import { bold } from "@discordjs/builders";
+import { Command } from "../../types/Command/Command";
+import { Message } from "discord.js";
 import Bot from "../../classes/Bot";
 
 export default class GiftCommand extends Command {
@@ -28,11 +27,12 @@ export default class GiftCommand extends Command {
 		const coins = args[1];
 
 		if (!target) {
-			const text = lang.ERRORS.ARGS_MISSING.replace("{cmd_name}", "gift");
+			const text = lang.ERRORS.ARGS_MISSING("gift");
 			const embed = this.client.functions.buildEmbed(
 				message,
-				"RED",
-				bold(text),
+				"Red",
+				text,
+				false,
 				"❌",
 				true
 			);
@@ -46,11 +46,12 @@ export default class GiftCommand extends Command {
 		}
 
 		if (!coins) {
-			const text = lang.ERRORS.ARGS_MISSING.replace("{cmd_name}", "gift");
+			const text = lang.ERRORS.ARGS_MISSING("gift");
 			const embed = this.client.functions.buildEmbed(
 				message,
-				"RED",
-				bold(text),
+				"Red",
+				text,
+				false,
 				"❌",
 				true
 			);
@@ -64,11 +65,12 @@ export default class GiftCommand extends Command {
 		}
 
 		if (!Number(coins)) {
-			const text = lang.ERRORS.IS_NAN.replace("{input}", coins);
+			const text = lang.ERRORS.IS_NAN(coins);
 			const embed = this.client.functions.buildEmbed(
 				message,
-				"RED",
-				bold(text),
+				"Red",
+				text,
+				false,
 				"❌",
 				true
 			);
@@ -102,8 +104,9 @@ export default class GiftCommand extends Command {
 			const text = lang.ERRORS.BALANCE_BOTS;
 			const embed = this.client.functions.buildEmbed(
 				message,
-				"RED",
-				bold(text),
+				"Red",
+				text,
+				false,
 				"❌",
 				true
 			);
@@ -117,8 +120,9 @@ export default class GiftCommand extends Command {
 			const text = lang.ERRORS.GIFT_YOURSELF;
 			const embed = this.client.functions.buildEmbed(
 				message,
-				"RED",
-				bold(text),
+				"Red",
+				text,
+				false,
 				"❌",
 				true
 			);
@@ -130,11 +134,12 @@ export default class GiftCommand extends Command {
 
 		if (balance < amount) {
 			const gift = lang.ECONOMY_ACTIONS.GIFT;
-			const notEnough = lang.ERRORS.NOT_ENOUGH_MONEY(gift);
+			const text = lang.ERRORS.NOT_ENOUGH_MONEY(gift);
 			const embed = this.client.functions.buildEmbed(
 				message,
-				"RED",
-				bold(notEnough),
+				"Red",
+				text,
+				false,
 				"❌",
 				true
 			);
@@ -157,26 +162,17 @@ export default class GiftCommand extends Command {
 			message.guild.id
 		);
 
-		const userBalance = this.client.economy.balance.fetch(
-			target.id,
-			message.guild.id
+		const text = lang.ECONOMY.GIFTED(
+			this.client.functions.sp(amount),
+			target.toString(),
+			this.client.functions.sp(currentBalance)
 		);
-
-		const giftedText = lang.ECONOMY.GIFTED.replace(
-			"{amount}",
-			this.client.functions.sp(amount)
-		)
-			.replace("{user}", target.toString())
-			.replace(
-				"{current_balance}",
-				this.client.functions.sp(currentBalance)
-			)
-			.replace("{user_balance}", this.client.functions.sp(userBalance));
 
 		const embed = this.client.functions.buildEmbed(
 			message,
-			"BLURPLE",
-			bold(giftedText),
+			"Blurple",
+			text,
+			false,
 			"✅",
 			true
 		);

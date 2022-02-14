@@ -1,13 +1,12 @@
-import { Categories, ValidateReturn } from "../../types/Command/BaseCommand";
 import {
 	ButtonInteraction,
-	Message,
-	MessageActionRow,
-	MessageButton,
-	MessageEmbed,
+	ActionRow,
+	ButtonComponent,
+	ComponentType,
 } from "discord.js";
+import { Categories, ValidateReturn } from "../../types/Command/BaseCommand";
 import { Command } from "../../types/Command/Command";
-import { bold } from "@discordjs/builders";
+import { Message } from "discord.js";
 import Bot from "../../classes/Bot";
 import ms from "ms";
 
@@ -24,8 +23,8 @@ export default class TempmuteCommand extends Command {
 			category: Categories.MODERATION,
 			usage: "<prefix>tempmute <member> <time> [reason]",
 
-			memberPermissions: ["MANAGE_MESSAGES"],
-			botPermissions: ["MANAGE_ROLES"],
+			memberPermissions: ["ManageMessages"],
+			botPermissions: ["ManageRoles"],
 		});
 	}
 
@@ -39,14 +38,12 @@ export default class TempmuteCommand extends Command {
 			message.guild.members.cache.get(args[0]);
 
 		if (!member) {
-			const text = lang.ERRORS.ARGS_MISSING.replace(
-				"{cmd_name}",
-				"tempmute"
-			);
+			const text = lang.ERRORS.ARGS_MISSING("tempmute");
 			const embed = this.client.functions.buildEmbed(
 				message,
-				"BLURPLE",
-				bold(text),
+				"Red",
+				text,
+				false,
 				"❌",
 				true
 			);
@@ -62,14 +59,12 @@ export default class TempmuteCommand extends Command {
 		const time = args[1];
 
 		if (!time) {
-			const text = lang.ERRORS.ARGS_MISSING.replace(
-				"{cmd_name}",
-				"tempmute"
-			);
+			const text = lang.ERRORS.ARGS_MISSING("tempmute");
 			const embed = this.client.functions.buildEmbed(
 				message,
-				"BLURPLE",
-				bold(text),
+				"Red",
+				text,
+				false,
 				"❌",
 				true
 			);
@@ -91,8 +86,9 @@ export default class TempmuteCommand extends Command {
 			const text = lang.ERRORS.NO_MUTEROLE;
 			const embed = this.client.functions.buildEmbed(
 				message,
-				"BLURPLE",
-				bold(text),
+				"Red",
+				text,
+				false,
 				"❌",
 				true
 			);
@@ -130,31 +126,31 @@ export default class TempmuteCommand extends Command {
 			lang.FUNCTIONS.VERIFICATION.TEXT,
 		];
 
-		const confirmButton = new MessageButton()
+		const confirmButton = new ButtonComponent()
 			.setCustomId("confirm")
-			.setStyle("SUCCESS")
+			.setStyle(3)
 			.setLabel(accept)
-			.setEmoji("✅");
+			.setEmoji({ name: "✅" });
 
-		const cancelButton = new MessageButton()
+		const cancelButton = new ButtonComponent()
 			.setCustomId("cancel")
-			.setStyle("DANGER")
+			.setStyle(4)
 			.setLabel(decline)
-			.setEmoji("❌");
+			.setEmoji({ name: "❌" });
 
-		const confirmRow = new MessageActionRow().addComponents([
+		const confirmRow = new ActionRow().addComponents(
 			confirmButton,
-			cancelButton,
-		]);
+			cancelButton
+		);
 
-		const confirmEmbed = new MessageEmbed()
-			.setColor("BLURPLE")
-			.setAuthor({
-				name: message.author.username,
-				iconURL: message.author.displayAvatarURL({ dynamic: true }),
-			})
-			.setDescription(bold(confirmText))
-			.setTimestamp();
+		const confirmEmbed = this.client.functions.buildEmbed(
+			message,
+			"Blurple",
+			confirmText,
+			false,
+			"✉️",
+			true
+		);
 
 		const msg = await message.channel.send({
 			embeds: [confirmEmbed],
@@ -163,7 +159,8 @@ export default class TempmuteCommand extends Command {
 
 		const collector = await msg.createMessageComponentCollector({
 			filter: (btn) => btn.user.id === message.author.id,
-			componentType: "BUTTON",
+			componentType: ComponentType.Button,
+			max: 1,
 			time: 20000,
 		});
 
@@ -171,24 +168,24 @@ export default class TempmuteCommand extends Command {
 			if (btn.customId === "confirm") {
 				await this.client.moderation.mute(
 					"tempmute",
+					// @ts-expect-error
 					message,
 					member,
 					reason,
 					time
 				);
 
-				const text = lang.MODERATION.TEMPMUTED.replace(
-					"{target}",
-					member.toString()
-				)
-					.replace("{reason}", reason)
-					.replace("{time}", ms(time, { long: true }))
-					.replace("{moderator}", message.author.toString());
-
+				const text = lang.MODERATION.TEMPMUTED(
+					member.toString(),
+					reason,
+					ms(time, { long: true }),
+					message.author.toString()
+				);
 				const embed = this.client.functions.buildEmbed(
 					message,
-					"BLURPLE",
-					bold(text),
+					"Blurple",
+					text,
+					false,
 					"✅",
 					true
 				);

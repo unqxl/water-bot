@@ -1,8 +1,8 @@
-import { Message } from "discord.js";
 import { Command } from "../../types/Command/Command";
 import { Categories } from "../../types/Command/BaseCommand";
+import { Message } from "discord.js";
 import Bot from "../../classes/Bot";
-import cases from "../../games/cases";
+import Cases from "../../games/cases";
 
 export default class CasesCommand extends Command {
 	constructor(client: Bot) {
@@ -24,8 +24,8 @@ export default class CasesCommand extends Command {
 		args: string[],
 		lang: typeof import("@locales/English").default
 	) {
-		await message.channel.send("...").then(async (msg) => {
-			return await cases(this.client, message, msg, lang);
+		return await message.channel.send("...").then(async (msg: Message) => {
+			return await Cases(this.client, message, msg, lang);
 		});
 	}
 }

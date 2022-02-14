@@ -1,8 +1,8 @@
 import { Categories, ValidateReturn } from "../../types/Command/BaseCommand";
-import { Message, MessageEmbed } from "discord.js";
 import { Command } from "../../types/Command/Command";
-import { bold } from "@discordjs/builders";
+import { Embed } from "discord.js";
 import { request } from "undici";
+import { Message } from "discord.js";
 import Bot from "../../classes/Bot";
 
 export default class MDNCommand extends Command {
@@ -21,17 +21,18 @@ export default class MDNCommand extends Command {
 	}
 
 	async validate(
-		message: Message<boolean>,
+		message: Message,
 		args: string[],
 		lang: typeof import("@locales/English").default
 	): Promise<ValidateReturn> {
 		const query = args[0];
 		if (!query) {
-			const text = lang.ERRORS.ARGS_MISSING.replace("{cmd_name}", "mdn");
+			const text = lang.ERRORS.ARGS_MISSING("mdn");
 			const embed = this.client.functions.buildEmbed(
 				message,
-				"BLURPLE",
-				bold(text),
+				"Red",
+				text,
+				false,
 				"❌",
 				true
 			);
@@ -62,8 +63,9 @@ export default class MDNCommand extends Command {
 			const text = lang.ERRORS.NOT_FOUND("MDN");
 			const embed = this.client.functions.buildEmbed(
 				message,
-				"BLURPLE",
-				bold(text),
+				"Red",
+				text,
+				false,
 				"❌",
 				true
 			);
@@ -73,7 +75,7 @@ export default class MDNCommand extends Command {
 			});
 		}
 
-		const embed = new MessageEmbed(data);
+		const embed = new Embed(data);
 
 		return message.channel.send({
 			embeds: [embed],

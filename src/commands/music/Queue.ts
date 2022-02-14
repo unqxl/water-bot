@@ -1,6 +1,7 @@
 import { Categories, ValidateReturn } from "../../types/Command/BaseCommand";
-import { Message, Util } from "discord.js";
+import { Util } from "discord.js";
 import { Command } from "../../types/Command/Command";
+import { Message } from "discord.js";
 import { bold } from "@discordjs/builders";
 import Bot from "../../classes/Bot";
 
@@ -31,11 +32,11 @@ export default class QueueCommand extends Command {
 				message
 			);
 			if (!status) {
-				const text = bold(error);
 				const embed = this.client.functions.buildEmbed(
 					message,
-					"BLURPLE",
-					bold(text),
+					"Red",
+					error,
+					false,
 					"❌",
 					true
 				);
@@ -57,8 +58,9 @@ export default class QueueCommand extends Command {
 		if (!message.member.voice.channel) {
 			const embed = this.client.functions.buildEmbed(
 				message,
-				"BLURPLE",
-				bold(error),
+				"Red",
+				error,
+				false,
 				"❌",
 				true
 			);
@@ -78,8 +80,9 @@ export default class QueueCommand extends Command {
 		) {
 			const embed = this.client.functions.buildEmbed(
 				message,
-				"BLURPLE",
-				bold(voice_error),
+				"Red",
+				voice_error,
+				false,
 				"❌",
 				true
 			);
@@ -97,8 +100,9 @@ export default class QueueCommand extends Command {
 			const text = lang.ERRORS.QUEUE_EMPTY;
 			const embed = this.client.functions.buildEmbed(
 				message,
-				"BLURPLE",
-				bold(text),
+				"Red",
+				text,
+				false,
 				"❌",
 				true
 			);
@@ -137,8 +141,9 @@ export default class QueueCommand extends Command {
 		const text = `${bold(description)}:\n\n${songs}`;
 		const embed = this.client.functions.buildEmbed(
 			message,
-			"BLURPLE",
+			"Blurple",
 			text,
+			false,
 			false,
 			true
 		);

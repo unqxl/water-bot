@@ -1,22 +1,22 @@
-import { Message, Permissions } from "discord.js";
+import { Message } from "discord.js";
 import { Command } from "../../types/Command/Command";
 import { Categories } from "../../types/Command/BaseCommand";
 import { bold, inlineCode } from "@discordjs/builders";
 import Bot from "../../classes/Bot";
 
 interface PermissionsKey {
-	MANAGE_GUILD: string;
-	ADMINISTRATOR: string;
-	MANAGE_MESSAGES: string;
-	BAN_MEMBERS: string;
-	KICK_MEMBERS: string;
-	CREATE_INSANT_INVITE: string;
-	EMBED_LINKS: string;
-	SPEAK: string;
-	CONNECT: string;
-	MANAGE_ROLES: string;
-	MANAGE_WEBHOOKS: string;
-	MANAGE_EMOJIS_AND_STICKERS: string;
+	ManageGuild: string;
+	ManageRoles: string;
+	ManageWebhooks: string;
+	ManageMessages: string;
+	ManageEmojisAndStickers: string;
+	Administrator: string;
+	BanMembers: string;
+	KickMembers: string;
+	CreateInstantInvite: string;
+	EmbedLinks: string;
+	Speak: string;
+	Connect: string;
 }
 
 export default class HelpCommand extends Command {
@@ -177,31 +177,49 @@ export default class HelpCommand extends Command {
 
 			const embed = this.client.functions.buildEmbed(
 				message,
-				"BLURPLE",
-				"...",
+				"Blurple",
+				null,
+				false,
 				false,
 				true
 			);
-			embed.setDescription("");
 
-			embed.addField(`[💰] ${Economy}`, EconomyCommands);
-			embed.addField(`[🎮] ${Games}`, GamesCommands);
-			embed.addField(`[🛡️] ${Moderation}`, ModerationCommands);
-			embed.addField(`[🎵] ${Music}`, MusicCommands);
-			embed.addField(`[📝] ${Other}`, OtherCommands);
-			embed.addField(`[⭐] ${Leveling}`, LevelingCommands);
-			embed.addField(`[🎉] ${Giveaways}`, GiveawaysCommands);
-			embed.addField(`[🎉] ${Giveaways}`, GiveawaysCommands);
-			embed.addField(`[🎭] ${RolePlay}`, RolePlayCommands);
+			embed.addField({ name: `[💰] ${Economy}`, value: EconomyCommands });
+			embed.addField({ name: `[🎮] ${Games}`, value: GamesCommands });
+			embed.addField({
+				name: `[🛡️] ${Moderation}`,
+				value: ModerationCommands,
+			});
+			embed.addField({ name: `[🎵] ${Music}`, value: MusicCommands });
+			embed.addField({ name: `[📝] ${Other}`, value: OtherCommands });
+			embed.addField({
+				name: `[⭐] ${Leveling}`,
+				value: LevelingCommands,
+			});
+			embed.addField({
+				name: `[⚙️] ${Settings}`,
+				value: SettingsCommands,
+			});
+			embed.addField({
+				name: `[🎉] ${Giveaways}`,
+				value: GiveawaysCommands,
+			});
+			embed.addField({
+				name: `[🎭] ${RolePlay}`,
+				value: RolePlayCommands,
+			});
 			embed.setFooter({
 				text: `${Length}: ${this.client.functions.sp(
 					this.client.commands.size
 				)}`,
-				iconURL: this.client.user.displayAvatarURL({ dynamic: true }),
+				iconURL: this.client.user.displayAvatarURL(),
 			});
 
 			if (this.client.functions.checkOwner(message.author))
-				embed.addField(`[👑] ${BotOwner}`, BotOwnerCommands);
+				embed.addField({
+					name: `[👑] ${BotOwner}`,
+					value: BotOwnerCommands,
+				});
 
 			return message.channel.send({
 				embeds: [embed],
@@ -214,9 +232,10 @@ export default class HelpCommand extends Command {
 				const text = lang.ERRORS.COMMAND_NOT_FOUND(command);
 				const embed = this.client.functions.buildEmbed(
 					message,
-					"BLURPLE",
-					bold(text),
+					"Red",
+					text,
 					false,
+					"❌",
 					true
 				);
 
@@ -299,11 +318,11 @@ export default class HelpCommand extends Command {
 						: None
 				)}`,
 			].join("\n");
-
 			const embed = this.client.functions.buildEmbed(
 				message,
-				"BLURPLE",
+				"Blurple",
 				res,
+				false,
 				false,
 				true
 			);

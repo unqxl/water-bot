@@ -1,4 +1,4 @@
-import { Guild, MessageEmbed, User } from "discord.js";
+import { Guild, Embed, User, Util } from "discord.js";
 import Bot from "classes/Bot";
 import Event from "../../types/Event/Event";
 
@@ -13,8 +13,8 @@ export default class GuildDeleteEvent extends Event {
 		const owner = client.users.cache.get("852921856800718908") as User;
 		const guildOwner = await guild.fetchOwner();
 
-		const embed = new MessageEmbed()
-			.setColor("BLURPLE")
+		const embed = new Embed()
+			.setColor(Util.resolveColor("Blurple"))
 			.setTitle("😔 Server Deleted 😔")
 			.setDescription(
 				`› **Name**: **${guild.name}** (**${

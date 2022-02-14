@@ -86,15 +86,15 @@ export default class BotinfoCommand extends Command {
 
 		const embed = this.client.functions.buildEmbed(
 			message,
-			"BLURPLE",
-			`${bold(title)}:`,
+			"Blurple",
+			`${title}:`,
+			false,
 			false,
 			true
 		);
-
-		embed.addField(
-			`${fieldName}:`,
-			[
+		embed.addField({
+			name: `${fieldName}:`,
+			value: [
 				`› **${guilds}**: **${botInfo.guilds}**`,
 				`› **${users}**: **${botInfo.users}**`,
 				`› **${emojis}**: **${botInfo.emojis}**`,
@@ -105,12 +105,9 @@ export default class BotinfoCommand extends Command {
 				`› **${runnedAt}**: **${botInfo.runTime}**`,
 				`› **${botUptime}**: **${botInfo.uptime}**`,
 				`› **${botVersion}**: **${this.client.version}**`,
-			].join("\n")
-		);
-
-		embed.setThumbnail(
-			this.client.user.displayAvatarURL({ dynamic: true })
-		);
+			].join("\n"),
+		});
+		embed.setThumbnail(this.client.user.displayAvatarURL());
 
 		return message.channel.send({
 			embeds: [embed],

@@ -1,6 +1,6 @@
 import Event from "../../types/Event/Event";
 import Bot from "../../classes/Bot";
-import { GuildMember, MessageEmbed, TextChannel } from "discord.js";
+import { GuildMember, Embed, TextChannel, Util } from "discord.js";
 
 export default class GuildMemberRemoveEvent extends Event {
 	constructor() {
@@ -29,11 +29,11 @@ export default class GuildMemberRemoveEvent extends Event {
 			new Date().toLocaleString(settings.locale)
 		);
 
-		const embed = new MessageEmbed()
-			.setColor("BLURPLE")
+		const embed = new Embed()
+			.setColor(Util.resolveColor("Blurple"))
 			.setAuthor({
 				name: member.user.tag,
-				iconURL: member.user.displayAvatarURL({ dynamic: true }),
+				iconURL: member.user.displayAvatarURL(),
 			})
 			.setTitle(title)
 			.setDescription(description)

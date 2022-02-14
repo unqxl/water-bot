@@ -1,9 +1,9 @@
 import {
 	ApplicationCommandOptionData,
 	ApplicationCommandType,
-	CommandInteraction,
-	MessageOptions,
+	InteractionReplyOptions,
 } from "discord.js";
+import { CommandInteraction } from "discord.js";
 import Bot from "../../classes/Bot";
 
 export interface BaseSlashCommandOptions {
@@ -16,7 +16,7 @@ export interface BaseSlashCommandOptions {
 
 export type ValidateReturn = {
 	ok: boolean;
-	error?: MessageOptions;
+	error?: InteractionReplyOptions;
 };
 
 export abstract class BaseSlashCommand<

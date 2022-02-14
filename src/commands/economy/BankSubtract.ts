@@ -1,7 +1,6 @@
-import { Command } from "../../types/Command/Command";
 import { Categories, ValidateReturn } from "../../types/Command/BaseCommand";
+import { Command } from "../../types/Command/Command";
 import { Message } from "discord.js";
-import { bold } from "@discordjs/builders";
 import Bot from "../../classes/Bot";
 
 export default class BankSubtactCommand extends Command {
@@ -32,14 +31,12 @@ export default class BankSubtactCommand extends Command {
 
 		const amount = args[0];
 		if (!amount) {
-			const text = lang.ERRORS.ARGS_MISSING.replace(
-				"{cmd_name}",
-				"bank-subtract"
-			);
+			const text = lang.ERRORS.ARGS_MISSING("bank-subtract");
 			const embed = this.client.functions.buildEmbed(
 				message,
-				"BLURPLE",
-				bold(text),
+				"Red",
+				text,
+				false,
 				"❌",
 				true
 			);
@@ -53,11 +50,12 @@ export default class BankSubtactCommand extends Command {
 		}
 
 		if (!Number(amount)) {
-			const text = lang.ERRORS.IS_NAN.replace("{input}", amount);
+			const text = lang.ERRORS.IS_NAN(amount);
 			const embed = this.client.functions.buildEmbed(
 				message,
-				"BLURPLE",
-				bold(text),
+				"Red",
+				text,
+				false,
 				"❌",
 				true
 			);
@@ -74,11 +72,11 @@ export default class BankSubtactCommand extends Command {
 			const text = lang.ERRORS.NOT_ENOUGH_MONEY(
 				lang.ECONOMY_ACTIONS.WITHDRAW
 			);
-
 			const embed = this.client.functions.buildEmbed(
 				message,
-				"BLURPLE",
-				bold(text),
+				"Red",
+				text,
+				false,
 				"❌",
 				true
 			);
@@ -115,14 +113,14 @@ export default class BankSubtactCommand extends Command {
 			message.guild.id
 		);
 
-		const text = lang.ECONOMY.BALANCE_SUBT.replace(
-			"{amount}",
+		const text = lang.ECONOMY.BANK_WITHDREW(
 			this.client.functions.sp(amount)
 		);
 		const embed = this.client.functions.buildEmbed(
 			message,
-			"BLURPLE",
-			bold(text),
+			"Blurple",
+			text,
+			false,
 			false,
 			true
 		);

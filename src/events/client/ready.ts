@@ -1,9 +1,9 @@
+import { Job } from "../../plugins/Job";
+import { Guild, Embed, TextChannel, Util } from "discord.js";
+import { bold } from "@discordjs/builders";
 import Bot from "classes/Bot";
 import Event from "../../types/Event/Event";
 import deployCommands from "../../deploy-commands";
-import { Job } from "../../plugins/Job";
-import { Guild, MessageEmbed, TextChannel, Util } from "discord.js";
-import { bold } from "@discordjs/builders";
 
 export default class ReadyEvent extends Event {
 	constructor() {
@@ -76,11 +76,11 @@ async function birthdayCheck(client: Bot, guild: Guild) {
 		birthdayCheck.years > 1 ? years : year
 	);
 
-	const embed = new MessageEmbed()
-		.setColor("BLURPLE")
+	const embed = new Embed()
+		.setColor(Util.resolveColor("Blurple"))
 		.setAuthor({
 			name: guild.name,
-			iconURL: guild.iconURL({ dynamic: true }),
+			iconURL: guild.iconURL(),
 		})
 		.setDescription(bold(description))
 		.setTimestamp();

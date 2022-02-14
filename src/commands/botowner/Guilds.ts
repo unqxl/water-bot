@@ -1,7 +1,8 @@
-import { Message, MessageButton, MessageActionRow, Util } from "discord.js";
+import { ButtonComponent, ActionRow, Util, ComponentType } from "discord.js";
 import { Categories, ValidateReturn } from "../../types/Command/BaseCommand";
-import { Command } from "../../types/Command/Command";
 import { bold, inlineCode } from "@discordjs/builders";
+import { Command } from "../../types/Command/Command";
+import { Message } from "discord.js";
 import Bot from "../../classes/Bot";
 
 export default class GuildsCommand extends Command {
@@ -28,8 +29,9 @@ export default class GuildsCommand extends Command {
 		const text = lang.ERRORS.NO_ACCESS;
 		const embed = this.client.functions.buildEmbed(
 			message,
-			"BLURPLE",
-			bold(text),
+			"Red",
+			text,
+			false,
 			"❌",
 			true
 		);
@@ -42,6 +44,7 @@ export default class GuildsCommand extends Command {
 				},
 			};
 		}
+
 		return {
 			ok: true,
 		};
@@ -70,34 +73,36 @@ export default class GuildsCommand extends Command {
 			.slice(0, 10)
 			.join("\n");
 
-		const previousPage = new MessageButton()
-			.setStyle("SECONDARY")
-			.setEmoji("⬅️")
+		const previousPage = new ButtonComponent()
+			.setStyle(2)
+			.setEmoji({ name: "⬅️" })
 			.setCustomId("previous");
 
-		const nextPage = new MessageButton()
-			.setStyle("SECONDARY")
-			.setEmoji("➡️")
+		const nextPage = new ButtonComponent()
+			.setStyle(2)
+			.setEmoji({ name: "➡️" })
 			.setCustomId("next");
 
-		const deletePage = new MessageButton()
-			.setStyle("SECONDARY")
-			.setEmoji("❌")
+		const deletePage = new ButtonComponent()
+			.setStyle(2)
+			.setEmoji({ name: "❌" })
 			.setCustomId("delete");
 
-		const row = new MessageActionRow().addComponents([
+		const row = new ActionRow().addComponents(
 			previousPage,
 			nextPage,
-			deletePage,
-		]);
+			deletePage
+		);
 
 		const embed = this.client.functions.buildEmbed(
 			message,
-			"BLURPLE",
+			"Blurple",
 			description,
+			false,
 			false,
 			true
 		);
+
 		embed.setFooter({
 			text: `Page: ${page}/${Math.ceil(
 				this.client.guilds.cache.size / 10
@@ -111,7 +116,7 @@ export default class GuildsCommand extends Command {
 
 		const collector = await msg.createMessageComponentCollector({
 			filter: (btn) => btn.user.id === message.author.id,
-			componentType: "BUTTON",
+			componentType: ComponentType.Button,
 			time: 60 * 1000 * 5,
 		});
 

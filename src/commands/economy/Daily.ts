@@ -1,7 +1,6 @@
-import { Message, MessageEmbed } from "discord.js";
+import { Message } from "discord.js";
 import { Command } from "../../types/Command/Command";
 import { Categories } from "../../types/Command/BaseCommand";
-import { bold } from "@discordjs/builders";
 import Bot from "../../classes/Bot";
 
 export default class DailyCommand extends Command {
@@ -29,14 +28,12 @@ export default class DailyCommand extends Command {
 		);
 		if (!daily.status) {
 			const FormattedTime = `${daily.value.days}:${daily.value.hours}:${daily.value.minutes}:${daily.value.seconds}`;
-			const text = lang.ECONOMY.TIME_ERROR.replace(
-				"{time}",
-				FormattedTime
-			);
+			const text = lang.ECONOMY.TIME_ERROR(FormattedTime);
 			const embed = this.client.functions.buildEmbed(
 				message,
-				"RED",
-				bold(text),
+				"Red",
+				text,
+				false,
 				"❌",
 				true
 			);
@@ -46,14 +43,14 @@ export default class DailyCommand extends Command {
 			});
 		}
 
-		const text = lang.ECONOMY.DAILY_REWARD.replace(
-			"{coins}",
+		const text = lang.ECONOMY.DAILY_REWARD(
 			this.client.functions.sp(daily.reward)
 		);
 		const embed = this.client.functions.buildEmbed(
 			message,
-			"BLURPLE",
-			bold(text),
+			"Blurple",
+			text,
+			false,
 			"✅",
 			true
 		);

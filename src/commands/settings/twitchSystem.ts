@@ -1,7 +1,6 @@
 import { Categories } from "../../types/Command/BaseCommand";
-import { Message } from "discord.js";
 import { Command } from "../../types/Command/Command";
-import { bold } from "@discordjs/builders";
+import { Message } from "discord.js";
 import Bot from "../../classes/Bot";
 
 export default class TwitchSystemCommand extends Command {
@@ -17,7 +16,7 @@ export default class TwitchSystemCommand extends Command {
 
 			usage: "<prefix>twitchsystem <enable|disable>",
 			category: Categories.SETTINGS,
-			memberPermissions: ["ADMINISTRATOR"],
+			memberPermissions: ["Administrator"],
 		});
 	}
 	async run(
@@ -43,8 +42,9 @@ export default class TwitchSystemCommand extends Command {
 			const text = lang.SETTINGS.ENABLED(type);
 			const embed = this.client.functions.buildEmbed(
 				message,
-				"BLURPLE",
-				bold(text),
+				"Blurple",
+				text,
+				false,
 				"✅",
 				true
 			);
@@ -60,8 +60,9 @@ export default class TwitchSystemCommand extends Command {
 			const text = lang.SETTINGS.DISABLED(type);
 			const embed = this.client.functions.buildEmbed(
 				message,
-				"BLURPLE",
-				bold(text),
+				"Blurple",
+				text,
+				false,
 				"✅",
 				true
 			);

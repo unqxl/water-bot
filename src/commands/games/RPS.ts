@@ -1,9 +1,8 @@
+import { Categories, ValidateReturn } from "../../types/Command/BaseCommand";
 import { Message } from "discord.js";
 import { Command } from "../../types/Command/Command";
-import { Categories, ValidateReturn } from "../../types/Command/BaseCommand";
-import { bold } from "@discordjs/builders";
 import Bot from "../../classes/Bot";
-import rps from "../../games/rps";
+import RPS from "../../games/rps";
 
 export default class RPSCommand extends Command {
 	constructor(client: Bot) {
@@ -28,11 +27,12 @@ export default class RPSCommand extends Command {
 		const opponent = message.mentions.users.first();
 
 		if (!opponent) {
-			const text = lang.ERRORS.ARGS_MISSING.replace("{cmd_name}", "rps");
+			const text = lang.ERRORS.ARGS_MISSING("rps");
 			const embed = this.client.functions.buildEmbed(
 				message,
-				"BLURPLE",
-				bold(text),
+				"Red",
+				text,
+				false,
 				"❌",
 				true
 			);
@@ -55,7 +55,8 @@ export default class RPSCommand extends Command {
 		args: string[],
 		lang: typeof import("@locales/English").default
 	) {
-		const msg = await message.channel.send("...");
-		return await rps(msg, message, lang);
+		return await message.channel.send("...").then(async (msg: Message) => {
+			return await RPS(msg, message, lang);
+		});
 	}
 }

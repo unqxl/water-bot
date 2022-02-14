@@ -1,4 +1,4 @@
-import { Guild, MessageEmbed, User } from "discord.js";
+import { Guild, Embed, User, Util } from "discord.js";
 import { getRepository } from "typeorm";
 import { GuildConfiguration } from "../../typeorm/entities/GuildConfiguration";
 import Bot from "classes/Bot";
@@ -34,8 +34,8 @@ export default class GuildCreateEvent extends Event {
 		const owner = client.users.cache.get("852921856800718908") as User;
 		const guildOwner = await guild.fetchOwner();
 
-		const embed = new MessageEmbed()
-			.setColor("BLURPLE")
+		const embed = new Embed()
+			.setColor(Util.resolveColor("Blurple"))
 			.setTitle("🎉 New Server 🎉")
 			.setDescription(
 				`› **Name**: **${guild.name}** (**${

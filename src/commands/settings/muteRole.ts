@@ -1,7 +1,6 @@
 import { Categories } from "../../types/Command/BaseCommand";
-import { Message } from "discord.js";
 import { Command } from "../../types/Command/Command";
-import { bold } from "@discordjs/builders";
+import { Message } from "discord.js";
 import Bot from "../../classes/Bot";
 
 export default class MuteRoleCommand extends Command {
@@ -17,7 +16,7 @@ export default class MuteRoleCommand extends Command {
 
 			usage: "<prefix>muterole <show|set|reset> [role]",
 			category: Categories.SETTINGS,
-			memberPermissions: ["ADMINISTRATOR"],
+			memberPermissions: ["Administrator"],
 		});
 	}
 	async run(
@@ -43,9 +42,10 @@ export default class MuteRoleCommand extends Command {
 			const text = lang.SETTINGS.SHOW(type, role);
 			const embed = this.client.functions.buildEmbed(
 				message,
-				"BLURPLE",
-				bold(text),
+				"Blurple",
+				text,
 				false,
+				"✉️",
 				true
 			);
 
@@ -58,14 +58,12 @@ export default class MuteRoleCommand extends Command {
 				message.guild.roles.cache.get(args[1]);
 
 			if (!role) {
-				const text = lang.ERRORS.ARGS_MISSING.replace(
-					"{cmd_name}",
-					"muterole"
-				);
+				const text = lang.ERRORS.ARGS_MISSING("muterole");
 				const embed = this.client.functions.buildEmbed(
 					message,
-					"BLURPLE",
-					bold(text),
+					"Red",
+					text,
+					false,
 					"❌",
 					true
 				);
@@ -85,8 +83,9 @@ export default class MuteRoleCommand extends Command {
 			const text = lang.SETTINGS.SETTED(type, role.toString());
 			const embed = this.client.functions.buildEmbed(
 				message,
-				"BLURPLE",
-				bold(text),
+				"Blurple",
+				text,
+				false,
 				"✅",
 				true
 			);
@@ -101,8 +100,9 @@ export default class MuteRoleCommand extends Command {
 			const text = lang.SETTINGS.RESETTED(type);
 			const embed = this.client.functions.buildEmbed(
 				message,
-				"BLURPLE",
-				bold(text),
+				"Blurple",
+				text,
+				false,
 				"✅",
 				true
 			);

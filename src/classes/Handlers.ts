@@ -27,32 +27,27 @@ export = class Handlers {
 		return `${path.dirname(require.main.filename)}${path.sep}`;
 	}
 
-	async loadEvents(client: Bot) {
-		const eventFiles: string[] = await glob(
-			process.env.BUILD_PATH ? `./events/**/*.js` : `./src/events/**/*.ts`
-		);
+	async loadEvents() {
+		const eventFiles: string[] = await glob(`./events/**/*.{js,ts}`);
 
 		for (const file of eventFiles) {
 			if (file.includes("twitchLive")) continue;
 			if (file.includes("distubeEvents")) continue;
 
-			const EventFile = await import(
-				process.env.BUILD_PATH ? `../${file}` : `../../${file}`
-			);
+			const EventFile = await import(`../${file}`);
 
 			const File: Event = new EventFile.default();
 
-			client.events.set(File.getName(), File);
-			(File.getEmitter() || client).on(File.getName(), async (...args) =>
-				File.run(client, ...args)
+			this.client.events.set(File.getName(), File);
+			(File.getEmitter() || this.client).on(
+				File.getName(),
+				async (...args) => File.run(this.client, ...args)
 			);
 		}
 	}
 
 	async loadCommands() {
-		const files = process.env.BUILD_PATH
-			? glob_cmds.sync("./commands/**/*.js")
-			: glob_cmds.sync("./src/commands/**/*.ts");
+		const files = glob_cmds.sync("./commands/**/*.{js,ts}");
 
 		for (const file of files) {
 			delete require.cache[file];
@@ -73,9 +68,7 @@ export = class Handlers {
 	}
 
 	async loadSlashCommands() {
-		const files = process.env.BUILD_PATH
-			? glob_cmds.sync("./slash-commands/**/*.js")
-			: glob_cmds.sync("./src/slash-commands/**/*.ts");
+		const files = glob_cmds.sync("./slash-commands/**/*.{js,ts}");
 
 		for (const file of files) {
 			delete require.cache[file];

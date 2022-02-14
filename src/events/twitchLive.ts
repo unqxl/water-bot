@@ -1,9 +1,10 @@
 import {
 	Guild,
-	MessageActionRow,
-	MessageButton,
-	MessageEmbed,
+	ActionRow,
+	ButtonComponent,
+	Embed,
 	TextChannel,
+	Util,
 } from "discord.js";
 import { bold, hyperlink } from "@discordjs/builders";
 import Bot from "classes/Bot";
@@ -28,16 +29,16 @@ export = async (
 		data,
 		channel.guild
 	);
-	const GoToButton = new MessageButton();
-	const row = new MessageActionRow();
+	const GoToButton = new ButtonComponent();
+	const row = new ActionRow();
 	const goTo = lang.TWITCH_HANDLER.GO_TO;
 
-	GoToButton.setStyle("LINK");
+	GoToButton.setStyle(5);
 	GoToButton.setLabel(goTo);
 	GoToButton.setURL(`https://twitch.tv/${data.name}`);
-	GoToButton.setEmoji("⏯");
+	GoToButton.setEmoji({ name: "⏯" });
 
-	row.addComponents([GoToButton]);
+	row.addComponents(GoToButton);
 
 	return channel.send({
 		embeds: [embed],
@@ -45,7 +46,7 @@ export = async (
 	});
 };
 
-class AnnounceEmbed extends MessageEmbed {
+class AnnounceEmbed extends Embed {
 	constructor() {
 		super();
 	}
@@ -70,7 +71,7 @@ class AnnounceEmbed extends MessageEmbed {
 			title
 		)}: ${bold(data.title)}\n› ${bold(startedAt)}: ${bold(startedDate)}`;
 
-		this.setColor("#6441a5");
+		this.setColor(Util.resolveColor("#6441a5"));
 		this.setAuthor({
 			name: data.name,
 			iconURL: data.picture,

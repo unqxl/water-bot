@@ -1,8 +1,8 @@
-import { Message, Util } from "discord.js";
 import { Categories, ValidateReturn } from "../../types/Command/BaseCommand";
+import { Util } from "discord.js";
 import { Command } from "../../types/Command/Command";
 import { parse } from "twemoji-parser";
-import { bold } from "@discordjs/builders";
+import { Message } from "discord.js";
 import Bot from "../../classes/Bot";
 
 export default class StealEmojiCommand extends Command {
@@ -18,8 +18,8 @@ export default class StealEmojiCommand extends Command {
 			category: Categories.MODERATION,
 			usage: "<prefix>stealemoji <emoji>",
 
-			memberPermissions: ["MANAGE_GUILD"],
-			botPermissions: ["MANAGE_EMOJIS_AND_STICKERS"],
+			memberPermissions: ["ManageGuild"],
+			botPermissions: ["ManageEmojisAndStickers"],
 		});
 	}
 
@@ -32,14 +32,12 @@ export default class StealEmojiCommand extends Command {
 		const name = args[1];
 
 		if (!emoji) {
-			const text = lang.ERRORS.ARGS_MISSING.replace(
-				"{cmd_name}",
-				"stealemoji"
-			);
+			const text = lang.ERRORS.ARGS_MISSING("stealemoji");
 			const embed = this.client.functions.buildEmbed(
 				message,
-				"BLURPLE",
-				bold(text),
+				"Red",
+				text,
+				false,
 				"❌",
 				true
 			);
@@ -53,14 +51,12 @@ export default class StealEmojiCommand extends Command {
 		}
 
 		if (!name) {
-			const text = lang.ERRORS.ARGS_MISSING.replace(
-				"{cmd_name}",
-				"stealemoji"
-			);
+			const text = lang.ERRORS.ARGS_MISSING("stealemoji");
 			const embed = this.client.functions.buildEmbed(
 				message,
-				"BLURPLE",
-				bold(text),
+				"Red",
+				text,
+				false,
 				"❌",
 				true
 			);
@@ -94,8 +90,9 @@ export default class StealEmojiCommand extends Command {
 			const text = lang.MODERATION.EMOJI_CREATED(name);
 			const embed = this.client.functions.buildEmbed(
 				message,
-				"BLURPLE",
-				bold(text),
+				"Blurple",
+				text,
+				false,
 				"✅",
 				true
 			);
@@ -115,8 +112,9 @@ export default class StealEmojiCommand extends Command {
 			if (msg) {
 				const embed = this.client.functions.buildEmbed(
 					message,
-					"BLURPLE",
-					bold(msg),
+					"Red",
+					msg,
+					false,
 					"❌",
 					true
 				);
@@ -129,8 +127,9 @@ export default class StealEmojiCommand extends Command {
 			const text = lang.MODERATION.EMOJI_CREATED(name);
 			const embed = this.client.functions.buildEmbed(
 				message,
-				"BLURPLE",
-				bold(text),
+				"Blurple",
+				text,
+				false,
 				"✅",
 				true
 			);
@@ -145,8 +144,9 @@ export default class StealEmojiCommand extends Command {
 			const text = lang.ERRORS.VALID_EMOJI;
 			const embed = this.client.functions.buildEmbed(
 				message,
-				"BLURPLE",
-				bold(text),
+				"Red",
+				text,
+				false,
 				"❌",
 				true
 			);
@@ -159,8 +159,9 @@ export default class StealEmojiCommand extends Command {
 		const text = lang.ERRORS.NORMAL_EMOJI;
 		const embed = this.client.functions.buildEmbed(
 			message,
-			"BLURPLE",
-			bold(text),
+			"Red",
+			text,
+			false,
 			"❌",
 			true
 		);

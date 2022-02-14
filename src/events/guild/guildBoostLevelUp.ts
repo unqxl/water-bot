@@ -1,4 +1,4 @@
-import { Guild, TextChannel, MessageEmbed } from "discord.js";
+import { Guild, TextChannel, Embed, Util } from "discord.js";
 import Event from "../../types/Event/Event";
 import Bot from "../../classes/Bot";
 
@@ -25,11 +25,11 @@ export default class GuildBoostLevelUpEvent extends Event {
 			new Date().toLocaleString(settings.locale)
 		);
 
-		const embed = new MessageEmbed()
-			.setColor("BLURPLE")
+		const embed = new Embed()
+			.setColor(Util.resolveColor("Blurple"))
 			.setAuthor({
 				name: guild.name,
-				iconURL: guild.iconURL({ dynamic: true }),
+				iconURL: guild.iconURL(),
 			})
 			.setTitle(title)
 			.setDescription(description)

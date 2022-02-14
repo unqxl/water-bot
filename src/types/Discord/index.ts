@@ -1,11 +1,22 @@
-import { ColorResolvable, Guild, Message, MessageEmbed } from "discord.js";
+import {
+	ColorResolvable,
+	Guild,
+	Message,
+	Embed,
+	Util,
+	CommandInteraction,
+} from "discord.js";
+import {
+	RawGuildData,
+	RawInteractionData,
+	RawMessageData,
+} from "discord.js/typings/rawDataTypes";
 import { GuildConfiguration } from "../../typeorm/entities/GuildConfiguration";
-import { RawGuildData, RawMessageData } from "discord.js/typings/rawDataTypes";
 import { bold } from "@discordjs/builders";
 import Bot from "classes/Bot";
 
-// @ts-ignore
-export class AkayoMessage extends Message {
+// @ts-expect-error
+class Message extends Message {
 	declare client: Bot;
 	declare guild: AkayoGuild;
 
@@ -20,28 +31,65 @@ export class AkayoMessage extends Message {
 		emoji: string | boolean,
 		showAuthor: boolean,
 		showTimestamp?: boolean
-	): MessageEmbed {
-		const embed = new MessageEmbed();
+	): Embed {
+		const embed = new Embed();
 
-		if (showAuthor === true)
+		if (showAuthor === true) {
 			embed.setAuthor({
 				name: this.author.username,
-				iconURL: this.author.displayAvatarURL({ dynamic: true }),
+				iconURL: this.author.displayAvatarURL(),
 			});
+		}
+
 		if (showTimestamp === true) embed.setTimestamp();
 
-		embed.setColor(color);
+		embed.setColor(Util.resolveColor(color));
 		embed.setDescription(
 			typeof emoji === "string" ? `${emoji} | ${bold(text)}` : text
 		);
-		embed.setFooter(typeof footer === "string" ? footer : null);
+		embed.setFooter(typeof footer === "string" ? { text: footer } : null);
 
 		return embed;
 	}
 }
 
-// @ts-ignore
-export class AkayoGuild extends Guild {
+class AkayoCommandInteraction extends CommandInteraction {
+	declare client: Bot;
+	declare guild: AkayoGuild;
+
+	constructor(client: Bot, data: RawInteractionData) {
+		super(client, data);
+	}
+
+	embed(
+		color: ColorResolvable,
+		text: string,
+		footer: string | boolean,
+		emoji: string | boolean,
+		showAuthor: boolean,
+		showTimestamp?: boolean
+	): Embed {
+		const embed = new Embed();
+
+		if (showAuthor === true)
+			embed.setAuthor({
+				name: this.user.username,
+				iconURL: this.user.displayAvatarURL(),
+			});
+		if (showTimestamp === true) embed.setTimestamp();
+
+		embed.setColor(Util.resolveColor(color));
+		embed.setDescription(
+			typeof emoji === "string" ? `${emoji} | ${bold(text)}` : text
+		);
+		embed.setFooter(typeof footer === "string" ? { text: footer } : null);
+
+		return embed;
+	}
+}
+
+// @ts-expect-error
+class AkayoGuild extends Guild {
 	declare client: Bot;
 
 	constructor(client: Bot, data: RawGuildData) {
@@ -56,3 +104,5 @@ export class AkayoGuild extends Guild {
 		return this.client.database.getSetting(this.id, "locale");
 	}
 }
+
+export { Message, AkayoGuild, AkayoCommandInteraction };

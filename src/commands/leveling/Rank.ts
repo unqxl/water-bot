@@ -1,7 +1,8 @@
-import { Message, MessageAttachment } from "discord.js";
+import { MessageAttachment } from "discord.js";
 import { Command } from "../../types/Command/Command";
 import { Categories } from "../../types/Command/BaseCommand";
 import { Rank } from "canvacord";
+import { Message } from "discord.js";
 import Bot from "../../classes/Bot";
 
 export default class RankCommand extends Command {
@@ -41,9 +42,7 @@ export default class RankCommand extends Command {
 		const rank = this.client.levels.getRank(message.guild.id, member.id);
 
 		const card = new Rank()
-			.setAvatar(
-				member.user.displayAvatarURL({ dynamic: false, format: "png" })
-			)
+			.setAvatar(member.user.displayAvatarURL({ extension: "png" }))
 			.setUsername(member.user.username)
 			.setDiscriminator(member.user.discriminator)
 			.renderEmojis(true)

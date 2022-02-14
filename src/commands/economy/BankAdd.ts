@@ -1,7 +1,6 @@
-import { Command } from "../../types/Command/Command";
 import { Categories, ValidateReturn } from "../../types/Command/BaseCommand";
+import { Command } from "../../types/Command/Command";
 import { Message } from "discord.js";
-import { bold } from "@discordjs/builders";
 import Bot from "../../classes/Bot";
 
 export default class BankAddCommand extends Command {
@@ -31,14 +30,12 @@ export default class BankAddCommand extends Command {
 
 		const amount = args[0];
 		if (!amount) {
-			const text = lang.ERRORS.ARGS_MISSING.replace(
-				"{cmd_name}",
-				"bank-add"
-			);
+			const text = lang.ERRORS.ARGS_MISSING("bank-add");
 			const embed = this.client.functions.buildEmbed(
 				message,
-				"BLURPLE",
-				bold(text),
+				"Red",
+				text,
+				false,
 				"❌",
 				true
 			);
@@ -52,11 +49,12 @@ export default class BankAddCommand extends Command {
 		}
 
 		if (!Number(amount)) {
-			const text = lang.ERRORS.IS_NAN.replace("{input}", amount);
+			const text = lang.ERRORS.IS_NAN(amount);
 			const embed = this.client.functions.buildEmbed(
 				message,
-				"BLURPLE",
-				bold(text),
+				"Red",
+				text,
+				false,
 				"❌",
 				true
 			);
@@ -73,11 +71,11 @@ export default class BankAddCommand extends Command {
 			const text = lang.ERRORS.NOT_ENOUGH_MONEY(
 				lang.ECONOMY_ACTIONS.DEPOSIT
 			);
-
 			const embed = this.client.functions.buildEmbed(
 				message,
-				"BLURPLE",
-				bold(text),
+				"Red",
+				text,
+				false,
 				"❌",
 				true
 			);
@@ -114,14 +112,14 @@ export default class BankAddCommand extends Command {
 			message.guild.id
 		);
 
-		const text = lang.ECONOMY.BANK_DEPOSITED.replace(
-			"{amount}",
+		const text = lang.ECONOMY.BANK_DEPOSITED(
 			this.client.functions.sp(amount)
 		);
 		const embed = this.client.functions.buildEmbed(
 			message,
-			"BLURPLE",
-			bold(text),
+			"Blurple",
+			text,
+			false,
 			false,
 			true
 		);

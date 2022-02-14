@@ -1,7 +1,8 @@
-import { Guild, Message, MessageEmbed } from "discord.js";
+import { Embed, Guild, Util, ChannelType } from "discord.js";
+import { bold, inlineCode } from "@discordjs/builders";
 import { Command } from "../../types/Command/Command";
 import { Categories } from "../../types/Command/BaseCommand";
-import { bold, inlineCode } from "@discordjs/builders";
+import { Message } from "discord.js";
 import Bot from "../../classes/Bot";
 
 export default class ServerinfoCommand extends Command {
@@ -25,7 +26,7 @@ export default class ServerinfoCommand extends Command {
 		lang: typeof import("@locales/English").default
 	) {
 		const info = await this.getInfo(message.guild);
-		const embed = new MessageEmbed();
+		const embed = new Embed();
 
 		// Embed Title and Field Names
 		const [title, information, precences, members, channels] = [
@@ -66,44 +67,44 @@ export default class ServerinfoCommand extends Command {
 			lang.OTHER.SERVER_INFO.OTHER.CREATED_AT,
 		];
 
-		embed.setColor("BLURPLE");
+		embed.setColor(Util.resolveColor("Blurple"));
 		embed.setAuthor({
 			name: message.author.username,
-			iconURL: message.author.displayAvatarURL({ dynamic: true }),
+			iconURL: message.author.displayAvatarURL(),
 		});
 		embed.setTitle(title);
-		embed.setThumbnail(message.guild.iconURL({ dynamic: true }));
+		embed.setThumbnail(message.guild.iconURL());
 
-		embed.addField(
-			`› ${bold(information)}:`,
-			[
+		embed.addField({
+			name: `› ${bold(information)}:`,
+			value: [
 				`» ${bold(guild_id)}: ${bold(inlineCode(info.id))}`,
 				`» ${bold(owner)}: ${bold(info.owner.toString())}`,
 				`» ${bold(member_count)}: ${bold(inlineCode(info.members))}`,
 				`» ${bold(createdAt)}: ${bold(info.created_at)}`,
-			].join("\n")
-		);
+			].join("\n"),
+		});
 
-		embed.addField(
-			`› ${bold(precences)}:`,
-			[
+		embed.addField({
+			name: `› ${bold(precences)}:`,
+			value: [
 				`» ${bold(online)}: ${bold(inlineCode(info.onlineUsers))}`,
 				`» ${bold(idle)}: ${bold(inlineCode(info.idleUsers))}`,
 				`» ${bold(dnd)}: ${bold(inlineCode(info.dndUsers))}`,
-			].join("\n")
-		);
+			].join("\n"),
+		});
 
-		embed.addField(
-			`› ${bold(members)}:`,
-			[
+		embed.addField({
+			name: `› ${bold(members)}:`,
+			value: [
 				`» ${bold(humans)}: ${bold(inlineCode(info.users.humans))}`,
 				`» ${bold(bots)}: ${bold(inlineCode(info.users.bots))}`,
-			].join("\n")
-		);
+			].join("\n"),
+		});
 
-		embed.addField(
-			`› ${bold(channels)}:`,
-			[
+		embed.addField({
+			name: `› ${bold(channels)}:`,
+			value: [
 				`» ${bold(text)}: ${bold(
 					inlineCode(info.channels.textChannels)
 				)}`,
@@ -119,8 +120,8 @@ export default class ServerinfoCommand extends Command {
 				`» ${bold(categories)}: ${bold(
 					inlineCode(info.channels.categoriesChannels)
 				)}`,
-			].join("\n")
-		);
+			].join("\n"),
+		});
 
 		return message.channel.send({
 			embeds: [embed],
@@ -190,11 +191,13 @@ export default class ServerinfoCommand extends Command {
 		});
 
 		channels.forEach((channel) => {
-			if (channel.type === "GUILD_TEXT") text_channels++;
-			else if (channel.type === "GUILD_NEWS") news_channels++;
-			else if (channel.type === "GUILD_VOICE") voice_channels++;
-			else if (channel.type === "GUILD_CATEGORY") categories_channels++;
-			else if (channel.type === "GUILD_STAGE_VOICE") stages_channels++;
+			if (channel.type === ChannelType.GuildText) text_channels++;
+			else if (channel.type === ChannelType.GuildNews) news_channels++;
+			else if (channel.type === ChannelType.GuildVoice) voice_channels++;
+			else if (channel.type === ChannelType.GuildCategory)
+				categories_channels++;
+			else if (channel.type === ChannelType.GuildStageVoice)
+				stages_channels++;
 		});
 
 		humansPercent = this.calculatePercent(humans, members.size);

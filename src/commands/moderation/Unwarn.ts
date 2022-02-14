@@ -1,13 +1,12 @@
-import { Categories, ValidateReturn } from "../../types/Command/BaseCommand";
 import {
 	ButtonInteraction,
-	Message,
-	MessageActionRow,
-	MessageButton,
-	MessageEmbed,
+	ActionRow,
+	ButtonComponent,
+	ComponentType,
 } from "discord.js";
+import { Categories, ValidateReturn } from "../../types/Command/BaseCommand";
 import { Command } from "../../types/Command/Command";
-import { bold } from "@discordjs/builders";
+import { Message } from "discord.js";
 import Bot from "../../classes/Bot";
 
 export default class UnwarnCommand extends Command {
@@ -23,8 +22,8 @@ export default class UnwarnCommand extends Command {
 			category: Categories.MODERATION,
 			usage: "<prefix>unwarn <member>",
 
-			memberPermissions: ["MANAGE_MESSAGES"],
-			botPermissions: ["MANAGE_ROLES"],
+			memberPermissions: ["ManageMessages"],
+			botPermissions: ["ManageRoles"],
 		});
 	}
 
@@ -38,14 +37,12 @@ export default class UnwarnCommand extends Command {
 			message.guild.members.cache.get(args[0]);
 
 		if (!member) {
-			const text = lang.ERRORS.ARGS_MISSING.replace(
-				"{cmd_name}",
-				"unwarn"
-			);
+			const text = lang.ERRORS.ARGS_MISSING("unwarn");
 			const embed = this.client.functions.buildEmbed(
 				message,
-				"BLURPLE",
-				bold(text),
+				"Red",
+				text,
+				false,
 				"❌",
 				true
 			);
@@ -58,16 +55,15 @@ export default class UnwarnCommand extends Command {
 			};
 		}
 
+		// @ts-expect-error
 		const lastWarns = await this.client.moderation.warns.all(member);
 		if (!lastWarns.length) {
-			const text = lang.ERRORS.NO_WARNS.replace(
-				"{member}",
-				member.toString()
-			);
+			const text = lang.ERRORS.NO_WARNS(member.toString());
 			const embed = this.client.functions.buildEmbed(
 				message,
-				"BLURPLE",
-				bold(text),
+				"Red",
+				text,
+				false,
 				"❌",
 				true
 			);
@@ -100,31 +96,31 @@ export default class UnwarnCommand extends Command {
 			lang.FUNCTIONS.VERIFICATION.TEXT,
 		];
 
-		const confirmButton = new MessageButton()
+		const confirmButton = new ButtonComponent()
 			.setCustomId("confirm")
-			.setStyle("SUCCESS")
+			.setStyle(3)
 			.setLabel(accept)
-			.setEmoji("✅");
+			.setEmoji({ name: "✅" });
 
-		const cancelButton = new MessageButton()
+		const cancelButton = new ButtonComponent()
 			.setCustomId("cancel")
-			.setStyle("DANGER")
+			.setStyle(4)
 			.setLabel(decline)
-			.setEmoji("❌");
+			.setEmoji({ name: "❌" });
 
-		const confirmRow = new MessageActionRow().addComponents([
+		const confirmRow = new ActionRow().addComponents(
 			confirmButton,
-			cancelButton,
-		]);
+			cancelButton
+		);
 
-		const confirmEmbed = new MessageEmbed()
-			.setColor("BLURPLE")
-			.setAuthor({
-				name: message.author.username,
-				iconURL: message.author.displayAvatarURL({ dynamic: true }),
-			})
-			.setDescription(bold(confirmText))
-			.setTimestamp();
+		const confirmEmbed = this.client.functions.buildEmbed(
+			message,
+			"Blurple",
+			confirmText,
+			false,
+			"✉️",
+			true
+		);
 
 		const msg = await message.channel.send({
 			embeds: [confirmEmbed],
@@ -133,22 +129,22 @@ export default class UnwarnCommand extends Command {
 
 		const collector = await msg.createMessageComponentCollector({
 			filter: (btn) => btn.user.id === message.author.id,
-			componentType: "BUTTON",
+			componentType: ComponentType.Button,
+			max: 1,
 			time: 20000,
 		});
 
 		collector.on("collect", async (btn: ButtonInteraction) => {
 			if (btn.customId === "confirm") {
+				// @ts-expect-error
 				await this.client.moderation.unwarn(member);
 
-				const text = lang.MODERATION.UNWARNED.replace(
-					"{target}",
-					member.toString()
-				);
+				const text = lang.MODERATION.UNWARNED(member.toString());
 				const embed = this.client.functions.buildEmbed(
 					message,
-					"BLURPLE",
-					bold(text),
+					"Blurple",
+					text,
+					false,
 					"✅",
 					true
 				);

@@ -29,16 +29,15 @@ export default class WarnsCommand extends Command {
 			message.guild.members.cache.get(args[0]) ||
 			message.member;
 
+		// @ts-expect-error
 		const warns = await this.client.moderation.allWarns(member);
 		if (!warns.length) {
-			const text = lang.ERRORS.NO_WARNS.replace(
-				"{member}",
-				member.toString()
-			);
+			const text = lang.ERRORS.NO_WARNS(member.toString());
 			const embed = this.client.functions.buildEmbed(
 				message,
-				"BLURPLE",
-				bold(text),
+				"Red",
+				text,
+				false,
 				"❌",
 				true
 			);
@@ -65,6 +64,7 @@ export default class WarnsCommand extends Command {
 			message.mentions.members.first() ||
 			message.guild.members.cache.get(args[0]);
 
+		// @ts-expect-error
 		const warns = await this.client.moderation.allWarns(member);
 
 		var text = "";
@@ -81,12 +81,12 @@ export default class WarnsCommand extends Command {
 
 		const embed = this.client.functions.buildEmbed(
 			message,
-			"BLURPLE",
+			"Blurple",
 			text,
+			false,
 			false,
 			true
 		);
-
 		return message.channel.send({
 			embeds: [embed],
 		});

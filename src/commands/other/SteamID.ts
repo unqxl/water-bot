@@ -29,15 +29,12 @@ export default class SteamIDCommand extends Command {
 	): Promise<ValidateReturn> {
 		const id = args[0];
 		if (!id) {
-			const text = lang.ERRORS.ARGS_MISSING.replace(
-				"{cmd_name}",
-				"steamid"
-			);
-
+			const text = lang.ERRORS.ARGS_MISSING("steamid");
 			const embed = this.client.functions.buildEmbed(
 				message,
-				"BLURPLE",
-				bold(text),
+				"Red",
+				text,
+				false,
 				"❌",
 				true
 			);
@@ -62,8 +59,9 @@ export default class SteamIDCommand extends Command {
 			const text = lang.MODULES.STEAMID.NOT_STEAMID;
 			const embed = this.client.functions.buildEmbed(
 				message,
-				"BLURPLE",
-				bold(text),
+				"Red",
+				text,
+				false,
 				"❌",
 				true
 			);
@@ -84,10 +82,14 @@ export default class SteamIDCommand extends Command {
 	) {
 		const id = args[0];
 
-		const [SteamID, SteamID3, SteamID64, ProfileURL] = [
-			Converter.toSteamID(id) as string,
+		const [SteamID, SteamID64, SteamID3, ProfileURL] = [
+			Converter.toSteamID(Converter.toSteamID64(id) as string) as string,
+			Converter.toSteamID64(
+				Converter.toSteamID(
+					Converter.toSteamID64(id) as string
+				) as string
+			) as string,
 			Converter.toSteamID3(id) as string,
-			Converter.toSteamID64(Converter.toSteamID(id) as string) as string,
 			Converter.profileURL(
 				Converter.toSteamID64(Converter.toSteamID(id) as string)
 			) as string,
@@ -101,8 +103,9 @@ export default class SteamIDCommand extends Command {
 		);
 		const embed = this.client.functions.buildEmbed(
 			message,
-			"BLURPLE",
-			bold(text),
+			"Blurple",
+			text,
+			false,
 			false,
 			true
 		);

@@ -28,9 +28,10 @@ export default class SourceCommand extends Command {
 		const text = lang.OTHER.SOURCE.TEXT(this.client.config.bot.github_link);
 		const embed = this.client.functions.buildEmbed(
 			message,
-			"BLURPLE",
-			bold(text),
-			"❌",
+			"Blurple",
+			text,
+			false,
+			"✉️",
 			true
 		);
 

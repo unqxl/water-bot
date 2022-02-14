@@ -1,7 +1,8 @@
 import Event from "../../types/Event/Event";
 import Bot from "../../classes/Bot";
 import GhostPing from "../../modules/GhostPing";
-import { Message, TextChannel, MessageEmbed } from "discord.js";
+import { TextChannel, Embed, Util } from "discord.js";
+import { Message } from "discord.js";
 
 export default class MessageDeleteEvent extends Event {
 	constructor() {
@@ -36,11 +37,11 @@ export default class MessageDeleteEvent extends Event {
 					message.content
 				);
 
-			const embed = new MessageEmbed()
-				.setColor("YELLOW")
+			const embed = new Embed()
+				.setColor(Util.resolveColor("Yellow"))
 				.setAuthor({
 					name: message.author.tag,
-					iconURL: message.author.displayAvatarURL({ dynamic: true }),
+					iconURL: message.author.displayAvatarURL(),
 				})
 				.setTitle(title)
 				.setDescription(description)
@@ -59,11 +60,11 @@ export default class MessageDeleteEvent extends Event {
 			message.content
 		);
 
-		const embed = new MessageEmbed()
-			.setColor("BLURPLE")
+		const embed = new Embed()
+			.setColor(Util.resolveColor("Blurple"))
 			.setAuthor({
 				name: message.author.tag,
-				iconURL: message.author.displayAvatarURL({ dynamic: true }),
+				iconURL: message.author.displayAvatarURL(),
 			})
 			.setTitle(title)
 			.setDescription(description)

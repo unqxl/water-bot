@@ -1,4 +1,5 @@
-import { Message, MessageEmbed } from "discord.js";
+import { Embed, Util } from "discord.js";
+import { Message } from "discord.js";
 import { Command } from "../../types/Command/Command";
 import { Categories } from "../../types/Command/BaseCommand";
 import Bot from "../../classes/Bot";
@@ -99,7 +100,7 @@ export default class UserinfoCommand extends Command {
 		const userInfo = {
 			name: member.user.username,
 			tag: member.user.tag,
-			avatar: member.user.displayAvatarURL({ dynamic: true }),
+			avatar: member.user.displayAvatarURL(),
 			regDate: new Date(member.user.createdTimestamp).toLocaleString(
 				locale === "en-US" ? "en-US" : "ru-RU"
 			),
@@ -185,28 +186,35 @@ export default class UserinfoCommand extends Command {
 			botCheck: member.user.bot ? yes : no,
 		};
 
-		const embed = new MessageEmbed()
-			.setColor("BLURPLE")
+		const embed = new Embed()
+			.setColor(Util.resolveColor("Blurple"))
 			.setAuthor({
 				name: member.user.username,
-				iconURL: member.user.displayAvatarURL({ dynamic: true }),
+				iconURL: member.user.displayAvatarURL(),
 			})
-			.addField(
-				`[1] ${main}:`,
-				`› **${username}**: **${userInfo.name}**\n› **${tag}**: **${userInfo.tag}**\n› **${avatar}**: **[Click](${userInfo.avatar})**`
-			)
-			.addField(
-				`[2] ${other}:`,
-				`› **${online_using}**: **${userInfo.onlineUsing()}**\n› **${presence}**: **${userInfo.presence()}**\n› **${playing}**: **${userInfo.presenceGame()}**\n\n› **${reg_date}**: **${
-					userInfo.regDate
-				}** (**${userInfo.regTimeAgo}**)\n› **${join_date}**: **${
-					userInfo.joinDate
-				}** (**${userInfo.joinTimeAgo}**)\n\n› **${in_voice}**: **${
-					userInfo.voiceCheck
-				}**\n› **${boosting}**: **${
-					userInfo.boostCheck
-				}**\n› **${bot}**: **${userInfo.botCheck}**`
-			)
+			.addField({
+				name: `[1] ${main}:`,
+				value: [
+					`› **${username}**: **${userInfo.name}**`,
+					`› **${tag}**: **${userInfo.tag}**`,
+					`› **${avatar}**: **[Click](${userInfo.avatar})**`,
+				].join("\n"),
+			})
+			.addField({
+				name: `[2] ${other}:`,
+				value: [
+					`› **${online_using}**: **${userInfo.onlineUsing()}**`,
+					`› **${presence}**: **${userInfo.presence()}**`,
+					`› **${playing}**: **${userInfo.presenceGame()}**`,
+					"",
+					`› **${reg_date}**: **${userInfo.regDate}** (**${userInfo.regTimeAgo}**)`,
+					`› **${join_date}**: **${userInfo.joinDate}** (**${userInfo.joinTimeAgo}**)`,
+					"",
+					`› **${in_voice}**: **${userInfo.voiceCheck}**`,
+					`› **${boosting}**: **${userInfo.boostCheck}**`,
+					`› **${bot}**: **${userInfo.botCheck}**`,
+				].join("\n"),
+			})
 			.setThumbnail(userInfo.avatar);
 
 		return message.channel.send({

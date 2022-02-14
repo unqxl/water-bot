@@ -1,24 +1,16 @@
-import { Categories, ValidateReturn } from "../../types/Command/BaseCommand";
 import {
 	ButtonInteraction,
-	Message,
-	MessageActionRow,
-	MessageButton,
-	MessageEmbed,
+	ActionRow,
+	ButtonComponent,
+	ComponentType,
 } from "discord.js";
+import { Categories, ValidateReturn } from "../../types/Command/BaseCommand";
 import { Command } from "../../types/Command/Command";
-import { bold } from "@discordjs/builders";
-import { getRepository, Repository } from "typeorm";
-import { GuildBan } from "../../typeorm/entities/GuildBan";
+import { Message } from "discord.js";
 import Bot from "../../classes/Bot";
 
 export default class BanCommand extends Command {
-	constructor(
-		client: Bot,
-		private readonly banRepository: Repository<GuildBan> = getRepository(
-			GuildBan
-		)
-	) {
+	constructor(client: Bot) {
 		super(client, {
 			name: "ban",
 
@@ -30,8 +22,8 @@ export default class BanCommand extends Command {
 			category: Categories.MODERATION,
 			usage: "<prefix>ban <member> [reason]",
 
-			memberPermissions: ["BAN_MEMBERS"],
-			botPermissions: ["BAN_MEMBERS"],
+			memberPermissions: ["BanMembers"],
+			botPermissions: ["BanMembers"],
 		});
 	}
 
@@ -45,11 +37,12 @@ export default class BanCommand extends Command {
 			message.guild.members.cache.get(args[0]);
 
 		if (!member) {
-			const text = lang.ERRORS.ARGS_MISSING.replace("{cmd_name}", "ban");
+			const text = lang.ERRORS.ARGS_MISSING("ban");
 			const embed = this.client.functions.buildEmbed(
 				message,
-				"BLURPLE",
-				bold(text),
+				"Red",
+				text,
+				false,
 				"❌",
 				true
 			);
@@ -63,14 +56,12 @@ export default class BanCommand extends Command {
 		}
 
 		if (!member.bannable) {
-			const text = lang.ERRORS.MEMBER_NOT_BANNABLE.replace(
-				"{target}",
-				member.toString()
-			);
+			const text = lang.ERRORS.MEMBER_NOT_BANNABLE(member.toString());
 			const embed = this.client.functions.buildEmbed(
 				message,
-				"RED",
-				bold(text),
+				"Red",
+				text,
+				false,
 				"❌",
 				true
 			);
@@ -106,31 +97,31 @@ export default class BanCommand extends Command {
 			lang.FUNCTIONS.VERIFICATION.TEXT,
 		];
 
-		const confirmButton = new MessageButton()
+		const confirmButton = new ButtonComponent()
 			.setCustomId("confirm")
-			.setStyle("SUCCESS")
+			.setStyle(3)
 			.setLabel(accept)
-			.setEmoji("✅");
+			.setEmoji({ name: "✅" });
 
-		const cancelButton = new MessageButton()
+		const cancelButton = new ButtonComponent()
 			.setCustomId("cancel")
-			.setStyle("DANGER")
+			.setStyle(4)
 			.setLabel(decline)
-			.setEmoji("❌");
+			.setEmoji({ name: "❌" });
 
-		const confirmRow = new MessageActionRow().addComponents([
+		const confirmRow = new ActionRow().addComponents(
 			confirmButton,
-			cancelButton,
-		]);
+			cancelButton
+		);
 
-		const confirmEmbed = new MessageEmbed()
-			.setColor("BLURPLE")
-			.setAuthor({
-				name: message.author.username,
-				iconURL: message.author.displayAvatarURL({ dynamic: true }),
-			})
-			.setDescription(bold(confirmText))
-			.setTimestamp();
+		const confirmEmbed = this.client.functions.buildEmbed(
+			message,
+			"Blurple",
+			confirmText,
+			false,
+			"✉️",
+			true
+		);
 
 		const msg = await message.channel.send({
 			embeds: [confirmEmbed],
@@ -139,46 +130,33 @@ export default class BanCommand extends Command {
 
 		const collector = await msg.createMessageComponentCollector({
 			filter: (btn) => btn.user.id === message.author.id,
-			componentType: "BUTTON",
+			componentType: ComponentType.Button,
 			max: 1,
 			time: 20000,
 		});
 
 		collector.on("collect", async (btn: ButtonInteraction) => {
 			if (btn.customId === "confirm") {
-				const text = lang.MODERATION.BANNED.replace(
-					"{target}",
-					member.toString()
-				)
-					.replace("{reason}", reason)
-					.replace("{moderator}", message.author.toString());
-
+				const text = lang.MODERATION.BANNED(
+					member.toString(),
+					reason,
+					message.author.toString()
+				);
 				const embed = this.client.functions.buildEmbed(
 					message,
-					"BLURPLE",
-					bold(text),
+					"Blurple",
+					text,
+					false,
 					"✅",
 					true
 				);
 
-				await member.ban({
-					days: 7,
-					reason: reason,
-				});
+				await member.ban({ deleteMessageDays: 7, reason: reason });
 
 				await msg.edit({
 					embeds: [embed],
 					components: [],
 				});
-
-				const ban = this.banRepository.create({
-					guild_id: message.guild.id,
-					banned_member_id: member.id,
-					issued_by: message.author.id,
-					reason: reason,
-					creation_date: new Date(),
-				});
-				await this.banRepository.save(ban);
 
 				return;
 			} else if (btn.customId === "cancel") {

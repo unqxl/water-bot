@@ -34,12 +34,12 @@ export default class LoopCommand extends Command {
 				const text = bold(error);
 				const embed = this.client.functions.buildEmbed(
 					message,
-					"BLURPLE",
-					bold(text),
+					"Red",
+					text,
+					false,
 					"❌",
 					true
 				);
-
 				return {
 					ok: false,
 					error: {
@@ -57,8 +57,9 @@ export default class LoopCommand extends Command {
 		if (!message.member.voice.channel) {
 			const embed = this.client.functions.buildEmbed(
 				message,
-				"BLURPLE",
-				bold(error),
+				"Red",
+				error,
+				false,
 				"❌",
 				true
 			);
@@ -78,8 +79,9 @@ export default class LoopCommand extends Command {
 		) {
 			const embed = this.client.functions.buildEmbed(
 				message,
-				"BLURPLE",
-				bold(voice_error),
+				"Red",
+				voice_error,
+				false,
 				"❌",
 				true
 			);
@@ -97,8 +99,9 @@ export default class LoopCommand extends Command {
 			const text = lang.ERRORS.QUEUE_EMPTY;
 			const embed = this.client.functions.buildEmbed(
 				message,
-				"BLURPLE",
-				bold(text),
+				"Red",
+				text,
+				false,
 				"❌",
 				true
 			);
@@ -158,8 +161,9 @@ export default class LoopCommand extends Command {
 		const text = lang.MUSIC.LOOP_CHANGES(mode);
 		const embed = this.client.functions.buildEmbed(
 			message,
-			"BLURPLE",
-			bold(text),
+			"Blurple",
+			text,
+			false,
 			"✅",
 			true
 		);

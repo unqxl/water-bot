@@ -1,18 +1,18 @@
 import {
 	ColorResolvable,
-	CommandInteraction,
 	DiscordAPIError,
 	Guild,
 	HTTPError,
-	Message,
-	MessageEmbed,
+	Embed,
 	MessageOptions,
 	Snowflake,
 	TextChannel,
 	User,
+	Util,
 } from "discord.js";
-import { codeBlock } from "@discordjs/builders";
+import { bold, codeBlock } from "@discordjs/builders";
 import { request } from "undici";
+import { Message } from "discord.js";
 import Bot from "./Bot";
 
 export = class Functions {
@@ -23,38 +23,30 @@ export = class Functions {
 	}
 
 	buildEmbed(
-		message: Message | CommandInteraction | { author: User | null },
+		message: Message | { author: User | null },
 		color: ColorResolvable,
-		description: string,
-		emoji?: string | boolean,
-		showAuthor?: boolean
-	): MessageEmbed {
-		const embed = new MessageEmbed();
+		text: string,
+		footer: string | boolean,
+		emoji: string | boolean,
+		showAuthor: boolean,
+		showTimestamp?: boolean
+	): Embed {
+		const embed = new Embed();
 
 		if (showAuthor === true) {
-			if (message instanceof Message)
-				embed.setAuthor({
-					name: message.author.username,
-					iconURL: message.author.displayAvatarURL({ dynamic: true }),
-				});
-			else if (message instanceof CommandInteraction)
-				embed.setAuthor({
-					name: message.user.username,
-					iconURL: message.user.displayAvatarURL({ dynamic: true }),
-				});
-			else
-				embed.setAuthor({
-					name: message.author.username,
-					iconURL: message.author.displayAvatarURL({ dynamic: true }),
-				});
+			embed.setAuthor({
+				name: message.author.username,
+				iconURL: message.author.displayAvatarURL(),
+			});
 		}
 
-		embed.setColor(color);
+		if (showTimestamp === true) embed.setTimestamp();
+
+		embed.setColor(Util.resolveColor(color));
 		embed.setDescription(
-			typeof emoji === "string"
-				? `${emoji} | ${description}`
-				: description
+			typeof emoji === "string" ? `${emoji} | ${bold(text)}` : text
 		);
+		embed.setFooter(typeof footer === "string" ? { text: footer } : null);
 
 		return embed;
 	}
@@ -99,7 +91,7 @@ export = class Functions {
 	) {
 		if (arr.length > length) {
 			const len = (arr.length - length).toString();
-			const more = lang.FUNCTIONS.TRIMARRAY.replace("{len}", len);
+			const more = lang.FUNCTIONS.TRIMARRAY(len);
 
 			arr = arr.slice(0, length);
 			arr.push(more);
@@ -206,9 +198,10 @@ export = class Functions {
 			};
 
 			const code = "code" in error ? error.code : "N/A";
-			const httpStatus = "httpStatus" in error ? error.httpStatus : "N/A";
+			const httpStatus =
+				"httpStatus" in error ? error["httpStatus"] : "N/A";
 			const requestData =
-				"requestData" in error ? error.requestData : { json: {} };
+				"requestData" in error ? error["requestData"] : { json: {} };
 			const name = error.name || "N/A";
 
 			var stack = error.stack || error;
@@ -234,22 +227,40 @@ export = class Functions {
 
 			const embed = this.buildEmbed(
 				message,
-				type === "error" ? "RED" : "ORANGE",
+				type === "error" ? "Red" : "Orange",
 				"...",
 				false,
-				true
+				false,
+				false,
+				false
 			);
 
 			embed.setDescription(codeBlock(stack as string));
-			embed.addField("Name", name, true);
-			embed.addField("Code", code.toString(), true);
-			embed.addField("HTTP Status", httpStatus.toString(), true);
-			embed.addField("Timestamp", new Date().toLocaleString("ru"), true);
-			embed.addField(
-				"Request Data",
-				codeBlock("json", jsonString?.substring(0, 2045)),
-				false
-			);
+			embed.addField({
+				name: "Name",
+				value: name,
+				inline: true,
+			});
+			embed.addField({
+				name: "Code",
+				value: code.toString(),
+				inline: true,
+			});
+			embed.addField({
+				name: "HTTP Status",
+				value: httpStatus.toString(),
+				inline: true,
+			});
+			embed.addField({
+				name: "Timestamp",
+				value: new Date().toLocaleString("ru"),
+				inline: true,
+			});
+			embed.addField({
+				name: "Request Data",
+				value: codeBlock("json", jsonString.substring(0, 2045)),
+				inline: false,
+			});
 
 			channel.send({
 				embeds: [embed],

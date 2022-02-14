@@ -1,7 +1,7 @@
 import { Categories, ValidateReturn } from "../../types/Command/BaseCommand";
-import { Message, TextChannel } from "discord.js";
+import { TextChannel } from "discord.js";
 import { Command } from "../../types/Command/Command";
-import { bold } from "@discordjs/builders";
+import { Message } from "discord.js";
 import Bot from "../../classes/Bot";
 
 export default class PlayCommand extends Command {
@@ -30,11 +30,11 @@ export default class PlayCommand extends Command {
 				message
 			);
 			if (!status) {
-				const text = bold(error);
 				const embed = this.client.functions.buildEmbed(
 					message,
-					"BLURPLE",
-					bold(text),
+					"Red",
+					error,
+					false,
 					"❌",
 					true
 				);
@@ -56,8 +56,9 @@ export default class PlayCommand extends Command {
 		if (!message.member.voice.channel) {
 			const embed = this.client.functions.buildEmbed(
 				message,
-				"BLURPLE",
-				bold(error),
+				"Red",
+				error,
+				false,
 				"❌",
 				true
 			);
@@ -77,8 +78,9 @@ export default class PlayCommand extends Command {
 		) {
 			const embed = this.client.functions.buildEmbed(
 				message,
-				"BLURPLE",
-				bold(voice_error),
+				"Red",
+				voice_error,
+				false,
 				"❌",
 				true
 			);
@@ -93,11 +95,12 @@ export default class PlayCommand extends Command {
 
 		const song = args.join(" ");
 		if (!song) {
-			const text = lang.ERRORS.ARGS_MISSING.replace("{cmd_name}", "play");
+			const text = lang.ERRORS.ARGS_MISSING("play");
 			const embed = this.client.functions.buildEmbed(
 				message,
-				"BLURPLE",
-				bold(text),
+				"Red",
+				text,
+				false,
 				"❌",
 				true
 			);

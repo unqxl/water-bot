@@ -1,7 +1,6 @@
 import { Categories, ValidateReturn } from "../../types/Command/BaseCommand";
-import { Message } from "discord.js";
 import { Command } from "../../types/Command/Command";
-import { bold } from "@discordjs/builders";
+import { Message } from "discord.js";
 import Bot from "../../classes/Bot";
 
 export default class VolumeCommand extends Command {
@@ -31,11 +30,11 @@ export default class VolumeCommand extends Command {
 				message
 			);
 			if (!status) {
-				const text = bold(error);
 				const embed = this.client.functions.buildEmbed(
 					message,
-					"BLURPLE",
-					bold(text),
+					"Red",
+					error,
+					false,
 					"❌",
 					true
 				);
@@ -57,8 +56,9 @@ export default class VolumeCommand extends Command {
 		if (!message.member.voice.channel) {
 			const embed = this.client.functions.buildEmbed(
 				message,
-				"BLURPLE",
-				bold(error),
+				"Red",
+				error,
+				false,
 				"❌",
 				true
 			);
@@ -78,8 +78,9 @@ export default class VolumeCommand extends Command {
 		) {
 			const embed = this.client.functions.buildEmbed(
 				message,
-				"BLURPLE",
-				bold(voice_error),
+				"Red",
+				voice_error,
+				false,
 				"❌",
 				true
 			);
@@ -97,8 +98,9 @@ export default class VolumeCommand extends Command {
 			const text = lang.ERRORS.QUEUE_EMPTY;
 			const embed = this.client.functions.buildEmbed(
 				message,
-				"BLURPLE",
-				bold(text),
+				"Red",
+				text,
+				false,
 				"❌",
 				true
 			);
@@ -114,11 +116,12 @@ export default class VolumeCommand extends Command {
 		const volume = args[0];
 		if (volume) {
 			if (!Number(volume)) {
-				const text = lang.ERRORS.IS_NAN.replace("{input}", volume);
+				const text = lang.ERRORS.IS_NAN(volume);
 				const embed = this.client.functions.buildEmbed(
 					message,
-					"BLURPLE",
-					bold(text),
+					"Red",
+					text,
+					false,
 					"❌",
 					true
 				);
@@ -148,16 +151,17 @@ export default class VolumeCommand extends Command {
 		if (!volume) {
 			const current_volume = queue.volume;
 			const volumeText = lang.MUSIC.VOLUME_NOW(current_volume);
-			const nowEmbed = this.client.functions.buildEmbed(
+			const embed = this.client.functions.buildEmbed(
 				message,
-				"BLURPLE",
-				bold(volumeText),
-				"✅",
+				"Blurple",
+				volumeText,
+				false,
+				false,
 				true
 			);
 
 			return message.channel.send({
-				embeds: [nowEmbed],
+				embeds: [embed],
 			});
 		}
 
@@ -165,8 +169,9 @@ export default class VolumeCommand extends Command {
 		const text = lang.MUSIC.VOLUME_SETTED(newQueue.volume);
 		const embed = this.client.functions.buildEmbed(
 			message,
-			"BLURPLE",
-			bold(text),
+			"Blurple",
+			text,
+			false,
 			"✅",
 			true
 		);

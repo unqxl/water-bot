@@ -1,7 +1,6 @@
 import { Message } from "discord.js";
 import { Command } from "../../types/Command/Command";
 import { Categories } from "../../types/Command/BaseCommand";
-import { bold } from "@discordjs/builders";
 import Bot from "../../classes/Bot";
 import random from "random";
 
@@ -27,36 +26,31 @@ export default class CaptchaCommand extends Command {
 		const { image, answer } = await this.client.dagpi.captcha();
 		const reward = random.int(10, 150);
 
-		const text = lang.GAMES.CAPTCHA.TEXT.replace(
-			"{reward}",
-			this.client.functions.sp(reward)
-		);
+		const text = lang.GAMES.CAPTCHA.TEXT(this.client.functions.sp(reward));
 		const embed = this.client.functions.buildEmbed(
 			message,
-			"BLURPLE",
-			bold(text),
+			"Blurple",
+			text,
+			false,
 			false,
 			true
 		);
 		embed.setImage(image);
 
-		const msg = await message.channel.send({
-			embeds: [embed],
-		});
+		const collector = await this.client.functions.promptMessage(
+			message,
+			{ embeds: [embed] },
+			15000
+		);
 
-		const collector = await msg.channel.awaitMessages({
-			filter: (msg) => msg.author.id === message.author.id,
-			max: 1,
-			time: 15000,
-		});
-
-		const content = collector.first().content;
+		const content = collector;
 		if (!content) {
 			const text = lang.GAMES.CAPTCHA.TIMEOUT;
 			const embed = this.client.functions.buildEmbed(
 				message,
-				"BLURPLE",
-				bold(text),
+				"Red",
+				text,
+				false,
 				"❌",
 				true
 			);
@@ -70,8 +64,9 @@ export default class CaptchaCommand extends Command {
 			const text = lang.GAMES.CAPTCHA.WRONG_ANSWER;
 			const embed = this.client.functions.buildEmbed(
 				message,
-				"BLURPLE",
-				bold(text),
+				"Red",
+				text,
+				false,
 				"❌",
 				true
 			);
@@ -86,14 +81,14 @@ export default class CaptchaCommand extends Command {
 				message.guild.id
 			);
 
-			const text = lang.GAMES.CAPTCHA.CORRECT_ANSWER.replace(
-				"{coins}",
+			const text = lang.GAMES.CAPTCHA.CORRECT_ANSWER(
 				this.client.functions.sp(reward)
 			);
 			const embed = this.client.functions.buildEmbed(
 				message,
-				"BLURPLE",
-				bold(text),
+				"Blurple",
+				text,
+				false,
 				"✅",
 				true
 			);

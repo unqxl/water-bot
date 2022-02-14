@@ -1,7 +1,7 @@
 import { Categories, ValidateReturn } from "../../types/Command/BaseCommand";
-import { Message, TextChannel } from "discord.js";
+import { TextChannel } from "discord.js";
 import { Command } from "../../types/Command/Command";
-import { bold } from "@discordjs/builders";
+import { Message } from "discord.js";
 import Bot from "../../classes/Bot";
 
 export default class PurgeCommand extends Command {
@@ -18,8 +18,8 @@ export default class PurgeCommand extends Command {
 			category: Categories.MODERATION,
 			usage: "<prefix>purge <amount>",
 
-			memberPermissions: ["MANAGE_MESSAGES"],
-			botPermissions: ["MANAGE_MESSAGES"],
+			memberPermissions: ["ManageMessages"],
+			botPermissions: ["ManageMessages"],
 		});
 	}
 
@@ -31,14 +31,12 @@ export default class PurgeCommand extends Command {
 		const amount = args[0];
 
 		if (!amount) {
-			const text = lang.ERRORS.ARGS_MISSING.replace(
-				"{cmd_name}",
-				"purge"
-			);
+			const text = lang.ERRORS.ARGS_MISSING("purge");
 			const embed = this.client.functions.buildEmbed(
 				message,
-				"BLURPLE",
-				bold(text),
+				"Red",
+				text,
+				false,
 				"❌",
 				true
 			);
@@ -52,29 +50,12 @@ export default class PurgeCommand extends Command {
 		}
 
 		if (!Number(amount)) {
-			const text = lang.ERRORS.IS_NAN.replace("{input}", amount);
+			const text = lang.ERRORS.IS_NAN(amount);
 			const embed = this.client.functions.buildEmbed(
 				message,
-				"BLURPLE",
-				bold(text),
-				"❌",
-				true
-			);
-
-			return {
-				ok: false,
-				error: {
-					embeds: [embed],
-				},
-			};
-		}
-
-		if (Number(amount) > 100) {
-			const text = lang.ERRORS.CLEAR_LIMIT;
-			const embed = this.client.functions.buildEmbed(
-				message,
-				"BLURPLE",
-				bold(text),
+				"Red",
+				text,
+				false,
 				"❌",
 				true
 			);
@@ -97,19 +78,20 @@ export default class PurgeCommand extends Command {
 		args: string[],
 		lang: typeof import("@locales/English").default
 	) {
-		const amount = Number(args[0]);
+		var amount = Number(args[0]);
+		if (amount > 100) amount = 100;
 
 		return await (message.channel as TextChannel)
 			.bulkDelete(amount, true)
 			.then(async (collected) => {
-				const text = lang.MODERATION.CLEARED.replace(
-					"{amount}",
+				const text = lang.MODERATION.CLEARED(
 					collected.size.toLocaleString("be")
 				);
 				const embed = this.client.functions.buildEmbed(
 					message,
-					"BLURPLE",
-					bold(text),
+					"Blurple",
+					text,
+					false,
 					"✅",
 					true
 				);

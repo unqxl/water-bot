@@ -1,6 +1,13 @@
 import "reflect-metadata";
 
-import { Client, Collection, Intents } from "discord.js";
+import {
+	Client,
+	Collection,
+	GatewayIntentBits,
+	Partials,
+	ActivityType,
+	Util,
+} from "discord.js";
 import { EnmapGiveaways } from "./EnmapGiveaways";
 import { Moderation } from "discord-moderation";
 import { Leveling } from "./Leveling";
@@ -42,7 +49,7 @@ import { GuildConfiguration } from "../typeorm/entities/GuildConfiguration";
 // WebSocket
 import { io, Socket } from "socket.io-client";
 
-class Bot extends Client {
+export = class Bot extends Client {
 	//? [Collections]
 	public commands: Collection<string, Command> = new Collection();
 	public slashCommands: Collection<string, SlashCommand> = new Collection();
@@ -59,25 +66,25 @@ class Bot extends Client {
 	//? [Storages]
 	public custom_commands: Enmap<string, CustomCommand[]> = new Enmap({
 		name: "custom_commands",
-		dataDir: process.env.BUILD_PATH ? "./db" : "./src/db",
+		dataDir: "./db",
 		wal: false,
 	}); //? Custom Commands Storage
 
 	public configurations: Enmap<string, GuildConfig> = new Enmap({
 		name: "configurations",
-		dataDir: process.env.BUILD_PATH ? "./db" : "./src/db",
+		dataDir: "./db",
 		wal: false,
 	}); //? Configurations Storage
 
 	public leveling = new Enmap({
 		name: "leveling",
-		dataDir: process.env.BUILD_PATH ? "./db" : "./src/db",
+		dataDir: "./db",
 		wal: false,
 	}); //? Leveling Storage
 
 	public giveawaysDB = new Enmap({
 		name: "giveaways",
-		dataDir: process.env.BUILD_PATH ? "./db" : "./src/db",
+		dataDir: "./db",
 		wal: false,
 	}); //? Giveaways Storage
 
@@ -87,7 +94,7 @@ class Bot extends Client {
 	public imdb: IMDBClient = new IMDBClient({
 		apiKey: this.config.keys.imdb_key,
 	});
-	//@ts-expect-error
+	// @ts-expect-error
 	public together: DiscordTogether<{}> = new DiscordTogether(this);
 
 	public handlers: Handlers = new Handlers(this);
@@ -157,9 +164,6 @@ class Bot extends Client {
 			liveBuffer: 60000,
 			dlChunkSize: 1024 * 1024 * 64,
 		},
-
-		youtubeDL: true,
-		updateYouTubeDL: true,
 	});
 
 	public giveaways: EnmapGiveaways = new EnmapGiveaways(this, {
@@ -167,13 +171,13 @@ class Bot extends Client {
 
 		default: {
 			botsCanWin: false,
-			embedColor: "BLURPLE",
-			embedColorEnd: "GREEN",
+			embedColor: Util.resolveColor("Blurple"),
+			embedColorEnd: Util.resolveColor("Green"),
 			reaction: "🎉",
 
 			lastChance: {
 				enabled: true,
-				embedColor: "YELLOW",
+				embedColor: Util.resolveColor("Yellow"),
 				content: "Last Chance to Enter!",
 			},
 		},
@@ -182,29 +186,29 @@ class Bot extends Client {
 	constructor() {
 		super({
 			partials: [
-				"CHANNEL",
-				"GUILD_MEMBER",
-				"MESSAGE",
-				"REACTION",
-				"USER",
+				Partials.Channel,
+				Partials.GuildMember,
+				Partials.Message,
+				Partials.Reaction,
+				Partials.User,
 			],
 
 			intents: [
-				Intents.FLAGS.GUILDS,
-				Intents.FLAGS.GUILD_MEMBERS,
-				Intents.FLAGS.GUILD_MESSAGES,
-				Intents.FLAGS.GUILD_VOICE_STATES,
-				Intents.FLAGS.GUILD_BANS,
-				Intents.FLAGS.GUILD_EMOJIS_AND_STICKERS,
-				Intents.FLAGS.GUILD_MESSAGE_REACTIONS,
-				Intents.FLAGS.GUILD_PRESENCES,
+				GatewayIntentBits.Guilds,
+				GatewayIntentBits.GuildMembers,
+				GatewayIntentBits.GuildMessages,
+				GatewayIntentBits.GuildVoiceStates,
+				GatewayIntentBits.GuildBans,
+				GatewayIntentBits.GuildEmojisAndStickers,
+				GatewayIntentBits.GuildMessageReactions,
+				GatewayIntentBits.GuildPresences,
 			],
 
 			presence: {
 				status: "idle",
 				activities: [
 					{
-						type: "LISTENING",
+						type: ActivityType.Watching,
 						name: "music 🎶",
 					},
 				],
@@ -244,7 +248,7 @@ class Bot extends Client {
 
 		await distubeEvents(this);
 		await logs(this);
-		await this.handlers.loadEvents(this);
+		await this.handlers.loadEvents();
 		await this.handlers.loadCommands();
 		await this.handlers.loadSlashCommands();
 		await this.functions.updateToken();
@@ -267,6 +271,4 @@ class Bot extends Client {
 	set configs(guildConfigs: Collection<string, GuildConfiguration>) {
 		this._configs = guildConfigs;
 	}
-}
-
-export = Bot;
+};

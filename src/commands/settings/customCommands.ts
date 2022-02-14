@@ -1,6 +1,6 @@
 import { Categories } from "../../types/Command/BaseCommand";
-import { Message } from "discord.js";
 import { Command } from "../../types/Command/Command";
+import { Message } from "discord.js";
 import { bold } from "@discordjs/builders";
 import Bot from "../../classes/Bot";
 
@@ -17,7 +17,7 @@ export default class CustomCommandsCommand extends Command {
 
 			usage: "<prefix>custom-commands <show|add|delete> [name]",
 			category: Categories.SETTINGS,
-			memberPermissions: ["ADMINISTRATOR"],
+			memberPermissions: ["Administrator"],
 		});
 	}
 	async run(
@@ -49,8 +49,9 @@ export default class CustomCommandsCommand extends Command {
 
 			const embed = this.client.functions.buildEmbed(
 				message,
-				"BLURPLE",
+				"Blurple",
 				text,
+				false,
 				false,
 				true
 			);
@@ -63,14 +64,12 @@ export default class CustomCommandsCommand extends Command {
 			const response = args.slice(2).join(" ");
 
 			if (!name) {
-				const text = lang.ERRORS.ARGS_MISSING.replace(
-					"{cmd_name}",
-					"custom-commands"
-				);
+				const text = lang.ERRORS.ARGS_MISSING("custom-commands");
 				const embed = this.client.functions.buildEmbed(
 					message,
-					"BLURPLE",
-					bold(text),
+					"Red",
+					text,
+					false,
 					"❌",
 					true
 				);
@@ -81,14 +80,12 @@ export default class CustomCommandsCommand extends Command {
 			}
 
 			if (!response) {
-				const text = lang.ERRORS.ARGS_MISSING.replace(
-					"{cmd_name}",
-					"custom-commands"
-				);
+				const text = lang.ERRORS.ARGS_MISSING("custom-commands");
 				const embed = this.client.functions.buildEmbed(
 					message,
-					"BLURPLE",
-					bold(text),
+					"Red",
+					text,
+					false,
 					"❌",
 					true
 				);
@@ -103,8 +100,9 @@ export default class CustomCommandsCommand extends Command {
 				const text = lang.ERRORS.ALREADY_IN_DB(type, name);
 				const embed = this.client.functions.buildEmbed(
 					message,
-					"BLURPLE",
-					bold(text),
+					"Red",
+					text,
+					false,
 					"❌",
 					true
 				);
@@ -128,8 +126,9 @@ export default class CustomCommandsCommand extends Command {
 			const text = lang.SETTINGS.ADDED(type, name);
 			const embed = this.client.functions.buildEmbed(
 				message,
-				"BLURPLE",
-				bold(text),
+				"Blurple",
+				text,
+				false,
 				"✅",
 				true
 			);
@@ -141,14 +140,12 @@ export default class CustomCommandsCommand extends Command {
 			const name = args[1];
 
 			if (!name) {
-				const text = lang.ERRORS.ARGS_MISSING.replace(
-					"{cmd_name}",
-					"custom-commands"
-				);
+				const text = lang.ERRORS.ARGS_MISSING("custom-commands");
 				const embed = this.client.functions.buildEmbed(
 					message,
-					"BLURPLE",
-					bold(text),
+					"Red",
+					text,
+					false,
 					"❌",
 					true
 				);
@@ -163,8 +160,9 @@ export default class CustomCommandsCommand extends Command {
 				const text = lang.ERRORS.NOT_FOUND_IN_DB(type, name);
 				const embed = this.client.functions.buildEmbed(
 					message,
-					"BLURPLE",
-					bold(text),
+					"Red",
+					text,
+					false,
 					"❌",
 					true
 				);
@@ -183,8 +181,9 @@ export default class CustomCommandsCommand extends Command {
 			const text = lang.SETTINGS.DELETED(type, name);
 			const embed = this.client.functions.buildEmbed(
 				message,
-				"BLURPLE",
-				bold(text),
+				"Blurple",
+				text,
+				false,
 				"✅",
 				true
 			);

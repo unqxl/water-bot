@@ -1,7 +1,6 @@
+import { ValidateReturn, Categories } from "../../types/Command/BaseCommand";
 import { Message } from "discord.js";
 import { Command } from "../../types/Command/Command";
-import { ValidateReturn, Categories } from "../../types/Command/BaseCommand";
-import { bold } from "@discordjs/builders";
 import Bot from "../../classes/Bot";
 
 export default class LeaveCommand extends Command {
@@ -28,8 +27,9 @@ export default class LeaveCommand extends Command {
 		const text = lang.ERRORS.NO_ACCESS;
 		const embed = this.client.functions.buildEmbed(
 			message,
-			"BLURPLE",
-			bold(text),
+			"Red",
+			text,
+			false,
 			"❌",
 			true
 		);
@@ -45,14 +45,12 @@ export default class LeaveCommand extends Command {
 		}
 
 		if (!id) {
-			const text = lang.ERRORS.ARGS_MISSING.replace(
-				"{cmd_name}",
-				"leave"
-			);
+			const text = lang.ERRORS.ARGS_MISSING("leave");
 			const embed = this.client.functions.buildEmbed(
 				message,
-				"BLURPLE",
-				bold(text),
+				"Red",
+				text,
+				false,
 				"❌",
 				true
 			);
@@ -67,11 +65,12 @@ export default class LeaveCommand extends Command {
 
 		const server = this.client.guilds.cache.get(id);
 		if (!server) {
-			const text = lang.ERRORS.GUILD_NOT_FOUND.replace("{id}", id);
+			const text = lang.ERRORS.GUILD_NOT_FOUND(id);
 			const embed = this.client.functions.buildEmbed(
 				message,
-				"BLURPLE",
-				bold(text),
+				"Red",
+				text,
+				false,
 				"❌",
 				true
 			);
@@ -100,11 +99,12 @@ export default class LeaveCommand extends Command {
 		return await server
 			.leave()
 			.then(async () => {
-				const text = lang.BOTOWNER.LEFT_GUILD.replace("{id}", id);
+				const text = lang.BOTOWNER.LEFT_GUILD(id);
 				const embed = this.client.functions.buildEmbed(
 					message,
-					"BLURPLE",
-					bold(text),
+					"Blurple",
+					text,
+					false,
 					"✅",
 					true
 				);

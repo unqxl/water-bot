@@ -1,7 +1,11 @@
+import {
+	GuildMember,
+	ApplicationCommandType,
+	ApplicationCommandOptionType,
+} from "discord.js";
+import { CommandInteraction } from "discord.js";
 import { SlashCommand } from "../types/Command/SlashCommand";
 import { ValidateReturn } from "types/Command/BaseSlashCommand";
-import { CommandInteraction, GuildMember } from "discord.js";
-import { bold } from "@discordjs/builders";
 import Bot from "classes/Bot";
 
 export default class ActivitySlashCommand extends SlashCommand {
@@ -9,14 +13,14 @@ export default class ActivitySlashCommand extends SlashCommand {
 		super(client, {
 			name: "activity",
 			description: "Let's Play!",
-			type: "CHAT_INPUT",
+			type: ApplicationCommandType.ChatInput,
 
 			options: [
 				{
 					name: "type",
 					description: "Activity Type",
 					required: true,
-					type: "STRING",
+					type: ApplicationCommandOptionType.String,
 
 					choices: [
 						{
@@ -76,11 +80,11 @@ export default class ActivitySlashCommand extends SlashCommand {
 		const voiceChannel = (interaction.member as GuildMember).voice.channel;
 		if (!voiceChannel) {
 			const error = lang.ERRORS.NOT_JOINED_VOICE;
-
 			const embed = this.client.functions.buildEmbed(
-				interaction,
-				"BLURPLE",
-				bold(error),
+				{ author: interaction.user },
+				"Red",
+				error,
+				false,
 				"❌",
 				true
 			);
@@ -102,7 +106,7 @@ export default class ActivitySlashCommand extends SlashCommand {
 		interaction: CommandInteraction,
 		lang: typeof import("@locales/English").default
 	) {
-		const activity = interaction.options.getString("type", true);
+		const activity = interaction.options.get("type", true);
 		const invite = await this.client.together.createTogetherCode(
 			(interaction.member as GuildMember).voice.channel.id,
 			// @ts-ignore | It's working!
@@ -114,9 +118,10 @@ export default class ActivitySlashCommand extends SlashCommand {
 			invite.code
 		);
 		const embed = this.client.functions.buildEmbed(
-			interaction,
-			"BLURPLE",
-			bold(text),
+			{ author: interaction.user },
+			"Blurple",
+			text,
+			false,
 			"🎮",
 			true
 		);

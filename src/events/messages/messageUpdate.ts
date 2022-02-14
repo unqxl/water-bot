@@ -1,12 +1,13 @@
 import Event from "../../types/Event/Event";
 import Bot from "../../classes/Bot";
 import {
-	Message,
 	TextChannel,
-	MessageEmbed,
-	MessageButton,
-	MessageActionRow,
+	Embed,
+	ButtonComponent,
+	ActionRow,
+	Util,
 } from "discord.js";
+import { Message } from "discord.js";
 
 export default class MessageUpdateEvent extends Event {
 	constructor() {
@@ -43,17 +44,17 @@ export default class MessageUpdateEvent extends Event {
 			new_message.content
 		);
 
-		const RedirectButton = new MessageButton()
-			.setStyle("LINK")
+		const RedirectButton = new ButtonComponent()
+			.setStyle(5)
 			.setURL(new_message.url)
 			.setLabel(lang_file.EVENTS.MESSAGE_EVENTS.UPDATE.GO_TO);
 
-		const row = new MessageActionRow().addComponents([RedirectButton]);
-		const embed = new MessageEmbed()
-			.setColor("BLURPLE")
+		const row = new ActionRow().addComponents(RedirectButton);
+		const embed = new Embed()
+			.setColor(Util.resolveColor("Blurple"))
 			.setAuthor({
 				name: new_message.author.tag,
-				iconURL: new_message.author.displayAvatarURL({ dynamic: true }),
+				iconURL: new_message.author.displayAvatarURL(),
 			})
 			.setTitle(title)
 			.setDescription(description)

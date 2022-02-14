@@ -1,5 +1,6 @@
-import { Message, MessageEmbed } from "discord.js";
 import { bold, inlineCode } from "@discordjs/builders";
+import { Embed, Util } from "discord.js";
+import { Message } from "discord.js";
 import { Command } from "../../types/Command/Command";
 import { Categories } from "../../types/Command/BaseCommand";
 import Bot from "../../classes/Bot";
@@ -56,11 +57,11 @@ export default class LeaderboardCommand extends Command {
 			)}] ${member.toString()} (${bold(`${level} LVL | ${xp} XP`)})\n`;
 		}
 
-		const embed = new MessageEmbed()
-			.setColor("BLURPLE")
+		const embed = new Embed()
+			.setColor(Util.resolveColor("Blurple"))
 			.setAuthor({
 				name: message.guild.name,
-				iconURL: message.guild.iconURL({ dynamic: true }),
+				iconURL: message.guild.iconURL(),
 			})
 			.setDescription(content + additionalContent)
 			.setTimestamp();

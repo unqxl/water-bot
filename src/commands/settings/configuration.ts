@@ -1,8 +1,8 @@
-import { Message } from "discord.js";
 import { Command } from "../../types/Command/Command";
 import { Categories } from "../../types/Command/BaseCommand";
-import Bot from "../../classes/Bot";
+import { Message } from "discord.js";
 import { bold } from "@discordjs/builders";
+import Bot from "../../classes/Bot";
 
 export default class ConfigurationCommand extends Command {
 	constructor(client: Bot) {
@@ -93,8 +93,9 @@ export default class ConfigurationCommand extends Command {
 		//? Sending Message
 		const embed = this.client.functions.buildEmbed(
 			message,
-			"BLURPLE",
+			"Blurple",
 			text,
+			false,
 			false,
 			true
 		);

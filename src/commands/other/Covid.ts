@@ -51,9 +51,11 @@ export default class COVIDCommand extends Command {
 			const text = lang.ERRORS.COVID_NOT_FOUND(query);
 			const embed = this.client.functions.buildEmbed(
 				message,
-				"BLURPLE",
-				bold(text),
-				"❌"
+				"Red",
+				text,
+				false,
+				"❌",
+				true
 			);
 
 			return message.channel.send({
@@ -63,8 +65,9 @@ export default class COVIDCommand extends Command {
 
 		const embed = this.client.functions.buildEmbed(
 			message,
-			"BLURPLE",
-			"...",
+			"Blurple",
+			"",
+			false,
 			false,
 			true
 		);
@@ -73,12 +76,10 @@ export default class COVIDCommand extends Command {
 			? `COVID-19: ${country.country}`
 			: "COVID-19";
 
-		embed.description = undefined;
 		embed.setTitle(title);
-
-		embed.addField(
-			lang.OTHER.COVID.TOTAL,
-			[
+		embed.addField({
+			name: lang.OTHER.COVID.TOTAL,
+			value: [
 				`${bold(lang.OTHER.COVID.CASES)}: ${bold(
 					this.client.functions.formatNumber(country.cases)
 				)}`,
@@ -95,44 +96,43 @@ export default class COVIDCommand extends Command {
 					this.client.functions.formatNumber(country.population)
 				)}`,
 			].join("\n"),
-			true
-		);
+			inline: true,
+		});
 
-		embed.addField(
-			lang.OTHER.COVID.TODAY,
-			[
+		embed.addField({
+			name: lang.OTHER.COVID.TODAY,
+			value: [
 				`${bold(lang.OTHER.COVID.CASES)}: ${bold(
-					this.client.functions.formatNumber(country.cases)
+					this.client.functions.formatNumber(country.todayCases)
 				)}`,
 
 				`${bold(lang.OTHER.COVID.RECOVERED)}: ${bold(
-					this.client.functions.formatNumber(country.recovered)
+					this.client.functions.formatNumber(country.todayRecovered)
 				)}`,
 
 				`${bold(lang.OTHER.COVID.DEATHS)}: ${bold(
-					this.client.functions.formatNumber(country.deaths)
+					this.client.functions.formatNumber(country.todayDeaths)
 				)}`,
 			].join("\n"),
-			true
-		);
+			inline: true,
+		});
 
-		embed.addField(
-			lang.OTHER.COVID.CRITICAL,
-			bold(this.client.functions.formatNumber(country.critical))
-		);
+		embed.addField({
+			name: lang.OTHER.COVID.CRITICAL,
+			value: bold(this.client.functions.formatNumber(country.critical)),
+		});
 
-		embed.addField(
-			lang.OTHER.COVID.TESTS,
-			bold(this.client.functions.formatNumber(country.tests)),
-			true
-		);
+		embed.addField({
+			name: lang.OTHER.COVID.TESTS,
+			value: bold(this.client.functions.formatNumber(country.tests)),
+		});
 
 		embed.setThumbnail(country.countryInfo?.flag || "");
 		embed.setFooter({
 			text: `${lang.OTHER.COVID.LAST_UPDATED}: ${new Date(
 				country.updated
 			).toLocaleString(locale)}`,
-			iconURL: message.author.displayAvatarURL({ dynamic: true }),
+			iconURL: message.author.displayAvatarURL(),
 		});
 
 		return message.channel.send({

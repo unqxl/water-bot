@@ -1,16 +1,13 @@
-import { Categories, ValidateReturn } from "../../types/Command/BaseCommand";
 import {
 	ButtonInteraction,
-	Message,
-	MessageActionRow,
-	MessageButton,
-	MessageEmbed,
-	TextChannel,
+	ActionRow,
+	ButtonComponent,
+	ComponentType,
 } from "discord.js";
+import { Categories, ValidateReturn } from "../../types/Command/BaseCommand";
 import { Command } from "../../types/Command/Command";
-import { bold } from "@discordjs/builders";
+import { Message } from "discord.js";
 import Bot from "../../classes/Bot";
-import ms from "ms";
 
 export default class UnmuteCommand extends Command {
 	constructor(client: Bot) {
@@ -25,8 +22,8 @@ export default class UnmuteCommand extends Command {
 			category: Categories.MODERATION,
 			usage: "<prefix>unmute <member>",
 
-			memberPermissions: ["MANAGE_MESSAGES"],
-			botPermissions: ["MANAGE_ROLES"],
+			memberPermissions: ["ManageMessages"],
+			botPermissions: ["ManageRoles"],
 		});
 	}
 
@@ -40,14 +37,12 @@ export default class UnmuteCommand extends Command {
 			message.guild.members.cache.get(args[0]);
 
 		if (!member) {
-			const text = lang.ERRORS.ARGS_MISSING.replace(
-				"{cmd_name}",
-				"unmute"
-			);
+			const text = lang.ERRORS.ARGS_MISSING("unmute");
 			const embed = this.client.functions.buildEmbed(
 				message,
-				"BLURPLE",
-				bold(text),
+				"Red",
+				text,
+				false,
 				"❌",
 				true
 			);
@@ -68,8 +63,9 @@ export default class UnmuteCommand extends Command {
 			const text = lang.ERRORS.NO_MUTEROLE;
 			const embed = this.client.functions.buildEmbed(
 				message,
-				"BLURPLE",
-				bold(text),
+				"Red",
+				text,
+				false,
 				"❌",
 				true
 			);
@@ -82,16 +78,15 @@ export default class UnmuteCommand extends Command {
 			};
 		}
 
+		// @ts-expect-error
 		const lastMute = await this.client.moderation.mutes.getMute(member);
 		if (!lastMute) {
-			const text = lang.ERRORS.NO_MUTE.replace(
-				"{member}",
-				member.toString()
-			);
+			const text = lang.ERRORS.NO_MUTE(member.toString());
 			const embed = this.client.functions.buildEmbed(
 				message,
-				"BLURPLE",
-				bold(text),
+				"Red",
+				text,
+				false,
 				"❌",
 				true
 			);
@@ -124,31 +119,31 @@ export default class UnmuteCommand extends Command {
 			lang.FUNCTIONS.VERIFICATION.TEXT,
 		];
 
-		const confirmButton = new MessageButton()
+		const confirmButton = new ButtonComponent()
 			.setCustomId("confirm")
-			.setStyle("SUCCESS")
+			.setStyle(3)
 			.setLabel(accept)
-			.setEmoji("✅");
+			.setEmoji({ name: "✅" });
 
-		const cancelButton = new MessageButton()
+		const cancelButton = new ButtonComponent()
 			.setCustomId("cancel")
-			.setStyle("DANGER")
+			.setStyle(4)
 			.setLabel(decline)
-			.setEmoji("❌");
+			.setEmoji({ name: "❌" });
 
-		const confirmRow = new MessageActionRow().addComponents([
+		const confirmRow = new ActionRow().addComponents(
 			confirmButton,
-			cancelButton,
-		]);
+			cancelButton
+		);
 
-		const confirmEmbed = new MessageEmbed()
-			.setColor("BLURPLE")
-			.setAuthor({
-				name: message.author.username,
-				iconURL: message.author.displayAvatarURL({ dynamic: true }),
-			})
-			.setDescription(bold(confirmText))
-			.setTimestamp();
+		const confirmEmbed = this.client.functions.buildEmbed(
+			message,
+			"Blurple",
+			confirmText,
+			false,
+			"✉️",
+			true
+		);
 
 		const msg = await message.channel.send({
 			embeds: [confirmEmbed],
@@ -157,22 +152,22 @@ export default class UnmuteCommand extends Command {
 
 		const collector = await msg.createMessageComponentCollector({
 			filter: (btn) => btn.user.id === message.author.id,
-			componentType: "BUTTON",
+			componentType: ComponentType.Button,
+			max: 1,
 			time: 20000,
 		});
 
 		collector.on("collect", async (btn: ButtonInteraction) => {
 			if (btn.customId === "confirm") {
+				// @ts-expect-error
 				await this.client.moderation.unmute(member);
 
-				const text = lang.MODERATION.UNMUTED.replace(
-					"{target}",
-					member.toString()
-				);
+				const text = lang.MODERATION.UNMUTED(member.toString());
 				const embed = this.client.functions.buildEmbed(
 					message,
-					"BLURPLE",
-					bold(text),
+					"Blurple",
+					text,
+					false,
 					"✅",
 					true
 				);
