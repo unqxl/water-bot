@@ -338,6 +338,32 @@ const Russian: typeof import("@locales/English").default = {
 			LAST_UPDATED: "Дата обновления",
 			TOTAL_POPULATION: "Население",
 		},
+
+		STEAM: {
+			FIELDS: {
+				ABOUT: "Об игре",
+				LANGUAGES: "Поддерживаемые языки",
+				DEVELOPERS: "Разработчики",
+				PLATFORMS: "Поддерживаемые платформы",
+				CATEGORIES: "Категории Игры",
+				GENRES: "Жанры Игры",
+				RECOMENDATIONS: "Всего Рекомендаций",
+				RELEASE_DATE: "Дата выхода",
+				PRICE: "Стоимость игры",
+				NOTES: "Записки",
+			},
+
+			PLATFORMS: {
+				WINDOWS: "Windows",
+				MACOS: "MacOS",
+				LINUX: "Linux",
+			},
+
+			COMING_SOON: "Скоро выходит",
+			DATE: "Дата выхода",
+			PRICE: "Цена",
+			DISCOUNT: "Скидка",
+		},
 	},
 
 	SLASH_COMMANDS: {

@@ -32,7 +32,8 @@ import DJSystem from "../modules/DJSystem";
 import distubeEvents from "../events/distubeEvents";
 import NekoClient from "nekos.life";
 
-// Music Plugins
+// Distube Plugins
+import { YtDlpPlugin } from "@distube/yt-dlp";
 import SpotifyPlugin from "@distube/spotify";
 import SoundCloudPlugin from "@distube/soundcloud";
 
@@ -48,6 +49,7 @@ import { GuildConfiguration } from "../typeorm/entities/GuildConfiguration";
 
 // WebSocket
 import { io, Socket } from "socket.io-client";
+import API from "./API";
 
 export = class Bot extends Client {
 	//? [Collections]
@@ -108,6 +110,7 @@ export = class Bot extends Client {
 	public logger: Logger = new Logger();
 	public twitchSystem: TwitchSystem = new TwitchSystem(this);
 	public database: DBManager = null;
+	public apis: API = new API(this.config);
 
 	//? [Modules]
 	// @ts-expect-error
@@ -156,7 +159,11 @@ export = class Bot extends Client {
 		emitAddSongWhenCreatingQueue: false,
 		emptyCooldown: 5,
 
-		plugins: [new SpotifyPlugin(), new SoundCloudPlugin()],
+		plugins: [
+			new SpotifyPlugin(),
+			new SoundCloudPlugin(),
+			new YtDlpPlugin(),
+		],
 
 		ytdlOptions: {
 			highWaterMark: 1024 * 1024 * 64,

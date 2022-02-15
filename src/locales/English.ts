@@ -336,6 +336,32 @@ export default {
 			LAST_UPDATED: "Last updated",
 			TOTAL_POPULATION: "Population",
 		},
+
+		STEAM: {
+			FIELDS: {
+				ABOUT: "About the Game",
+				LANGUAGES: "Supported Languages",
+				DEVELOPERS: "Developers",
+				PLATFORMS: "Supported Platforms",
+				CATEGORIES: "Game Categories",
+				GENRES: "Game Genres",
+				RECOMENDATIONS: "Total Recomendations",
+				RELEASE_DATE: "Release Date",
+				PRICE: "Game Price",
+				NOTES: "Notes",
+			},
+
+			PLATFORMS: {
+				WINDOWS: "Windows",
+				MACOS: "MacOS",
+				LINUX: "Linux",
+			},
+
+			COMING_SOON: "Coming Soon",
+			DATE: "Release Date",
+			PRICE: "Price",
+			DISCOUNT: "Discount",
+		},
 	},
 
 	SLASH_COMMANDS: {
