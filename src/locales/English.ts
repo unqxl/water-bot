@@ -362,6 +362,34 @@ export default {
 			PRICE: "Price",
 			DISCOUNT: "Discount",
 		},
+
+		OSU: {
+			FIELDS: {
+				STATISTICS: "Profile Statistics",
+				OTHER_USERNAMES: "Other Usernames",
+				GRADES: "Maps Grades",
+			},
+
+			GRADES: {
+				SS: "SS",
+				SSH: "SSH",
+				S: "S",
+				SH: "SH",
+				A: "A",
+			},
+
+			ACCURACY: "Hit Accuracy",
+			COUNTRY: "Country",
+			PP: "PP",
+			PLAYSTYLE: "Playstyle",
+			PLAYCOUNT: "Play Count",
+			MAX_COMBO: "Max. Combo",
+			LEVEL: "User Level",
+			RANK: "Global Rank",
+			COUNTRY_RANK: "Country Rank",
+			RANKED_SCORE: "Ranked Score",
+			LAST_VISIT: "Last Visit",
+		},
 	},
 
 	SLASH_COMMANDS: {
@@ -720,15 +748,6 @@ export default {
 			FINISH: "Music Queue is Over, bot left Voice Channel!",
 			EMPTY: "Voice Channel is empty, bot left Voice Channel!",
 			ERROR: (message) => `Oops, there's an error: ${message}`,
-		},
-	},
-
-	MODULES: {
-		STEAMID: {
-			NOT_STEAMID:
-				"The argument you specified is not like SteamID/SteamID3/SteamID64!",
-			ANSWER: (steam_id, steam_id64, steam_id3, url) =>
-				`SteamID: ${steam_id}\nSteamID64: ${steam_id64}\nSteamID3: ${steam_id3}\nProfile: [Click](${url})`,
 		},
 	},
 };

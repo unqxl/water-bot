@@ -364,6 +364,34 @@ const Russian: typeof import("@locales/English").default = {
 			PRICE: "Цена",
 			DISCOUNT: "Скидка",
 		},
+
+		OSU: {
+			FIELDS: {
+				STATISTICS: "Статистика профиля",
+				OTHER_USERNAMES: "Другие имена",
+				GRADES: "Результаты карт",
+			},
+
+			GRADES: {
+				SS: "SS",
+				SSH: "SSH",
+				S: "S",
+				SH: "SH",
+				A: "A",
+			},
+
+			ACCURACY: "Точность",
+			COUNTRY: "Страна",
+			PP: "PP",
+			PLAYSTYLE: "Стиль игры",
+			PLAYCOUNT: "Количество игр",
+			MAX_COMBO: "Макс. Комбо",
+			LEVEL: "Уровень",
+			RANK: "Глоб. Ранг",
+			COUNTRY_RANK: "Ранг в стране",
+			RANKED_SCORE: "Ранкнутый счёт",
+			LAST_VISIT: "Последний визит",
+		},
 	},
 
 	SLASH_COMMANDS: {
@@ -719,15 +747,6 @@ const Russian: typeof import("@locales/English").default = {
 			FINISH: "Очередь песен окончена, бот покинул Голосовой Канал!",
 			EMPTY: "Голосовой канал пустой, бот покинул его!",
 			ERROR: (message) => `Упс, произошла ошибка: ${message}`,
-		},
-	},
-
-	MODULES: {
-		STEAMID: {
-			NOT_STEAMID:
-				"То, что вы указали не является SteamID/SteamID3/SteamID64!",
-			ANSWER: (steam_id, steam_id64, steam_id3, url) =>
-				`SteamID: ${steam_id}\nSteamID64: ${steam_id64}\nSteamID3: ${steam_id3}\nПрофиль: [Click](${url})`,
 		},
 	},
 };

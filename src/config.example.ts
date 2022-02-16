@@ -26,7 +26,8 @@ export = {
 	keys: {
 		weather_api: "NO-TOKEN",
 		steam_key: "NO-TOKEN",
-		osu_key: "NO-TOKEN",
+		osu_client_id: 0,
+		osu_client_secret: "NO-TOKEN",
 		dagpi_key: "NO-TOKEN",
 		imdb_key: "NO-TOKEN",
 	},
