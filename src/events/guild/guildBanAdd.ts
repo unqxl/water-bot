@@ -1,4 +1,5 @@
-import { GuildBan, Embed, TextChannel, Util } from "discord.js";
+import { GuildBan, Embed, TextChannel, Util, User } from "discord.js";
+import { AuditLogEvent } from "discord-api-types/v9";
 import Bot from "../../classes/Bot";
 import Event from "../../types/Event/Event";
 
@@ -19,15 +20,15 @@ export default class GuildBanAddEvent extends Event {
 		const lang_file = await client.functions.getLanguageFile(ban.guild.id);
 		const { target, executor, reason } = await (
 			await ban.guild.fetchAuditLogs({
-				type: "MemberBanAdd",
+				type: AuditLogEvent.MemberBanAdd,
 				limit: 1,
 			})
 		).entries.first();
 
 		const title = lang_file.EVENTS.GUILD_EVENTS.BAN_ADD.TITLE;
 		const description = lang_file.EVENTS.GUILD_EVENTS.BAN_ADD.DESCRIPTION(
-			target.toString(),
-			target.tag,
+			(target as User).toString(),
+			(target as User).tag,
 			executor.toString(),
 			reason
 		);
@@ -39,8 +40,8 @@ export default class GuildBanAddEvent extends Event {
 		const embed = new Embed()
 			.setColor(Util.resolveColor("Blurple"))
 			.setAuthor({
-				name: target.tag,
-				iconURL: target.displayAvatarURL(),
+				name: (target as User).tag,
+				iconURL: (target as User).displayAvatarURL(),
 			})
 			.setTitle(title)
 			.setDescription(description)

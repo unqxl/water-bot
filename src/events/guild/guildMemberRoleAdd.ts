@@ -1,6 +1,7 @@
+import { GuildMember, Embed, Role, TextChannel, Util } from "discord.js";
+import { AuditLogEvent } from "discord-api-types/v9";
 import Event from "../../types/Event/Event";
 import Bot from "../../classes/Bot";
-import { GuildMember, Embed, Role, TextChannel, Util } from "discord.js";
 
 export default class GuildMemberRoleAddEvent extends Event {
 	constructor() {
@@ -18,7 +19,7 @@ export default class GuildMemberRoleAddEvent extends Event {
 
 		const { executor, changes } = await (
 			await member.guild.fetchAuditLogs({
-				type: "MemberRoleUpdate",
+				type: AuditLogEvent.MemberRoleUpdate,
 				limit: 1,
 			})
 		).entries.first();

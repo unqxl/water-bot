@@ -208,3 +208,84 @@ export interface OsuUserData {
 	ranked_and_approved_beatmapset_count: number;
 	unranked_beatmapset_count: number;
 }
+
+export interface IMDBSearchData {
+	searchType: string;
+	expression: string;
+	results: IMDBSearchResult[];
+	errorMessage: string;
+}
+
+export interface IMDBSearchResult {
+	id: string;
+	resultType: string;
+	image: string;
+	title: string;
+	description: string;
+}
+
+export interface IMDBFilmData {
+	id: string;
+	title: string;
+	originalTitle: string;
+	fullTitle: string;
+	type: string;
+	year: string;
+	image: string;
+	releaseDate: string;
+	runtimeMins: string;
+	runtimeStr: string;
+	plot: string;
+	plotLocal: string;
+	plotLocalIsRtl: boolean;
+	awards: string;
+	directors: string;
+	directorList: { id: string; name: string }[];
+	writers: string;
+	writerList: { id: string; name: string }[];
+	stars: string;
+	starList: { id: string; name: string }[];
+	actorList: { id: string; name: string }[];
+	fullCast: null | any;
+	genres: string;
+	genreList: { id: string; name: string }[];
+	companies: string;
+	companyList: { id: string; name: string }[];
+	countries: string;
+	countryList: { id: string; name: string }[];
+	languages: string;
+	languageList: { id: string; name: string }[];
+	contentRating: string;
+	imDbRating: string;
+	imDbRatingVotes: string;
+	metacriticRating: string;
+	ratings: null | any;
+	wikipedia: null | any;
+	posters: null | any;
+	images: null | any;
+	trailer: null | any;
+	boxOffice: {
+		budget: string;
+		openingWeekendUSA: string;
+		grossUSA: string;
+		comulativeWorldwideGross: string;
+	};
+	tagline: string;
+	keywords: string;
+	keywordList: string[];
+	similars: {
+		id: string;
+		title: string;
+		fullTitle: string;
+		year: string;
+		image: string;
+		plot: string;
+		directors: string;
+		stars: string;
+		genres: string;
+		imDbRating: string;
+	}[];
+	tvSeriesInfo: null | any;
+	tvEpisodeInfo: null | any;
+	errorMessage: null | any;
+}

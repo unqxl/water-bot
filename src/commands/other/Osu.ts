@@ -77,12 +77,9 @@ export default class OsuCommand extends Command {
 					true
 				);
 
-				return {
-					ok: false,
-					error: {
-						embeds: [embed],
-					},
-				};
+				return message.channel.send({
+					embeds: [embed],
+				});
 			}
 
 			return {

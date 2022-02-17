@@ -392,6 +392,23 @@ const Russian: typeof import("@locales/English").default = {
 			RANKED_SCORE: "Ранкнутый счёт",
 			LAST_VISIT: "Последний визит",
 		},
+
+		IMDB: {
+			FIELDS: {
+				DIRECTORS: "Режиссеры фильмов",
+				STARS: "Звёзды в фильме",
+				WRITERS: "Сценаристы фильма",
+				LENGTH: "Длина фильма",
+				COMPANIES: "Компании",
+				COUNTRIES: "Страны",
+				LANGUAGES: "Языки",
+				RATINGS: "Рейтинги",
+			},
+
+			CONTENT_RATING: "Рейтинг контента",
+			IMDB_RATING: "IMDB",
+			RELEASE_DATE: "Дата выхода",
+		},
 	},
 
 	SLASH_COMMANDS: {

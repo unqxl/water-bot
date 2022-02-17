@@ -390,6 +390,23 @@ export default {
 			RANKED_SCORE: "Ranked Score",
 			LAST_VISIT: "Last Visit",
 		},
+
+		IMDB: {
+			FIELDS: {
+				DIRECTORS: "Film Directors",
+				STARS: "Stars in Film",
+				WRITERS: "Film Writers",
+				LENGTH: "Film Length",
+				COMPANIES: "Companies",
+				COUNTRIES: "Countries",
+				LANGUAGES: "Languages",
+				RATINGS: "Ratings",
+			},
+
+			CONTENT_RATING: "Content Rating",
+			IMDB_RATING: "IMDB",
+			RELEASE_DATE: "Release Date",
+		},
 	},
 
 	SLASH_COMMANDS: {
