@@ -24,7 +24,7 @@ Akayo - one of the best Discord Bots in terms of functionality.</strong>
 3. <strong>[osu!api](https://osu.ppy.sh/p/api)</strong>
 4. <strong>[dagpi](https://dagpi.xyz/)</strong>
 5. <strong>[Twitch API](https://dev.twitch.tv/console)</strong>
-6. <strong>[IMDB API (WIP)](https://imdb-api.com)</strong> 
+6. <strong>[IMDB API](https://imdb-api.com)</strong> 
 
 ## Installation
 1. <strong>Clone this repo: `git clone https://github.com/bad-boy-discord/akayo-bot`</strong>
