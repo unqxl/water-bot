@@ -64,6 +64,7 @@ export default class HelpCommand extends Command {
 			Leveling,
 			Giveaways,
 			RolePlay,
+			Clans,
 		] = [
 			lang.GLOBAL.NONE,
 			lang.OTHER.HELP.CATEGORIES.BOT_OWNER,
@@ -77,6 +78,7 @@ export default class HelpCommand extends Command {
 			lang.OTHER.HELP.CATEGORIES.LEVELING,
 			lang.OTHER.HELP.CATEGORIES.GIVEAWAYS,
 			lang.OTHER.HELP.CATEGORIES.ROLEPLAY,
+			lang.OTHER.HELP.CATEGORIES.CLANS,
 		];
 
 		const Length = lang.OTHER.HELP.COMMANDS_LENGTH;
@@ -175,6 +177,14 @@ export default class HelpCommand extends Command {
 					})
 					.join(", ") || bold(None);
 
+			const ClansCommands =
+				this.client.commands
+					.filter((cmd) => cmd.options.category === Categories.CLANS)
+					.map((cmd) => {
+						return inlineCode(prefix + cmd.options.name);
+					})
+					.join(", ") || bold(None);
+
 			const embed = this.client.functions.buildEmbed(
 				message,
 				"Blurple",
@@ -208,6 +218,11 @@ export default class HelpCommand extends Command {
 				name: `[🎭] ${RolePlay}`,
 				value: RolePlayCommands,
 			});
+			embed.addField({
+				name: `[✨] ${Clans}`,
+				value: ClansCommands,
+			});
+
 			embed.setFooter({
 				text: `${Length}: ${this.client.functions.sp(
 					this.client.commands.size

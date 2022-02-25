@@ -86,7 +86,8 @@ export = class TwitchSystem {
 			};
 
 			await this.sync(guild, data.name, TwitchAPI.id);
-			return await this.send(channel, data);
+			await this.send(channel, data);
+			return;
 		}
 	}
 

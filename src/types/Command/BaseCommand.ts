@@ -14,6 +14,7 @@ export enum Categories {
 	LEVELING = 8,
 	GIVEAWAYS = 9,
 	ROLEPLAY = 10,
+	CLANS = 11,
 }
 
 export interface BaseCommandOptions {

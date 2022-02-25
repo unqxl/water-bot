@@ -31,6 +31,7 @@ import TopGG from "../modules/TopGG";
 import DJSystem from "../modules/DJSystem";
 import distubeEvents from "../events/distubeEvents";
 import NekoClient from "nekos.life";
+import ClanSystem from "../modules/ClanSystem";
 
 // Distube Plugins
 import { YtDlpPlugin } from "@distube/yt-dlp";
@@ -41,6 +42,7 @@ import SoundCloudPlugin from "@distube/soundcloud";
 import { Command } from "../types/Command/Command";
 import { SlashCommand } from "../types/Command/SlashCommand";
 import { CustomCommand, GuildConfig } from "../types/types";
+import { ClansGuild } from "../interfaces/Clans";
 import Event from "../types/Event/Event";
 
 // MySQL
@@ -90,6 +92,12 @@ export = class Bot extends Client {
 		wal: false,
 	}); //? Giveaways Storage
 
+	public clansDB: Enmap<string, ClansGuild> = new Enmap({
+		name: "clans",
+		dataDir: "./db",
+		wal: false,
+	}); //? Clans Storage
+
 	//? [APIs]
 	public dagpi: dagpiClient = new dagpiClient(this.config.keys.dagpi_key);
 	public nekos: NekoClient = new NekoClient();
@@ -103,14 +111,15 @@ export = class Bot extends Client {
 	public functions: Functions = new Functions(this);
 
 	//? [Systems]
+	public apis: API = new API(this.config);
 	public web: WebServer = new WebServer({ port: 80 });
 	public socket: Socket = io("http://localhost:3001");
+	public clans: ClanSystem = new ClanSystem(this);
 	public DJSystem: DJSystem = new DJSystem(this);
 	public levels: Leveling = new Leveling(this);
 	public logger: Logger = new Logger();
 	public twitchSystem: TwitchSystem = new TwitchSystem(this);
 	public database: DBManager = null;
-	public apis: API = new API(this.config);
 
 	//? [Modules]
 	// @ts-expect-error

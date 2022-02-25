@@ -26,6 +26,7 @@ export default class ReadyEvent extends Event {
 			async () => {
 				for (const guild of client.guilds.cache.values()) {
 					await birthdayCheck(client, guild);
+					await client.twitchSystem.check(guild);
 				}
 			},
 			null,

@@ -231,6 +231,7 @@ export default {
 				LEVELING: "Leveling",
 				GIVEAWAYS: "Giveaways",
 				ROLEPLAY: "Role Play",
+				CLANS: "Clans",
 			},
 
 			COMMAND: {
@@ -561,6 +562,10 @@ export default {
 			DECLINE: "Decline",
 			TEXT: "To complete, you need to confirm that you did not miss up anything.\nClick on the green button to continue or click on the red button to cancel the action!",
 		},
+
+		DECL: {
+			MEMBERS: ["Member", "Members"],
+		},
 	},
 
 	TWITCH_HANDLER: {
@@ -608,6 +613,43 @@ export default {
 		DJ_ROLES: {
 			HASNT_ANY:
 				"You can't use this command because You don't have any DJ Role!",
+		},
+
+		CLANS: {
+			ERRORS: {
+				CLAN_ALREADY_EXISTS: "Clan with that name already exists!",
+				CLAN_NOT_FOUND: "Clan with that ID isn't found!",
+				CANNOT_FETCH: "Cannot fetch Guild for creating members list!",
+				CANNOT_FETCH_MEMBER:
+					"Cannot fetch Member for creating members list!",
+				NO_CLANS: "There's no clans in this Guild!",
+				NOT_OWNER: "You are not owner of this clan!",
+				NOT_IN_CLAN: "Join the clan before leaving it!",
+				ALREADY_IN_CLAN:
+					"You cannot create an clan because You're already joined the other clan!",
+				ALREADY_JOINED_CLAN:
+					"You cannot join clan because You're already joined the other clan!",
+			},
+
+			PROMPTS: {
+				WRITE_CLAN_NAME:
+					"To create Your own clan, You need to write name of your clan (15sec)!",
+				WRITE_CLAN_ABR:
+					"Write an abbreviation to help users join the clan!",
+			},
+
+			PROMPT_ERRORS: {
+				CLAN_NAME:
+					"You didn't write the name of the clan! The process has been canceled!",
+				CLAN_ABR:
+					"You didn't write the abbreviation of the clan! The process has been canceled!",
+			},
+
+			RESULTS: {
+				CREATED: (name) => `Successfully created clan "${name}"!`,
+				JOINED: (name) => `Successfully join clan "${name}"`,
+				LEFT: (name) => `Successfully left clan "${name}"`,
+			},
 		},
 	},
 
