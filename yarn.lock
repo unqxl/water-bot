@@ -1563,10 +1563,10 @@ data-uri-to-buffer@^3.0.1:
   resolved "https://registry.yarnpkg.com/data-uri-to-buffer/-/data-uri-to-buffer-3.0.1.tgz#594b8973938c5bc2c33046535785341abc4f3636"
   integrity sha512-WboRycPNsVw3B3TL559F7kuBUM4d8CgMEvk6xEJlOp7OBPjt6G7z8WMWlD2rOFZLk6OYfFIUGsCOWzcQH9K2og==
 
-dayjs@^1.10.7:
-  version "1.10.7"
-  resolved "https://registry.yarnpkg.com/dayjs/-/dayjs-1.10.7.tgz#2cf5f91add28116748440866a0a1d26f3a6ce468"
-  integrity sha512-P6twpd70BcPK34K26uJ1KT3wlhpuOAPoMwJzpsIWUxHZ7wpmbdZL/hQqBDfz7hGurYSa5PhzdhDHtt319hL3ig==
+dayjs@^1.10.8:
+  version "1.10.8"
+  resolved "https://registry.yarnpkg.com/dayjs/-/dayjs-1.10.8.tgz#267df4bc6276fcb33c04a6735287e3f429abec41"
+  integrity sha512-wbNwDfBHHur9UOzNUjeKUOJ0fCb0a52Wx0xInmQ7Y8FstyajiV1NmK1e00cxsr9YrE9r7yAChE0VvpuY5Rnlow==
 
 debug@2.6.9:
   version "2.6.9"
@@ -1753,10 +1753,10 @@ discord.js@^13.1.0, discord.js@^13.5.0:
     node-fetch "^2.6.1"
     ws "^8.4.0"
 
-discord.js@^14.0.0-dev.1645661258.8203c5d:
-  version "14.0.0-dev.1645661258.8203c5d"
-  resolved "https://registry.yarnpkg.com/discord.js/-/discord.js-14.0.0-dev.1645661258.8203c5d.tgz#8567b8b4a01a10e2863a23e3bef71afdc3cadd0b"
-  integrity sha512-RYgJPvV2moAYptvalYviPXsIfVyQXt0UWkDHrLZ3Cb4nr0F+TCTRCx4ypIgBoeh60X8WIbXhI/m8adyC1tWa9Q==
+discord.js@^14.0.0-dev.1646222610.53defb8:
+  version "14.0.0-dev.1646222610.53defb8"
+  resolved "https://registry.yarnpkg.com/discord.js/-/discord.js-14.0.0-dev.1646222610.53defb8.tgz#1d6c4174f53e520bc9363488ac5098d17d50acd1"
+  integrity sha512-nXdHTOwSszlpFClFK8h0VcU8lFdmaDrqnU0G2/bPxK8DBjecY/D/IJ5qGCbN2FARpg0Q+wjqXhA6v/E7+cmUCA==
   dependencies:
     "@discordjs/builders" "^0.13.0-dev"
     "@discordjs/collection" "^0.6.0-dev"
@@ -3447,10 +3447,10 @@ npm-bundled@^1.1.1:
   dependencies:
     npm-normalize-package-bin "^1.0.1"
 
-npm-check-updates@^12.4.0:
-  version "12.4.0"
-  resolved "https://registry.yarnpkg.com/npm-check-updates/-/npm-check-updates-12.4.0.tgz#67e8e1b88551167368ec246dfd4302ce3007d83d"
-  integrity sha512-X14H74M8SVFkStmP1NDOMh0OjLB3mU2dwUeM71zyITJHkm08MASwwTcydW6YuGcNW1RUlVq1cQY2yWijv4zKUQ==
+npm-check-updates@^12.5.0:
+  version "12.5.0"
+  resolved "https://registry.yarnpkg.com/npm-check-updates/-/npm-check-updates-12.5.0.tgz#584c6d22c977f98a55988c7a662b82ea8550f474"
+  integrity sha512-nrryXO9IZdJsAIXo8LdtllrsGiTDE4IMAod7fl1jd5C38tOdZZG/crNNii4IkctxltQRmK/ziZwsMDTlhszZXg==
   dependencies:
     chalk "^4.1.2"
     cint "^8.2.1"
@@ -3623,10 +3623,10 @@ open@^8.4.0:
     is-docker "^2.1.1"
     is-wsl "^2.2.0"
 
-osu-api-extended@^2.0.10:
-  version "2.0.10"
-  resolved "https://registry.yarnpkg.com/osu-api-extended/-/osu-api-extended-2.0.10.tgz#efc87d5cd6111e960fc303fbdbebe275ed0a09fd"
-  integrity sha512-uIvBeM41CCESIhWVegLQB4+RgYAbSRBq54fFAdrIFKRxt09560VPaHbu61e7aTG/whNYKV/1Wda4aaLqR+26nA==
+osu-api-extended@^2.0.11:
+  version "2.0.11"
+  resolved "https://registry.yarnpkg.com/osu-api-extended/-/osu-api-extended-2.0.11.tgz#da39e47e94744be0d4e1c38b7e6687f8e911bf01"
+  integrity sha512-Z7aaYVE03KISxRyyA+ynVzR311XZqBkZd6HnKmaY75aQWo6z/7OWJxf1f8Oy2CYessYcegymGx5Vn1Hbl+Y+Fw==
   dependencies:
     lzma-native "^8.0.1"
     node-osr "^1.2.1"
