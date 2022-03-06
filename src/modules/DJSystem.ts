@@ -1,5 +1,5 @@
 import { Message } from "discord.js";
-import Bot from "classes/Bot";
+import Bot from "../../classes/Bot";
 
 export = class DJSystem {
 	public client: Bot;

@@ -1,4 +1,3 @@
-import { Message } from "discord.js";
 import express, { Express } from "express";
 import Logger from "./Logger";
 

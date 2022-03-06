@@ -1,5 +1,4 @@
 import "module-alias/register";
-import "dotenv/config";
 
 import P from "bluebird";
 import Bot from "./classes/Bot";

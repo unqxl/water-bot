@@ -1,7 +1,7 @@
 import { Guild, Embed, User, Util } from "discord.js";
 import { getRepository } from "typeorm";
 import { GuildConfiguration } from "../../typeorm/entities/GuildConfiguration";
-import Bot from "classes/Bot";
+import Bot from "../../classes/Bot";
 import Event from "../../types/Event/Event";
 
 export default class GuildCreateEvent extends Event {

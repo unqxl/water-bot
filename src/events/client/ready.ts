@@ -1,7 +1,7 @@
 import { Job } from "../../plugins/Job";
 import { Guild, Embed, TextChannel, Util } from "discord.js";
 import { bold } from "@discordjs/builders";
-import Bot from "classes/Bot";
+import Bot from "../../classes/Bot";
 import Event from "../../types/Event/Event";
 import deployCommands from "../../deploy-commands";
 

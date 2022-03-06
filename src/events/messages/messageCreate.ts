@@ -1,8 +1,8 @@
 import { Embed, Message, TextChannel, Util } from "discord.js";
-import Bot from "classes/Bot";
+import { bold } from "@discordjs/builders";
+import Bot from "../../classes/Bot";
 import Event from "../../types/Event/Event";
 import MessageChecks from "../../modules/MessageChecks";
-import { bold } from "@discordjs/builders";
 
 export default class MessageCreateEvent extends Event {
 	constructor() {

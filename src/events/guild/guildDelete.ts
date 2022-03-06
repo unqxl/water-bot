@@ -1,5 +1,5 @@
 import { Guild, Embed, User, Util } from "discord.js";
-import Bot from "classes/Bot";
+import Bot from "../../classes/Bot";
 import Event from "../../types/Event/Event";
 
 export default class GuildDeleteEvent extends Event {

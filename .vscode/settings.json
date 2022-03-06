@@ -4,5 +4,6 @@
 	"editor.defaultFormatter": "esbenp.prettier-vscode",
 	"editor.formatOnSave": true,
 	"prettier.endOfLine": "lf",
-	"files.eol": "\n"
+	"files.eol": "\n",
+	"window.title": "${activeEditorShort} | Akayo Discord"
 }

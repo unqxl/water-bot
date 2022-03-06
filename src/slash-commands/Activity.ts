@@ -6,7 +6,7 @@ import {
 import { CommandInteraction } from "discord.js";
 import { SlashCommand } from "../types/Command/SlashCommand";
 import { ValidateReturn } from "types/Command/BaseSlashCommand";
-import Bot from "classes/Bot";
+import Bot from "../classes/Bot";
 
 export default class ActivitySlashCommand extends SlashCommand {
 	constructor(client: Bot) {

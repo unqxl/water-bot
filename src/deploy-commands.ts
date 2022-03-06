@@ -14,8 +14,6 @@ export = async (client: Bot) => {
 		client.application.commands.set(commands as ApplicationCommandData[]);
 		client.logger.log("Slash Commands Deployed!", "deploy-commands");
 	} catch (error) {
-		console.log(error);
-
 		client.logger.error("Cannot Deploy Slash Commands!", "deploy-commands");
 		client.functions.sendLog(
 			new Error("Cannot create Slash Commands!"),
