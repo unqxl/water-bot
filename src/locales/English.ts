@@ -770,6 +770,18 @@ export default {
 					`Message from ${author} has been updated!\n\n› Old Message Content: \`${old_content}\`\n› New Message Content: \`${new_content}\``,
 				GO_TO: "Jump to Message",
 			},
+			CREATE: {
+				ANTI_FISH: {
+					TYPES: {
+						IP_LOGGER: "IP Logger",
+						PHISHING: "Phishing",
+					},
+
+					TITLE: "⚠️ | Phishing Link Detected",
+					DESCRIPTION: (type, author, content) =>
+						`Looks like that message from ${author} contains phishing link (${type})!\n\n› Message Content: ||\`${content}\`||`,
+				},
+			},
 		},
 
 		MUSIC_EVENTS: {

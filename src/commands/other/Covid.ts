@@ -77,7 +77,7 @@ export default class COVIDCommand extends Command {
 			: "COVID-19";
 
 		embed.setTitle(title);
-		embed.addField({
+		embed.fields.push({
 			name: lang.OTHER.COVID.TOTAL,
 			value: [
 				`${bold(lang.OTHER.COVID.CASES)}: ${bold(
@@ -99,7 +99,7 @@ export default class COVIDCommand extends Command {
 			inline: true,
 		});
 
-		embed.addField({
+		embed.fields.push({
 			name: lang.OTHER.COVID.TODAY,
 			value: [
 				`${bold(lang.OTHER.COVID.CASES)}: ${bold(
@@ -117,12 +117,12 @@ export default class COVIDCommand extends Command {
 			inline: true,
 		});
 
-		embed.addField({
+		embed.fields.push({
 			name: lang.OTHER.COVID.CRITICAL,
 			value: bold(this.client.functions.formatNumber(country.critical)),
 		});
 
-		embed.addField({
+		embed.fields.push({
 			name: lang.OTHER.COVID.TESTS,
 			value: bold(this.client.functions.formatNumber(country.tests)),
 		});

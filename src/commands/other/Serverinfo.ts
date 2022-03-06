@@ -75,7 +75,7 @@ export default class ServerinfoCommand extends Command {
 		embed.setTitle(title);
 		embed.setThumbnail(message.guild.iconURL());
 
-		embed.addField({
+		embed.fields.push({
 			name: `› ${bold(information)}:`,
 			value: [
 				`» ${bold(guild_id)}: ${bold(inlineCode(info.id))}`,
@@ -85,7 +85,7 @@ export default class ServerinfoCommand extends Command {
 			].join("\n"),
 		});
 
-		embed.addField({
+		embed.fields.push({
 			name: `› ${bold(precences)}:`,
 			value: [
 				`» ${bold(online)}: ${bold(inlineCode(info.onlineUsers))}`,
@@ -94,7 +94,7 @@ export default class ServerinfoCommand extends Command {
 			].join("\n"),
 		});
 
-		embed.addField({
+		embed.fields.push({
 			name: `› ${bold(members)}:`,
 			value: [
 				`» ${bold(humans)}: ${bold(inlineCode(info.users.humans))}`,
@@ -102,7 +102,7 @@ export default class ServerinfoCommand extends Command {
 			].join("\n"),
 		});
 
-		embed.addField({
+		embed.fields.push({
 			name: `› ${bold(channels)}:`,
 			value: [
 				`» ${bold(text)}: ${bold(

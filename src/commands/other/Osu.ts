@@ -98,7 +98,7 @@ export default class OsuCommand extends Command {
 			.setTitle(data.username)
 			.setURL("https://osu.ppy.sh/users/" + data.id);
 
-		embed.addField({
+		embed.fields.push({
 			name: lang.OTHER.OSU.FIELDS.STATISTICS,
 			value: [
 				`› ${bold(lang.OTHER.OSU.LEVEL)}: ${bold(
@@ -143,7 +143,7 @@ export default class OsuCommand extends Command {
 			].join("\n"),
 		});
 
-		embed.addField({
+		embed.fields.push({
 			name: lang.OTHER.OSU.FIELDS.GRADES,
 			value: [
 				`› ${bold(lang.OTHER.OSU.GRADES.SSH)}: ${bold(
@@ -165,7 +165,7 @@ export default class OsuCommand extends Command {
 			inline: true,
 		});
 
-		embed.addField({
+		embed.fields.push({
 			name: lang.OTHER.OSU.FIELDS.OTHER_USERNAMES,
 			value: bold(data.previous_usernames.join(", ")),
 			inline: true,

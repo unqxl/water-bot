@@ -768,6 +768,18 @@ const Russian: typeof import("@locales/English").default = {
 					`Сообщение от ${author} было изменено!\n\n› Старое содержание: \`${old_content}\`\n› Новое содержание: \`${new_content}\``,
 				GO_TO: "Jump to Message",
 			},
+			CREATE: {
+				ANTI_FISH: {
+					TYPES: {
+						IP_LOGGER: "IP Логгер",
+						PHISHING: "Фишинговая",
+					},
+
+					TITLE: "⚠️ | Обнаружена Фишинговая Ссылка",
+					DESCRIPTION: (type, author, content) =>
+						`Похоже, что сообщение от ${author} имеет фишинговые ссылки (${type})!\n\n› Содержание сообщения: ||\`${content}\`||`,
+				},
+			},
 		},
 
 		MUSIC_EVENTS: {

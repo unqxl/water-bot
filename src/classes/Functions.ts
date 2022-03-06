@@ -236,27 +236,27 @@ export = class Functions {
 			);
 
 			embed.setDescription(codeBlock(stack as string));
-			embed.addField({
+			embed.fields.push({
 				name: "Name",
 				value: name,
 				inline: true,
 			});
-			embed.addField({
+			embed.fields.push({
 				name: "Code",
 				value: code.toString(),
 				inline: true,
 			});
-			embed.addField({
+			embed.fields.push({
 				name: "HTTP Status",
 				value: httpStatus.toString(),
 				inline: true,
 			});
-			embed.addField({
+			embed.fields.push({
 				name: "Timestamp",
 				value: new Date().toLocaleString("ru"),
 				inline: true,
 			});
-			embed.addField({
+			embed.fields.push({
 				name: "Request Data",
 				value: codeBlock("json", jsonString.substring(0, 2045)),
 				inline: false,

@@ -191,31 +191,34 @@ export default class UserinfoCommand extends Command {
 			.setAuthor({
 				name: member.user.username,
 				iconURL: member.user.displayAvatarURL(),
-			})
-			.addField({
-				name: `[1] ${main}:`,
-				value: [
-					`› **${username}**: **${userInfo.name}**`,
-					`› **${tag}**: **${userInfo.tag}**`,
-					`› **${avatar}**: **[Click](${userInfo.avatar})**`,
-				].join("\n"),
-			})
-			.addField({
-				name: `[2] ${other}:`,
-				value: [
-					`› **${online_using}**: **${userInfo.onlineUsing()}**`,
-					`› **${presence}**: **${userInfo.presence()}**`,
-					`› **${playing}**: **${userInfo.presenceGame()}**`,
-					"",
-					`› **${reg_date}**: **${userInfo.regDate}** (**${userInfo.regTimeAgo}**)`,
-					`› **${join_date}**: **${userInfo.joinDate}** (**${userInfo.joinTimeAgo}**)`,
-					"",
-					`› **${in_voice}**: **${userInfo.voiceCheck}**`,
-					`› **${boosting}**: **${userInfo.boostCheck}**`,
-					`› **${bot}**: **${userInfo.botCheck}**`,
-				].join("\n"),
-			})
-			.setThumbnail(userInfo.avatar);
+			});
+
+		embed.fields.push({
+			name: `[1] ${main}:`,
+			value: [
+				`› **${username}**: **${userInfo.name}**`,
+				`› **${tag}**: **${userInfo.tag}**`,
+				`› **${avatar}**: **[Click](${userInfo.avatar})**`,
+			].join("\n"),
+		});
+
+		embed.fields.push({
+			name: `[2] ${other}:`,
+			value: [
+				`› **${online_using}**: **${userInfo.onlineUsing()}**`,
+				`› **${presence}**: **${userInfo.presence()}**`,
+				`› **${playing}**: **${userInfo.presenceGame()}**`,
+				"",
+				`› **${reg_date}**: **${userInfo.regDate}** (**${userInfo.regTimeAgo}**)`,
+				`› **${join_date}**: **${userInfo.joinDate}** (**${userInfo.joinTimeAgo}**)`,
+				"",
+				`› **${in_voice}**: **${userInfo.voiceCheck}**`,
+				`› **${boosting}**: **${userInfo.boostCheck}**`,
+				`› **${bot}**: **${userInfo.botCheck}**`,
+			].join("\n"),
+		});
+
+		embed.setThumbnail(userInfo.avatar);
 
 		return message.channel.send({
 			embeds: [embed],

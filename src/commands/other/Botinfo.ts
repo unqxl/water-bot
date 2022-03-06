@@ -92,7 +92,7 @@ export default class BotinfoCommand extends Command {
 			false,
 			true
 		);
-		embed.addField({
+		embed.fields.push({
 			name: `${fieldName}:`,
 			value: [
 				`› **${guilds}**: **${botInfo.guilds}**`,

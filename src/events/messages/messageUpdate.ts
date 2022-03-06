@@ -15,6 +15,9 @@ export default class MessageUpdateEvent extends Event {
 	}
 
 	async run(client: Bot, old_message: Message, new_message: Message) {
+		if (old_message.author && new_message.author && new_message.author.bot)
+			return;
+
 		const settings = await client.database.getSettings(
 			new_message.guild.id
 		);

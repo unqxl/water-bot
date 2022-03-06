@@ -194,31 +194,34 @@ export default class HelpCommand extends Command {
 				true
 			);
 
-			embed.addField({ name: `[💰] ${Economy}`, value: EconomyCommands });
-			embed.addField({ name: `[🎮] ${Games}`, value: GamesCommands });
-			embed.addField({
+			embed.fields.push({
+				name: `[💰] ${Economy}`,
+				value: EconomyCommands,
+			});
+			embed.fields.push({ name: `[🎮] ${Games}`, value: GamesCommands });
+			embed.fields.push({
 				name: `[🛡️] ${Moderation}`,
 				value: ModerationCommands,
 			});
-			embed.addField({ name: `[🎵] ${Music}`, value: MusicCommands });
-			embed.addField({ name: `[📝] ${Other}`, value: OtherCommands });
-			embed.addField({
+			embed.fields.push({ name: `[🎵] ${Music}`, value: MusicCommands });
+			embed.fields.push({ name: `[📝] ${Other}`, value: OtherCommands });
+			embed.fields.push({
 				name: `[⭐] ${Leveling}`,
 				value: LevelingCommands,
 			});
-			embed.addField({
+			embed.fields.push({
 				name: `[⚙️] ${Settings}`,
 				value: SettingsCommands,
 			});
-			embed.addField({
+			embed.fields.push({
 				name: `[🎉] ${Giveaways}`,
 				value: GiveawaysCommands,
 			});
-			embed.addField({
+			embed.fields.push({
 				name: `[🎭] ${RolePlay}`,
 				value: RolePlayCommands,
 			});
-			embed.addField({
+			embed.fields.push({
 				name: `[✨] ${Clans}`,
 				value: ClansCommands,
 			});
@@ -231,7 +234,7 @@ export default class HelpCommand extends Command {
 			});
 
 			if (this.client.functions.checkOwner(message.author))
-				embed.addField({
+				embed.fields.push({
 					name: `[👑] ${BotOwner}`,
 					value: BotOwnerCommands,
 				});

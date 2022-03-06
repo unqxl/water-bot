@@ -1,6 +1,6 @@
 import Event from "../../types/Event/Event";
 import Bot from "../../classes/Bot";
-import GhostPing from "../../modules/GhostPing";
+import MessageChecks from "../../modules/MessageChecks";
 import { TextChannel, Embed, Util } from "discord.js";
 import { Message } from "discord.js";
 
@@ -10,6 +10,8 @@ export default class MessageDeleteEvent extends Event {
 	}
 
 	async run(client: Bot, message: Message) {
+		if (message.author && message.author.bot) return;
+
 		const settings = await client.database.getSettings(message.guild.id);
 		if (!settings.log_channel) return;
 
@@ -26,8 +28,8 @@ export default class MessageDeleteEvent extends Event {
 			new Date().toLocaleString(settings.locale)
 		);
 
-		const checker = new GhostPing();
-		if (checker.handle(message)) {
+		const checker = new MessageChecks();
+		if (checker.ghostPing(message)) {
 			const title =
 				lang_file.EVENTS.MESSAGE_EVENTS.DELETE.GHOST_PING.TITLE;
 

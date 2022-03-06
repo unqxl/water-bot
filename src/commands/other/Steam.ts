@@ -96,13 +96,13 @@ export default class SteamCommand extends Command {
 		embed.setURL(data.website ?? app_url);
 		embed.setImage(data.header_image ?? null);
 
-		embed.addField({
+		embed.fields.push({
 			name: lang.OTHER.STEAM.FIELDS.ABOUT,
 			value: bold(data.about_the_game),
 			inline: false,
 		});
 
-		embed.addField({
+		embed.fields.push({
 			name: lang.OTHER.STEAM.FIELDS.LANGUAGES,
 			value: bold(
 				data.supported_languages
@@ -113,13 +113,13 @@ export default class SteamCommand extends Command {
 			inline: true,
 		});
 
-		embed.addField({
+		embed.fields.push({
 			name: lang.OTHER.STEAM.FIELDS.DEVELOPERS,
 			value: bold(data.developers.join(", ")),
 			inline: true,
 		});
 
-		embed.addField({
+		embed.fields.push({
 			name: lang.OTHER.STEAM.FIELDS.PLATFORMS,
 			value: [
 				`› ${bold(lang.OTHER.STEAM.PLATFORMS.WINDOWS)}: ${
@@ -141,25 +141,25 @@ export default class SteamCommand extends Command {
 			inline: false,
 		});
 
-		embed.addField({
+		embed.fields.push({
 			name: lang.OTHER.STEAM.FIELDS.CATEGORIES,
 			value: bold(data.categories.map((c) => c.description).join(", ")),
 			inline: true,
 		});
 
-		embed.addField({
+		embed.fields.push({
 			name: lang.OTHER.STEAM.FIELDS.GENRES,
 			value: bold(data.genres.map((c) => c.description).join(", ")),
 			inline: true,
 		});
 
-		embed.addField({
+		embed.fields.push({
 			name: lang.OTHER.STEAM.FIELDS.RECOMENDATIONS,
 			value: bold(data.recommendations.total.toLocaleString("be")),
 			inline: true,
 		});
 
-		embed.addField({
+		embed.fields.push({
 			name: lang.OTHER.STEAM.FIELDS.RELEASE_DATE,
 			value: [
 				`› ${bold(lang.OTHER.STEAM.COMING_SOON)}: ${
@@ -174,7 +174,7 @@ export default class SteamCommand extends Command {
 			inline: true,
 		});
 
-		embed.addField({
+		embed.fields.push({
 			name: lang.OTHER.STEAM.FIELDS.PRICE,
 			value: [
 				`› ${bold(lang.OTHER.STEAM.PRICE)}: ${bold(
@@ -187,7 +187,7 @@ export default class SteamCommand extends Command {
 			inline: true,
 		});
 
-		embed.addField({
+		embed.fields.push({
 			name: lang.OTHER.STEAM.FIELDS.NOTES,
 			value:
 				typeof data.content_descriptors.notes === "string"

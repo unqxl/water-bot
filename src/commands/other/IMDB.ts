@@ -90,43 +90,43 @@ export default class IMDBCommand extends Command {
 					: bold(data.plot)
 			);
 
-		embed.addField({
+		embed.fields.push({
 			name: lang.OTHER.IMDB.FIELDS.DIRECTORS,
 			value: bold(data.directors),
 			inline: true,
 		});
 
-		embed.addField({
+		embed.fields.push({
 			name: lang.OTHER.IMDB.FIELDS.WRITERS,
 			value: bold(data.writers),
 			inline: true,
 		});
 
-		embed.addField({
+		embed.fields.push({
 			name: lang.OTHER.IMDB.FIELDS.STARS,
 			value: bold(data.stars),
 			inline: true,
 		});
 
-		embed.addField({
+		embed.fields.push({
 			name: lang.OTHER.IMDB.FIELDS.COMPANIES,
 			value: bold(data.companies),
 			inline: true,
 		});
 
-		embed.addField({
+		embed.fields.push({
 			name: lang.OTHER.IMDB.FIELDS.COUNTRIES,
 			value: bold(data.countries),
 			inline: true,
 		});
 
-		embed.addField({
+		embed.fields.push({
 			name: lang.OTHER.IMDB.FIELDS.LANGUAGES,
 			value: bold(data.languages),
 			inline: true,
 		});
 
-		embed.addField({
+		embed.fields.push({
 			name: lang.OTHER.IMDB.FIELDS.RATINGS,
 			value: [
 				`› ${bold(lang.OTHER.IMDB.CONTENT_RATING)}: ${bold(
@@ -139,7 +139,7 @@ export default class IMDBCommand extends Command {
 			inline: true,
 		});
 
-		embed.addField({
+		embed.fields.push({
 			name: lang.OTHER.IMDB.FIELDS.LENGTH,
 			value: bold(
 				dayjs
