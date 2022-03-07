@@ -43,7 +43,7 @@ export = class Functions {
 
 		embed.setColor(color);
 		embed.setDescription(
-			typeof emoji === "string" ? `${emoji} | ${bold(text)}` : text
+			typeof emoji === "string" ? `${emoji} | ${bold(text)}` : bold(text)
 		);
 		embed.setFooter(typeof footer === "string" ? { text: footer } : null);
 

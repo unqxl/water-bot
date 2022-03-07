@@ -7,10 +7,10 @@
   resolved "https://registry.yarnpkg.com/@anishshobith/deeptype/-/deeptype-1.1.0.tgz#38c8e634a563904753aedefdf0082a0b4f1b76a4"
   integrity sha512-C/NfCUQMydPrpVGVmcYjMxr4aIJ/tTps/voDSuDM3Zf0B5K5M0Kw4e9AeUppd55eH0j7DFHzc2eKsidz3qarRg==
 
-"@badboy-discord/discordjs-economy@^1.1.4":
-  version "1.1.4"
-  resolved "https://registry.yarnpkg.com/@badboy-discord/discordjs-economy/-/discordjs-economy-1.1.4.tgz#33518b4d3522f0f4bd643e397fb963a4a14c6d92"
-  integrity sha512-eaFVPE9G23vFT0yMvTabJNh3i1MYtB2+n1/k2JkW8kZxMTymAPAIzhOuSr7Q3gkFP51u3/1eQnH1thGq+IFaAQ==
+"@badboy-discord/discordjs-economy@^1.1.43":
+  version "1.1.43"
+  resolved "https://registry.yarnpkg.com/@badboy-discord/discordjs-economy/-/discordjs-economy-1.1.43.tgz#b4b337eb671286fcdefd82be476394d4662ecc00"
+  integrity sha512-D3gWrOhWLycwiN81r1nXl75nF7qv5zgneKBMMJtmY12Gp9DGF6YqobLlfh7FJ9nVmoq4WqhKMXm5BJoJbcOjBw==
   dependencies:
     colors "^1.4.0"
     enmap "^5.8.8"

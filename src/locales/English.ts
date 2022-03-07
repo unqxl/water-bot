@@ -87,7 +87,7 @@ export default {
 				declOfNum(Number(bank), ["coin", "coins"]),
 			];
 
-			return `Balance: ${balance} ${balance_form}\nBank Balance: ${bank} ${bank_form}.`;
+			return `Balance: ${balance} ${balance_form}.\nBank Balance: ${bank} ${bank_form}.`;
 		},
 
 		GIFTED: (amount, user, balance) => {
@@ -110,12 +110,75 @@ export default {
 				`You openned ${case_name} and won ${prize} coins!`,
 			TIME_IS_OVER: "Time is over!",
 		},
+
+		SHOP: {
+			ALL: {
+				EMPTY: "Guild's Store is Empty now!",
+			},
+
+			CREATE: {
+				PROMPTS: {
+					WRITE_NAME: "Write the name of the Item (15sec)",
+					WRITE_DESCRIPTION:
+						"Write the description of the Item (30sec)",
+					WRITE_COST: "Write the cost of the Item (15sec)",
+					WRITE_ROLE:
+						"Mention Role for the Item or skip this (15sec)",
+				},
+
+				PROMPTS_ERRORS: {
+					NAME: "You didn't write Item Name!",
+					DESCRIPTION: "You didn't write Item Description!",
+					COST: "You didn't write Item Cost!",
+					REGEX_ERROR:
+						"Your answer doesn't looks like a role mention!",
+				},
+
+				CREATED: (name, cost) => {
+					const formatted = Number(cost).toLocaleString("be");
+					const format = declOfNum(cost, ["coin", "coins"]);
+
+					return `Successfully created new Item with name "${name}" (${formatted} ${format})`;
+				},
+			},
+
+			DELETE: {
+				PROMPTS: {
+					WRITE_ID: (prefix) =>
+						`Write the ID of the Item \`(${prefix}shop all | 15sec)\``,
+				},
+
+				PROMPTS_ERRORS: {
+					ID: "You didn't write Item ID!",
+					ITEM_NOT_FOUND: (id) =>
+						`Item with ID ${id} isn't found is Items List!`,
+				},
+
+				DELETED: (name) => `Successfully deleted Item "${name}"!`,
+			},
+
+			BUY: {
+				PROMPTS: {
+					WRITE_ID: (prefix) =>
+						`Write the ID of the Item \`(${prefix}shop all | 15sec)\``,
+				},
+
+				PROMPTS_ERRORS: {
+					ID: "You didn't write Item ID!",
+					ITEM_NOT_FOUND: (id) =>
+						`Item with ID ${id} isn't found is Items List!`,
+				},
+
+				PURCHASED: (name) => `Successfully purchased Item "${name}"!`,
+			},
+		},
 	},
 
 	ECONOMY_ACTIONS: {
 		WITHDRAW: "Withdraw from the Bank",
 		DEPOSIT: "Deposit into the Bank",
-		BUY_CASE: "Buy the Case",
+		BUY_CASE: "Purchasing the Case",
+		BUY_ITEM: "Purchasing the Item",
 		GIFT: "Gift",
 	},
 
@@ -635,6 +698,7 @@ export default {
 
 		DECL: {
 			MEMBERS: ["Member", "Members"],
+			COINS: ["coin", "coins"],
 		},
 	},
 

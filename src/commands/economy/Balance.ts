@@ -3,11 +3,11 @@ import { Categories } from "../../types/Command/BaseCommand";
 import { Message } from "discord.js";
 import Bot from "../../classes/Bot";
 
-export default class BalanceGetCommand extends Command {
+export default class BalanceCommand extends Command {
 	constructor(client: Bot) {
 		super(client, {
-			name: "balance-get",
-			aliases: ["bal-get"],
+			name: "balance",
+			aliases: ["bal"],
 
 			description: {
 				en: "Returns Your Balance!",
@@ -31,8 +31,8 @@ export default class BalanceGetCommand extends Command {
 		);
 
 		const bank = await this.client.economy.bank.get(
-			message.author.id,
-			message.guild.id
+			message.guild.id,
+			message.author.id
 		);
 
 		const text = lang.ECONOMY.BALANCE_INFO(sp(balance), sp(bank));

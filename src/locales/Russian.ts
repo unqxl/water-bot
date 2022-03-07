@@ -98,7 +98,7 @@ const Russian: typeof import("@locales/English").default = {
 				]),
 			];
 
-			return `Баланс: ${balance} ${balance_form}\nБаланс в банке: ${bank} ${bank_form}.`;
+			return `Баланс: ${balance} ${balance_form}.\nБаланс в банке: ${bank} ${bank_form}.`;
 		},
 
 		GIFTED: (amount, user, balance) => {
@@ -130,12 +130,77 @@ const Russian: typeof import("@locales/English").default = {
 				`Вы открыли ${case_name} и получили ${prize} коинов!`,
 			TIME_IS_OVER: "Время вышло!",
 		},
+
+		SHOP: {
+			ALL: {
+				EMPTY: "Магазин сервера сейчас пустой!",
+			},
+
+			CREATE: {
+				PROMPTS: {
+					WRITE_NAME: "Напишите название предмета (15 сек)",
+					WRITE_DESCRIPTION: "Напишите описание предмета (30 сек)",
+					WRITE_COST: "Напишите цену предмета (15 сек)",
+					WRITE_ROLE:
+						"Укажите роль для предмета или пропустите это (15 сек)",
+				},
+
+				PROMPTS_ERRORS: {
+					NAME: "Вы не указали название предмета!",
+					DESCRIPTION: "Вы не указали описание предмета!",
+					COST: "Вы не указали цену предмета!",
+					REGEX_ERROR: "Ваш ответ не похож на упоминание роли!",
+				},
+
+				CREATED: (name, cost) => {
+					const formatted = Number(cost).toLocaleString("be");
+					const format = declOfNum(cost, [
+						"монету",
+						"монеты",
+						"монет",
+					]);
+
+					return `Успешно создал предмет с названием "${name}" (${formatted} ${format})`;
+				},
+			},
+
+			DELETE: {
+				PROMPTS: {
+					WRITE_ID: (prefix) =>
+						`Укажите ID (номер) предмета \`(${prefix}shop all | 15 сек)\``,
+				},
+
+				PROMPTS_ERRORS: {
+					ID: "Вы не указали ID (номер) предмета!",
+					ITEM_NOT_FOUND: (id) =>
+						`Предмет с ID (номером) ${id} не найден в списке предметов!`,
+				},
+
+				DELETED: (name) => `Успешно удалён предмет "${name}"!`,
+			},
+
+			BUY: {
+				PROMPTS: {
+					WRITE_ID: (prefix) =>
+						`Укажите ID (номер) предмета \`(${prefix}shop all | 15 сек)\``,
+				},
+
+				PROMPTS_ERRORS: {
+					ID: "Вы не указали ID (номер) предмета!",
+					ITEM_NOT_FOUND: (id) =>
+						`Предмет с ID (номером) ${id} не найден в списке предметов!`,
+				},
+
+				PURCHASED: (name) => `Успешно куплен предмет "${name}"!`,
+			},
+		},
 	},
 
 	ECONOMY_ACTIONS: {
 		WITHDRAW: "Снятия с банка",
 		DEPOSIT: "Вложения в банк",
 		BUY_CASE: "Покупки кейса",
+		BUY_ITEM: "покупки предмета",
 		GIFT: "Перевода",
 	},
 
@@ -656,6 +721,7 @@ const Russian: typeof import("@locales/English").default = {
 
 		DECL: {
 			MEMBERS: ["Участник", "Участника", "Участников"],
+			COINS: ["монету", "монеты", "монет"],
 		},
 	},
 
