@@ -194,37 +194,39 @@ export default class HelpCommand extends Command {
 				true
 			);
 
-			embed.fields.push({
-				name: `[💰] ${Economy}`,
-				value: EconomyCommands,
-			});
-			embed.fields.push({ name: `[🎮] ${Games}`, value: GamesCommands });
-			embed.fields.push({
-				name: `[🛡️] ${Moderation}`,
-				value: ModerationCommands,
-			});
-			embed.fields.push({ name: `[🎵] ${Music}`, value: MusicCommands });
-			embed.fields.push({ name: `[📝] ${Other}`, value: OtherCommands });
-			embed.fields.push({
-				name: `[⭐] ${Leveling}`,
-				value: LevelingCommands,
-			});
-			embed.fields.push({
-				name: `[⚙️] ${Settings}`,
-				value: SettingsCommands,
-			});
-			embed.fields.push({
-				name: `[🎉] ${Giveaways}`,
-				value: GiveawaysCommands,
-			});
-			embed.fields.push({
-				name: `[🎭] ${RolePlay}`,
-				value: RolePlayCommands,
-			});
-			embed.fields.push({
-				name: `[✨] ${Clans}`,
-				value: ClansCommands,
-			});
+			embed.addFields(
+				{
+					name: `[💰] ${Economy}`,
+					value: EconomyCommands,
+				},
+				{ name: `[🎮] ${Games}`, value: GamesCommands },
+				{
+					name: `[🛡️] ${Moderation}`,
+					value: ModerationCommands,
+				},
+				{ name: `[🎵] ${Music}`, value: MusicCommands },
+				{ name: `[📝] ${Other}`, value: OtherCommands },
+				{
+					name: `[⭐] ${Leveling}`,
+					value: LevelingCommands,
+				},
+				{
+					name: `[⚙️] ${Settings}`,
+					value: SettingsCommands,
+				},
+				{
+					name: `[🎉] ${Giveaways}`,
+					value: GiveawaysCommands,
+				},
+				{
+					name: `[🎭] ${RolePlay}`,
+					value: RolePlayCommands,
+				},
+				{
+					name: `[✨] ${Clans}`,
+					value: ClansCommands,
+				}
+			);
 
 			embed.setFooter({
 				text: `${Length}: ${this.client.functions.sp(
@@ -234,7 +236,7 @@ export default class HelpCommand extends Command {
 			});
 
 			if (this.client.functions.checkOwner(message.author))
-				embed.fields.push({
+				embed.addFields({
 					name: `[👑] ${BotOwner}`,
 					value: BotOwnerCommands,
 				});
@@ -336,6 +338,7 @@ export default class HelpCommand extends Command {
 						: None
 				)}`,
 			].join("\n");
+
 			const embed = this.client.functions.buildEmbed(
 				message,
 				"Blurple",

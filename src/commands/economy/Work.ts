@@ -22,14 +22,23 @@ export default class WorkCommand extends Command {
 		args: string[],
 		lang: typeof import("@locales/English").default
 	) {
-		const work = this.client.economy.rewards.work(
-			message.author.id,
-			message.guild.id
+		const work = await this.client.economy.rewards.work(
+			message.guild.id,
+			message.author.id
 		);
 
-		if (!work.status) {
-			const FormattedTime = `${work.value.days}:${work.value.hours}:${work.value.minutes}:${work.value.seconds}`;
-			const text = lang.ECONOMY.TIME_ERROR(FormattedTime);
+		if ("status" in work) {
+			const locale = await this.client.database.getSetting(
+				message.guild.id,
+				"locale"
+			);
+
+			const collectAt = new Date(work.data);
+			const text = lang.ECONOMY.TIME_ERROR(
+				collectAt.toLocaleString(locale),
+				collectAt
+			);
+
 			const embed = this.client.functions.buildEmbed(
 				message,
 				"Red",
@@ -44,9 +53,7 @@ export default class WorkCommand extends Command {
 			});
 		}
 
-		const text = lang.ECONOMY.WORK_REWARD(
-			this.client.functions.sp(work.pretty as number)
-		);
+		const text = lang.ECONOMY.WORK_REWARD(work.amount);
 		const embed = this.client.functions.buildEmbed(
 			message,
 			"Blurple",

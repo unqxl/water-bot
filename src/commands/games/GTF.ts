@@ -93,9 +93,9 @@ export default class GuessTheFlagCommand extends Command {
 			(locale === "ru-RU" && answer === russian_name.toLowerCase())
 		) {
 			this.client.economy.balance.add(
-				reward,
+				message.guild.id,
 				message.author.id,
-				message.guild.id
+				reward
 			);
 
 			const text = lang.GAMES.GUESS_THE_FLAG.DEFEAT(

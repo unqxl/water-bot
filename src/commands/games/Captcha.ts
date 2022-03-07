@@ -76,9 +76,9 @@ export default class CaptchaCommand extends Command {
 			});
 		} else {
 			this.client.economy.balance.add(
-				reward,
+				message.guild.id,
 				message.author.id,
-				message.guild.id
+				reward
 			);
 
 			const text = lang.GAMES.CAPTCHA.CORRECT_ANSWER(

@@ -8,7 +8,6 @@ import {
 	Snowflake,
 	TextChannel,
 	User,
-	Util,
 } from "discord.js";
 import { bold, codeBlock } from "@discordjs/builders";
 import { request } from "undici";
@@ -42,7 +41,7 @@ export = class Functions {
 
 		if (showTimestamp === true) embed.setTimestamp();
 
-		embed.setColor(Util.resolveColor(color));
+		embed.setColor(color);
 		embed.setDescription(
 			typeof emoji === "string" ? `${emoji} | ${bold(text)}` : text
 		);
@@ -236,31 +235,33 @@ export = class Functions {
 			);
 
 			embed.setDescription(codeBlock(stack as string));
-			embed.fields.push({
-				name: "Name",
-				value: name,
-				inline: true,
-			});
-			embed.fields.push({
-				name: "Code",
-				value: code.toString(),
-				inline: true,
-			});
-			embed.fields.push({
-				name: "HTTP Status",
-				value: httpStatus.toString(),
-				inline: true,
-			});
-			embed.fields.push({
-				name: "Timestamp",
-				value: new Date().toLocaleString("ru"),
-				inline: true,
-			});
-			embed.fields.push({
-				name: "Request Data",
-				value: codeBlock("json", jsonString.substring(0, 2045)),
-				inline: false,
-			});
+			embed.addFields(
+				{
+					name: "Name",
+					value: name,
+					inline: true,
+				},
+				{
+					name: "Code",
+					value: code.toString(),
+					inline: true,
+				},
+				{
+					name: "HTTP Status",
+					value: httpStatus.toString(),
+					inline: true,
+				},
+				{
+					name: "Timestamp",
+					value: new Date().toLocaleString("ru"),
+					inline: true,
+				},
+				{
+					name: "Request Data",
+					value: codeBlock("json", jsonString.substring(0, 2045)),
+					inline: false,
+				}
+			);
 
 			channel.send({
 				embeds: [embed],

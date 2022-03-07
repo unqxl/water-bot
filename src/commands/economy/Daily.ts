@@ -22,13 +22,23 @@ export default class DailyCommand extends Command {
 		args: string[],
 		lang: typeof import("@locales/English").default
 	) {
-		const daily = this.client.economy.rewards.daily(
-			message.author.id,
-			message.guild.id
+		const daily = await this.client.economy.rewards.daily(
+			message.guild.id,
+			message.author.id
 		);
-		if (!daily.status) {
-			const FormattedTime = `${daily.value.days}:${daily.value.hours}:${daily.value.minutes}:${daily.value.seconds}`;
-			const text = lang.ECONOMY.TIME_ERROR(FormattedTime);
+
+		if ("status" in daily) {
+			const locale = await this.client.database.getSetting(
+				message.guild.id,
+				"locale"
+			);
+
+			const collectAt = new Date(daily.data);
+			const text = lang.ECONOMY.TIME_ERROR(
+				collectAt.toLocaleString(locale),
+				collectAt
+			);
+
 			const embed = this.client.functions.buildEmbed(
 				message,
 				"Red",
@@ -43,9 +53,7 @@ export default class DailyCommand extends Command {
 			});
 		}
 
-		const text = lang.ECONOMY.DAILY_REWARD(
-			this.client.functions.sp(daily.reward)
-		);
+		const text = lang.ECONOMY.DAILY_REWARD(daily.amount);
 		const embed = this.client.functions.buildEmbed(
 			message,
 			"Blurple",

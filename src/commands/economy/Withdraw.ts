@@ -3,18 +3,19 @@ import { Command } from "../../types/Command/Command";
 import { Message } from "discord.js";
 import Bot from "../../classes/Bot";
 
-export default class BankAddCommand extends Command {
+export default class BankSubtactCommand extends Command {
 	constructor(client: Bot) {
 		super(client, {
-			name: "bank-add",
+			name: "bank-subtract",
+			aliases: ["bank-sub"],
 
 			description: {
-				en: "Deposites Coins to Bank Balance!",
-				ru: "Вносит Коины в Банк!",
+				en: "Withdraws Coins into Bank!",
+				ru: "Снимает деньги с Баланса Банка!",
 			},
 
 			category: Categories.ECONOMY,
-			usage: "<prefix>bank-add <amount>",
+			usage: "<prefix>bank-withdraw <amount>",
 		});
 	}
 
@@ -23,14 +24,14 @@ export default class BankAddCommand extends Command {
 		args: string[],
 		lang: typeof import("@locales/English").default
 	): Promise<ValidateReturn> {
-		const balance = this.client.economy.balance.fetch(
-			message.author.id,
-			message.guild.id
+		const balance = await this.client.economy.bank.get(
+			message.guild.id,
+			message.author.id
 		);
 
 		const amount = args[0];
 		if (!amount) {
-			const text = lang.ERRORS.ARGS_MISSING("bank-add");
+			const text = lang.ERRORS.ARGS_MISSING("bank-subtract");
 			const embed = this.client.functions.buildEmbed(
 				message,
 				"Red",
@@ -67,9 +68,28 @@ export default class BankAddCommand extends Command {
 			};
 		}
 
+		if (amount.includes("-")) {
+			const text = lang.ERRORS.NEGATIVE_NUMBER(amount);
+			const embed = this.client.functions.buildEmbed(
+				message,
+				"Red",
+				text,
+				false,
+				"❌",
+				true
+			);
+
+			return {
+				ok: false,
+				error: {
+					embeds: [embed],
+				},
+			};
+		}
+
 		if (Number(amount) > balance) {
 			const text = lang.ERRORS.NOT_ENOUGH_MONEY(
-				lang.ECONOMY_ACTIONS.DEPOSIT
+				lang.ECONOMY_ACTIONS.WITHDRAW
 			);
 			const embed = this.client.functions.buildEmbed(
 				message,
@@ -100,21 +120,22 @@ export default class BankAddCommand extends Command {
 	) {
 		const amount = Number(args[0]);
 
-		this.client.economy.balance.subtract(
-			amount,
+		this.client.economy.bank.subtract(
+			message.guild.id,
 			message.author.id,
-			message.guild.id
+			amount
 		);
 
-		this.client.economy.bank.add(
-			amount,
+		this.client.economy.balance.add(
+			message.guild.id,
 			message.author.id,
-			message.guild.id
+			amount
 		);
 
-		const text = lang.ECONOMY.BANK_DEPOSITED(
+		const text = lang.ECONOMY.BANK_WITHDREW(
 			this.client.functions.sp(amount)
 		);
+
 		const embed = this.client.functions.buildEmbed(
 			message,
 			"Blurple",

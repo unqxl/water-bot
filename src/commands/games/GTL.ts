@@ -77,9 +77,9 @@ export default class GuessTheLogoCommand extends Command {
 
 		if (answer === data.brand || answer === data.brand.toLowerCase()) {
 			this.client.economy.balance.add(
-				reward,
+				message.guild.id,
 				message.author.id,
-				message.guild.id
+				reward
 			);
 
 			const text = lang.GAMES.GUESS_THE_LOGO.WIN(

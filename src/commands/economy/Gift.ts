@@ -45,6 +45,44 @@ export default class GiftCommand extends Command {
 			};
 		}
 
+		if (target.bot) {
+			const text = lang.ERRORS.BALANCE_BOTS;
+			const embed = this.client.functions.buildEmbed(
+				message,
+				"Red",
+				text,
+				false,
+				"❌",
+				true
+			);
+
+			return {
+				ok: false,
+				error: {
+					embeds: [embed],
+				},
+			};
+		}
+
+		if (target.id === message.author.id) {
+			const text = lang.ERRORS.GIFT_YOURSELF;
+			const embed = this.client.functions.buildEmbed(
+				message,
+				"Red",
+				text,
+				false,
+				"❌",
+				true
+			);
+
+			return {
+				ok: false,
+				error: {
+					embeds: [embed],
+				},
+			};
+		}
+
 		if (!coins) {
 			const text = lang.ERRORS.ARGS_MISSING("gift");
 			const embed = this.client.functions.buildEmbed(
@@ -83,6 +121,25 @@ export default class GiftCommand extends Command {
 			};
 		}
 
+		if (coins.includes("-")) {
+			const text = lang.ERRORS.NEGATIVE_NUMBER(coins);
+			const embed = this.client.functions.buildEmbed(
+				message,
+				"Red",
+				text,
+				false,
+				"❌",
+				true
+			);
+
+			return {
+				ok: false,
+				error: {
+					embeds: [embed],
+				},
+			};
+		}
+
 		return {
 			ok: true,
 		};
@@ -95,42 +152,10 @@ export default class GiftCommand extends Command {
 	) {
 		const target = message.mentions.users.first();
 		const amount = Number(args[1]);
-		const balance = this.client.economy.balance.fetch(
-			message.author.id,
-			message.guild.id
+		const balance = await this.client.economy.balance.get(
+			message.guild.id,
+			message.author.id
 		);
-
-		if (target.bot) {
-			const text = lang.ERRORS.BALANCE_BOTS;
-			const embed = this.client.functions.buildEmbed(
-				message,
-				"Red",
-				text,
-				false,
-				"❌",
-				true
-			);
-
-			return message.channel.send({
-				embeds: [embed],
-			});
-		}
-
-		if (target.id === message.author.id) {
-			const text = lang.ERRORS.GIFT_YOURSELF;
-			const embed = this.client.functions.buildEmbed(
-				message,
-				"Red",
-				text,
-				false,
-				"❌",
-				true
-			);
-
-			return message.channel.send({
-				embeds: [embed],
-			});
-		}
 
 		if (balance < amount) {
 			const gift = lang.ECONOMY_ACTIONS.GIFT;
@@ -150,16 +175,16 @@ export default class GiftCommand extends Command {
 		}
 
 		this.client.economy.balance.subtract(
-			amount,
+			message.guild.id,
 			message.author.id,
-			message.guild.id
+			amount
 		);
 
-		this.client.economy.balance.add(amount, target.id, message.guild.id);
+		this.client.economy.balance.add(message.guild.id, target.id, amount);
 
-		const currentBalance = this.client.economy.balance.fetch(
-			message.author.id,
-			message.guild.id
+		const currentBalance = await this.client.economy.balance.get(
+			message.guild.id,
+			message.author.id
 		);
 
 		const text = lang.ECONOMY.GIFTED(

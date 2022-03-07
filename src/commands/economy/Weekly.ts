@@ -22,14 +22,23 @@ export default class WeeklyCommand extends Command {
 		args: string[],
 		lang: typeof import("@locales/English").default
 	) {
-		const weekly = this.client.economy.rewards.weekly(
-			message.author.id,
-			message.guild.id
+		const weekly = await this.client.economy.rewards.weekly(
+			message.guild.id,
+			message.author.id
 		);
 
-		if (!weekly.status) {
-			const FormattedTime = `${weekly.value.days}:${weekly.value.hours}:${weekly.value.minutes}:${weekly.value.seconds}`;
-			const text = lang.ECONOMY.TIME_ERROR(FormattedTime);
+		if ("status" in weekly) {
+			const locale = await this.client.database.getSetting(
+				message.guild.id,
+				"locale"
+			);
+
+			const collectAt = new Date(weekly.data);
+			const text = lang.ECONOMY.TIME_ERROR(
+				collectAt.toLocaleString(locale),
+				collectAt
+			);
+
 			const embed = this.client.functions.buildEmbed(
 				message,
 				"Red",
@@ -44,9 +53,7 @@ export default class WeeklyCommand extends Command {
 			});
 		}
 
-		const text = lang.ECONOMY.WEEKLY_REWARD(
-			this.client.functions.sp(weekly.reward)
-		);
+		const text = lang.ECONOMY.WEEKLY_REWARD(weekly.amount);
 		const embed = this.client.functions.buildEmbed(
 			message,
 			"Blurple",

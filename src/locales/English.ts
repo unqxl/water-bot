@@ -1,3 +1,24 @@
+import { time as build_time } from "@discordjs/builders";
+
+function declOfNum(n: number, text_forms: string[]) {
+	n = Math.abs(n) % 100;
+	var n1 = n % 10;
+
+	if (n > 10 && n < 20) {
+		return text_forms[2];
+	}
+
+	if (n1 > 1 && n1 < 5) {
+		return text_forms[1];
+	}
+
+	if (n1 == 1) {
+		return text_forms[0];
+	}
+
+	return text_forms[2];
+}
+
 export default {
 	BOTOWNER: {
 		LEFT_GUILD: (id) => `Successfully left Guild with ID "${id}"`,
@@ -10,26 +31,73 @@ export default {
 		BALANCE: "Balance",
 		BANK: "Bank",
 
-		TIME_ERROR: (time) =>
-			`You've already received your reward!\nTry again in ${time}`,
+		TIME_ERROR: (time, unix) => {
+			var collectAt = build_time(unix, "R");
+			return `You've already received your reward!\nTry again in ${time} (${collectAt})`;
+		},
+
 		DAILY_REWARD: (coins) =>
 			`You've received ${coins} coins as a Daily Reward!`,
+
 		WORK_REWARD: (coins) =>
 			`You've received ${coins} coins as a Work Reward!`,
+
 		WEEKLY_REWARD: (coins) =>
 			`You've received ${coins} coins as a Weekly Reward!`,
-		BALANCE_ADDED: (amount, member) =>
-			`Successfully added ${amount} Coins to ${member} Balance!`,
-		BALANCE_SUBT: (amount, member) =>
-			`Successfully subtracted ${amount} Coins from the ${member} Balance!`,
-		BANK_DEPOSITED: (amount) =>
-			`Successfully deposited ${amount} Coins to Your Bank!`,
-		BANK_WITHDREW: (amount) =>
-			`Successfully withdrew ${amount} Coins from Your Bank!`,
-		BALANCE_INFO: (balance, bank) =>
-			`Balance: ${balance} coins,\nBank Balance: ${bank} coins.`,
-		GIFTED: (amount, user, balance) =>
-			`Successfully gifted ${amount} coins to ${user}!\n\nYour Balance: ${balance} coins`,
+
+		BALANCE_ADDED: (amount, member) => {
+			var form = declOfNum(Number(amount.replace(" ", "")), [
+				"coin",
+				"coins",
+			]);
+
+			return `Successfully added ${amount} ${form} to ${member} Balance!`;
+		},
+
+		BALANCE_SUBT: (amount, member) => {
+			var form = declOfNum(Number(amount.replace(" ", "")), [
+				"coin",
+				"coins",
+			]);
+
+			return `Successfully subtracted ${amount} ${form} from the ${member} Balance!`;
+		},
+
+		BANK_DEPOSITED: (amount) => {
+			var form = declOfNum(Number(amount.replace(" ", "")), [
+				"coin",
+				"coins",
+			]);
+
+			return `Successfully deposited ${amount} ${form} to Your Bank!`;
+		},
+
+		BANK_WITHDREW: (amount) => {
+			var form = declOfNum(Number(amount.replace(" ", "")), [
+				"coin",
+				"coins",
+			]);
+
+			return `Successfully withdrew ${amount} ${form} from Your Bank!`;
+		},
+
+		BALANCE_INFO: (balance, bank) => {
+			var [balance_form, bank_form] = [
+				declOfNum(Number(balance.replace(" ", "")), ["coin", "coins"]),
+				declOfNum(Number(bank), ["coin", "coins"]),
+			];
+
+			return `Balance: ${balance} ${balance_form}\nBank Balance: ${bank} ${bank_form}.`;
+		},
+
+		GIFTED: (amount, user, balance) => {
+			var [amount_form, balance_form] = [
+				declOfNum(Number(amount.replace(" ", "")), ["coin", "coins"]),
+				declOfNum(Number(balance.replace(" ", "")), ["coin", "coins"]),
+			];
+
+			return `Successfully gifted ${amount} ${amount_form} to ${user}!\nYour balance: ${balance} ${balance_form}`;
+		},
 
 		CASES: {
 			BRONZE: "Bronze Case",
@@ -552,6 +620,8 @@ export default {
 			`Giveaway with ID "\`${id}\`" already ended!`,
 		COVID_NOT_FOUND: (name: string) =>
 			`Cannot get COVID-19 data for "${name}"`,
+		NEGATIVE_NUMBER: (input: string) =>
+			`This argument should not be "${input}" (negative number)`,
 	},
 
 	FUNCTIONS: {

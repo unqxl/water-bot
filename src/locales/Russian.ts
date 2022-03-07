@@ -1,3 +1,24 @@
+import { time as build_time } from "@discordjs/builders";
+
+function declOfNum(n: number, text_forms: string[]) {
+	n = Math.abs(n) % 100;
+	var n1 = n % 10;
+
+	if (n > 10 && n < 20) {
+		return text_forms[2];
+	}
+
+	if (n1 > 1 && n1 < 5) {
+		return text_forms[1];
+	}
+
+	if (n1 == 1) {
+		return text_forms[0];
+	}
+
+	return text_forms[2];
+}
+
 const Russian: typeof import("@locales/English").default = {
 	BOTOWNER: {
 		LEFT_GUILD: (id) => `Успешно покинул сервер с ID "${id}"`,
@@ -10,26 +31,93 @@ const Russian: typeof import("@locales/English").default = {
 		BALANCE: "Balance",
 		BANK: "Bank",
 
-		TIME_ERROR: (time) =>
-			`Вы уже забирали вашу награду!\nПопробуйте ещё раз через ${time}`,
+		TIME_ERROR: (time, unix) => {
+			var collectAt = build_time(unix, "R");
+			return `Вы уже забрали данную награду!\nПопробуйте ещё раз ${time} (${collectAt})`;
+		},
+
 		DAILY_REWARD: (coins) =>
 			`Успешно забрали ${coins} коинов в качестве Ежедневной награды!`,
 		WORK_REWARD: (coins) =>
 			`Успешно забрали ${coins} коинов в качестве награды за работу!`,
 		WEEKLY_REWARD: (coins) =>
 			`Успешно забрали ${coins} коинов в качестве Еженедельной награды!`,
-		BALANCE_ADDED: (amount, member) =>
-			`Успешно добавил ${amount} коинов на баланс ${member}!`,
-		BALANCE_SUBT: (amount, member) =>
-			`Успешно убрал ${amount} коинов с баланса ${member}!`,
-		BANK_DEPOSITED: (amount) =>
-			`Успешно вложил ${amount} коинов в ваш банк!`,
-		BANK_WITHDREW: (amount) =>
-			`Успешно снял ${amount} коинов с вашего банка!`,
-		BALANCE_INFO: (balance, bank) =>
-			`Баланс: ${balance} коинов,\nБаланс в банке: ${bank} коинов.`,
-		GIFTED: (amount, user, balance) =>
-			`Успешно подарил ${amount} коинов ${user}!\n\nВаш баланс: ${balance} коинов`,
+
+		BALANCE_ADDED: (amount, member) => {
+			var form = declOfNum(Number(amount.replace(" ", "")), [
+				"монету",
+				"монеты",
+				"монет",
+			]);
+
+			return `Успешно добавлено ${amount} ${form} на баланс ${member}!`;
+		},
+
+		BALANCE_SUBT: (amount, member) => {
+			var form = declOfNum(Number(amount.replace(" ", "")), [
+				"монету",
+				"монеты",
+				"монет",
+			]);
+
+			return `Успешно убрано ${amount} ${form} с баланса ${member}!`;
+		},
+
+		BANK_DEPOSITED: (amount) => {
+			var form = declOfNum(Number(amount.replace(" ", "")), [
+				"монету",
+				"монеты",
+				"монет",
+			]);
+
+			return `Успешно внесено ${amount} ${form} в ваш банк!`;
+		},
+
+		BANK_WITHDREW: (amount) => {
+			var form = declOfNum(Number(amount.replace(" ", "")), [
+				"монету",
+				"монеты",
+				"монет",
+			]);
+
+			return `Успешно снято ${amount} ${form} с вашего банка!`;
+		},
+
+		BALANCE_INFO: (balance, bank) => {
+			var [balance_form, bank_form] = [
+				declOfNum(Number(balance.replace(" ", "")), [
+					"монету",
+					"монеты",
+					"монет",
+				]),
+
+				declOfNum(Number(bank.replace(" ", "")), [
+					"монету",
+					"монеты",
+					"монет",
+				]),
+			];
+
+			return `Баланс: ${balance} ${balance_form}\nБаланс в банке: ${bank} ${bank_form}.`;
+		},
+
+		GIFTED: (amount, user, balance) => {
+			var [amount_form, balance_form] = [
+				declOfNum(Number(amount.replace(" ", "")), [
+					"монету",
+					"монеты",
+					"монет",
+				]),
+
+				declOfNum(Number(balance.replace(" ", "")), [
+					"монету",
+					"монеты",
+					"монет",
+				]),
+			];
+
+			return `Успешно подарено ${amount} ${amount_form} ${user}!\nВаш баланс: ${balance} ${balance_form}`;
+		},
 
 		CASES: {
 			BRONZE: "Бронзовый кейс",
@@ -553,6 +641,8 @@ const Russian: typeof import("@locales/English").default = {
 			`Розыгрыш с ID "\`${id}\`" уже закончен!`,
 		COVID_NOT_FOUND: (name: string) =>
 			`Не могу получить информацию COVID-19 в "${name}"`,
+		NEGATIVE_NUMBER: (input: string) =>
+			`Данный аргумент не может быть "${input}" (негативным числом)`,
 	},
 
 	FUNCTIONS: {

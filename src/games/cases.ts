@@ -86,9 +86,9 @@ export = async (
 			collector.on("collect", async (btn: ButtonInteraction) => {
 				const buttonID = btn.customId;
 				const chosenCase = cases.find((i) => i.name === buttonID);
-				const balance = client.economy.balance.fetch(
-					_msg.author.id,
-					btn.guild.id
+				const balance = await client.economy.balance.get(
+					btn.guild.id,
+					_msg.author.id
 				);
 
 				if (!chosenCase) return;
@@ -121,14 +121,15 @@ export = async (
 					];
 
 				client.economy.balance.subtract(
-					chosenCase.cost,
+					btn.guild.id,
 					_msg.author.id,
-					btn.guild.id
+					chosenCase.cost
 				);
+
 				client.economy.balance.add(
-					prize.prize,
+					btn.guild.id,
 					_msg.author.id,
-					btn.guild.id
+					prize.prize
 				);
 
 				const case_name =

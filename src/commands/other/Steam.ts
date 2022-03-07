@@ -96,105 +96,100 @@ export default class SteamCommand extends Command {
 		embed.setURL(data.website ?? app_url);
 		embed.setImage(data.header_image ?? null);
 
-		embed.fields.push({
-			name: lang.OTHER.STEAM.FIELDS.ABOUT,
-			value: bold(data.about_the_game),
-			inline: false,
-		});
-
-		embed.fields.push({
-			name: lang.OTHER.STEAM.FIELDS.LANGUAGES,
-			value: bold(
-				data.supported_languages
-					.replaceAll("<strong>", "")
-					.replaceAll("</strong>", "")
-					.replaceAll("<br>", "\n")
-			),
-			inline: true,
-		});
-
-		embed.fields.push({
-			name: lang.OTHER.STEAM.FIELDS.DEVELOPERS,
-			value: bold(data.developers.join(", ")),
-			inline: true,
-		});
-
-		embed.fields.push({
-			name: lang.OTHER.STEAM.FIELDS.PLATFORMS,
-			value: [
-				`› ${bold(lang.OTHER.STEAM.PLATFORMS.WINDOWS)}: ${
-					data.platforms.windows === true
-						? bold(lang.GLOBAL.YES)
-						: bold(lang.GLOBAL.NO)
-				}`,
-				`› ${bold(lang.OTHER.STEAM.PLATFORMS.MACOS)}: ${
-					data.platforms.mac === true
-						? bold(lang.GLOBAL.YES)
-						: bold(lang.GLOBAL.NO)
-				}`,
-				`› ${bold(lang.OTHER.STEAM.PLATFORMS.LINUX)}: ${
-					data.platforms.linux === true
-						? bold(lang.GLOBAL.YES)
-						: bold(lang.GLOBAL.NO)
-				}`,
-			].join("\n"),
-			inline: false,
-		});
-
-		embed.fields.push({
-			name: lang.OTHER.STEAM.FIELDS.CATEGORIES,
-			value: bold(data.categories.map((c) => c.description).join(", ")),
-			inline: true,
-		});
-
-		embed.fields.push({
-			name: lang.OTHER.STEAM.FIELDS.GENRES,
-			value: bold(data.genres.map((c) => c.description).join(", ")),
-			inline: true,
-		});
-
-		embed.fields.push({
-			name: lang.OTHER.STEAM.FIELDS.RECOMENDATIONS,
-			value: bold(data.recommendations.total.toLocaleString("be")),
-			inline: true,
-		});
-
-		embed.fields.push({
-			name: lang.OTHER.STEAM.FIELDS.RELEASE_DATE,
-			value: [
-				`› ${bold(lang.OTHER.STEAM.COMING_SOON)}: ${
-					data.release_date.coming_soon === true
-						? bold(lang.GLOBAL.YES)
-						: bold(lang.GLOBAL.NO)
-				}`,
-				`› ${bold(lang.OTHER.STEAM.DATE)}: ${bold(
-					data.release_date.date
-				)}`,
-			].join("\n"),
-			inline: true,
-		});
-
-		embed.fields.push({
-			name: lang.OTHER.STEAM.FIELDS.PRICE,
-			value: [
-				`› ${bold(lang.OTHER.STEAM.PRICE)}: ${bold(
-					data.price_overview.final_formatted
-				)}`,
-				`› ${bold(lang.OTHER.STEAM.DISCOUNT)}: ${bold(
-					data.price_overview.discount_percent.toString() + "%"
-				)}`,
-			].join("\n"),
-			inline: true,
-		});
-
-		embed.fields.push({
-			name: lang.OTHER.STEAM.FIELDS.NOTES,
-			value:
-				typeof data.content_descriptors.notes === "string"
-					? bold(data.content_descriptors.notes)
-					: bold(lang.GLOBAL.NONE),
-			inline: true,
-		});
+		embed.addFields(
+			{
+				name: lang.OTHER.STEAM.FIELDS.ABOUT,
+				value: bold(data.about_the_game),
+				inline: false,
+			},
+			{
+				name: lang.OTHER.STEAM.FIELDS.LANGUAGES,
+				value: bold(
+					data.supported_languages
+						.replaceAll("<strong>", "")
+						.replaceAll("</strong>", "")
+						.replaceAll("<br>", "\n")
+				),
+				inline: true,
+			},
+			{
+				name: lang.OTHER.STEAM.FIELDS.DEVELOPERS,
+				value: bold(data.developers.join(", ")),
+				inline: true,
+			},
+			{
+				name: lang.OTHER.STEAM.FIELDS.PLATFORMS,
+				value: [
+					`› ${bold(lang.OTHER.STEAM.PLATFORMS.WINDOWS)}: ${
+						data.platforms.windows === true
+							? bold(lang.GLOBAL.YES)
+							: bold(lang.GLOBAL.NO)
+					}`,
+					`› ${bold(lang.OTHER.STEAM.PLATFORMS.MACOS)}: ${
+						data.platforms.mac === true
+							? bold(lang.GLOBAL.YES)
+							: bold(lang.GLOBAL.NO)
+					}`,
+					`› ${bold(lang.OTHER.STEAM.PLATFORMS.LINUX)}: ${
+						data.platforms.linux === true
+							? bold(lang.GLOBAL.YES)
+							: bold(lang.GLOBAL.NO)
+					}`,
+				].join("\n"),
+				inline: false,
+			},
+			{
+				name: lang.OTHER.STEAM.FIELDS.CATEGORIES,
+				value: bold(
+					data.categories.map((c) => c.description).join(", ")
+				),
+				inline: true,
+			},
+			{
+				name: lang.OTHER.STEAM.FIELDS.GENRES,
+				value: bold(data.genres.map((c) => c.description).join(", ")),
+				inline: true,
+			},
+			{
+				name: lang.OTHER.STEAM.FIELDS.RECOMENDATIONS,
+				value: bold(data.recommendations.total.toLocaleString("be")),
+				inline: true,
+			},
+			{
+				name: lang.OTHER.STEAM.FIELDS.RELEASE_DATE,
+				value: [
+					`› ${bold(lang.OTHER.STEAM.COMING_SOON)}: ${
+						data.release_date.coming_soon === true
+							? bold(lang.GLOBAL.YES)
+							: bold(lang.GLOBAL.NO)
+					}`,
+					`› ${bold(lang.OTHER.STEAM.DATE)}: ${bold(
+						data.release_date.date
+					)}`,
+				].join("\n"),
+				inline: true,
+			},
+			{
+				name: lang.OTHER.STEAM.FIELDS.PRICE,
+				value: [
+					`› ${bold(lang.OTHER.STEAM.PRICE)}: ${bold(
+						data.price_overview.final_formatted
+					)}`,
+					`› ${bold(lang.OTHER.STEAM.DISCOUNT)}: ${bold(
+						data.price_overview.discount_percent.toString() + "%"
+					)}`,
+				].join("\n"),
+				inline: true,
+			},
+			{
+				name: lang.OTHER.STEAM.FIELDS.NOTES,
+				value:
+					typeof data.content_descriptors.notes === "string"
+						? bold(data.content_descriptors.notes)
+						: bold(lang.GLOBAL.NONE),
+				inline: true,
+			}
+		);
 
 		return message.channel.send({
 			embeds: [embed],

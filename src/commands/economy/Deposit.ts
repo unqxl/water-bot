@@ -3,19 +3,18 @@ import { Command } from "../../types/Command/Command";
 import { Message } from "discord.js";
 import Bot from "../../classes/Bot";
 
-export default class BankSubtactCommand extends Command {
+export default class DepositCommand extends Command {
 	constructor(client: Bot) {
 		super(client, {
-			name: "bank-subtract",
-			aliases: ["bank-sub"],
+			name: "deposit",
 
 			description: {
-				en: "Withdraws Coins into Bank!",
-				ru: "Снимает деньги с Баланса Банка!",
+				en: "Deposites Coins to Bank Balance!",
+				ru: "Вносит Коины в Банк!",
 			},
 
 			category: Categories.ECONOMY,
-			usage: "<prefix>bank-withdraw <amount>",
+			usage: "<prefix>deposit <amount>",
 		});
 	}
 
@@ -24,14 +23,14 @@ export default class BankSubtactCommand extends Command {
 		args: string[],
 		lang: typeof import("@locales/English").default
 	): Promise<ValidateReturn> {
-		const balance = this.client.economy.bank.fetch(
-			message.author.id,
-			message.guild.id
+		const balance = await this.client.economy.balance.get(
+			message.guild.id,
+			message.author.id
 		);
 
 		const amount = args[0];
 		if (!amount) {
-			const text = lang.ERRORS.ARGS_MISSING("bank-subtract");
+			const text = lang.ERRORS.ARGS_MISSING("bank-add");
 			const embed = this.client.functions.buildEmbed(
 				message,
 				"Red",
@@ -68,10 +67,28 @@ export default class BankSubtactCommand extends Command {
 			};
 		}
 
-		if (Number(amount) > balance) {
-			const text = lang.ERRORS.NOT_ENOUGH_MONEY(
-				lang.ECONOMY_ACTIONS.WITHDRAW
+		if (amount.includes("-")) {
+			const text = lang.ERRORS.NEGATIVE_NUMBER(amount);
+			const embed = this.client.functions.buildEmbed(
+				message,
+				"Red",
+				text,
+				false,
+				"❌",
+				true
 			);
+
+			return {
+				ok: false,
+				error: {
+					embeds: [embed],
+				},
+			};
+		}
+
+		if (Number(amount) > balance) {
+			const action = lang.ECONOMY_ACTIONS.DEPOSIT;
+			const text = lang.ERRORS.NOT_ENOUGH_MONEY(action);
 			const embed = this.client.functions.buildEmbed(
 				message,
 				"Red",
@@ -101,21 +118,22 @@ export default class BankSubtactCommand extends Command {
 	) {
 		const amount = Number(args[0]);
 
-		this.client.economy.bank.subtract(
-			amount,
+		this.client.economy.balance.subtract(
+			message.guild.id,
 			message.author.id,
-			message.guild.id
+			amount
 		);
 
-		this.client.economy.balance.add(
-			amount,
+		this.client.economy.bank.add(
+			message.guild.id,
 			message.author.id,
-			message.guild.id
+			amount
 		);
 
-		const text = lang.ECONOMY.BANK_WITHDREW(
+		const text = lang.ECONOMY.BANK_DEPOSITED(
 			this.client.functions.sp(amount)
 		);
+
 		const embed = this.client.functions.buildEmbed(
 			message,
 			"Blurple",

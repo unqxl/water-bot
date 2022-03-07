@@ -77,55 +77,58 @@ export default class COVIDCommand extends Command {
 			: "COVID-19";
 
 		embed.setTitle(title);
-		embed.fields.push({
-			name: lang.OTHER.COVID.TOTAL,
-			value: [
-				`${bold(lang.OTHER.COVID.CASES)}: ${bold(
-					this.client.functions.formatNumber(country.cases)
-				)}`,
+		embed.addFields(
+			{
+				name: lang.OTHER.COVID.TOTAL,
+				value: [
+					`${bold(lang.OTHER.COVID.CASES)}: ${bold(
+						this.client.functions.formatNumber(country.cases)
+					)}`,
 
-				`${bold(lang.OTHER.COVID.RECOVERED)}: ${bold(
-					this.client.functions.formatNumber(country.recovered)
-				)}`,
+					`${bold(lang.OTHER.COVID.RECOVERED)}: ${bold(
+						this.client.functions.formatNumber(country.recovered)
+					)}`,
 
-				`${bold(lang.OTHER.COVID.DEATHS)}: ${bold(
-					this.client.functions.formatNumber(country.deaths)
-				)}`,
+					`${bold(lang.OTHER.COVID.DEATHS)}: ${bold(
+						this.client.functions.formatNumber(country.deaths)
+					)}`,
 
-				`${bold(lang.OTHER.COVID.TOTAL_POPULATION)}: ${bold(
-					this.client.functions.formatNumber(country.population)
-				)}`,
-			].join("\n"),
-			inline: true,
-		});
+					`${bold(lang.OTHER.COVID.TOTAL_POPULATION)}: ${bold(
+						this.client.functions.formatNumber(country.population)
+					)}`,
+				].join("\n"),
+				inline: true,
+			},
+			{
+				name: lang.OTHER.COVID.TODAY,
+				value: [
+					`${bold(lang.OTHER.COVID.CASES)}: ${bold(
+						this.client.functions.formatNumber(country.todayCases)
+					)}`,
 
-		embed.fields.push({
-			name: lang.OTHER.COVID.TODAY,
-			value: [
-				`${bold(lang.OTHER.COVID.CASES)}: ${bold(
-					this.client.functions.formatNumber(country.todayCases)
-				)}`,
+					`${bold(lang.OTHER.COVID.RECOVERED)}: ${bold(
+						this.client.functions.formatNumber(
+							country.todayRecovered
+						)
+					)}`,
 
-				`${bold(lang.OTHER.COVID.RECOVERED)}: ${bold(
-					this.client.functions.formatNumber(country.todayRecovered)
-				)}`,
-
-				`${bold(lang.OTHER.COVID.DEATHS)}: ${bold(
-					this.client.functions.formatNumber(country.todayDeaths)
-				)}`,
-			].join("\n"),
-			inline: true,
-		});
-
-		embed.fields.push({
-			name: lang.OTHER.COVID.CRITICAL,
-			value: bold(this.client.functions.formatNumber(country.critical)),
-		});
-
-		embed.fields.push({
-			name: lang.OTHER.COVID.TESTS,
-			value: bold(this.client.functions.formatNumber(country.tests)),
-		});
+					`${bold(lang.OTHER.COVID.DEATHS)}: ${bold(
+						this.client.functions.formatNumber(country.todayDeaths)
+					)}`,
+				].join("\n"),
+				inline: true,
+			},
+			{
+				name: lang.OTHER.COVID.CRITICAL,
+				value: bold(
+					this.client.functions.formatNumber(country.critical)
+				),
+			},
+			{
+				name: lang.OTHER.COVID.TESTS,
+				value: bold(this.client.functions.formatNumber(country.tests)),
+			}
+		);
 
 		embed.setThumbnail(country.countryInfo?.flag || "");
 		embed.setFooter({

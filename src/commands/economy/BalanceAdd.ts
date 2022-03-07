@@ -29,8 +29,28 @@ export default class BalanceAddCommand extends Command {
 		const member =
 			message.mentions.members.first() ||
 			message.guild.members.cache.get(args[0]);
+
 		if (!member) {
 			const text = lang.ERRORS.ARGS_MISSING("balance-add");
+			const embed = this.client.functions.buildEmbed(
+				message,
+				"Red",
+				text,
+				false,
+				"❌",
+				true
+			);
+
+			return {
+				ok: false,
+				error: {
+					embeds: [embed],
+				},
+			};
+		}
+
+		if (member.user.bot) {
+			const text = lang.ERRORS.USER_BOT(member.toString());
 			const embed = this.client.functions.buildEmbed(
 				message,
 				"Red",
@@ -59,6 +79,7 @@ export default class BalanceAddCommand extends Command {
 				"❌",
 				true
 			);
+
 			return {
 				ok: false,
 				error: {
@@ -69,6 +90,25 @@ export default class BalanceAddCommand extends Command {
 
 		if (!Number(amount)) {
 			const text = lang.ERRORS.IS_NAN(amount);
+			const embed = this.client.functions.buildEmbed(
+				message,
+				"Red",
+				text,
+				false,
+				"❌",
+				true
+			);
+
+			return {
+				ok: false,
+				error: {
+					embeds: [embed],
+				},
+			};
+		}
+
+		if (amount.includes("-")) {
+			const text = lang.ERRORS.NEGATIVE_NUMBER(amount);
 			const embed = this.client.functions.buildEmbed(
 				message,
 				"Red",
@@ -99,34 +139,20 @@ export default class BalanceAddCommand extends Command {
 		const member =
 			message.mentions.members.first() ||
 			message.guild.members.cache.get(args[0]);
+
 		const amount = Number(args[1]);
 
-		if (member.user.bot) {
-			const text = lang.ERRORS.USER_BOT(member.toString());
-			const embed = this.client.functions.buildEmbed(
-				message,
-				"Red",
-				text,
-				false,
-				"❌",
-				true
-			);
-
-			return message.channel.send({
-				embeds: [embed],
-			});
-		}
-
 		this.client.economy.balance.add(
-			amount,
+			message.guild.id,
 			member.user.id,
-			message.guild.id
+			amount
 		);
 
 		const text = lang.ECONOMY.BALANCE_ADDED(
 			this.client.functions.sp(amount),
 			member.toString()
 		);
+
 		const embed = this.client.functions.buildEmbed(
 			message,
 			"Blurple",

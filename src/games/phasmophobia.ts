@@ -305,9 +305,9 @@ export = async (
 						);
 
 						client.economy.balance.add(
-							150,
+							message.guild.id,
 							msg.author.id,
-							message.guild.id
+							150
 						);
 
 						reply.edit({

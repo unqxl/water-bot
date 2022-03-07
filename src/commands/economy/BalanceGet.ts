@@ -23,19 +23,19 @@ export default class BalanceGetCommand extends Command {
 		args: string[],
 		lang: typeof import("@locales/English").default
 	) {
-		const balance = this.client.economy.balance.fetch(
-			message.author.id,
-			message.guild.id
+		const sp = (num: string | number) => this.client.functions.sp(num);
+
+		const balance = await this.client.economy.balance.get(
+			message.guild.id,
+			message.author.id
 		);
-		const bank = this.client.economy.bank.fetch(
+
+		const bank = await this.client.economy.bank.get(
 			message.author.id,
 			message.guild.id
 		);
 
-		const text = lang.ECONOMY.BALANCE_INFO(
-			this.client.functions.sp(balance),
-			this.client.functions.sp(bank)
-		);
+		const text = lang.ECONOMY.BALANCE_INFO(sp(balance), sp(bank));
 		const embed = this.client.functions.buildEmbed(
 			message,
 			"Blurple",

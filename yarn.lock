@@ -7,6 +7,15 @@
   resolved "https://registry.yarnpkg.com/@anishshobith/deeptype/-/deeptype-1.1.0.tgz#38c8e634a563904753aedefdf0082a0b4f1b76a4"
   integrity sha512-C/NfCUQMydPrpVGVmcYjMxr4aIJ/tTps/voDSuDM3Zf0B5K5M0Kw4e9AeUppd55eH0j7DFHzc2eKsidz3qarRg==
 
+"@badboy-discord/discordjs-economy@^1.1.4":
+  version "1.1.4"
+  resolved "https://registry.yarnpkg.com/@badboy-discord/discordjs-economy/-/discordjs-economy-1.1.4.tgz#33518b4d3522f0f4bd643e397fb963a4a14c6d92"
+  integrity sha512-eaFVPE9G23vFT0yMvTabJNh3i1MYtB2+n1/k2JkW8kZxMTymAPAIzhOuSr7Q3gkFP51u3/1eQnH1thGq+IFaAQ==
+  dependencies:
+    colors "^1.4.0"
+    enmap "^5.8.8"
+    undici "^4.15.0"
+
 "@canvacord/assets@^2.0.5":
   version "2.1.0"
   resolved "https://registry.yarnpkg.com/@canvacord/assets/-/assets-2.1.0.tgz#4d11644256dadcd47ac11cf59ae3d42d7ef30be2"
@@ -280,10 +289,10 @@
   resolved "https://registry.yarnpkg.com/@sapphire/snowflake/-/snowflake-3.1.0.tgz#1c2d9781d3b1de0bcb02b7079898947ce754d394"
   integrity sha512-K+OiqXSx4clIaXcoaghrCV56zsm3bZZ5SBpgJkgvAKegFFdETMntHviUfypjt8xVleIuDaNyQA4APOIl3BMcxg==
 
-"@sapphire/utilities@^3.3.0":
-  version "3.3.0"
-  resolved "https://registry.yarnpkg.com/@sapphire/utilities/-/utilities-3.3.0.tgz#62ff0a52cd86bd6169a94b2f217d72da6772a3cd"
-  integrity sha512-wWESfB03elALhci3GjcacRh8pnK89Qe5AEKCQplKyTCKabWl64SAFw52hQBth2fMmJStgK1fr87aGhRZAB8DNA==
+"@sapphire/utilities@^3.4.0":
+  version "3.4.0"
+  resolved "https://registry.yarnpkg.com/@sapphire/utilities/-/utilities-3.4.0.tgz#cc176dbab9d8854ef4ad6e1eba3bdac153758665"
+  integrity sha512-d6IWoETMpyTbPgSvH8bDZ2eqVq1/8GhN3LWk/v44Ut4GxFaI5U23ig55DGIUC3z0Ace1TrYFvKKCBnY4NH0RqQ==
 
 "@sindresorhus/is@^0.14.0":
   version "0.14.0"
@@ -1237,12 +1246,10 @@ discord-api-types@^0.27.0, discord-api-types@^0.27.3:
   resolved "https://registry.yarnpkg.com/discord-api-types/-/discord-api-types-0.27.3.tgz#518e99a548b62a7912a09e94ad90d0612e2053c6"
   integrity sha512-HOG64DTpZ7CB5EU9eKbjHD50H5qG1pxKG8pmFfHUMKjKvEWeLBHfw0c9xF1cruiYLnBb3+n7m3jBWxZ3H1hcgQ==
 
-discord-economy-super@^1.5.2:
-  version "1.5.2"
-  resolved "https://registry.yarnpkg.com/discord-economy-super/-/discord-economy-super-1.5.2.tgz#ad427483b6acaff53f3c671a2f8fff98ae2957da"
-  integrity sha512-STH4yPF+eQCbPznjesYzY/GWZXEkwT1tSIk7/J1J+yDk9qQiFgIBrLXwfLEhcN3qA0+u3ECMYzLgPEFWPGK0cQ==
-  dependencies:
-    node-fetch "2.6.1"
+discord-api-types@^0.28.0:
+  version "0.28.0"
+  resolved "https://registry.yarnpkg.com/discord-api-types/-/discord-api-types-0.28.0.tgz#59c4a3649d5bad0d3dd4684f595dc5ade79c30a5"
+  integrity sha512-Gi36pbzV+2j0q/XPlDJEgX/R+wogLxU2BZFvfTMUHHAQYXqwvqj4iZP5YUGOfKimmJc79rDRrtSPUGz2t4S4GQ==
 
 discord-giveaways@bad-boy-discord/discord-giveaways#develop:
   version "5.1.1"
@@ -1292,10 +1299,10 @@ discord.js@^13.1.0, discord.js@^13.5.0:
     node-fetch "^2.6.1"
     ws "^8.4.0"
 
-discord.js@^14.0.0-dev.1646395406.6f7a366:
-  version "14.0.0-dev.1646395406.6f7a366"
-  resolved "https://registry.yarnpkg.com/discord.js/-/discord.js-14.0.0-dev.1646395406.6f7a366.tgz#6275cb19eb3dbc989902a3c9f502d57377543ac9"
-  integrity sha512-2KxdaPb4frEtOmQQfBkfpsR0Q8/U2iLoA8es03rJFHwSaxO9tfNYEbrMaf2xDXiIVoB2LDwH3jeh097UfXh2gg==
+discord.js@^14.0.0-dev.1646654941.b162f27:
+  version "14.0.0-dev.1646654941.b162f27"
+  resolved "https://registry.yarnpkg.com/discord.js/-/discord.js-14.0.0-dev.1646654941.b162f27.tgz#8a2d489941ecd3f40ee8ebfa3b1b3067e46e4a0f"
+  integrity sha512-HgtZgG7MtbvAmKD5ku0SPxWOQ3q/Ja6ZLzFlGsG08MlaGPofkPq8dPsICiuuKTooj4TR2YF7iQzYa1BRA4dGhw==
   dependencies:
     "@discordjs/builders" "^0.13.0-dev"
     "@discordjs/collection" "^0.6.0-dev"
@@ -2639,11 +2646,6 @@ node-addon-api@^4.2.0:
   version "4.3.0"
   resolved "https://registry.yarnpkg.com/node-addon-api/-/node-addon-api-4.3.0.tgz#52a1a0b475193e0928e98e0426a0d1254782b77f"
   integrity sha512-73sE9+3UaLYYFmDsFZnqCInzPyh3MqIwZO9cw58yIqAZhONrrabrYyYe3TuIqtIiOuTXVhsGau8hcrhhwSsDIQ==
-
-node-fetch@2.6.1:
-  version "2.6.1"
-  resolved "https://registry.yarnpkg.com/node-fetch/-/node-fetch-2.6.1.tgz#045bd323631f76ed2e2b55573394416b639a0052"
-  integrity sha512-V4aYg89jEoVRxRb2fJdAg8FHvI7cEyYdVAh94HH0UIK8oJxUfkjlDQN9RbMx+bEjP7+ggMiFRprSti032Oipxw==
 
 node-fetch@2.6.7, node-fetch@^2.6.1, node-fetch@^2.6.5, node-fetch@^2.6.7:
   version "2.6.7"

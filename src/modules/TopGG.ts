@@ -1,7 +1,6 @@
 import { Webhook } from "@top-gg/sdk";
 import { AutoPoster } from "topgg-autoposter";
 import { BasePoster } from "topgg-autoposter/dist/structs/BasePoster";
-import { TextChannel } from "discord.js";
 import Bot from "../classes/Bot";
 
 export = class TopGG {

@@ -75,53 +75,54 @@ export default class ServerinfoCommand extends Command {
 		embed.setTitle(title);
 		embed.setThumbnail(message.guild.iconURL());
 
-		embed.fields.push({
-			name: `› ${bold(information)}:`,
-			value: [
-				`» ${bold(guild_id)}: ${bold(inlineCode(info.id))}`,
-				`» ${bold(owner)}: ${bold(info.owner.toString())}`,
-				`» ${bold(member_count)}: ${bold(inlineCode(info.members))}`,
-				`» ${bold(createdAt)}: ${bold(info.created_at)}`,
-			].join("\n"),
-		});
-
-		embed.fields.push({
-			name: `› ${bold(precences)}:`,
-			value: [
-				`» ${bold(online)}: ${bold(inlineCode(info.onlineUsers))}`,
-				`» ${bold(idle)}: ${bold(inlineCode(info.idleUsers))}`,
-				`» ${bold(dnd)}: ${bold(inlineCode(info.dndUsers))}`,
-			].join("\n"),
-		});
-
-		embed.fields.push({
-			name: `› ${bold(members)}:`,
-			value: [
-				`» ${bold(humans)}: ${bold(inlineCode(info.users.humans))}`,
-				`» ${bold(bots)}: ${bold(inlineCode(info.users.bots))}`,
-			].join("\n"),
-		});
-
-		embed.fields.push({
-			name: `› ${bold(channels)}:`,
-			value: [
-				`» ${bold(text)}: ${bold(
-					inlineCode(info.channels.textChannels)
-				)}`,
-				`» ${bold(news)}: ${bold(
-					inlineCode(info.channels.newsChannels)
-				)}`,
-				`» ${bold(voice)}: ${bold(
-					inlineCode(info.channels.voiceChannels)
-				)}`,
-				`» ${bold(stage)}: ${bold(
-					inlineCode(info.channels.stagesChannels)
-				)}`,
-				`» ${bold(categories)}: ${bold(
-					inlineCode(info.channels.categoriesChannels)
-				)}`,
-			].join("\n"),
-		});
+		embed.addFields(
+			{
+				name: `› ${bold(information)}:`,
+				value: [
+					`» ${bold(guild_id)}: ${bold(inlineCode(info.id))}`,
+					`» ${bold(owner)}: ${bold(info.owner.toString())}`,
+					`» ${bold(member_count)}: ${bold(
+						inlineCode(info.members)
+					)}`,
+					`» ${bold(createdAt)}: ${bold(info.created_at)}`,
+				].join("\n"),
+			},
+			{
+				name: `› ${bold(precences)}:`,
+				value: [
+					`» ${bold(online)}: ${bold(inlineCode(info.onlineUsers))}`,
+					`» ${bold(idle)}: ${bold(inlineCode(info.idleUsers))}`,
+					`» ${bold(dnd)}: ${bold(inlineCode(info.dndUsers))}`,
+				].join("\n"),
+			},
+			{
+				name: `› ${bold(members)}:`,
+				value: [
+					`» ${bold(humans)}: ${bold(inlineCode(info.users.humans))}`,
+					`» ${bold(bots)}: ${bold(inlineCode(info.users.bots))}`,
+				].join("\n"),
+			},
+			{
+				name: `› ${bold(channels)}:`,
+				value: [
+					`» ${bold(text)}: ${bold(
+						inlineCode(info.channels.textChannels)
+					)}`,
+					`» ${bold(news)}: ${bold(
+						inlineCode(info.channels.newsChannels)
+					)}`,
+					`» ${bold(voice)}: ${bold(
+						inlineCode(info.channels.voiceChannels)
+					)}`,
+					`» ${bold(stage)}: ${bold(
+						inlineCode(info.channels.stagesChannels)
+					)}`,
+					`» ${bold(categories)}: ${bold(
+						inlineCode(info.channels.categoriesChannels)
+					)}`,
+				].join("\n"),
+			}
+		);
 
 		return message.channel.send({
 			embeds: [embed],

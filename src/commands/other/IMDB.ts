@@ -90,65 +90,60 @@ export default class IMDBCommand extends Command {
 					: bold(data.plot)
 			);
 
-		embed.fields.push({
-			name: lang.OTHER.IMDB.FIELDS.DIRECTORS,
-			value: bold(data.directors),
-			inline: true,
-		});
-
-		embed.fields.push({
-			name: lang.OTHER.IMDB.FIELDS.WRITERS,
-			value: bold(data.writers),
-			inline: true,
-		});
-
-		embed.fields.push({
-			name: lang.OTHER.IMDB.FIELDS.STARS,
-			value: bold(data.stars),
-			inline: true,
-		});
-
-		embed.fields.push({
-			name: lang.OTHER.IMDB.FIELDS.COMPANIES,
-			value: bold(data.companies),
-			inline: true,
-		});
-
-		embed.fields.push({
-			name: lang.OTHER.IMDB.FIELDS.COUNTRIES,
-			value: bold(data.countries),
-			inline: true,
-		});
-
-		embed.fields.push({
-			name: lang.OTHER.IMDB.FIELDS.LANGUAGES,
-			value: bold(data.languages),
-			inline: true,
-		});
-
-		embed.fields.push({
-			name: lang.OTHER.IMDB.FIELDS.RATINGS,
-			value: [
-				`› ${bold(lang.OTHER.IMDB.CONTENT_RATING)}: ${bold(
-					data.contentRating
-				)}`,
-				`› ${bold(lang.OTHER.IMDB.IMDB_RATING)}: ${bold(
-					data.imDbRating
-				)}`,
-			].join("\n"),
-			inline: true,
-		});
-
-		embed.fields.push({
-			name: lang.OTHER.IMDB.FIELDS.LENGTH,
-			value: bold(
-				dayjs
-					.duration(Number(data.runtimeMins), "minutes")
-					.locale(l)
-					.humanize()
-			),
-			inline: true,
-		});
+		embed.addFields(
+			{
+				name: lang.OTHER.IMDB.FIELDS.DIRECTORS,
+				value: bold(data.directors),
+				inline: true,
+			},
+			{
+				name: lang.OTHER.IMDB.FIELDS.WRITERS,
+				value: bold(data.writers),
+				inline: true,
+			},
+			{
+				name: lang.OTHER.IMDB.FIELDS.STARS,
+				value: bold(data.stars),
+				inline: true,
+			},
+			{
+				name: lang.OTHER.IMDB.FIELDS.COMPANIES,
+				value: bold(data.companies),
+				inline: true,
+			},
+			{
+				name: lang.OTHER.IMDB.FIELDS.COUNTRIES,
+				value: bold(data.countries),
+				inline: true,
+			},
+			{
+				name: lang.OTHER.IMDB.FIELDS.LANGUAGES,
+				value: bold(data.languages),
+				inline: true,
+			},
+			{
+				name: lang.OTHER.IMDB.FIELDS.RATINGS,
+				value: [
+					`› ${bold(lang.OTHER.IMDB.CONTENT_RATING)}: ${bold(
+						data.contentRating
+					)}`,
+					`› ${bold(lang.OTHER.IMDB.IMDB_RATING)}: ${bold(
+						data.imDbRating
+					)}`,
+				].join("\n"),
+				inline: true,
+			},
+			{
+				name: lang.OTHER.IMDB.FIELDS.LENGTH,
+				value: bold(
+					dayjs
+						.duration(Number(data.runtimeMins), "minutes")
+						.locale(l)
+						.humanize()
+				),
+				inline: true,
+			}
+		);
 
 		embed.setFooter({
 			text: `${lang.OTHER.IMDB.RELEASE_DATE}: ${data.releaseDate}`,

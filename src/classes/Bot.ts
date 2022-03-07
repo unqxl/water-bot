@@ -14,8 +14,8 @@ import { Leveling } from "./Leveling";
 import { Client as dagpiClient } from "dagpijs";
 import { DiscordTogether } from "discord-together";
 import { Client as IMDBClient } from "imdb-api";
+import { Economy } from "@badboy-discord/discordjs-economy";
 import WebServer from "./Server";
-import Economy from "discord-economy-super";
 import Enmap from "enmap";
 import DisTube from "distube";
 import logs from "discord-logs";
@@ -138,25 +138,13 @@ export = class Bot extends Client {
 	});
 
 	public economy: Economy = new Economy({
-		storagePath: "./db/economy.json",
-
-		dailyCooldown: 60000 * 60 * 24,
-		workCooldown: 60000 * 60,
-		weeklyCooldown: 60000 * 60 * 24 * 7,
-
-		dailyAmount: 150,
-		workAmount: [25, 75],
-		weeklyAmount: 1050,
-
-		subtractOnBuy: true,
-		dateLocale: "en-US",
-
-		updater: {
-			checkUpdates: false,
-			upToDateMessage: false,
+		DBName: "economy",
+		DBPath: "./db/",
+		rewards: {
+			daily: 150,
+			weekly: 1050,
+			work: [100, 150],
 		},
-
-		savePurchasesHistory: false,
 	});
 
 	public music: DisTube = new DisTube(this, {
