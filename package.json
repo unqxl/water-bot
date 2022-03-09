@@ -63,7 +63,7 @@
 		"libsodium-wrappers": "^0.7.9",
 		"npm-check-updates": "^12.5.2",
 		"rimraf": "^3.0.2",
-		"utf-8-validate": "^5.0.8"
+		"utf-8-validate": "^5.0.9"
 	},
 	"author": "WhyMe#1126",
 	"license": "Apache",
