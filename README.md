@@ -1,6 +1,6 @@
-# Akayo - Discord Bot
+# Water (WIP) - Discord Bot
 <strong>Welcome! <br />
-Akayo - one of the best Discord Bots in terms of functionality.</strong>
+Water - one of the best Discord Bots in terms of functionality.</strong>
 
 <strong>This bot includes a lot of useful functions, many of which I think can help you when setting up the server, here are a few of them:
 1. Server events - Akayo will notify in a specially designated channel (which you will set yourself) for many events on the server (role assignment /removal, server boost, etc.)
@@ -27,7 +27,7 @@ Akayo - one of the best Discord Bots in terms of functionality.</strong>
 6. <strong>[IMDB API](https://imdb-api.com)</strong> 
 
 ## Installation
-1. <strong>Clone this repo: `git clone https://github.com/bad-boy-discord/akayo-bot`</strong>
+1. <strong>Clone this repo: `git clone https://github.com/bad-boy-discord/water-bot`</strong>
 2. <strong>Install all dependencies: `npm install`</strong>
 3. <strong>Change all keys/tokens in `src/config.ts`</strong>
 4. <strong>Run `npm run build` to convert TS code into JS</strong> <br />
@@ -36,7 +36,7 @@ Akayo - one of the best Discord Bots in terms of functionality.</strong>
 5.1: <strong>Run `npm run start:ts` to run TS code using ts-node</strong>
 
 # License
-<strong>This repository uses the [Apache License](https://github.com/bad-boy-discord/akayo-bot/blob/master/LICENSE)!</strong>
+<strong>This repository uses the [Apache License](https://github.com/bad-boy-discord/water-bot/blob/master/LICENSE)!</strong>
 
 <a href="https://top.gg/bot/891819280318996501">
   <img src="https://top.gg/api/widget/891819280318996501.svg">
