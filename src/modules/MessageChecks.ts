@@ -42,7 +42,7 @@ export = class MessageChecks {
 				}),
 				headers: {
 					"Content-Type": "application/json",
-					"User-Agent": "Akayo-Bot (discord.com)",
+					"User-Agent": "Water-Bot (discord.com)",
 				},
 			})
 		).body.json();

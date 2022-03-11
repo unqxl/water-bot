@@ -1,5 +1,5 @@
 {
-	"name": "akayo-rewrite",
+	"name": "water-bot",
 	"version": "2.2.0-dev",
 	"description": "Multi-Purpose and Multilingual Discord Bot",
 	"main": "dist/index.js",
@@ -75,6 +75,6 @@
 	},
 	"repository": {
 		"type": "git",
-		"url": "git+https://github.com/bad-boy-discord/Bot-rewrite.git"
+		"url": "git+https://github.com/bad-boy-discord/water-bot.git"
 	}
 }

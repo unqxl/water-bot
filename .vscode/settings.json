@@ -5,5 +5,5 @@
 	"editor.formatOnSave": true,
 	"prettier.endOfLine": "lf",
 	"files.eol": "\n",
-	"window.title": "${activeEditorShort} | Akayo Discord"
+	"window.title": "${activeEditorShort} | Water Discord"
 }
