@@ -48,7 +48,7 @@
 		"string-similarity": "^4.0.4",
 		"tiny-typed-emitter": "^2.1.0",
 		"topgg-autoposter": "^2.0.1",
-		"twemoji-parser": "^13.1.0",
+		"twemoji-parser": "^14.0.0",
 		"typeorm": "^0.2.45",
 		"undici": "^4.15.1"
 	},
