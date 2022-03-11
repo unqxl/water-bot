@@ -139,11 +139,11 @@ export default class EvalCommand extends Command {
 
 		const stopTime = process.hrtime(startTime);
 		const res = [
-			`**Output:** \`\`\`js\n${this.clean(
+			`Output: \`\`\`js\n${this.clean(
 				inspect(evaled, { depth: 0 })
 			)}\n\`\`\``,
-			`**Type:** \`\`\`ts\n${new Type(evaled).is}\n\`\`\``,
-			`**Time Taken:** \`\`\`${
+			`Type: \`\`\`ts\n${new Type(evaled).is}\n\`\`\``,
+			`Time Taken: \`\`\`${
 				(stopTime[0] * 1e9 + stopTime[1]) / 1e6
 			}ms\`\`\``,
 		].join("\n");

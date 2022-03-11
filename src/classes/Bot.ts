@@ -15,6 +15,7 @@ import { Client as dagpiClient } from "dagpijs";
 import { DiscordTogether } from "discord-together";
 import { Client as IMDBClient } from "imdb-api";
 import { Economy } from "@badboy-discord/discordjs-economy";
+import Cluster, { Client as ClusterClient } from "discord-hybrid-sharding";
 import WebServer from "./Server";
 import Enmap from "enmap";
 import DisTube from "distube";
@@ -111,6 +112,7 @@ export = class Bot extends Client {
 	public functions: Functions = new Functions(this);
 
 	//? [Systems]
+	public cluster: ClusterClient = new ClusterClient(this);
 	public apis: API = new API(this.config);
 	public web: WebServer = new WebServer({ port: 80 });
 	public socket: Socket = io("http://localhost:3001");
@@ -217,6 +219,9 @@ export = class Bot extends Client {
 					},
 				],
 			},
+
+			shards: Cluster.data.SHARD_LIST,
+			shardCount: Cluster.data.TOTAL_SHARDS,
 		});
 
 		this.music.setMaxListeners(100);

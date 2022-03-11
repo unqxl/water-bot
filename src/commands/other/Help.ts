@@ -188,7 +188,7 @@ export default class HelpCommand extends Command {
 			const embed = this.client.functions.buildEmbed(
 				message,
 				"Blurple",
-				null,
+				undefined,
 				false,
 				false,
 				true
