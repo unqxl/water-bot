@@ -289,10 +289,10 @@
   resolved "https://registry.yarnpkg.com/@sapphire/snowflake/-/snowflake-3.1.0.tgz#1c2d9781d3b1de0bcb02b7079898947ce754d394"
   integrity sha512-K+OiqXSx4clIaXcoaghrCV56zsm3bZZ5SBpgJkgvAKegFFdETMntHviUfypjt8xVleIuDaNyQA4APOIl3BMcxg==
 
-"@sapphire/utilities@^3.4.0":
-  version "3.4.0"
-  resolved "https://registry.yarnpkg.com/@sapphire/utilities/-/utilities-3.4.0.tgz#cc176dbab9d8854ef4ad6e1eba3bdac153758665"
-  integrity sha512-d6IWoETMpyTbPgSvH8bDZ2eqVq1/8GhN3LWk/v44Ut4GxFaI5U23ig55DGIUC3z0Ace1TrYFvKKCBnY4NH0RqQ==
+"@sapphire/utilities@^3.5.0":
+  version "3.5.0"
+  resolved "https://registry.yarnpkg.com/@sapphire/utilities/-/utilities-3.5.0.tgz#1caf5ae84941b55026298be244afb61b4bbcfe03"
+  integrity sha512-TKB6szXNBlKY9HfkiOvT1p79iQEnXVhr49QwWXgoQpGU9ODXcE1oGOTTAYixmYZLJfRw64+4gGiiUoSE1KiPEw==
 
 "@sindresorhus/is@^0.14.0":
   version "0.14.0"
@@ -514,11 +514,6 @@
   integrity sha512-NOn5eIcgWLOo6qW8AcuLZ7G8PycXu0xTxxkS6Q18VWFxgPUSOwV0pBj2a/4viNZVu25i7RIB7GttdkAIUUXOOg==
   dependencies:
     "@types/node" "*"
-
-"@types/zen-observable@0.8.3":
-  version "0.8.3"
-  resolved "https://registry.yarnpkg.com/@types/zen-observable/-/zen-observable-0.8.3.tgz#781d360c282436494b32fe7d9f7f8e64b3118aa3"
-  integrity sha512-fbF6oTd4sGGy0xjHPKAt+eS2CrxJ3+6gQ3FGcBoIJR2TLAyCkCyI8JqZNy+FeON0AhVgNJoUumVoZQjBFUqHkw==
 
 "@ungap/url-search-params@^0.2.2":
   version "0.2.2"
@@ -1134,10 +1129,15 @@ data-uri-to-buffer@^3.0.1:
   resolved "https://registry.yarnpkg.com/data-uri-to-buffer/-/data-uri-to-buffer-3.0.1.tgz#594b8973938c5bc2c33046535785341abc4f3636"
   integrity sha512-WboRycPNsVw3B3TL559F7kuBUM4d8CgMEvk6xEJlOp7OBPjt6G7z8WMWlD2rOFZLk6OYfFIUGsCOWzcQH9K2og==
 
-dayjs@^1.10.8:
-  version "1.10.8"
-  resolved "https://registry.yarnpkg.com/dayjs/-/dayjs-1.10.8.tgz#267df4bc6276fcb33c04a6735287e3f429abec41"
-  integrity sha512-wbNwDfBHHur9UOzNUjeKUOJ0fCb0a52Wx0xInmQ7Y8FstyajiV1NmK1e00cxsr9YrE9r7yAChE0VvpuY5Rnlow==
+date-fns@^2.28.0:
+  version "2.28.0"
+  resolved "https://registry.yarnpkg.com/date-fns/-/date-fns-2.28.0.tgz#9570d656f5fc13143e50c975a3b6bbeb46cd08b2"
+  integrity sha512-8d35hViGYx/QH0icHYCeLmsLmMUheMmTyV9Fcm6gvNwdw31yXXH+O85sOBJ+OLnLQMKZowvpKb6FgMIQjcpvQw==
+
+dayjs@^1.11.0:
+  version "1.11.0"
+  resolved "https://registry.yarnpkg.com/dayjs/-/dayjs-1.11.0.tgz#009bf7ef2e2ea2d5db2e6583d2d39a4b5061e805"
+  integrity sha512-JLC809s6Y948/FuCZPm5IX8rRhQwOiyMb2TfVVQEixG7P8Lm/gt5S7yoQZmC8x1UehI9Pb7sksEt4xx14m+7Ug==
 
 debug@2.6.9:
   version "2.6.9"
@@ -1150,6 +1150,13 @@ debug@4, debug@^4.1.0, debug@^4.1.1, debug@^4.3.1, debug@~4.3.1, debug@~4.3.2:
   version "4.3.3"
   resolved "https://registry.yarnpkg.com/debug/-/debug-4.3.3.tgz#04266e0b70a98d4462e6e288e38259213332b664"
   integrity sha512-/zxw5+vh1Tfv+4Qn7a5nsbcJKPaSvCDhojn6FEl9vupwK2VCSDtEiEtqr8DFtzYFOdz63LBkxec7DYuc2jon6Q==
+  dependencies:
+    ms "2.1.2"
+
+debug@^4.3.3:
+  version "4.3.4"
+  resolved "https://registry.yarnpkg.com/debug/-/debug-4.3.4.tgz#1319f6579357f2338d3337d2cdd4914bb5dcc865"
+  integrity sha512-PRWFHuSU3eDtQJPvnNY7Jcket1j0t5OuOsFzPPzsekD52Zl8qUfFIPEiswXqIvHWGVHOgX+7G/vCNNhehwxfkQ==
   dependencies:
     ms "2.1.2"
 
@@ -1258,13 +1265,6 @@ discord-giveaways@bad-boy-discord/discord-giveaways#develop:
     deepmerge "^4.2.2"
     serialize-javascript "^6.0.0"
 
-discord-hybrid-sharding@^1.4.6:
-  version "1.4.6"
-  resolved "https://registry.yarnpkg.com/discord-hybrid-sharding/-/discord-hybrid-sharding-1.4.6.tgz#5b8c2a075f10f837a8df146aca06b163d16286ce"
-  integrity sha512-oQzkZsrFQDw1uUOgWExWk2jAsNroBI1nF4a0V7d+wuEg2Um9jm2nY7VvmNLsuosopSCftX+3EnicjOMQKzcXdQ==
-  dependencies:
-    node-fetch "^2.6.1"
-
 discord-logs@bad-boy-discord/discord-logs:
   version "2.0.1"
   resolved "https://codeload.github.com/bad-boy-discord/discord-logs/tar.gz/49d39323375ff35425e7fb7d6c3eacece8209f50"
@@ -1306,10 +1306,10 @@ discord.js@^13.1.0, discord.js@^13.5.0:
     node-fetch "^2.6.1"
     ws "^8.4.0"
 
-discord.js@^14.0.0-dev.1646914074.dcd4797:
-  version "14.0.0-dev.1646914074.dcd4797"
-  resolved "https://registry.yarnpkg.com/discord.js/-/discord.js-14.0.0-dev.1646914074.dcd4797.tgz#5be464dc195086052adbe35c17dad41e0cd71e6f"
-  integrity sha512-nuKdthYfIIPrrbrVttyMRCoYzUCiuaHadsrgehcMEzffB7RJvRmykBTw9lOZ5rxaREUpaMp5zitwXApf5cRF8A==
+discord.js@^14.0.0-dev.1647259751.2297c2b:
+  version "14.0.0-dev.1647259751.2297c2b"
+  resolved "https://registry.yarnpkg.com/discord.js/-/discord.js-14.0.0-dev.1647259751.2297c2b.tgz#da996c08ab05780dbef0177ba3e9a3c76d5f16e3"
+  integrity sha512-3VgjiwAcJEEjzchvqFofClncISEivPawX7zeLT+7Kabqm7GIj+p5tfD8MIBbJPm/chcNDc/k2IN1uL154bKV7g==
   dependencies:
     "@discordjs/builders" "^0.13.0-dev"
     "@discordjs/collection" "^0.6.0-dev"
@@ -1317,6 +1317,7 @@ discord.js@^14.0.0-dev.1646914074.dcd4797:
     "@sapphire/snowflake" "^3.1.0"
     "@types/ws" "^8.2.2"
     discord-api-types "^0.27.3"
+    fast-deep-equal "^3.1.3"
     lodash.snakecase "^4.1.1"
     undici "^4.14.1"
     ws "^8.5.0"
@@ -1339,10 +1340,10 @@ dot-prop@^5.2.0:
   dependencies:
     is-obj "^2.0.0"
 
-dotenv@^8.2.0:
-  version "8.6.0"
-  resolved "https://registry.yarnpkg.com/dotenv/-/dotenv-8.6.0.tgz#061af664d19f7f4d8fc6e4ff9b584ce237adcb8b"
-  integrity sha512-IrPdXQsk2BbzvCBGBOTmmSH5SodmqZNt4ERAZDmW4CT+tL8VtvinqywuANaFu4bOMWki16nqf0e4oC0QIaDr/g==
+dotenv@^16.0.0:
+  version "16.0.0"
+  resolved "https://registry.yarnpkg.com/dotenv/-/dotenv-16.0.0.tgz#c619001253be89ebb638d027b609c75c26e47411"
+  integrity sha512-qD9WU0MPM4SWLPJy/r2Be+2WgQj8plChsyrCNQzW/0WjvcJQiKQJ9mH3ZgB3fxbUUxgc/11ZJ0Fi5KiimWGz2Q==
 
 duplexer3@^0.1.4:
   version "0.1.4"
@@ -2143,7 +2144,7 @@ jju@^1.1.0:
   resolved "https://registry.yarnpkg.com/jju/-/jju-1.4.0.tgz#a3abe2718af241a2b2904f84a625970f389ae32a"
   integrity sha1-o6vicYryQaKykE+EpiWXDzia4yo=
 
-js-yaml@^4.0.0:
+js-yaml@^4.0.0, js-yaml@^4.1.0:
   version "4.1.0"
   resolved "https://registry.yarnpkg.com/js-yaml/-/js-yaml-4.1.0.tgz#c1fb65f8f5017901cdd2c951864ba18458a10602"
   integrity sha512-wpxZs9NoxZaJESJGIZTyDEaYpl0FKSA+FB9aJiyemKhMwkxQg63h4T1KJgUGHpTqPDNRcmmYLugrRjJlBtWvRA==
@@ -2733,10 +2734,10 @@ npm-bundled@^1.1.1:
   dependencies:
     npm-normalize-package-bin "^1.0.1"
 
-npm-check-updates@^12.5.2:
-  version "12.5.2"
-  resolved "https://registry.yarnpkg.com/npm-check-updates/-/npm-check-updates-12.5.2.tgz#cfc2bb62a599fda8afe5af55967e03af96d340c8"
-  integrity sha512-XJGFO3kgcm+WJljOPRYZf/W40FSzEcLDacQ1WPEgW4qXlQy4Ihr1eVnlS2+43y0YEF+qjLkycr7WbHyfkm6C4A==
+npm-check-updates@^12.5.4:
+  version "12.5.4"
+  resolved "https://registry.yarnpkg.com/npm-check-updates/-/npm-check-updates-12.5.4.tgz#c783b9ec6e27508a91c97d343f7714f1b5e43ec4"
+  integrity sha512-4+27zaTdieWgvPLaCZ/A6Q2WC1cYVcrc2SqVmLFYgkWBrKw1QkwpeV16FSvkFGZr3OdFyr7Dpjw8JRn4H2QxFw==
   dependencies:
     chalk "^4.1.2"
     cint "^8.2.1"
@@ -3853,7 +3854,7 @@ ts-mixer@^6.0.0:
   resolved "https://registry.yarnpkg.com/ts-mixer/-/ts-mixer-6.0.0.tgz#4e631d3a36e3fa9521b973b132e8353bc7267f9f"
   integrity sha512-nXIb1fvdY5CBSrDIblLn73NW0qRDk5yJ0Sk1qPBF560OdJfQp9jhl+0tzcY09OZ9U+6GpeoI9RjwoIKFIoB9MQ==
 
-tslib@^2.1.0, tslib@^2.3.1:
+tslib@^2.3.1:
   version "2.3.1"
   resolved "https://registry.yarnpkg.com/tslib/-/tslib-2.3.1.tgz#e8a335add5ceae51aa261d32a490158ef042ef01"
   integrity sha512-77EbyPPpMz+FRFRuAFlWMtmgUWGe9UOG2Z25NqCwiIjRhOf5iKGuzSe5P2w1laq+FkRy4p+PCuVkJSGkzTEKVw==
@@ -3895,38 +3896,43 @@ typedarray-to-buffer@^3.1.5:
   dependencies:
     is-typedarray "^1.0.0"
 
-typeorm@^0.2.45:
-  version "0.2.45"
-  resolved "https://registry.yarnpkg.com/typeorm/-/typeorm-0.2.45.tgz#e5bbb3af822dc4646bad96cfa48cd22fa4687cea"
-  integrity sha512-c0rCO8VMJ3ER7JQ73xfk0zDnVv0WDjpsP6Q1m6CVKul7DB9iVdWLRjPzc8v2eaeBuomsbZ2+gTaYr8k1gm3bYA==
+typeorm@^0.3.0:
+  version "0.3.0"
+  resolved "https://registry.yarnpkg.com/typeorm/-/typeorm-0.3.0.tgz#82ea586f1b8a8f7b24835710423edfd5dabba2ef"
+  integrity sha512-fGhJql31DRyxT0bxcjD5kAf9hz+aUppp90M93GmlRlCfHq+qKhY70eCEreAgjrlAYmZkfEgDcyMHpcAfrtCe7A==
   dependencies:
     "@sqltools/formatter" "^1.2.2"
     app-root-path "^3.0.0"
     buffer "^6.0.3"
     chalk "^4.1.0"
     cli-highlight "^2.1.11"
-    debug "^4.3.1"
-    dotenv "^8.2.0"
-    glob "^7.1.6"
-    js-yaml "^4.0.0"
+    date-fns "^2.28.0"
+    debug "^4.3.3"
+    dotenv "^16.0.0"
+    glob "^7.2.0"
+    js-yaml "^4.1.0"
     mkdirp "^1.0.4"
     reflect-metadata "^0.1.13"
     sha.js "^2.4.11"
-    tslib "^2.1.0"
+    tslib "^2.3.1"
     uuid "^8.3.2"
     xml2js "^0.4.23"
-    yargs "^17.0.1"
-    zen-observable-ts "^1.0.0"
+    yargs "^17.3.1"
 
 typescript@^4.2.3:
   version "4.5.5"
   resolved "https://registry.yarnpkg.com/typescript/-/typescript-4.5.5.tgz#d8c953832d28924a9e3d37c73d729c846c5896f3"
   integrity sha512-TCTIul70LyWe6IJWT8QSYeA54WQe8EjQFU4wY52Fasj5UKx88LNYKCgBEHcOMOrFF1rKGbD8v/xcNWVUq9SymA==
 
-undici@^4.14.1, undici@^4.15.0, undici@^4.15.1:
+undici@^4.14.1, undici@^4.15.0:
   version "4.15.1"
   resolved "https://registry.yarnpkg.com/undici/-/undici-4.15.1.tgz#c2c0e75f232178f0e6781f6b46c81ccc15065f6e"
   integrity sha512-h8LJybhMKD09IyQZoQadNtIR/GmugVhTOVREunJrpV6RStriKBFdSVoFzEzTihwXi/27DIBO+Z0OGF+Mzfi0lA==
+
+undici@^4.16.0:
+  version "4.16.0"
+  resolved "https://registry.yarnpkg.com/undici/-/undici-4.16.0.tgz#469bb87b3b918818d3d7843d91a1d08da357d5ff"
+  integrity sha512-tkZSECUYi+/T1i4u+4+lwZmQgLXd4BLGlrc7KZPcLIW7Jpq99+Xpc30ONv7nS6F5UNOxp/HBZSSL9MafUrvJbw==
 
 unique-filename@^1.1.1:
   version "1.1.1"
@@ -4152,7 +4158,7 @@ yargs@^16.0.0:
     y18n "^5.0.5"
     yargs-parser "^20.2.2"
 
-yargs@^17.0.1:
+yargs@^17.3.1:
   version "17.3.1"
   resolved "https://registry.yarnpkg.com/yargs/-/yargs-17.3.1.tgz#da56b28f32e2fd45aefb402ed9c26f42be4c07b9"
   integrity sha512-WUANQeVgjLbNsEmGk20f+nlHgOqzRFpiGWVaBrYGYIGANIIu3lWjoyi0fNlFmJkvfhCZ6BXINe7/W2O2bV4iaA==
@@ -4174,19 +4180,6 @@ yocto-queue@^0.1.0:
   version "0.1.0"
   resolved "https://registry.yarnpkg.com/yocto-queue/-/yocto-queue-0.1.0.tgz#0294eb3dee05028d31ee1a5fa2c556a6aaf10a1b"
   integrity sha512-rVksvsnNCdJ/ohGc6xgPwyN8eheCxsiLM8mxuE/t/mOVqJewPuO1miLpTHQiRgTKCLexL4MeAFVagts7HmNZ2Q==
-
-zen-observable-ts@^1.0.0:
-  version "1.1.0"
-  resolved "https://registry.yarnpkg.com/zen-observable-ts/-/zen-observable-ts-1.1.0.tgz#2d1aa9d79b87058e9b75698b92791c1838551f83"
-  integrity sha512-1h4zlLSqI2cRLPJUHJFL8bCWHhkpuXkF+dbGkRaWjgDIG26DmzyshUMrdV/rL3UnR+mhaX4fRq8LPouq0MYYIA==
-  dependencies:
-    "@types/zen-observable" "0.8.3"
-    zen-observable "0.8.15"
-
-zen-observable@0.8.15:
-  version "0.8.15"
-  resolved "https://registry.yarnpkg.com/zen-observable/-/zen-observable-0.8.15.tgz#96415c512d8e3ffd920afd3889604e30b9eaac15"
-  integrity sha512-PQ2PC7R9rslx84ndNBZB/Dkv8V8fZEpk83RLgXtYd0fwUgEjseMn1Dgajh2x6S8QbZAFa9p2qVCEuYZNgve0dQ==
 
 zod@^3.11.6:
   version "3.11.6"
