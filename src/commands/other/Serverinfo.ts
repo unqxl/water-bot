@@ -1,4 +1,4 @@
-import { Embed, Guild, Util, ChannelType } from "discord.js";
+import { EmbedBuilder, Guild, Util, ChannelType } from "discord.js";
 import { bold, inlineCode } from "@discordjs/builders";
 import { Command } from "../../types/Command/Command";
 import { Categories } from "../../types/Command/BaseCommand";
@@ -26,7 +26,7 @@ export default class ServerinfoCommand extends Command {
 		lang: typeof import("@locales/English").default
 	) {
 		const info = await this.getInfo(message.guild);
-		const embed = new Embed();
+		const embed = new EmbedBuilder();
 
 		// Embed Title and Field Names
 		const [title, information, precences, members, channels] = [
@@ -125,7 +125,7 @@ export default class ServerinfoCommand extends Command {
 		);
 
 		return message.channel.send({
-			embeds: [embed],
+			embeds: [embed.toJSON()],
 		});
 	}
 

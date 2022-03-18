@@ -40,7 +40,7 @@ export default class StopGiveawayCommand extends Command {
 			return {
 				ok: false,
 				error: {
-					embeds: [embed],
+					embeds: [embed.toJSON()],
 				},
 			};
 		}
@@ -63,7 +63,7 @@ export default class StopGiveawayCommand extends Command {
 			return {
 				ok: false,
 				error: {
-					embeds: [embed],
+					embeds: [embed.toJSON()],
 				},
 			};
 		}
@@ -95,7 +95,7 @@ export default class StopGiveawayCommand extends Command {
 			);
 
 			return message.channel.send({
-				embeds: [embed],
+				embeds: [embed.toJSON()],
 			});
 		});
 	}

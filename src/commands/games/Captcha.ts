@@ -39,7 +39,7 @@ export default class CaptchaCommand extends Command {
 
 		const collector = await this.client.functions.promptMessage(
 			message,
-			{ embeds: [embed] },
+			{ embeds: [embed.toJSON()] },
 			15000
 		);
 
@@ -56,7 +56,7 @@ export default class CaptchaCommand extends Command {
 			);
 
 			return message.channel.send({
-				embeds: [embed],
+				embeds: [embed.toJSON()],
 			});
 		}
 
@@ -72,7 +72,7 @@ export default class CaptchaCommand extends Command {
 			);
 
 			return message.channel.send({
-				embeds: [embed],
+				embeds: [embed.toJSON()],
 			});
 		} else {
 			this.client.economy.balance.add(
@@ -94,7 +94,7 @@ export default class CaptchaCommand extends Command {
 			);
 
 			return message.channel.send({
-				embeds: [embed],
+				embeds: [embed.toJSON()],
 			});
 		}
 	}

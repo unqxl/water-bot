@@ -2,9 +2,9 @@ import Event from "../../types/Event/Event";
 import Bot from "../../classes/Bot";
 import {
 	TextChannel,
-	Embed,
-	ButtonComponent,
-	ActionRow,
+	EmbedBuilder,
+	ButtonBuilder,
+	ActionRowBuilder,
 	Util,
 } from "discord.js";
 import { Message } from "discord.js";
@@ -47,13 +47,15 @@ export default class MessageUpdateEvent extends Event {
 			new_message.content
 		);
 
-		const RedirectButton = new ButtonComponent()
+		const RedirectButton = new ButtonBuilder()
 			.setStyle(5)
 			.setURL(new_message.url)
 			.setLabel(lang_file.EVENTS.MESSAGE_EVENTS.UPDATE.GO_TO);
 
-		const row = new ActionRow().addComponents(RedirectButton);
-		const embed = new Embed()
+		const row = new ActionRowBuilder<ButtonBuilder>().addComponents(
+			RedirectButton
+		);
+		const embed = new EmbedBuilder()
 			.setColor(Util.resolveColor("Blurple"))
 			.setAuthor({
 				name: new_message.author.tag,
@@ -66,7 +68,7 @@ export default class MessageUpdateEvent extends Event {
 			});
 
 		return log_channel.send({
-			embeds: [embed],
+			embeds: [embed.toJSON()],
 			components: [row],
 		});
 	}

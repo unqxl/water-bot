@@ -38,7 +38,7 @@ export default class TickleCommand extends Command {
 			return {
 				ok: false,
 				error: {
-					embeds: [embed],
+					embeds: [embed.toJSON()],
 				},
 			};
 		}
@@ -72,7 +72,7 @@ export default class TickleCommand extends Command {
 		embed.setImage(url);
 
 		return message.channel.send({
-			embeds: [embed],
+			embeds: [embed.toJSON()],
 		});
 	}
 }

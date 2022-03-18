@@ -1,4 +1,4 @@
-import { Guild, TextChannel, Embed, Util } from "discord.js";
+import { Guild, TextChannel, EmbedBuilder, Util } from "discord.js";
 import Event from "../../types/Event/Event";
 import Bot from "../../classes/Bot";
 
@@ -25,7 +25,7 @@ export default class GuildBoostLevelDownEvent extends Event {
 			new Date().toLocaleString(settings.locale)
 		);
 
-		const embed = new Embed()
+		const embed = new EmbedBuilder()
 			.setColor(Util.resolveColor("Blurple"))
 			.setAuthor({
 				name: guild.name,
@@ -38,7 +38,7 @@ export default class GuildBoostLevelDownEvent extends Event {
 			});
 
 		return log_channel.send({
-			embeds: [embed],
+			embeds: [embed.toJSON()],
 		});
 	}
 }

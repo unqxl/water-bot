@@ -1,4 +1,4 @@
-import { ButtonComponent, ActionRow, ComponentType } from "discord.js";
+import { ButtonBuilder, ActionRowBuilder, ComponentType } from "discord.js";
 import { ValidateReturn, Categories } from "../../types/Command/BaseCommand";
 import { Message } from "discord.js";
 import { Command } from "../../types/Command/Command";
@@ -55,7 +55,7 @@ export default class EvalCommand extends Command {
 			return {
 				ok: false,
 				error: {
-					embeds: [embed],
+					embeds: [embed.toJSON()],
 				},
 			};
 		}
@@ -74,7 +74,7 @@ export default class EvalCommand extends Command {
 			return {
 				ok: false,
 				error: {
-					embeds: [embed],
+					embeds: [embed.toJSON()],
 				},
 			};
 		}
@@ -125,7 +125,7 @@ export default class EvalCommand extends Command {
 			);
 
 			return message.channel.send({
-				embeds: [embed],
+				embeds: [embed.toJSON()],
 			});
 		}
 
@@ -148,12 +148,14 @@ export default class EvalCommand extends Command {
 			}ms\`\`\``,
 		].join("\n");
 
-		const deleteBTN = new ButtonComponent()
+		const deleteBTN = new ButtonBuilder()
 			.setCustomId("delete")
 			.setStyle(1)
 			.setEmoji({ name: "❌" });
 
-		const row = new ActionRow().addComponents(deleteBTN);
+		const row = new ActionRowBuilder<ButtonBuilder>().addComponents(
+			deleteBTN
+		);
 		const embed = this.client.functions.buildEmbed(
 			message,
 			"Blurple",
@@ -164,7 +166,7 @@ export default class EvalCommand extends Command {
 		);
 
 		const msg = await message.channel.send({
-			embeds: [embed],
+			embeds: [embed.toJSON()],
 			components: [row],
 		});
 

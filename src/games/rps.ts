@@ -1,9 +1,9 @@
 import {
 	ButtonInteraction,
 	ComponentType,
-	ActionRow,
-	ButtonComponent,
-	Embed,
+	ActionRowBuilder,
+	ButtonBuilder,
+	EmbedBuilder,
 	Util,
 } from "discord.js";
 import { Message } from "discord.js";
@@ -19,7 +19,7 @@ export = async (
 	const opponent = message.mentions.users.first();
 	const acceptText = lang.GAMES.RPS.WAITING_FOR_OPPONENT(opponent.toString());
 	const footer = lang.GAMES.RPS.FOOTER;
-	const AcceptEmbed = new Embed()
+	const AcceptEmbed = new EmbedBuilder()
 		.setColor(Util.resolveColor("Blurple"))
 		.setAuthor({
 			name: message.author.username,
@@ -31,19 +31,19 @@ export = async (
 		})
 		.setTimestamp();
 
-	const AcceptButton = new ButtonComponent()
+	const AcceptButton = new ButtonBuilder()
 		.setStyle(3)
 		.setCustomId("accept")
 		.setLabel(lang.GLOBAL.ACCEPT)
 		.setEmoji({ name: "✅" });
 
-	const DeclineButton = new ButtonComponent()
+	const DeclineButton = new ButtonBuilder()
 		.setStyle(4)
 		.setCustomId("decline")
 		.setLabel(lang.GLOBAL.DECLINE)
 		.setEmoji({ name: "❌" });
 
-	const ChooseRow = new ActionRow().addComponents(
+	const ChooseRow = new ActionRowBuilder<ButtonBuilder>().addComponents(
 		AcceptButton,
 		DeclineButton
 	);
@@ -53,7 +53,7 @@ export = async (
 			opponent.toString(),
 			message.author.toString()
 		),
-		embeds: [AcceptEmbed],
+		embeds: [AcceptEmbed.toJSON()],
 		components: [ChooseRow],
 	});
 
@@ -77,7 +77,7 @@ export = async (
 		);
 		await button.deferUpdate();
 
-		const GameEmbed = new Embed()
+		const GameEmbed = new EmbedBuilder()
 			.setColor(Util.resolveColor("Blurple"))
 			.setAuthor({
 				name: message.author.username,
@@ -89,29 +89,33 @@ export = async (
 			})
 			.setTimestamp();
 
-		const rock = new ButtonComponent()
+		const rock = new ButtonBuilder()
 			.setStyle(2)
 			.setCustomId("rock")
 			.setLabel(lang.GAMES.RPS.ITEMS.ROCK)
 			.setEmoji({ name: "🪨" });
 
-		const paper = new ButtonComponent()
+		const paper = new ButtonBuilder()
 			.setStyle(3)
 			.setCustomId("paper")
 			.setLabel(lang.GAMES.RPS.ITEMS.PAPER)
 			.setEmoji({ name: "📄" });
 
-		const scissors = new ButtonComponent()
+		const scissors = new ButtonBuilder()
 			.setStyle(4)
 			.setCustomId("scissors")
 			.setLabel(lang.GAMES.RPS.ITEMS.SCISSORS)
 			.setEmoji({ name: "✂" });
 
-		const ItemsRow = new ActionRow().addComponents(rock, paper, scissors);
+		const ItemsRow = new ActionRowBuilder<ButtonBuilder>().addComponents(
+			rock,
+			paper,
+			scissors
+		);
 
 		await reply.edit({
 			content: null,
-			embeds: [GameEmbed],
+			embeds: [GameEmbed.toJSON()],
 			components: [ItemsRow],
 		});
 
@@ -149,7 +153,7 @@ export = async (
 			switch (reason) {
 				case "time": {
 					const OverContent = lang.GAMES.RPS.TIMEOUT;
-					const OverEmbed = new Embed()
+					const OverEmbed = new EmbedBuilder()
 						.setColor(Util.resolveColor("Blurple"))
 						.setAuthor({
 							name: message.author.username,
@@ -162,7 +166,7 @@ export = async (
 						.setTimestamp();
 
 					reply.edit({
-						embeds: [OverEmbed],
+						embeds: [OverEmbed.toJSON()],
 						components: [],
 					});
 
@@ -174,7 +178,7 @@ export = async (
 						opponentChoose,
 						authorChoose
 					);
-					const winEmbed = new Embed()
+					const winEmbed = new EmbedBuilder()
 						.setColor(Util.resolveColor("Blurple"))
 						.setAuthor({
 							name: message.author.username,
@@ -192,7 +196,7 @@ export = async (
 						winEmbed.setDescription(bold(opponentWinContent));
 
 						reply.edit({
-							embeds: [winEmbed],
+							embeds: [winEmbed.toJSON()],
 							components: [],
 						});
 						return;
@@ -203,7 +207,7 @@ export = async (
 						winEmbed.setDescription(bold(authorWinContent));
 
 						reply.edit({
-							embeds: [winEmbed],
+							embeds: [winEmbed.toJSON()],
 							components: [],
 						});
 
@@ -213,7 +217,7 @@ export = async (
 						winEmbed.setDescription(`**${WinContent}**`);
 
 						reply.edit({
-							embeds: [winEmbed],
+							embeds: [winEmbed.toJSON()],
 							components: [],
 						});
 
@@ -230,7 +234,7 @@ export = async (
 				opponent.toString()
 			);
 
-			const noAnswerEmbed = new Embed()
+			const noAnswerEmbed = new EmbedBuilder()
 				.setColor(Util.resolveColor("Blurple"))
 				.setAuthor({
 					name: message.author.username,
@@ -243,7 +247,7 @@ export = async (
 				.setTimestamp();
 
 			reply.edit({
-				embeds: [noAnswerEmbed],
+				embeds: [noAnswerEmbed.toJSON()],
 				components: [],
 				content: null,
 			});
@@ -254,7 +258,7 @@ export = async (
 				opponent.toString()
 			);
 
-			const DeclinedEmbed = new Embed()
+			const DeclinedEmbed = new EmbedBuilder()
 				.setColor(Util.resolveColor("Blurple"))
 				.setAuthor({
 					name: message.author.username,
@@ -267,7 +271,7 @@ export = async (
 				.setTimestamp();
 
 			reply.edit({
-				embeds: [DeclinedEmbed],
+				embeds: [DeclinedEmbed.toJSON()],
 				components: [],
 				content: null,
 			});

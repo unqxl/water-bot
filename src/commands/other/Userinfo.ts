@@ -1,4 +1,4 @@
-import { Embed, Util } from "discord.js";
+import { EmbedBuilder, Util } from "discord.js";
 import { Message } from "discord.js";
 import { Command } from "../../types/Command/Command";
 import { Categories } from "../../types/Command/BaseCommand";
@@ -186,7 +186,7 @@ export default class UserinfoCommand extends Command {
 			botCheck: member.user.bot ? yes : no,
 		};
 
-		const embed = new Embed()
+		const embed = new EmbedBuilder()
 			.setColor(Util.resolveColor("Blurple"))
 			.setAuthor({
 				name: member.user.username,
@@ -222,7 +222,7 @@ export default class UserinfoCommand extends Command {
 		embed.setThumbnail(userInfo.avatar);
 
 		return message.channel.send({
-			embeds: [embed],
+			embeds: [embed.toJSON()],
 		});
 	}
 }

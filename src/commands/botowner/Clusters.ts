@@ -37,7 +37,7 @@ export default class ClustersCommand extends Command {
 			return {
 				ok: false,
 				error: {
-					embeds: [embed],
+					embeds: [embed.toJSON()],
 				},
 			};
 		}
@@ -84,7 +84,7 @@ export default class ClustersCommand extends Command {
 				embed.addFields(...filedData);
 
 				return message.channel.send({
-					embeds: [embed],
+					embeds: [embed.toJSON()],
 				});
 			});
 	}

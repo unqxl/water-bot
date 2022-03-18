@@ -1,4 +1,9 @@
-import { ButtonComponent, ActionRow, Util, ComponentType } from "discord.js";
+import {
+	ButtonBuilder,
+	ActionRowBuilder,
+	Util,
+	ComponentType,
+} from "discord.js";
 import { Categories, ValidateReturn } from "../../types/Command/BaseCommand";
 import { bold, inlineCode } from "@discordjs/builders";
 import { Command } from "../../types/Command/Command";
@@ -40,7 +45,7 @@ export default class GuildsCommand extends Command {
 			return {
 				ok: false,
 				error: {
-					embeds: [embed],
+					embeds: [embed.toJSON()],
 				},
 			};
 		}
@@ -73,26 +78,23 @@ export default class GuildsCommand extends Command {
 			.slice(0, 10)
 			.join("\n");
 
-		const previousPage = new ButtonComponent()
+		const previousPage = new ButtonBuilder()
 			.setStyle(2)
 			.setEmoji({ name: "⬅️" })
 			.setCustomId("previous");
 
-		const nextPage = new ButtonComponent()
+		const nextPage = new ButtonBuilder()
 			.setStyle(2)
 			.setEmoji({ name: "➡️" })
 			.setCustomId("next");
 
-		const deletePage = new ButtonComponent()
+		const deletePage = new ButtonBuilder()
 			.setStyle(2)
 			.setEmoji({ name: "❌" })
 			.setCustomId("delete");
 
-		const row = new ActionRow().addComponents(
-			previousPage,
-			nextPage,
-			deletePage
-		);
+		const row = new ActionRowBuilder<ButtonBuilder>();
+		row.addComponents(previousPage, nextPage, deletePage);
 
 		const embed = this.client.functions.buildEmbed(
 			message,
@@ -110,7 +112,7 @@ export default class GuildsCommand extends Command {
 		});
 
 		const msg = await message.channel.send({
-			embeds: [embed],
+			embeds: [embed.toJSON()],
 			components: [row],
 		});
 
@@ -161,7 +163,7 @@ export default class GuildsCommand extends Command {
 					});
 
 					return btn.update({
-						embeds: [embed],
+						embeds: [embed.toJSON()],
 					});
 				}
 
@@ -212,7 +214,7 @@ export default class GuildsCommand extends Command {
 					});
 
 					return btn.update({
-						embeds: [embed],
+						embeds: [embed.toJSON()],
 					});
 				}
 

@@ -49,7 +49,7 @@ export default class DailyCommand extends Command {
 			);
 
 			return message.channel.send({
-				embeds: [embed],
+				embeds: [embed.toJSON()],
 			});
 		}
 
@@ -64,7 +64,7 @@ export default class DailyCommand extends Command {
 		);
 
 		return message.channel.send({
-			embeds: [embed],
+			embeds: [embed.toJSON()],
 		});
 	}
 }

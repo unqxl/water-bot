@@ -1,5 +1,5 @@
 import { Job } from "../../plugins/Job";
-import { Guild, Embed, TextChannel, Util } from "discord.js";
+import { Guild, EmbedBuilder, TextChannel, Util } from "discord.js";
 import { bold } from "@discordjs/builders";
 import Bot from "../../classes/Bot";
 import Event from "../../types/Event/Event";
@@ -77,7 +77,7 @@ async function birthdayCheck(client: Bot, guild: Guild) {
 		birthdayCheck.years > 1 ? years : year
 	);
 
-	const embed = new Embed()
+	const embed = new EmbedBuilder()
 		.setColor(Util.resolveColor("Blurple"))
 		.setAuthor({
 			name: guild.name,
@@ -87,6 +87,6 @@ async function birthdayCheck(client: Bot, guild: Guild) {
 		.setTimestamp();
 
 	return (channel as TextChannel).send({
-		embeds: [embed],
+		embeds: [embed.toJSON()],
 	});
 }

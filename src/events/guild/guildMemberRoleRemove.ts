@@ -1,4 +1,4 @@
-import { GuildMember, Embed, Role, TextChannel, Util } from "discord.js";
+import { GuildMember, EmbedBuilder, Role, TextChannel, Util } from "discord.js";
 import { AuditLogEvent } from "discord-api-types/v9";
 import Event from "../../types/Event/Event";
 import Bot from "../../classes/Bot";
@@ -40,7 +40,7 @@ export default class GuildMemberRoleRemoveEvent extends Event {
 			new Date().toLocaleString(settings.locale)
 		);
 
-		const embed = new Embed()
+		const embed = new EmbedBuilder()
 			.setColor(Util.resolveColor("Blurple"))
 			.setAuthor({
 				name: member.user.tag,
@@ -53,7 +53,7 @@ export default class GuildMemberRoleRemoveEvent extends Event {
 			});
 
 		return log_channel.send({
-			embeds: [embed],
+			embeds: [embed.toJSON()],
 		});
 	}
 }

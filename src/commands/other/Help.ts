@@ -242,7 +242,7 @@ export default class HelpCommand extends Command {
 				});
 
 			return message.channel.send({
-				embeds: [embed],
+				embeds: [embed.toJSON()],
 			});
 		} else {
 			const cmd =
@@ -260,7 +260,7 @@ export default class HelpCommand extends Command {
 				);
 
 				return message.channel.send({
-					embeds: [embed],
+					embeds: [embed.toJSON()],
 				});
 			}
 
@@ -349,7 +349,7 @@ export default class HelpCommand extends Command {
 			);
 
 			return message.channel.send({
-				embeds: [embed],
+				embeds: [embed.toJSON()],
 			});
 		}
 	}

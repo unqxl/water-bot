@@ -1,8 +1,8 @@
 import {
 	ButtonInteraction,
-	ActionRow,
-	ButtonComponent,
-	Embed,
+	ActionRowBuilder,
+	ButtonBuilder,
+	EmbedBuilder,
 	Util,
 } from "discord.js";
 import { Message } from "discord.js";
@@ -213,7 +213,7 @@ export = async (
 	}
 
 	const description = lang.GAMES.PHASMOPHOBIA.WELCOME(ghostType);
-	const firstEmbed = new Embed()
+	const firstEmbed = new EmbedBuilder()
 		.setColor(Util.resolveColor("Blurple"))
 		.setAuthor({
 			name: msg.author.username,
@@ -254,22 +254,22 @@ export = async (
 		}
 	});
 
-	const buttons = new ActionRow();
+	const buttons = new ActionRowBuilder<ButtonBuilder>();
 	buttons.addComponents(
 		...shuffle(
-			new ButtonComponent()
+			new ButtonBuilder()
 				.setStyle(2)
 				.setCustomId("success")
 				.setLabel(successEvidences.join(", ")),
 
-			new ButtonComponent()
+			new ButtonBuilder()
 				.setStyle(2)
 				.setCustomId("fake")
 				.setLabel(
 					`${firstFake.first}, ${firstFake.second}, ${firstFake.third}`
 				),
 
-			new ButtonComponent()
+			new ButtonBuilder()
 				.setStyle(2)
 				.setCustomId("fake_1")
 				.setLabel(
@@ -281,7 +281,7 @@ export = async (
 	await message
 		.edit({
 			content: null,
-			embeds: [firstEmbed],
+			embeds: [firstEmbed.toJSON()],
 			components: [buttons],
 		})
 		.then(async (reply) => {
@@ -311,7 +311,7 @@ export = async (
 						);
 
 						reply.edit({
-							embeds: [embed],
+							embeds: [embed.toJSON()],
 							components: [],
 						});
 						return;
@@ -333,7 +333,7 @@ export = async (
 						);
 
 						reply.edit({
-							embeds: [embed],
+							embeds: [embed.toJSON()],
 							components: [],
 						});
 						return;
@@ -354,7 +354,7 @@ export = async (
 					);
 
 					reply.edit({
-						embeds: [embed],
+						embeds: [embed.toJSON()],
 						components: [],
 					});
 					return;

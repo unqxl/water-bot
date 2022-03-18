@@ -1,4 +1,4 @@
-import { Embed, Message, TextChannel, Util } from "discord.js";
+import { EmbedBuilder, Message, TextChannel, Util } from "discord.js";
 import { bold } from "@discordjs/builders";
 import Bot from "../../classes/Bot";
 import Event from "../../types/Event/Event";
@@ -39,14 +39,14 @@ export default class MessageCreateEvent extends Event {
 					phishingCheck.domain
 				);
 
-			const embed = new Embed()
+			const embed = new EmbedBuilder()
 				.setColor(Util.resolveColor("Red"))
 				.setTitle(title)
 				.setDescription(bold(text))
 				.setTimestamp();
 
 			return logChannel.send({
-				embeds: [embed],
+				embeds: [embed.toJSON()],
 			});
 		}
 
@@ -64,7 +64,7 @@ export default class MessageCreateEvent extends Event {
 			);
 
 			return message.channel.send({
-				embeds: [embed],
+				embeds: [embed.toJSON()],
 			});
 		}
 

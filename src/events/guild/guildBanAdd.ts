@@ -1,4 +1,4 @@
-import { GuildBan, Embed, TextChannel, Util, User } from "discord.js";
+import { GuildBan, EmbedBuilder, TextChannel, Util, User } from "discord.js";
 import { AuditLogEvent } from "discord-api-types/v9";
 import Bot from "../../classes/Bot";
 import Event from "../../types/Event/Event";
@@ -37,7 +37,7 @@ export default class GuildBanAddEvent extends Event {
 			new Date().toLocaleString(settings.locale)
 		);
 
-		const embed = new Embed()
+		const embed = new EmbedBuilder()
 			.setColor(Util.resolveColor("Blurple"))
 			.setAuthor({
 				name: (target as User).tag,
@@ -50,7 +50,7 @@ export default class GuildBanAddEvent extends Event {
 			});
 
 		return log_channel.send({
-			embeds: [embed],
+			embeds: [embed.toJSON()],
 		});
 	}
 }

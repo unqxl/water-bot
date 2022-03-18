@@ -43,7 +43,7 @@ export default class LoopCommand extends Command {
 				return {
 					ok: false,
 					error: {
-						embeds: [embed],
+						embeds: [embed.toJSON()],
 					},
 				};
 			}
@@ -67,7 +67,7 @@ export default class LoopCommand extends Command {
 			return {
 				ok: false,
 				error: {
-					embeds: [embed],
+					embeds: [embed.toJSON()],
 				},
 			};
 		}
@@ -89,7 +89,7 @@ export default class LoopCommand extends Command {
 			return {
 				ok: false,
 				error: {
-					embeds: [embed],
+					embeds: [embed.toJSON()],
 				},
 			};
 		}
@@ -109,7 +109,7 @@ export default class LoopCommand extends Command {
 			return {
 				ok: false,
 				error: {
-					embeds: [embed],
+					embeds: [embed.toJSON()],
 				},
 			};
 		}
@@ -169,7 +169,7 @@ export default class LoopCommand extends Command {
 		);
 
 		return message.channel.send({
-			embeds: [embed],
+			embeds: [embed.toJSON()],
 		});
 	}
 }

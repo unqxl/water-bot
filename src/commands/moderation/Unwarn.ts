@@ -1,7 +1,7 @@
 import {
 	ButtonInteraction,
-	ActionRow,
-	ButtonComponent,
+	ActionRowBuilder,
+	ButtonBuilder,
 	ComponentType,
 } from "discord.js";
 import { Categories, ValidateReturn } from "../../types/Command/BaseCommand";
@@ -50,7 +50,7 @@ export default class UnwarnCommand extends Command {
 			return {
 				ok: false,
 				error: {
-					embeds: [embed],
+					embeds: [embed.toJSON()],
 				},
 			};
 		}
@@ -71,7 +71,7 @@ export default class UnwarnCommand extends Command {
 			return {
 				ok: false,
 				error: {
-					embeds: [embed],
+					embeds: [embed.toJSON()],
 				},
 			};
 		}
@@ -96,19 +96,19 @@ export default class UnwarnCommand extends Command {
 			lang.FUNCTIONS.VERIFICATION.TEXT,
 		];
 
-		const confirmButton = new ButtonComponent()
+		const confirmButton = new ButtonBuilder()
 			.setCustomId("confirm")
 			.setStyle(3)
 			.setLabel(accept)
 			.setEmoji({ name: "✅" });
 
-		const cancelButton = new ButtonComponent()
+		const cancelButton = new ButtonBuilder()
 			.setCustomId("cancel")
 			.setStyle(4)
 			.setLabel(decline)
 			.setEmoji({ name: "❌" });
 
-		const confirmRow = new ActionRow().addComponents(
+		const confirmRow = new ActionRowBuilder<ButtonBuilder>().addComponents(
 			confirmButton,
 			cancelButton
 		);
@@ -150,7 +150,7 @@ export default class UnwarnCommand extends Command {
 				);
 
 				await msg.edit({
-					embeds: [embed],
+					embeds: [embed.toJSON()],
 					components: [],
 				});
 

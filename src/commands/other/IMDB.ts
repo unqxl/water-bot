@@ -1,4 +1,4 @@
-import { Message, Embed, Util } from "discord.js";
+import { Message, EmbedBuilder, Util } from "discord.js";
 import { Categories, ValidateReturn } from "../../types/Command/BaseCommand";
 import { Command } from "../../types/Command/Command";
 import { bold } from "@discordjs/builders";
@@ -50,7 +50,7 @@ export default class IMDBCommand extends Command {
 			return {
 				ok: false,
 				error: {
-					embeds: [embed],
+					embeds: [embed.toJSON()],
 				},
 			};
 		}
@@ -76,7 +76,7 @@ export default class IMDBCommand extends Command {
 		if (!data) {
 		}
 
-		const embed = new Embed()
+		const embed = new EmbedBuilder()
 			.setColor(Util.resolveColor("Blurple"))
 			.setAuthor({
 				name: message.author.username,
@@ -150,7 +150,7 @@ export default class IMDBCommand extends Command {
 		});
 
 		return message.channel.send({
-			embeds: [embed],
+			embeds: [embed.toJSON()],
 		});
 	}
 }

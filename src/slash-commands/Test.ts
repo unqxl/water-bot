@@ -1,10 +1,10 @@
 import {
 	ApplicationCommandType,
-	ActionRow,
-	TextInputComponent,
-	Modal,
+	ActionRowBuilder,
+	ModalBuilder,
 	type ModalActionRowComponent,
 	TextInputStyle,
+	TextInputBuilder,
 } from "discord.js";
 import { CommandInteraction } from "discord.js";
 import { SlashCommand } from "../types/Command/SlashCommand";
@@ -54,17 +54,17 @@ export default class TestSlashCommand extends SlashCommand {
 		interaction: CommandInteraction,
 		lang: typeof import("@locales/English").default
 	) {
-		const modal = new Modal()
+		const modal = new ModalBuilder()
 			.setCustomId("TestModal")
 			.setTitle("Test Modal");
 
-		const ApplicationComponent = new TextInputComponent()
+		const ApplicationComponent = new TextInputBuilder()
 			.setCustomId("UserName")
 			.setLabel("Enter Your Real Name")
 			.setStyle(TextInputStyle.Short);
 
 		const rows = [ApplicationComponent].map((component) =>
-			new ActionRow<ModalActionRowComponent>().addComponents(component)
+			new ActionRowBuilder<TextInputBuilder>().addComponents(component)
 		);
 
 		modal.addComponents(...rows);

@@ -1,9 +1,9 @@
 import {
 	ButtonInteraction,
 	ComponentType,
-	ActionRow,
-	ButtonComponent,
-	Embed,
+	ActionRowBuilder,
+	ButtonBuilder,
+	EmbedBuilder,
 	Util,
 } from "discord.js";
 import { Message } from "discord.js";
@@ -21,25 +21,25 @@ export = async (
 	const silverName = lang.ECONOMY.CASES.SILVER;
 	const goldenName = lang.ECONOMY.CASES.GOLD;
 
-	const bronzeCase = new ButtonComponent()
+	const bronzeCase = new ButtonBuilder()
 		.setStyle(2)
 		.setLabel(bronzeName)
 		.setCustomId("bronze_case")
 		.setEmoji({ name: "1️⃣" });
 
-	const silverCase = new ButtonComponent()
+	const silverCase = new ButtonBuilder()
 		.setStyle(2)
 		.setLabel(silverName)
 		.setCustomId("silver_case")
 		.setEmoji({ name: "2️⃣" });
 
-	const goldenCase = new ButtonComponent()
+	const goldenCase = new ButtonBuilder()
 		.setStyle(2)
 		.setLabel(goldenName)
 		.setCustomId("golden_case")
 		.setEmoji({ name: "3️⃣" });
 
-	const casesRow = new ActionRow().addComponents(
+	const casesRow = new ActionRowBuilder<ButtonBuilder>().addComponents(
 		bronzeCase,
 		silverCase,
 		goldenCase
@@ -61,7 +61,7 @@ export = async (
 	)}\n\n`;
 	embedDescription += note;
 
-	const ChooseCaseEmbed = new Embed()
+	const ChooseCaseEmbed = new EmbedBuilder()
 		.setColor(Util.resolveColor("Blurple"))
 		.setAuthor({
 			name: _msg.author.username,
@@ -73,7 +73,7 @@ export = async (
 	await message
 		.edit({
 			content: null,
-			embeds: [ChooseCaseEmbed],
+			embeds: [ChooseCaseEmbed.toJSON()],
 			components: [casesRow],
 		})
 		.then(async (msg) => {
@@ -94,7 +94,7 @@ export = async (
 				if (!chosenCase) return;
 
 				if (balance < chosenCase.cost) {
-					const embed = new Embed()
+					const embed = new EmbedBuilder()
 						.setColor(Util.resolveColor("Blurple"))
 						.setAuthor({
 							name: _msg.author.username,
@@ -111,7 +111,7 @@ export = async (
 
 					msg.edit({
 						components: [],
-						embeds: [embed],
+						embeds: [embed.toJSON()],
 					});
 				}
 
@@ -146,7 +146,7 @@ export = async (
 					prize.prize.toLocaleString("be")
 				);
 
-				const embed = new Embed()
+				const embed = new EmbedBuilder()
 					.setColor(Util.resolveColor("Blurple"))
 					.setAuthor({
 						name: _msg.author.username,
@@ -158,7 +158,7 @@ export = async (
 				collector.stop();
 
 				msg.edit({
-					embeds: [embed],
+					embeds: [embed.toJSON()],
 					components: [],
 				});
 				return;
@@ -167,7 +167,7 @@ export = async (
 			collector.on("end", async (collected, reason) => {
 				if (reason === "time") {
 					const text = lang.ECONOMY.CASES.TIME_IS_OVER;
-					const embed = new Embed()
+					const embed = new EmbedBuilder()
 						.setColor(Util.resolveColor("Blurple"))
 						.setAuthor({
 							name: _msg.author.username,
@@ -178,7 +178,7 @@ export = async (
 
 					msg.edit({
 						components: [],
-						embeds: [embed],
+						embeds: [embed.toJSON()],
 					});
 					return;
 				}

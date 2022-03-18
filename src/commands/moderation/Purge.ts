@@ -44,7 +44,7 @@ export default class PurgeCommand extends Command {
 			return {
 				ok: false,
 				error: {
-					embeds: [embed],
+					embeds: [embed.toJSON()],
 				},
 			};
 		}
@@ -63,7 +63,7 @@ export default class PurgeCommand extends Command {
 			return {
 				ok: false,
 				error: {
-					embeds: [embed],
+					embeds: [embed.toJSON()],
 				},
 			};
 		}
@@ -97,7 +97,7 @@ export default class PurgeCommand extends Command {
 				);
 
 				const msg = await message.channel.send({
-					embeds: [embed],
+					embeds: [embed.toJSON()],
 				});
 
 				await this.client.wait(2000);

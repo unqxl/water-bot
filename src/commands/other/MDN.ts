@@ -1,6 +1,6 @@
 import { Categories, ValidateReturn } from "../../types/Command/BaseCommand";
 import { Command } from "../../types/Command/Command";
-import { Embed } from "discord.js";
+import { EmbedBuilder } from "discord.js";
 import { request } from "undici";
 import { Message } from "discord.js";
 import Bot from "../../classes/Bot";
@@ -40,7 +40,7 @@ export default class MDNCommand extends Command {
 			return {
 				ok: false,
 				error: {
-					embeds: [embed],
+					embeds: [embed.toJSON()],
 				},
 			};
 		}
@@ -71,14 +71,14 @@ export default class MDNCommand extends Command {
 			);
 
 			return message.channel.send({
-				embeds: [embed],
+				embeds: [embed.toJSON()],
 			});
 		}
 
-		const embed = new Embed(data);
+		const embed = new EmbedBuilder(data);
 
 		return message.channel.send({
-			embeds: [embed],
+			embeds: [embed.toJSON()],
 		});
 	}
 }

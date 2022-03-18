@@ -1,4 +1,4 @@
-import { Embed, Message, Util } from "discord.js";
+import { EmbedBuilder, Message, Util } from "discord.js";
 import { Categories, ValidateReturn } from "../../types/Command/BaseCommand";
 import { Command } from "../../types/Command/Command";
 import { bold } from "@discordjs/builders";
@@ -39,7 +39,7 @@ export default class OsuCommand extends Command {
 			return {
 				ok: false,
 				error: {
-					embeds: [embed],
+					embeds: [embed.toJSON()],
 				},
 			};
 		}
@@ -78,7 +78,7 @@ export default class OsuCommand extends Command {
 				);
 
 				return message.channel.send({
-					embeds: [embed],
+					embeds: [embed.toJSON()],
 				});
 			}
 
@@ -87,7 +87,7 @@ export default class OsuCommand extends Command {
 			};
 		}
 
-		const embed = new Embed()
+		const embed = new EmbedBuilder()
 			.setColor(Util.resolveColor("Blurple"))
 			.setAuthor({
 				name: data.username,
@@ -175,7 +175,7 @@ export default class OsuCommand extends Command {
 		);
 
 		return message.channel.send({
-			embeds: [embed],
+			embeds: [embed.toJSON()],
 		});
 	}
 }

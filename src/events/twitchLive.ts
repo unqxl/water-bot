@@ -1,8 +1,8 @@
 import {
 	Guild,
-	ActionRow,
-	ButtonComponent,
-	Embed,
+	ActionRowBuilder,
+	ButtonBuilder,
+	EmbedBuilder,
 	TextChannel,
 	Util,
 } from "discord.js";
@@ -23,9 +23,14 @@ export = async (
 	channel: TextChannel,
 	data: TwitchData
 ) => {
-	const embed = new AnnounceEmbed().build(client, lang, data, channel.guild);
-	const GoToButton = new ButtonComponent();
-	const row = new ActionRow();
+	const embed = await new AnnounceEmbed().build(
+		client,
+		lang,
+		data,
+		channel.guild
+	);
+	const GoToButton = new ButtonBuilder();
+	const row = new ActionRowBuilder<ButtonBuilder>();
 	const goTo = lang.TWITCH_HANDLER.GO_TO;
 
 	GoToButton.setStyle(5);
@@ -36,12 +41,12 @@ export = async (
 	row.addComponents(GoToButton);
 
 	return channel.send({
-		embeds: [await embed],
+		embeds: [embed.toJSON()],
 		components: [row],
 	});
 };
 
-class AnnounceEmbed extends Embed {
+class AnnounceEmbed extends EmbedBuilder {
 	constructor() {
 		super();
 	}

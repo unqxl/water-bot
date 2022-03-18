@@ -14,14 +14,20 @@ export default class DBManager {
 	}
 
 	async getGuild(guild_id: string): Promise<GuildConfiguration> {
-		const config = await this.guildConfigRepository.findOne({ guild_id });
+		const config = await this.guildConfigRepository.findOne({
+			where: { guild_id },
+		});
 		if (!config) return await this.createGuild(guild_id);
 
-		return await this.guildConfigRepository.findOne({ guild_id });
+		return await this.guildConfigRepository.findOne({
+			where: { guild_id },
+		});
 	}
 
 	async createGuild(guild_id: string): Promise<GuildConfiguration> {
-		const config = await this.guildConfigRepository.findOne({ guild_id });
+		const config = await this.guildConfigRepository.findOne({
+			where: { guild_id },
+		});
 		if (config) return config;
 
 		const newConfig = await this.guildConfigRepository.create({ guild_id });
@@ -39,7 +45,9 @@ export default class DBManager {
 	}
 
 	async deleteGuild(guild_id: string): Promise<boolean> {
-		const config = await this.guildConfigRepository.findOne({ guild_id });
+		const config = await this.guildConfigRepository.findOne({
+			where: { guild_id },
+		});
 		if (!config) return false;
 
 		this.guildConfigRepository.delete({ guild_id });
@@ -54,14 +62,18 @@ export default class DBManager {
 		guild_id: string,
 		key: K
 	): Promise<GuildConfiguration[K]> {
-		var config = await this.guildConfigRepository.findOne({ guild_id });
+		var config = await this.guildConfigRepository.findOne({
+			where: { guild_id },
+		});
 		if (!config) config = await this.createGuild(guild_id);
 
 		return config[key];
 	}
 
 	async getSettings(guild_id: string): Promise<GuildConfiguration> {
-		var config = await this.guildConfigRepository.findOne({ guild_id });
+		var config = await this.guildConfigRepository.findOne({
+			where: { guild_id },
+		});
 		if (!config) config = await this.createGuild(guild_id);
 
 		return config;
@@ -72,7 +84,9 @@ export default class DBManager {
 		key: K,
 		value: any
 	): Promise<boolean> {
-		var config = await this.guildConfigRepository.findOne({ guild_id });
+		var config = await this.guildConfigRepository.findOne({
+			where: { guild_id },
+		});
 		if (!config) config = await this.createGuild(guild_id);
 
 		config[key] = value;

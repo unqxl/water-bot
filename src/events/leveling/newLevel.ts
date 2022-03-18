@@ -1,7 +1,7 @@
 import Event from "../../types/Event/Event";
 import Bot from "../../classes/Bot";
 import index from "../../index";
-import { Embed, TextChannel, Util } from "discord.js";
+import { EmbedBuilder, TextChannel, Util } from "discord.js";
 
 interface INewLevelData {
 	userID: string;
@@ -37,7 +37,7 @@ export default class NewLevelEvent extends Event {
 			new Date().toLocaleString(settings.locale)
 		);
 
-		const embed = new Embed()
+		const embed = new EmbedBuilder()
 			.setColor(Util.resolveColor("Blurple"))
 			.setAuthor({
 				name: member.user.tag,
@@ -49,7 +49,7 @@ export default class NewLevelEvent extends Event {
 			});
 
 		return channel.send({
-			embeds: [embed],
+			embeds: [embed.toJSON()],
 		});
 	}
 }

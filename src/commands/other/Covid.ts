@@ -59,7 +59,7 @@ export default class COVIDCommand extends Command {
 			);
 
 			return message.channel.send({
-				embeds: [embed],
+				embeds: [embed.toJSON()],
 			});
 		}
 
@@ -139,7 +139,7 @@ export default class COVIDCommand extends Command {
 		});
 
 		return message.channel.send({
-			embeds: [embed],
+			embeds: [embed.toJSON()],
 		});
 	}
 }

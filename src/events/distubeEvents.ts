@@ -1,5 +1,5 @@
 import { bold, hyperlink } from "@discordjs/builders";
-import { Embed, Util } from "discord.js";
+import { EmbedBuilder, Util } from "discord.js";
 import Bot from "../classes/Bot";
 
 export = async (client: Bot) => {
@@ -35,7 +35,7 @@ export = async (client: Bot) => {
 					`› ${bold(songs)}: ${bold(sp(queue_songs.length))}`,
 				].join("\n");
 
-				const embed = new Embed()
+				const embed = new EmbedBuilder()
 					.setColor(Util.resolveColor("Blurple"))
 					.setAuthor({
 						name: user.username,
@@ -46,7 +46,7 @@ export = async (client: Bot) => {
 					.setTimestamp();
 
 				channel.send({
-					embeds: [embed],
+					embeds: [embed.toJSON()],
 				});
 
 				return;
@@ -78,7 +78,7 @@ export = async (client: Bot) => {
 					`› ${bold(songs)}: ${bold(sp(queue_songs.length))}`,
 				].join("\n");
 
-				const embed = new Embed()
+				const embed = new EmbedBuilder()
 					.setColor(Util.resolveColor("Blurple"))
 					.setAuthor({
 						name: user.username,
@@ -89,7 +89,7 @@ export = async (client: Bot) => {
 					.setTimestamp();
 
 				channel.send({
-					embeds: [embed],
+					embeds: [embed.toJSON()],
 				});
 
 				return;
@@ -130,14 +130,14 @@ export = async (client: Bot) => {
 					`› ${bold(requestedBy)}: ${bold(user.toString())}`,
 				].join("\n");
 
-				const embed = new Embed()
+				const embed = new EmbedBuilder()
 					.setColor(Util.resolveColor("Blurple"))
 					.setTitle(embed_title)
 					.setDescription(text)
 					.setTimestamp();
 
 				channel.send({
-					embeds: [embed],
+					embeds: [embed.toJSON()],
 				});
 
 				return;
@@ -146,13 +146,13 @@ export = async (client: Bot) => {
 		.on("finish", async ({ textChannel: channel }) => {
 			const lang = await get_language(channel.guild.id);
 			const text = lang.EVENTS.MUSIC_EVENTS.FINISH;
-			const embed = new Embed()
+			const embed = new EmbedBuilder()
 				.setColor(Util.resolveColor("Blurple"))
 				.setDescription(bold(text))
 				.setTimestamp();
 
 			channel.send({
-				embeds: [embed],
+				embeds: [embed.toJSON()],
 			});
 
 			return;
@@ -160,13 +160,13 @@ export = async (client: Bot) => {
 		.on("error", async (channel, error) => {
 			const lang = await get_language(channel.guild.id);
 			const text = lang.EVENTS.MUSIC_EVENTS.ERROR(error.message);
-			const embed = new Embed()
+			const embed = new EmbedBuilder()
 				.setColor(Util.resolveColor("Red"))
 				.setDescription(bold(text))
 				.setTimestamp();
 
 			channel.send({
-				embeds: [embed],
+				embeds: [embed.toJSON()],
 			});
 
 			return;
@@ -174,13 +174,13 @@ export = async (client: Bot) => {
 		.on("empty", async ({ textChannel: channel }) => {
 			const lang = await get_language(channel.guild.id);
 			const text = lang.EVENTS.MUSIC_EVENTS.EMPTY;
-			const embed = new Embed()
+			const embed = new EmbedBuilder()
 				.setColor(Util.resolveColor("Red"))
 				.setDescription(bold(text))
 				.setTimestamp();
 
 			channel.send({
-				embeds: [embed],
+				embeds: [embed.toJSON()],
 			});
 
 			return;

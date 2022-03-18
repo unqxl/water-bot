@@ -1,8 +1,8 @@
 import {
 	Message,
 	Util,
-	ButtonComponent,
-	ActionRow,
+	ButtonBuilder,
+	ActionRowBuilder,
 	ComponentType,
 } from "discord.js";
 import { Categories, ValidateReturn } from "../../types/Command/BaseCommand";
@@ -45,7 +45,7 @@ export default class ClanListCommand extends Command {
 			return {
 				ok: false,
 				error: {
-					embeds: [embed],
+					embeds: [embed.toJSON()],
 				},
 			};
 		}
@@ -86,22 +86,22 @@ export default class ClanListCommand extends Command {
 			.slice(0, 10)
 			.join("\n");
 
-		const previousPage = new ButtonComponent()
+		const previousPage = new ButtonBuilder()
 			.setStyle(2)
 			.setEmoji({ name: "⬅️" })
 			.setCustomId("previous");
 
-		const nextPage = new ButtonComponent()
+		const nextPage = new ButtonBuilder()
 			.setStyle(2)
 			.setEmoji({ name: "➡️" })
 			.setCustomId("next");
 
-		const deletePage = new ButtonComponent()
+		const deletePage = new ButtonBuilder()
 			.setStyle(2)
 			.setEmoji({ name: "❌" })
 			.setCustomId("delete");
 
-		const row = new ActionRow().addComponents(
+		const row = new ActionRowBuilder<ButtonBuilder>().addComponents(
 			previousPage,
 			nextPage,
 			deletePage
@@ -121,7 +121,7 @@ export default class ClanListCommand extends Command {
 		});
 
 		const msg = await message.channel.send({
-			embeds: [embed],
+			embeds: [embed.toJSON()],
 			components: [row],
 		});
 
@@ -174,7 +174,7 @@ export default class ClanListCommand extends Command {
 					});
 
 					return btn.update({
-						embeds: [embed],
+						embeds: [embed.toJSON()],
 					});
 				}
 
@@ -227,7 +227,7 @@ export default class ClanListCommand extends Command {
 					});
 
 					return btn.update({
-						embeds: [embed],
+						embeds: [embed.toJSON()],
 					});
 				}
 

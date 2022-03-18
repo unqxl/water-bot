@@ -1,5 +1,5 @@
 import { Categories, ValidateReturn } from "../../types/Command/BaseCommand";
-import { Embed, Message, Util } from "discord.js";
+import { EmbedBuilder, Message, Util } from "discord.js";
 import { Command } from "../../types/Command/Command";
 import Bot from "../../classes/Bot";
 import { bold } from "@discordjs/builders";
@@ -39,7 +39,7 @@ export default class SteamCommand extends Command {
 			return {
 				ok: false,
 				error: {
-					embeds: [embed],
+					embeds: [embed.toJSON()],
 				},
 			};
 		}
@@ -82,11 +82,11 @@ export default class SteamCommand extends Command {
 			);
 
 			return message.channel.send({
-				embeds: [embed],
+				embeds: [embed.toJSON()],
 			});
 		}
 
-		const embed = new Embed();
+		const embed = new EmbedBuilder();
 		embed.setColor(Util.resolveColor("Blurple"));
 		embed.setAuthor({
 			name: message.author.username,
@@ -192,7 +192,7 @@ export default class SteamCommand extends Command {
 		);
 
 		return message.channel.send({
-			embeds: [embed],
+			embeds: [embed.toJSON()],
 		});
 	}
 }

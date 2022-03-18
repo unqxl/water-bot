@@ -1,6 +1,6 @@
 import Event from "../../types/Event/Event";
 import Bot from "../../classes/Bot";
-import { Guild, Embed, TextChannel, Util } from "discord.js";
+import { Guild, EmbedBuilder, TextChannel, Util } from "discord.js";
 
 export default class GuildPartnerAddEvent extends Event {
 	constructor() {
@@ -24,7 +24,7 @@ export default class GuildPartnerAddEvent extends Event {
 			new Date().toLocaleString(settings.locale)
 		);
 
-		const embed = new Embed()
+		const embed = new EmbedBuilder()
 			.setColor(Util.resolveColor("Blurple"))
 			.setAuthor({
 				name: guild.name,
@@ -37,7 +37,7 @@ export default class GuildPartnerAddEvent extends Event {
 			});
 
 		return log_channel.send({
-			embeds: [embed],
+			embeds: [embed.toJSON()],
 		});
 	}
 }

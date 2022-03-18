@@ -1,5 +1,5 @@
 import { bold, inlineCode } from "@discordjs/builders";
-import { Embed, Util } from "discord.js";
+import { EmbedBuilder, Util } from "discord.js";
 import { Message } from "discord.js";
 import { Command } from "../../types/Command/Command";
 import { Categories } from "../../types/Command/BaseCommand";
@@ -57,7 +57,7 @@ export default class LeaderboardCommand extends Command {
 			)}] ${member.toString()} (${bold(`${level} LVL | ${xp} XP`)})\n`;
 		}
 
-		const embed = new Embed()
+		const embed = new EmbedBuilder()
 			.setColor(Util.resolveColor("Blurple"))
 			.setAuthor({
 				name: message.guild.name,
@@ -67,7 +67,7 @@ export default class LeaderboardCommand extends Command {
 			.setTimestamp();
 
 		return message.channel.send({
-			embeds: [embed],
+			embeds: [embed.toJSON()],
 		});
 	}
 }

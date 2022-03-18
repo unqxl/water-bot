@@ -1,4 +1,4 @@
-import { Guild, Embed, User, Util } from "discord.js";
+import { Guild, EmbedBuilder, User, Util } from "discord.js";
 import { getRepository } from "typeorm";
 import { GuildConfiguration } from "../../typeorm/entities/GuildConfiguration";
 import Bot from "../../classes/Bot";
@@ -17,7 +17,7 @@ export default class GuildCreateEvent extends Event {
 		await client.database.createGuild(guild.id);
 
 		const config = await this.guildConfigRepository.findOne({
-			guild_id: guild.id,
+			where: { guild_id: guild.id },
 		});
 
 		if (config) console.log(`Configruration of ${guild.id} was found!`);
@@ -34,7 +34,7 @@ export default class GuildCreateEvent extends Event {
 		const owner = client.users.cache.get("852921856800718908") as User;
 		const guildOwner = await guild.fetchOwner();
 
-		const embed = new Embed()
+		const embed = new EmbedBuilder()
 			.setColor(Util.resolveColor("Blurple"))
 			.setTitle("🎉 New Server 🎉")
 			.setDescription(
@@ -47,7 +47,7 @@ export default class GuildCreateEvent extends Event {
 			.setTimestamp();
 
 		return owner.send({
-			embeds: [embed],
+			embeds: [embed.toJSON()],
 		});
 	}
 }

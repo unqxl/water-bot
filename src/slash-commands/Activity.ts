@@ -92,7 +92,7 @@ export default class ActivitySlashCommand extends SlashCommand {
 			return {
 				ok: false,
 				error: {
-					embeds: [embed],
+					embeds: [embed.toJSON()],
 				},
 			};
 		}
@@ -127,7 +127,7 @@ export default class ActivitySlashCommand extends SlashCommand {
 		);
 
 		return interaction.reply({
-			embeds: [embed],
+			embeds: [embed.toJSON()],
 		});
 	}
 }

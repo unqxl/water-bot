@@ -3,7 +3,7 @@ import {
 	DiscordAPIError,
 	Guild,
 	HTTPError,
-	Embed,
+	EmbedBuilder,
 	MessageOptions,
 	Snowflake,
 	TextChannel,
@@ -29,8 +29,8 @@ export = class Functions {
 		emoji: string | boolean,
 		showAuthor: boolean,
 		showTimestamp?: boolean
-	): Embed {
-		const embed = new Embed();
+	): EmbedBuilder {
+		const embed = new EmbedBuilder();
 
 		if (showAuthor === true) {
 			embed.setAuthor({
@@ -264,7 +264,7 @@ export = class Functions {
 			);
 
 			channel.send({
-				embeds: [embed],
+				embeds: [embed.toJSON()],
 			});
 		} catch (e) {
 			console.warn({

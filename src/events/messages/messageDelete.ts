@@ -1,7 +1,7 @@
 import Event from "../../types/Event/Event";
 import Bot from "../../classes/Bot";
 import MessageChecks from "../../modules/MessageChecks";
-import { TextChannel, Embed, Util } from "discord.js";
+import { TextChannel, EmbedBuilder, Util } from "discord.js";
 import { Message } from "discord.js";
 
 export default class MessageDeleteEvent extends Event {
@@ -39,7 +39,7 @@ export default class MessageDeleteEvent extends Event {
 					message.content
 				);
 
-			const embed = new Embed()
+			const embed = new EmbedBuilder()
 				.setColor(Util.resolveColor("Yellow"))
 				.setAuthor({
 					name: message.author.tag,
@@ -52,7 +52,7 @@ export default class MessageDeleteEvent extends Event {
 				});
 
 			return log_channel.send({
-				embeds: [embed],
+				embeds: [embed.toJSON()],
 			});
 		}
 
@@ -62,7 +62,7 @@ export default class MessageDeleteEvent extends Event {
 			message.content
 		);
 
-		const embed = new Embed()
+		const embed = new EmbedBuilder()
 			.setColor(Util.resolveColor("Blurple"))
 			.setAuthor({
 				name: message.author.tag,
@@ -75,7 +75,7 @@ export default class MessageDeleteEvent extends Event {
 			});
 
 		return log_channel.send({
-			embeds: [embed],
+			embeds: [embed.toJSON()],
 		});
 	}
 }
