@@ -1,5 +1,5 @@
-import Bot from "../classes/Bot";
 import { GuildClan } from "../interfaces/Clans";
+import Bot from "../classes/Bot";
 
 export = class ClanSystem {
 	public client: Bot;

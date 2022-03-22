@@ -1,6 +1,6 @@
 import { BestMatch, SteamAppDetail, SteamAppList } from "../types";
-import { request } from "undici";
 import { findBestMatch } from "string-similarity";
+import { request } from "undici";
 
 export = class SteamAPI {
 	public key: string;

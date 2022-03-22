@@ -10,9 +10,9 @@ import glob_cmds from "glob";
 const glob = promisify(glob_events);
 
 // Other
-import { resolve } from "path";
-import { Command } from "../types/Command/Command";
 import { SlashCommand } from "../types/Command/SlashCommand";
+import { Command } from "../types/Command/Command";
+import { resolve } from "path";
 
 type Structures = Command | SlashCommand;
 

@@ -1,6 +1,6 @@
-import { Message } from "discord.js";
 import { UserLeveling } from "../interfaces/Guild";
 import { EventEmitter } from "events";
+import { Message } from "discord.js";
 import Bot from "./Bot";
 
 export class Leveling extends EventEmitter {

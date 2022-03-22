@@ -1,4 +1,4 @@
-import { v2 } from "osu-api-extended";
+import { v2, auth } from "osu-api-extended";
 import { OsuUserData } from "../types";
 
 type OsuModes = "osu" | "fruits" | "mania" | "taiko";
@@ -13,7 +13,7 @@ export = class OsuAPI {
 		this.client_secret = client_secret;
 		this.api = v2;
 
-		this.api.login(this.client_id, this.client_secret);
+		auth.login(this.client_id, this.client_secret);
 	}
 
 	async getUserData(

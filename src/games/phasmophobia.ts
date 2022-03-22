@@ -8,7 +8,7 @@ import {
 import { Message } from "discord.js";
 import { bold } from "@discordjs/builders";
 import ghosts from "../data/phasmaphobia_ghosts.json";
-import client from "..";
+import client from "../index";
 
 interface FakeEvidence {
 	first: string;

@@ -1,7 +1,7 @@
 import "module-alias/register";
 
-import P from "bluebird";
 import Bot from "./classes/Bot";
+import P from "bluebird";
 
 P.Promise.config({
 	longStackTraces: true,

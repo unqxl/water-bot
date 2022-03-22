@@ -1,5 +1,5 @@
-import { request } from "undici";
 import { IMDBFilmData, IMDBSearchData, IMDBSearchResult } from "../types";
+import { request } from "undici";
 
 export = class IMDBAPI {
 	public key: string;

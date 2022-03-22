@@ -4,8 +4,8 @@ import {
 	ApplicationCommandOptionType,
 } from "discord.js";
 import { CommandInteraction } from "discord.js";
-import { SlashCommand } from "../types/Command/SlashCommand";
 import { ValidateReturn } from "types/Command/BaseSlashCommand";
+import { SlashCommand } from "../types/Command/SlashCommand";
 import Bot from "../classes/Bot";
 
 export default class ActivitySlashCommand extends SlashCommand {

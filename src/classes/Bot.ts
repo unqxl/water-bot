@@ -40,10 +40,10 @@ import SpotifyPlugin from "@distube/spotify";
 import SoundCloudPlugin from "@distube/soundcloud";
 
 // Interfaces and Structures
-import { Command } from "../types/Command/Command";
-import { SlashCommand } from "../types/Command/SlashCommand";
 import { CustomCommand, GuildConfig } from "../types/types";
+import { SlashCommand } from "../types/Command/SlashCommand";
 import { ClansGuild } from "../interfaces/Clans";
+import { Command } from "../types/Command/Command";
 import Event from "../types/Event/Event";
 
 // MySQL
