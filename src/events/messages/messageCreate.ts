@@ -64,7 +64,7 @@ export default class MessageCreateEvent extends Event {
 			);
 
 			return message.channel.send({
-				embeds: [embed.toJSON()],
+				embeds: [embed.json],
 			});
 		}
 

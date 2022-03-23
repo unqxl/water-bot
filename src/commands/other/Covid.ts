@@ -59,7 +59,7 @@ export default class COVIDCommand extends Command {
 			);
 
 			return message.channel.send({
-				embeds: [embed.toJSON()],
+				embeds: [embed.json],
 			});
 		}
 
@@ -76,8 +76,8 @@ export default class COVIDCommand extends Command {
 			? `COVID-19: ${country.country}`
 			: "COVID-19";
 
-		embed.setTitle(title);
-		embed.addFields(
+		embed.embed.setTitle(title);
+		embed.embed.addFields(
 			{
 				name: lang.OTHER.COVID.TOTAL,
 				value: [
@@ -130,8 +130,8 @@ export default class COVIDCommand extends Command {
 			}
 		);
 
-		embed.setThumbnail(country.countryInfo?.flag || "");
-		embed.setFooter({
+		embed.embed.setThumbnail(country.countryInfo?.flag || "");
+		embed.embed.setFooter({
 			text: `${lang.OTHER.COVID.LAST_UPDATED}: ${new Date(
 				country.updated
 			).toLocaleString(locale)}`,
@@ -139,7 +139,7 @@ export default class COVIDCommand extends Command {
 		});
 
 		return message.channel.send({
-			embeds: [embed.toJSON()],
+			embeds: [embed.json],
 		});
 	}
 }

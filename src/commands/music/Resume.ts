@@ -41,7 +41,7 @@ export default class ResumeCommand extends Command {
 				return {
 					ok: false,
 					error: {
-						embeds: [embed.toJSON()],
+						embeds: [embed.json],
 					},
 				};
 			}
@@ -65,7 +65,7 @@ export default class ResumeCommand extends Command {
 			return {
 				ok: false,
 				error: {
-					embeds: [embed.toJSON()],
+					embeds: [embed.json],
 				},
 			};
 		}
@@ -87,7 +87,7 @@ export default class ResumeCommand extends Command {
 			return {
 				ok: false,
 				error: {
-					embeds: [embed.toJSON()],
+					embeds: [embed.json],
 				},
 			};
 		}
@@ -107,7 +107,7 @@ export default class ResumeCommand extends Command {
 			return {
 				ok: false,
 				error: {
-					embeds: [embed.toJSON()],
+					embeds: [embed.json],
 				},
 			};
 		}
@@ -126,7 +126,7 @@ export default class ResumeCommand extends Command {
 			return {
 				ok: false,
 				error: {
-					embeds: [embed.toJSON()],
+					embeds: [embed.json],
 				},
 			};
 		}
@@ -155,7 +155,7 @@ export default class ResumeCommand extends Command {
 		);
 
 		return message.channel.send({
-			embeds: [embed.toJSON()],
+			embeds: [embed.json],
 		});
 	}
 }

@@ -40,7 +40,7 @@ export default class RPSCommand extends Command {
 			return {
 				ok: false,
 				error: {
-					embeds: [embed.toJSON()],
+					embeds: [embed.json],
 				},
 			};
 		}

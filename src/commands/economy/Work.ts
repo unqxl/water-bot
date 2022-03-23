@@ -49,7 +49,7 @@ export default class WorkCommand extends Command {
 			);
 
 			return message.channel.send({
-				embeds: [embed.toJSON()],
+				embeds: [embed.json],
 			});
 		}
 
@@ -64,7 +64,7 @@ export default class WorkCommand extends Command {
 		);
 
 		return message.channel.send({
-			embeds: [embed.toJSON()],
+			embeds: [embed.json],
 		});
 	}
 }

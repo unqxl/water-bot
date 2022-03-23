@@ -44,7 +44,7 @@ export default class QueueCommand extends Command {
 				return {
 					ok: false,
 					error: {
-						embeds: [embed.toJSON()],
+						embeds: [embed.json],
 					},
 				};
 			}
@@ -68,7 +68,7 @@ export default class QueueCommand extends Command {
 			return {
 				ok: false,
 				error: {
-					embeds: [embed.toJSON()],
+					embeds: [embed.json],
 				},
 			};
 		}
@@ -90,7 +90,7 @@ export default class QueueCommand extends Command {
 			return {
 				ok: false,
 				error: {
-					embeds: [embed.toJSON()],
+					embeds: [embed.json],
 				},
 			};
 		}
@@ -110,7 +110,7 @@ export default class QueueCommand extends Command {
 			return {
 				ok: false,
 				error: {
-					embeds: [embed.toJSON()],
+					embeds: [embed.json],
 				},
 			};
 		}
@@ -149,7 +149,7 @@ export default class QueueCommand extends Command {
 		);
 
 		return message.channel.send({
-			embeds: [embed.toJSON()],
+			embeds: [embed.json],
 		});
 	}
 }

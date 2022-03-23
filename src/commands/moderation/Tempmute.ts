@@ -51,7 +51,7 @@ export default class TempmuteCommand extends Command {
 			return {
 				ok: false,
 				error: {
-					embeds: [embed.toJSON()],
+					embeds: [embed.json],
 				},
 			};
 		}
@@ -72,7 +72,7 @@ export default class TempmuteCommand extends Command {
 			return {
 				ok: false,
 				error: {
-					embeds: [embed.toJSON()],
+					embeds: [embed.json],
 				},
 			};
 		}
@@ -96,7 +96,7 @@ export default class TempmuteCommand extends Command {
 			return {
 				ok: false,
 				error: {
-					embeds: [embed.toJSON()],
+					embeds: [embed.json],
 				},
 			};
 		}
@@ -153,7 +153,7 @@ export default class TempmuteCommand extends Command {
 		);
 
 		const msg = await message.channel.send({
-			embeds: [confirmEmbed],
+			embeds: [confirmEmbed.json],
 			components: [confirmRow],
 		});
 
@@ -191,7 +191,7 @@ export default class TempmuteCommand extends Command {
 				);
 
 				await msg.edit({
-					embeds: [embed.toJSON()],
+					embeds: [embed.json],
 					components: [],
 				});
 

@@ -45,7 +45,7 @@ export default class WarnsCommand extends Command {
 			return {
 				ok: false,
 				error: {
-					embeds: [embed.toJSON()],
+					embeds: [embed.json],
 				},
 			};
 		}
@@ -88,7 +88,7 @@ export default class WarnsCommand extends Command {
 			true
 		);
 		return message.channel.send({
-			embeds: [embed.toJSON()],
+			embeds: [embed.json],
 		});
 	}
 }

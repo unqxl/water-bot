@@ -3,7 +3,6 @@ import { Guild, EmbedBuilder, TextChannel, Util } from "discord.js";
 import { bold } from "@discordjs/builders";
 import Bot from "../../classes/Bot";
 import Event from "../../types/Event/Event";
-import deployCommands from "../../deploy-commands";
 
 export default class ReadyEvent extends Event {
 	constructor() {
@@ -14,7 +13,7 @@ export default class ReadyEvent extends Event {
 		if (!client.application.owner) await client.application.fetch();
 
 		await client.web.start();
-		await deployCommands(client);
+		await client.handlers.loadSlashCommands();
 		await checkUp(client);
 
 		console.log(`${client.user.username} logged in!`);

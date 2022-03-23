@@ -50,7 +50,7 @@ export default class MuteCommand extends Command {
 			return {
 				ok: false,
 				error: {
-					embeds: [embed.toJSON()],
+					embeds: [embed.json],
 				},
 			};
 		}
@@ -74,7 +74,7 @@ export default class MuteCommand extends Command {
 			return {
 				ok: false,
 				error: {
-					embeds: [embed.toJSON()],
+					embeds: [embed.json],
 				},
 			};
 		}
@@ -129,7 +129,7 @@ export default class MuteCommand extends Command {
 		);
 
 		const msg = await message.channel.send({
-			embeds: [confirmEmbed],
+			embeds: [confirmEmbed.json],
 			components: [confirmRow],
 		});
 
@@ -165,7 +165,7 @@ export default class MuteCommand extends Command {
 				);
 
 				await msg.edit({
-					embeds: [embed.toJSON()],
+					embeds: [embed.json],
 					components: [],
 				});
 

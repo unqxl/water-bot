@@ -49,7 +49,7 @@ export default class TwitchStreamersCommand extends Command {
 			);
 
 			return message.channel.send({
-				embeds: [embed.toJSON()],
+				embeds: [embed.json],
 			});
 		} else if (action === "add") {
 			const channel = args.join(" ");
@@ -65,7 +65,7 @@ export default class TwitchStreamersCommand extends Command {
 				);
 
 				return message.channel.send({
-					embeds: [embed.toJSON()],
+					embeds: [embed.json],
 				});
 			}
 
@@ -82,7 +82,7 @@ export default class TwitchStreamersCommand extends Command {
 				);
 
 				return message.channel.send({
-					embeds: [embed.toJSON()],
+					embeds: [embed.json],
 				});
 			}
 
@@ -105,7 +105,7 @@ export default class TwitchStreamersCommand extends Command {
 			);
 
 			return message.channel.send({
-				embeds: [embed.toJSON()],
+				embeds: [embed.json],
 			});
 		} else if (action === "delete") {
 			const channel = args.join(" ");
@@ -121,7 +121,7 @@ export default class TwitchStreamersCommand extends Command {
 				);
 
 				return message.channel.send({
-					embeds: [embed.toJSON()],
+					embeds: [embed.json],
 				});
 			}
 
@@ -138,7 +138,7 @@ export default class TwitchStreamersCommand extends Command {
 				);
 
 				return message.channel.send({
-					embeds: [embed.toJSON()],
+					embeds: [embed.json],
 				});
 			}
 
@@ -157,7 +157,7 @@ export default class TwitchStreamersCommand extends Command {
 			);
 
 			return message.channel.send({
-				embeds: [embed.toJSON()],
+				embeds: [embed.json],
 			});
 		}
 	}

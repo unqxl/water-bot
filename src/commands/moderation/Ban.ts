@@ -50,7 +50,7 @@ export default class BanCommand extends Command {
 			return {
 				ok: false,
 				error: {
-					embeds: [embed.toJSON()],
+					embeds: [embed.json],
 				},
 			};
 		}
@@ -69,7 +69,7 @@ export default class BanCommand extends Command {
 			return {
 				ok: false,
 				error: {
-					embeds: [embed.toJSON()],
+					embeds: [embed.json],
 				},
 			};
 		}
@@ -124,7 +124,7 @@ export default class BanCommand extends Command {
 		);
 
 		const msg = await message.channel.send({
-			embeds: [confirmEmbed],
+			embeds: [confirmEmbed.json],
 			components: [confirmRow],
 		});
 
@@ -154,7 +154,7 @@ export default class BanCommand extends Command {
 				await member.ban({ deleteMessageDays: 7, reason: reason });
 
 				await msg.edit({
-					embeds: [embed.toJSON()],
+					embeds: [embed.json],
 					components: [],
 				});
 

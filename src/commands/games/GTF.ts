@@ -54,10 +54,10 @@ export default class GuessTheFlagCommand extends Command {
 			false,
 			true
 		);
-		embed.setImage(flag);
+		embed.embed.setImage(flag);
 
 		const answer = await this.client.functions.promptMessage(message, {
-			embeds: [embed.toJSON()],
+			embeds: [embed.json],
 		});
 
 		if (!answer) {
@@ -79,7 +79,7 @@ export default class GuessTheFlagCommand extends Command {
 				true
 			);
 			return message.channel.send({
-				embeds: [embed.toJSON()],
+				embeds: [embed.json],
 			});
 		}
 
@@ -116,7 +116,7 @@ export default class GuessTheFlagCommand extends Command {
 				true
 			);
 			return message.channel.send({
-				embeds: [embed.toJSON()],
+				embeds: [embed.json],
 			});
 		} else {
 			const text = lang.GAMES.GUESS_THE_FLAG.DEFEAT(
@@ -137,7 +137,7 @@ export default class GuessTheFlagCommand extends Command {
 				true
 			);
 			return message.channel.send({
-				embeds: [embed.toJSON()],
+				embeds: [embed.json],
 			});
 		}
 	}

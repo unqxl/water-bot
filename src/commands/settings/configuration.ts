@@ -101,7 +101,7 @@ export default class ConfigurationCommand extends Command {
 		);
 
 		return message.channel.send({
-			embeds: [embed.toJSON()],
+			embeds: [embed.json],
 		});
 	}
 }

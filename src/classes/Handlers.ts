@@ -10,17 +10,25 @@ import glob_cmds from "glob";
 const glob = promisify(glob_events);
 
 // Other
+import {
+	ApplicationCommandData,
+	ApplicationCommandOptionType,
+	ApplicationCommandType,
+} from "discord.js";
 import { SlashCommand } from "../types/Command/SlashCommand";
 import { Command } from "../types/Command/Command";
 import { resolve } from "path";
+import { SubCommand } from "../types/Command/SubCommand";
 
-type Structures = Command | SlashCommand;
+type Structures = Command | SlashCommand | SubCommand;
 
 export = class Handlers {
 	public client: Bot;
 
 	constructor(client: Bot) {
 		this.client = client;
+
+		this.createSlashCommand = this.createSlashCommand.bind(this);
 	}
 
 	get directory() {
@@ -54,7 +62,6 @@ export = class Handlers {
 
 			const command = await this.resolveFile<Command>(file, this.client);
 			if (!command) continue;
-
 			await this.validateFile(file, command);
 
 			this.client.commands.set(command.name, command);
@@ -69,20 +76,96 @@ export = class Handlers {
 
 	async loadSlashCommands() {
 		const files = glob_cmds.sync("./slash-commands/**/*.{js,ts}");
+		const subCommands: Record<string, SubCommand[]> = {};
+		const commandGroups: Record<string, [string, SubCommand[]]> = {};
 
 		for (const file of files) {
 			delete require.cache[file];
 
-			const command = await this.resolveFile<SlashCommand>(
+			const command = await this.resolveFile<SlashCommand | SubCommand>(
 				file,
 				this.client
 			);
 			if (!command) continue;
-
 			await this.validateFile(file, command);
 
-			this.client.slashCommands.set(command.name, command);
+			var commandName;
+			if (command instanceof SubCommand) {
+				const groupName = command.options.groupName;
+				const topLevelName = command.options.commandName;
+				if (groupName) {
+					const prev = commandGroups[groupName]?.[1] ?? [];
+
+					commandGroups[groupName] = [
+						topLevelName,
+						[...prev, command],
+					];
+					commandName = `${topLevelName}-${groupName}-${command.name}`;
+				} else if (topLevelName) {
+					const prevSubCommands = subCommands[topLevelName] ?? [];
+					subCommands[topLevelName] = [...prevSubCommands, command];
+					commandName = `${topLevelName}-${command.name}`;
+				}
+			} else {
+				commandName = command.name;
+
+				const data: ApplicationCommandData = {
+					type: ApplicationCommandType.ChatInput,
+					name: command.name,
+					description:
+						command.options.description ?? "No description...",
+					options: command.options.options ?? [],
+				};
+
+				await this.createSlashCommand(data);
+			}
+
+			this.client.slashCommands.set(commandName, command);
 		}
+
+		for (const topLevelName in subCommands) {
+			const cmds = subCommands[topLevelName];
+			const data: ApplicationCommandData = {
+				type: ApplicationCommandType.ChatInput,
+				name: topLevelName,
+				description: `${topLevelName} Commands...`,
+				// @ts-expect-error
+				options: cmds.map((v) => v.options),
+			};
+
+			await this.createSlashCommand(data);
+		}
+
+		const groupCache: any[] = [];
+
+		for (const groupName in commandGroups) {
+			const [topLevelName, cmds] = commandGroups[groupName];
+
+			const groupData = {
+				type: ApplicationCommandOptionType.SubcommandGroup,
+				name: groupName,
+				description: `${groupName} Sub Commands...`,
+				options: cmds.map((v) => v.options),
+			};
+
+			groupCache.push(groupData);
+
+			const data: ApplicationCommandData = {
+				type: ApplicationCommandType.ChatInput,
+				name: topLevelName,
+				description: `${topLevelName} Commands...`,
+				options: [
+					...groupCache,
+					...subCommands[topLevelName].map((v) => v.options),
+				],
+			};
+
+			await this.createSlashCommand(data);
+		}
+	}
+
+	async createSlashCommand(data: ApplicationCommandData) {
+		await this.client.application?.commands.create(data).catch(console.log);
 	}
 
 	async resolveFile<T>(file: string, client: Bot): Promise<T | null> {

@@ -50,7 +50,7 @@ export default class TwitchSystemCommand extends Command {
 			);
 
 			return message.channel.send({
-				embeds: [embed.toJSON()],
+				embeds: [embed.json],
 			});
 		} else if (action === "disable") {
 			config.twitchSystem = false;
@@ -68,7 +68,7 @@ export default class TwitchSystemCommand extends Command {
 			);
 
 			return message.channel.send({
-				embeds: [embed.toJSON()],
+				embeds: [embed.json],
 			});
 		}
 	}

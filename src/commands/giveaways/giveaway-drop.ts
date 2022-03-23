@@ -44,7 +44,7 @@ export default class DropGiveawayCommand extends Command {
 			return {
 				ok: false,
 				error: {
-					embeds: [embed.toJSON()],
+					embeds: [embed.json],
 				},
 			};
 		}
@@ -67,7 +67,7 @@ export default class DropGiveawayCommand extends Command {
 			return {
 				ok: false,
 				error: {
-					embeds: [embed.toJSON()],
+					embeds: [embed.json],
 				},
 			};
 		}
@@ -107,7 +107,7 @@ export default class DropGiveawayCommand extends Command {
 						false,
 						"✉️",
 						true
-					),
+					).json,
 				],
 			},
 			20000
@@ -124,7 +124,7 @@ export default class DropGiveawayCommand extends Command {
 			);
 
 			return message.channel.send({
-				embeds: [embed.toJSON()],
+				embeds: [embed.json],
 			});
 		}
 
@@ -139,7 +139,7 @@ export default class DropGiveawayCommand extends Command {
 						false,
 						"✉️",
 						true
-					),
+					).json,
 				],
 			},
 			10000
@@ -156,7 +156,7 @@ export default class DropGiveawayCommand extends Command {
 			);
 
 			return message.channel.send({
-				embeds: [embed.toJSON()],
+				embeds: [embed.json],
 			});
 		}
 
@@ -171,7 +171,7 @@ export default class DropGiveawayCommand extends Command {
 			);
 
 			return message.channel.send({
-				embeds: [embed.toJSON()],
+				embeds: [embed.json],
 			});
 		}
 

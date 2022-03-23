@@ -46,7 +46,7 @@ export default class LocaleCommand extends Command {
 			);
 
 			return message.channel.send({
-				embeds: [embed.toJSON()],
+				embeds: [embed.json],
 			});
 		} else if (action === "set") {
 			const locale = args[1];
@@ -63,7 +63,7 @@ export default class LocaleCommand extends Command {
 				);
 
 				return message.channel.send({
-					embeds: [embed.toJSON()],
+					embeds: [embed.json],
 				});
 			}
 
@@ -82,7 +82,7 @@ export default class LocaleCommand extends Command {
 				);
 
 				return message.channel.send({
-					embeds: [embed.toJSON()],
+					embeds: [embed.json],
 				});
 			}
 
@@ -107,7 +107,7 @@ export default class LocaleCommand extends Command {
 			);
 
 			return message.channel.send({
-				embeds: [embed.toJSON()],
+				embeds: [embed.json],
 			});
 		} else if (action === "reset") {
 			await this.client.database.set(message.guild.id, "locale", "ru-RU");
@@ -124,7 +124,7 @@ export default class LocaleCommand extends Command {
 			);
 
 			return message.channel.send({
-				embeds: [embed.toJSON()],
+				embeds: [embed.json],
 			});
 		}
 	}

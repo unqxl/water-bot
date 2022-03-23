@@ -1,6 +1,6 @@
 import Event from "../../types/Event/Event";
 import Bot from "../../classes/Bot";
-import { Interaction } from "discord.js";
+import { ChatInputCommandInteraction, Interaction } from "discord.js";
 
 export default class InteractionCreateEvent extends Event {
 	constructor() {
@@ -9,24 +9,46 @@ export default class InteractionCreateEvent extends Event {
 
 	async run(client: Bot, interaction: Interaction) {
 		if (!interaction.inGuild()) return;
-		if (!interaction.isCommand()) return;
+		if (!interaction.isChatInputCommand()) return;
 
 		const lang = await client.functions.getLanguageFile(
 			interaction.guild.id
 		);
 
-		const command = client.slashCommands.get(interaction.commandName);
-		if (!command)
-			return client.logger.warn(
-				`Command with name "${interaction.commandName}" isn't found!`,
-				"interactionCreate"
-			);
+		await client.application?.commands
+			.fetch(interaction.commandId)
+			.catch(() => null);
+
+		const command = client.slashCommands.get(
+			this.getCommandName(interaction)
+		);
+		if (!command) return console.log(1);
 
 		if (command.validate) {
 			const { ok, error } = await command.validate(interaction, lang);
 			if (!ok) return interaction.reply(error);
 		}
 
-		await command.run(interaction, lang);
+		return await command.run(interaction, lang);
+	}
+
+	getCommandName(interaction: ChatInputCommandInteraction) {
+		let command: string;
+
+		const commandName = interaction.commandName;
+		const group = interaction.options.getSubcommandGroup(false);
+		const subCommand = interaction.options.getSubcommand(false);
+
+		if (subCommand) {
+			if (group) {
+				command = `${commandName}-${group}-${subCommand}`;
+			} else {
+				command = `${commandName}-${subCommand}`;
+			}
+		} else {
+			command = commandName;
+		}
+
+		return command;
 	}
 }

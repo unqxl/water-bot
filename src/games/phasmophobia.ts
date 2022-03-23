@@ -311,7 +311,7 @@ export = async (
 						);
 
 						reply.edit({
-							embeds: [embed.toJSON()],
+							embeds: [embed.json],
 							components: [],
 						});
 						return;
@@ -333,7 +333,7 @@ export = async (
 						);
 
 						reply.edit({
-							embeds: [embed.toJSON()],
+							embeds: [embed.json],
 							components: [],
 						});
 						return;
@@ -354,7 +354,7 @@ export = async (
 					);
 
 					reply.edit({
-						embeds: [embed.toJSON()],
+						embeds: [embed.json],
 						components: [],
 					});
 					return;

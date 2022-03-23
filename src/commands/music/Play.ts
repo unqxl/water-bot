@@ -42,7 +42,7 @@ export default class PlayCommand extends Command {
 				return {
 					ok: false,
 					error: {
-						embeds: [embed.toJSON()],
+						embeds: [embed.json],
 					},
 				};
 			}
@@ -66,7 +66,7 @@ export default class PlayCommand extends Command {
 			return {
 				ok: false,
 				error: {
-					embeds: [embed.toJSON()],
+					embeds: [embed.json],
 				},
 			};
 		}
@@ -88,7 +88,7 @@ export default class PlayCommand extends Command {
 			return {
 				ok: false,
 				error: {
-					embeds: [embed.toJSON()],
+					embeds: [embed.json],
 				},
 			};
 		}
@@ -108,7 +108,7 @@ export default class PlayCommand extends Command {
 			return {
 				ok: false,
 				error: {
-					embeds: [embed.toJSON()],
+					embeds: [embed.json],
 				},
 			};
 		}

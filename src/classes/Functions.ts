@@ -8,10 +8,14 @@ import {
 	Snowflake,
 	TextChannel,
 	User,
+	Util,
+	GuildMember,
+	EmbedAuthorData,
 } from "discord.js";
 import { bold, codeBlock } from "@discordjs/builders";
-import { request } from "undici";
+import { APIEmbed } from "discord-api-types/v9";
 import { Message } from "discord.js";
+import { request } from "undici";
 import Bot from "./Bot";
 
 export = class Functions {
@@ -29,7 +33,10 @@ export = class Functions {
 		emoji: string | boolean,
 		showAuthor: boolean,
 		showTimestamp?: boolean
-	): EmbedBuilder {
+	): {
+		embed: EmbedBuilder;
+		json: APIEmbed;
+	} {
 		const embed = new EmbedBuilder();
 
 		if (showAuthor === true) {
@@ -41,13 +48,16 @@ export = class Functions {
 
 		if (showTimestamp === true) embed.setTimestamp();
 
-		embed.setColor(color);
+		embed.setColor(Util.resolveColor(color));
 		embed.setDescription(
 			typeof emoji === "string" ? `${emoji} | ${bold(text)}` : bold(text)
 		);
 		embed.setFooter(typeof footer === "string" ? { text: footer } : null);
 
-		return embed;
+		return {
+			embed: embed,
+			json: embed.toJSON(),
+		};
 	}
 
 	checkOwner(target: User): boolean {
@@ -234,8 +244,8 @@ export = class Functions {
 				false
 			);
 
-			embed.setDescription(codeBlock(stack as string));
-			embed.addFields(
+			embed.embed.setDescription(codeBlock(stack as string));
+			embed.embed.addFields(
 				{
 					name: "Name",
 					value: name,
@@ -264,7 +274,7 @@ export = class Functions {
 			);
 
 			channel.send({
-				embeds: [embed.toJSON()],
+				embeds: [embed.embed.toJSON()],
 			});
 		} catch (e) {
 			console.warn({
@@ -292,6 +302,17 @@ export = class Functions {
 		}
 
 		return text_forms[2];
+	}
+
+	author(member: GuildMember): EmbedAuthorData {
+		return {
+			name: member.displayName,
+			iconURL: member.displayAvatarURL(),
+		};
+	}
+
+	color(color: ColorResolvable): number {
+		return Util.resolveColor(color);
 	}
 };
 

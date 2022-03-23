@@ -15,7 +15,6 @@ import { Client as dagpiClient } from "dagpijs";
 import { DiscordTogether } from "discord-together";
 import { Client as IMDBClient } from "imdb-api";
 import { Economy } from "@badboy-discord/discordjs-economy";
-import Cluster, { Client as ClusterClient } from "discord-hybrid-sharding";
 import WebServer from "./Server";
 import Enmap from "enmap";
 import DisTube from "distube";
@@ -43,6 +42,7 @@ import SoundCloudPlugin from "@distube/soundcloud";
 import { CustomCommand, GuildConfig } from "../types/types";
 import { SlashCommand } from "../types/Command/SlashCommand";
 import { ClansGuild } from "../interfaces/Clans";
+import { SubCommand } from "../types/Command/SubCommand";
 import { Command } from "../types/Command/Command";
 import Event from "../types/Event/Event";
 
@@ -57,7 +57,8 @@ import API from "./API";
 export = class Bot extends Client {
 	//? [Collections]
 	public commands: Collection<string, Command> = new Collection();
-	public slashCommands: Collection<string, SlashCommand> = new Collection();
+	public slashCommands: Collection<string, SlashCommand | SubCommand> =
+		new Collection();
 	public aliases: Collection<string, string> = new Collection();
 	public events: Collection<string, Event> = new Collection();
 	public _configs: Collection<string, GuildConfiguration> = new Collection();
@@ -112,7 +113,6 @@ export = class Bot extends Client {
 	public functions: Functions = new Functions(this);
 
 	//? [Systems]
-	public cluster: ClusterClient = new ClusterClient(this);
 	public apis: API = new API(this.config);
 	public web: WebServer = new WebServer({ port: 80 });
 	public socket: Socket = io("http://localhost:3001");
@@ -219,9 +219,6 @@ export = class Bot extends Client {
 					},
 				],
 			},
-
-			shards: Cluster.data.SHARD_LIST,
-			shardCount: Cluster.data.TOTAL_SHARDS,
 		});
 
 		this.music.setMaxListeners(100);
@@ -259,7 +256,6 @@ export = class Bot extends Client {
 		await logs(this);
 		await this.handlers.loadEvents();
 		await this.handlers.loadCommands();
-		await this.handlers.loadSlashCommands();
 		await this.functions.updateToken();
 
 		new TopGG(this);

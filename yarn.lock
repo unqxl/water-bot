@@ -1275,13 +1275,6 @@ discord-giveaways@bad-boy-discord/discord-giveaways#develop:
     deepmerge "^4.2.2"
     serialize-javascript "^6.0.0"
 
-discord-hybrid-sharding@^1.5.0:
-  version "1.5.0"
-  resolved "https://registry.yarnpkg.com/discord-hybrid-sharding/-/discord-hybrid-sharding-1.5.0.tgz#f4f13a8d9e2f54300a4fec0ec7e039bd4e2746b2"
-  integrity sha512-m6U1AH8OhixBfce5cVAmjcXtR1Pv9hLV2cJToci3iZQeQ8BZkY0TeK3clPvu4+mI4K/3NAHBHU615CTOX66PFA==
-  dependencies:
-    node-fetch "^2.6.1"
-
 discord-logs@bad-boy-discord/discord-logs:
   version "2.0.1"
   resolved "https://codeload.github.com/bad-boy-discord/discord-logs/tar.gz/49d39323375ff35425e7fb7d6c3eacece8209f50"
@@ -3941,15 +3934,10 @@ typescript@^4.2.3:
   resolved "https://registry.yarnpkg.com/typescript/-/typescript-4.5.5.tgz#d8c953832d28924a9e3d37c73d729c846c5896f3"
   integrity sha512-TCTIul70LyWe6IJWT8QSYeA54WQe8EjQFU4wY52Fasj5UKx88LNYKCgBEHcOMOrFF1rKGbD8v/xcNWVUq9SymA==
 
-undici@^4.14.1, undici@^4.16.0:
+undici@^4.14.1, undici@^4.15.0, undici@^4.16.0:
   version "4.16.0"
   resolved "https://registry.yarnpkg.com/undici/-/undici-4.16.0.tgz#469bb87b3b918818d3d7843d91a1d08da357d5ff"
   integrity sha512-tkZSECUYi+/T1i4u+4+lwZmQgLXd4BLGlrc7KZPcLIW7Jpq99+Xpc30ONv7nS6F5UNOxp/HBZSSL9MafUrvJbw==
-
-undici@^4.15.0:
-  version "4.15.1"
-  resolved "https://registry.yarnpkg.com/undici/-/undici-4.15.1.tgz#c2c0e75f232178f0e6781f6b46c81ccc15065f6e"
-  integrity sha512-h8LJybhMKD09IyQZoQadNtIR/GmugVhTOVREunJrpV6RStriKBFdSVoFzEzTihwXi/27DIBO+Z0OGF+Mzfi0lA==
 
 unique-filename@^1.1.1:
   version "1.1.1"

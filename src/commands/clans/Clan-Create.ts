@@ -34,7 +34,7 @@ export default class ClanCreateCommand extends Command {
 						false,
 						"✉️",
 						true
-					),
+					).json,
 				],
 			},
 			30000
@@ -51,7 +51,7 @@ export default class ClanCreateCommand extends Command {
 			);
 
 			return message.channel.send({
-				embeds: [embed.toJSON()],
+				embeds: [embed.json],
 			});
 		}
 
@@ -66,7 +66,7 @@ export default class ClanCreateCommand extends Command {
 						false,
 						"✉️",
 						true
-					),
+					).json,
 				],
 			},
 			30000
@@ -83,7 +83,7 @@ export default class ClanCreateCommand extends Command {
 			);
 
 			return message.channel.send({
-				embeds: [embed.toJSON()],
+				embeds: [embed.json],
 			});
 		}
 
@@ -105,7 +105,7 @@ export default class ClanCreateCommand extends Command {
 			);
 
 			return message.channel.send({
-				embeds: [embed.toJSON()],
+				embeds: [embed.json],
 			});
 		}
 
@@ -119,7 +119,7 @@ export default class ClanCreateCommand extends Command {
 		);
 
 		return message.channel.send({
-			embeds: [embed.toJSON()],
+			embeds: [embed.json],
 		});
 	}
 }

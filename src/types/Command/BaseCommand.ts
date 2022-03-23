@@ -1,4 +1,9 @@
-import { MessageOptions, PermissionsString } from "discord.js";
+import {
+	ApplicationCommandOption,
+	ApplicationCommandOptionData,
+	MessageOptions,
+	PermissionsString,
+} from "discord.js";
 import { Message } from "discord.js";
 import Bot from "../../classes/Bot";
 
@@ -25,6 +30,7 @@ export interface BaseCommandOptions {
 	usage?: string;
 	memberPermissions?: PermissionsString[];
 	botPermissions?: PermissionsString[];
+	options?: ApplicationCommandOption | ApplicationCommandOptionData;
 }
 
 interface Description {
@@ -62,6 +68,7 @@ export abstract class BaseCommand<
 		args: string[],
 		lang: typeof import("@locales/English").default
 	): Promise<ValidateReturn>;
+
 	abstract run(
 		message: Message,
 		args: string[],

@@ -5,6 +5,7 @@ export = {
 		testToken: "NO-TOKEN",
 		logsChannelID: "CHANNEL-ID",
 		test: true,
+		migrate_to_slash: false,
 		github_link: "https://github.com/user/repo",
 	},
 

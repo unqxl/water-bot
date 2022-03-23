@@ -45,7 +45,7 @@ export default class CreateGiveawayCommand extends Command {
 			return {
 				ok: false,
 				error: {
-					embeds: [embed.toJSON()],
+					embeds: [embed.json],
 				},
 			};
 		}
@@ -68,7 +68,7 @@ export default class CreateGiveawayCommand extends Command {
 			return {
 				ok: false,
 				error: {
-					embeds: [embed.toJSON()],
+					embeds: [embed.json],
 				},
 			};
 		}
@@ -110,7 +110,7 @@ export default class CreateGiveawayCommand extends Command {
 						false,
 						"✉️",
 						true
-					),
+					).json,
 				],
 			},
 			20000
@@ -127,7 +127,7 @@ export default class CreateGiveawayCommand extends Command {
 			);
 
 			return message.channel.send({
-				embeds: [embed.toJSON()],
+				embeds: [embed.json],
 			});
 		}
 
@@ -142,7 +142,7 @@ export default class CreateGiveawayCommand extends Command {
 						false,
 						"✉️",
 						true
-					),
+					).json,
 				],
 			},
 			10000
@@ -159,7 +159,7 @@ export default class CreateGiveawayCommand extends Command {
 			);
 
 			return message.channel.send({
-				embeds: [embed.toJSON()],
+				embeds: [embed.json],
 			});
 		}
 
@@ -174,7 +174,7 @@ export default class CreateGiveawayCommand extends Command {
 			);
 
 			return message.channel.send({
-				embeds: [embed.toJSON()],
+				embeds: [embed.json],
 			});
 		}
 
@@ -189,7 +189,7 @@ export default class CreateGiveawayCommand extends Command {
 						false,
 						"✉️",
 						true
-					),
+					).json,
 				],
 			},
 			20000
@@ -206,7 +206,7 @@ export default class CreateGiveawayCommand extends Command {
 			);
 
 			return message.channel.send({
-				embeds: [embed.toJSON()],
+				embeds: [embed.json],
 			});
 		}
 

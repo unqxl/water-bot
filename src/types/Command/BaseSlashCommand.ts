@@ -1,17 +1,18 @@
 import {
+	ApplicationCommandOption,
 	ApplicationCommandOptionData,
-	ApplicationCommandType,
+	ChatInputCommandInteraction,
 	InteractionReplyOptions,
+	PermissionsString,
 } from "discord.js";
-import { CommandInteraction } from "discord.js";
 import Bot from "../../classes/Bot";
 
 export interface BaseSlashCommandOptions {
 	name: string;
 	description: string;
-	type?: ApplicationCommandType;
-	options?: ApplicationCommandOptionData[];
-	defaultPermission?: false;
+	memberPermissions?: PermissionsString[];
+	botPermissions?: PermissionsString[];
+	options?: (ApplicationCommandOption | ApplicationCommandOptionData)[];
 }
 
 export type ValidateReturn = {
@@ -40,12 +41,12 @@ export abstract class BaseSlashCommand<
 	}
 
 	validate?(
-		interaction: CommandInteraction,
+		interaction: ChatInputCommandInteraction<"cached" | "raw">,
 		lang: typeof import("@locales/English").default
 	): Promise<ValidateReturn>;
 
 	abstract run(
-		interaction: CommandInteraction,
+		interaction: ChatInputCommandInteraction<"cached" | "raw">,
 		lang: typeof import("@locales/English").default
 	): Promise<unknown>;
 }

@@ -188,13 +188,14 @@ export default class HelpCommand extends Command {
 			const embed = this.client.functions.buildEmbed(
 				message,
 				"Blurple",
-				undefined,
+				"",
 				false,
 				false,
 				true
 			);
 
-			embed.addFields(
+			embed.embed.data.description = undefined;
+			embed.embed.addFields(
 				{
 					name: `[💰] ${Economy}`,
 					value: EconomyCommands,
@@ -228,7 +229,7 @@ export default class HelpCommand extends Command {
 				}
 			);
 
-			embed.setFooter({
+			embed.embed.setFooter({
 				text: `${Length}: ${this.client.functions.sp(
 					this.client.commands.size
 				)}`,
@@ -236,13 +237,13 @@ export default class HelpCommand extends Command {
 			});
 
 			if (this.client.functions.checkOwner(message.author))
-				embed.addFields({
+				embed.embed.addFields({
 					name: `[👑] ${BotOwner}`,
 					value: BotOwnerCommands,
 				});
 
 			return message.channel.send({
-				embeds: [embed.toJSON()],
+				embeds: [embed.embed.toJSON()],
 			});
 		} else {
 			const cmd =
@@ -260,7 +261,7 @@ export default class HelpCommand extends Command {
 				);
 
 				return message.channel.send({
-					embeds: [embed.toJSON()],
+					embeds: [embed.json],
 				});
 			}
 
@@ -349,7 +350,7 @@ export default class HelpCommand extends Command {
 			);
 
 			return message.channel.send({
-				embeds: [embed.toJSON()],
+				embeds: [embed.json],
 			});
 		}
 	}
