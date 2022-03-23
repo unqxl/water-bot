@@ -38,7 +38,7 @@ export default class SlapCommand extends Command {
 			return {
 				ok: false,
 				error: {
-					embeds: [embed.embed.toJSON()],
+					embeds: [embed.data.toJSON()],
 				},
 			};
 		}
@@ -69,10 +69,10 @@ export default class SlapCommand extends Command {
 			"😤",
 			true
 		);
-		embed.embed.setImage(url);
+		embed.data.setImage(url);
 
 		return message.channel.send({
-			embeds: [embed.embed.toJSON()],
+			embeds: [embed.data.toJSON()],
 		});
 	}
 }

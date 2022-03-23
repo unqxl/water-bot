@@ -44,12 +44,12 @@ export default class GuessTheLogoCommand extends Command {
 			false,
 			true
 		);
-		embed.embed.setImage(data.question);
+		embed.data.setImage(data.question);
 
 		const answer = await this.client.functions.promptMessage(
 			message,
 			{
-				embeds: [embed.embed.toJSON()],
+				embeds: [embed.data.toJSON()],
 			},
 			35000
 		);
@@ -68,10 +68,10 @@ export default class GuessTheLogoCommand extends Command {
 				"❌",
 				true
 			);
-			embed.embed.setImage(data.answer);
+			embed.data.setImage(data.answer);
 
 			return message.channel.send({
-				embeds: [embed.embed.toJSON()],
+				embeds: [embed.data.toJSON()],
 			});
 		}
 
@@ -95,10 +95,10 @@ export default class GuessTheLogoCommand extends Command {
 				"✅",
 				true
 			);
-			embed.embed.setImage(data.answer);
+			embed.data.setImage(data.answer);
 
 			return message.channel.send({
-				embeds: [embed.embed.toJSON()],
+				embeds: [embed.data.toJSON()],
 			});
 		} else {
 			const text = lang.GAMES.GUESS_THE_LOGO.DEFEAT(
@@ -114,10 +114,10 @@ export default class GuessTheLogoCommand extends Command {
 				"❌",
 				true
 			);
-			embed.embed.setImage(data.answer);
+			embed.data.setImage(data.answer);
 
 			return message.channel.send({
-				embeds: [embed.embed.toJSON()],
+				embeds: [embed.data.toJSON()],
 			});
 		}
 	}

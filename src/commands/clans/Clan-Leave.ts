@@ -38,7 +38,7 @@ export default class ClanLeaveCommand extends Command {
 			return {
 				ok: false,
 				error: {
-					embeds: [embed.embed.toJSON()],
+					embeds: [embed.data.toJSON()],
 				},
 			};
 		}
@@ -60,7 +60,7 @@ export default class ClanLeaveCommand extends Command {
 			return {
 				ok: false,
 				error: {
-					embeds: [embed.embed.toJSON()],
+					embeds: [embed.data.toJSON()],
 				},
 			};
 		}
@@ -98,7 +98,7 @@ export default class ClanLeaveCommand extends Command {
 		);
 
 		return message.channel.send({
-			embeds: [embed.embed.toJSON()],
+			embeds: [embed.data.toJSON()],
 		});
 	}
 }

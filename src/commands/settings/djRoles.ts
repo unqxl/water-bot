@@ -56,7 +56,7 @@ export default class DJRolesCommand extends Command {
 			);
 
 			return message.channel.send({
-				embeds: [embed.embed.toJSON()],
+				embeds: [embed.data.toJSON()],
 			});
 		} else if (action === "add") {
 			const role =
@@ -75,7 +75,7 @@ export default class DJRolesCommand extends Command {
 				);
 
 				return message.channel.send({
-					embeds: [embed.embed.toJSON()],
+					embeds: [embed.data.toJSON()],
 				});
 			}
 
@@ -92,7 +92,7 @@ export default class DJRolesCommand extends Command {
 				);
 
 				return message.channel.send({
-					embeds: [embed.embed.toJSON()],
+					embeds: [embed.data.toJSON()],
 				});
 			}
 
@@ -109,7 +109,7 @@ export default class DJRolesCommand extends Command {
 				);
 
 				return message.channel.send({
-					embeds: [embed.embed.toJSON()],
+					embeds: [embed.data.toJSON()],
 				});
 			}
 
@@ -128,7 +128,7 @@ export default class DJRolesCommand extends Command {
 			);
 
 			return message.channel.send({
-				embeds: [embed.embed.toJSON()],
+				embeds: [embed.data.toJSON()],
 			});
 		} else if (action === "delete") {
 			const role =
@@ -147,7 +147,7 @@ export default class DJRolesCommand extends Command {
 				);
 
 				return message.channel.send({
-					embeds: [embed.embed.toJSON()],
+					embeds: [embed.data.toJSON()],
 				});
 			}
 
@@ -164,7 +164,7 @@ export default class DJRolesCommand extends Command {
 				);
 
 				return message.channel.send({
-					embeds: [embed.embed.toJSON()],
+					embeds: [embed.data.toJSON()],
 				});
 			}
 
@@ -181,7 +181,7 @@ export default class DJRolesCommand extends Command {
 				);
 
 				return message.channel.send({
-					embeds: [embed.embed.toJSON()],
+					embeds: [embed.data.toJSON()],
 				});
 			}
 
@@ -203,7 +203,7 @@ export default class DJRolesCommand extends Command {
 			);
 
 			return message.channel.send({
-				embeds: [embed.embed.toJSON()],
+				embeds: [embed.data.toJSON()],
 			});
 		}
 	}

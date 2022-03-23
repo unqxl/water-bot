@@ -34,7 +34,7 @@ export = class Functions {
 		showAuthor: boolean,
 		showTimestamp?: boolean
 	): {
-		embed: EmbedBuilder;
+		data: EmbedBuilder;
 		json: APIEmbed;
 	} {
 		const embed = new EmbedBuilder();
@@ -55,7 +55,7 @@ export = class Functions {
 		embed.setFooter(typeof footer === "string" ? { text: footer } : null);
 
 		return {
-			embed: embed,
+			data: embed,
 			json: embed.toJSON(),
 		};
 	}
@@ -244,8 +244,8 @@ export = class Functions {
 				false
 			);
 
-			embed.embed.setDescription(codeBlock(stack as string));
-			embed.embed.addFields(
+			embed.data.setDescription(codeBlock(stack as string));
+			embed.data.addFields(
 				{
 					name: "Name",
 					value: name,
@@ -274,7 +274,7 @@ export = class Functions {
 			);
 
 			channel.send({
-				embeds: [embed.embed.toJSON()],
+				embeds: [embed.data.toJSON()],
 			});
 		} catch (e) {
 			console.warn({

@@ -50,7 +50,7 @@ export default class TwitchChannelCommand extends Command {
 			);
 
 			return message.channel.send({
-				embeds: [embed.embed.toJSON()],
+				embeds: [embed.data.toJSON()],
 			});
 		} else if (action === "set") {
 			const channel =
@@ -69,7 +69,7 @@ export default class TwitchChannelCommand extends Command {
 				);
 
 				return message.channel.send({
-					embeds: [embed.embed.toJSON()],
+					embeds: [embed.data.toJSON()],
 				});
 			}
 
@@ -91,7 +91,7 @@ export default class TwitchChannelCommand extends Command {
 			);
 
 			return message.channel.send({
-				embeds: [embed.embed.toJSON()],
+				embeds: [embed.data.toJSON()],
 			});
 		} else if (action === "reset") {
 			await this.client.database.set(
@@ -112,7 +112,7 @@ export default class TwitchChannelCommand extends Command {
 			);
 
 			return message.channel.send({
-				embeds: [embed.embed.toJSON()],
+				embeds: [embed.data.toJSON()],
 			});
 		}
 	}

@@ -45,7 +45,7 @@ export default class ClanListCommand extends Command {
 			return {
 				ok: false,
 				error: {
-					embeds: [embed.embed.toJSON()],
+					embeds: [embed.data.toJSON()],
 				},
 			};
 		}
@@ -116,12 +116,12 @@ export default class ClanListCommand extends Command {
 			true
 		);
 
-		embed.embed.setFooter({
+		embed.data.setFooter({
 			text: `Page: ${page}/${Math.ceil(data.length / 10)}`,
 		});
 
 		const msg = await message.channel.send({
-			embeds: [embed.embed.toJSON()],
+			embeds: [embed.data.toJSON()],
 			components: [row],
 		});
 
@@ -168,13 +168,13 @@ export default class ClanListCommand extends Command {
 						.slice(i0, i1)
 						.join("\n");
 
-					embed.embed.setDescription(description);
-					embed.embed.setFooter({
+					embed.data.setDescription(description);
+					embed.data.setFooter({
 						text: `Page: ${page}/${Math.ceil(data.length / 10)}`,
 					});
 
 					return btn.update({
-						embeds: [embed.embed.toJSON()],
+						embeds: [embed.data.toJSON()],
 					});
 				}
 
@@ -221,13 +221,13 @@ export default class ClanListCommand extends Command {
 						.slice(i0, i1)
 						.join("\n");
 
-					embed.embed.setDescription(description);
-					embed.embed.setFooter({
+					embed.data.setDescription(description);
+					embed.data.setFooter({
 						text: `Page: ${page}/${Math.ceil(data.length / 10)}`,
 					});
 
 					return btn.update({
-						embeds: [embed.embed.toJSON()],
+						embeds: [embed.data.toJSON()],
 					});
 				}
 

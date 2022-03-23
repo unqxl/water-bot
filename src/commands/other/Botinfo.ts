@@ -93,7 +93,7 @@ export default class BotinfoCommand extends Command {
 			true
 		);
 
-		embed.embed.addFields({
+		embed.data.addFields({
 			name: `${fieldName}:`,
 			value: [
 				`› **${guilds}**: **${botInfo.guilds}**`,
@@ -109,10 +109,10 @@ export default class BotinfoCommand extends Command {
 			].join("\n"),
 		});
 
-		embed.embed.setThumbnail(this.client.user.displayAvatarURL());
+		embed.data.setThumbnail(this.client.user.displayAvatarURL());
 
 		return message.channel.send({
-			embeds: [embed.embed.toJSON()],
+			embeds: [embed.data.toJSON()],
 		});
 	}
 }

@@ -194,8 +194,8 @@ export default class HelpCommand extends Command {
 				true
 			);
 
-			embed.embed.data.description = undefined;
-			embed.embed.addFields(
+			embed.data.data.description = undefined;
+			embed.data.addFields(
 				{
 					name: `[💰] ${Economy}`,
 					value: EconomyCommands,
@@ -229,7 +229,7 @@ export default class HelpCommand extends Command {
 				}
 			);
 
-			embed.embed.setFooter({
+			embed.data.setFooter({
 				text: `${Length}: ${this.client.functions.sp(
 					this.client.commands.size
 				)}`,
@@ -237,13 +237,13 @@ export default class HelpCommand extends Command {
 			});
 
 			if (this.client.functions.checkOwner(message.author))
-				embed.embed.addFields({
+				embed.data.addFields({
 					name: `[👑] ${BotOwner}`,
 					value: BotOwnerCommands,
 				});
 
 			return message.channel.send({
-				embeds: [embed.embed.toJSON()],
+				embeds: [embed.data.toJSON()],
 			});
 		} else {
 			const cmd =
@@ -261,7 +261,7 @@ export default class HelpCommand extends Command {
 				);
 
 				return message.channel.send({
-					embeds: [embed.embed.toJSON()],
+					embeds: [embed.data.toJSON()],
 				});
 			}
 
@@ -350,7 +350,7 @@ export default class HelpCommand extends Command {
 			);
 
 			return message.channel.send({
-				embeds: [embed.embed.toJSON()],
+				embeds: [embed.data.toJSON()],
 			});
 		}
 	}
