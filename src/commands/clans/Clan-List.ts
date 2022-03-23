@@ -45,7 +45,7 @@ export default class ClanListCommand extends Command {
 			return {
 				ok: false,
 				error: {
-					embeds: [embed.json],
+					embeds: [embed.embed.toJSON()],
 				},
 			};
 		}
@@ -121,7 +121,7 @@ export default class ClanListCommand extends Command {
 		});
 
 		const msg = await message.channel.send({
-			embeds: [embed.json],
+			embeds: [embed.embed.toJSON()],
 			components: [row],
 		});
 
@@ -174,7 +174,7 @@ export default class ClanListCommand extends Command {
 					});
 
 					return btn.update({
-						embeds: [embed.json],
+						embeds: [embed.embed.toJSON()],
 					});
 				}
 
@@ -227,7 +227,7 @@ export default class ClanListCommand extends Command {
 					});
 
 					return btn.update({
-						embeds: [embed.json],
+						embeds: [embed.embed.toJSON()],
 					});
 				}
 

@@ -112,7 +112,7 @@ export default class BotinfoCommand extends Command {
 		embed.embed.setThumbnail(this.client.user.displayAvatarURL());
 
 		return message.channel.send({
-			embeds: [embed.json],
+			embeds: [embed.embed.toJSON()],
 		});
 	}
 }

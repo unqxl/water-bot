@@ -50,7 +50,7 @@ export default class MuteRoleCommand extends Command {
 			);
 
 			return message.channel.send({
-				embeds: [embed.json],
+				embeds: [embed.embed.toJSON()],
 			});
 		} else if (action === "set") {
 			const role =
@@ -69,7 +69,7 @@ export default class MuteRoleCommand extends Command {
 				);
 
 				return message.channel.send({
-					embeds: [embed.json],
+					embeds: [embed.embed.toJSON()],
 				});
 			}
 
@@ -91,7 +91,7 @@ export default class MuteRoleCommand extends Command {
 			);
 
 			return message.channel.send({
-				embeds: [embed.json],
+				embeds: [embed.embed.toJSON()],
 			});
 		} else if (action === "reset") {
 			await this.client.database.set(message.guild.id, "mute_role", null);
@@ -108,7 +108,7 @@ export default class MuteRoleCommand extends Command {
 			);
 
 			return message.channel.send({
-				embeds: [embed.json],
+				embeds: [embed.embed.toJSON()],
 			});
 		}
 	}

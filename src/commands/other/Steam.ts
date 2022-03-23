@@ -39,7 +39,7 @@ export default class SteamCommand extends Command {
 			return {
 				ok: false,
 				error: {
-					embeds: [embed.json],
+					embeds: [embed.embed.toJSON()],
 				},
 			};
 		}
@@ -82,7 +82,7 @@ export default class SteamCommand extends Command {
 			);
 
 			return message.channel.send({
-				embeds: [embed.json],
+				embeds: [embed.embed.toJSON()],
 			});
 		}
 

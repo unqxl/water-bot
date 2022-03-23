@@ -261,7 +261,7 @@ export default class HelpCommand extends Command {
 				);
 
 				return message.channel.send({
-					embeds: [embed.json],
+					embeds: [embed.embed.toJSON()],
 				});
 			}
 
@@ -350,7 +350,7 @@ export default class HelpCommand extends Command {
 			);
 
 			return message.channel.send({
-				embeds: [embed.json],
+				embeds: [embed.embed.toJSON()],
 			});
 		}
 	}

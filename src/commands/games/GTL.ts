@@ -49,7 +49,7 @@ export default class GuessTheLogoCommand extends Command {
 		const answer = await this.client.functions.promptMessage(
 			message,
 			{
-				embeds: [embed.json],
+				embeds: [embed.embed.toJSON()],
 			},
 			35000
 		);
@@ -71,7 +71,7 @@ export default class GuessTheLogoCommand extends Command {
 			embed.embed.setImage(data.answer);
 
 			return message.channel.send({
-				embeds: [embed.json],
+				embeds: [embed.embed.toJSON()],
 			});
 		}
 
@@ -98,7 +98,7 @@ export default class GuessTheLogoCommand extends Command {
 			embed.embed.setImage(data.answer);
 
 			return message.channel.send({
-				embeds: [embed.json],
+				embeds: [embed.embed.toJSON()],
 			});
 		} else {
 			const text = lang.GAMES.GUESS_THE_LOGO.DEFEAT(
@@ -117,7 +117,7 @@ export default class GuessTheLogoCommand extends Command {
 			embed.embed.setImage(data.answer);
 
 			return message.channel.send({
-				embeds: [embed.json],
+				embeds: [embed.embed.toJSON()],
 			});
 		}
 	}

@@ -37,7 +37,7 @@ export default class ClanJoinCommand extends Command {
 			return {
 				ok: false,
 				error: {
-					embeds: [embed.json],
+					embeds: [embed.embed.toJSON()],
 				},
 			};
 		}
@@ -56,7 +56,7 @@ export default class ClanJoinCommand extends Command {
 			return {
 				ok: false,
 				error: {
-					embeds: [embed.json],
+					embeds: [embed.embed.toJSON()],
 				},
 			};
 		}
@@ -87,7 +87,7 @@ export default class ClanJoinCommand extends Command {
 			);
 
 			return message.channel.send({
-				embeds: [embed.json],
+				embeds: [embed.embed.toJSON()],
 			});
 		}
 
@@ -102,7 +102,7 @@ export default class ClanJoinCommand extends Command {
 		);
 
 		return message.channel.send({
-			embeds: [embed.json],
+			embeds: [embed.embed.toJSON()],
 		});
 	}
 }

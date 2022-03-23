@@ -50,7 +50,7 @@ export default class UnmuteCommand extends Command {
 			return {
 				ok: false,
 				error: {
-					embeds: [embed.json],
+					embeds: [embed.embed.toJSON()],
 				},
 			};
 		}
@@ -73,7 +73,7 @@ export default class UnmuteCommand extends Command {
 			return {
 				ok: false,
 				error: {
-					embeds: [embed.json],
+					embeds: [embed.embed.toJSON()],
 				},
 			};
 		}
@@ -94,7 +94,7 @@ export default class UnmuteCommand extends Command {
 			return {
 				ok: false,
 				error: {
-					embeds: [embed.json],
+					embeds: [embed.embed.toJSON()],
 				},
 			};
 		}
@@ -146,7 +146,7 @@ export default class UnmuteCommand extends Command {
 		);
 
 		const msg = await message.channel.send({
-			embeds: [confirmEmbed.json],
+			embeds: [confirmembed.embed.toJSON()],
 			components: [confirmRow],
 		});
 
@@ -173,7 +173,7 @@ export default class UnmuteCommand extends Command {
 				);
 
 				await msg.edit({
-					embeds: [embed.json],
+					embeds: [embed.embed.toJSON()],
 					components: [],
 				});
 

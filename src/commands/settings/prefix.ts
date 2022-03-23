@@ -46,7 +46,7 @@ export default class PrefixCommand extends Command {
 			);
 
 			return message.channel.send({
-				embeds: [embed.json],
+				embeds: [embed.embed.toJSON()],
 			});
 		} else if (action === "set") {
 			const prefix = args[1];
@@ -62,7 +62,7 @@ export default class PrefixCommand extends Command {
 				);
 
 				return message.channel.send({
-					embeds: [embed.json],
+					embeds: [embed.embed.toJSON()],
 				});
 			}
 
@@ -80,7 +80,7 @@ export default class PrefixCommand extends Command {
 			);
 
 			return message.channel.send({
-				embeds: [embed.json],
+				embeds: [embed.embed.toJSON()],
 			});
 		} else if (action === "reset") {
 			await this.client.database.set(message.guild.id, "prefix", "-");
@@ -97,7 +97,7 @@ export default class PrefixCommand extends Command {
 			);
 
 			return message.channel.send({
-				embeds: [embed.json],
+				embeds: [embed.embed.toJSON()],
 			});
 		}
 	}

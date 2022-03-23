@@ -50,7 +50,7 @@ export default class WarnCommand extends Command {
 			return {
 				ok: false,
 				error: {
-					embeds: [embed.json],
+					embeds: [embed.embed.toJSON()],
 				},
 			};
 		}
@@ -74,7 +74,7 @@ export default class WarnCommand extends Command {
 			return {
 				ok: false,
 				error: {
-					embeds: [embed.json],
+					embeds: [embed.embed.toJSON()],
 				},
 			};
 		}
@@ -129,7 +129,7 @@ export default class WarnCommand extends Command {
 		);
 
 		const msg = await message.channel.send({
-			embeds: [confirmEmbed.json],
+			embeds: [confirmembed.embed.toJSON()],
 			components: [confirmRow],
 		});
 
@@ -160,7 +160,7 @@ export default class WarnCommand extends Command {
 				);
 
 				await msg.edit({
-					embeds: [embed.json],
+					embeds: [embed.embed.toJSON()],
 					components: [],
 				});
 

@@ -38,7 +38,7 @@ export default class HugCommand extends Command {
 			return {
 				ok: false,
 				error: {
-					embeds: [embed.json],
+					embeds: [embed.embed.toJSON()],
 				},
 			};
 		}
@@ -72,7 +72,7 @@ export default class HugCommand extends Command {
 		embed.embed.setImage(url);
 
 		return message.channel.send({
-			embeds: [embed.json],
+			embeds: [embed.embed.toJSON()],
 		});
 	}
 }

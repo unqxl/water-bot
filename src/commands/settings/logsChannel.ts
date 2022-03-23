@@ -50,7 +50,7 @@ export default class LogsChannelCommand extends Command {
 			);
 
 			return message.channel.send({
-				embeds: [embed.json],
+				embeds: [embed.embed.toJSON()],
 			});
 		} else if (action === "set") {
 			const channel =
@@ -69,7 +69,7 @@ export default class LogsChannelCommand extends Command {
 				);
 
 				return message.channel.send({
-					embeds: [embed.json],
+					embeds: [embed.embed.toJSON()],
 				});
 			}
 
@@ -91,7 +91,7 @@ export default class LogsChannelCommand extends Command {
 			);
 
 			return message.channel.send({
-				embeds: [embed.json],
+				embeds: [embed.embed.toJSON()],
 			});
 		} else if (action === "reset") {
 			await this.client.database.set(
@@ -112,7 +112,7 @@ export default class LogsChannelCommand extends Command {
 			);
 
 			return message.channel.send({
-				embeds: [embed.json],
+				embeds: [embed.embed.toJSON()],
 			});
 		}
 	}

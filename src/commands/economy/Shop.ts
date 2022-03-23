@@ -61,7 +61,7 @@ export default class ShopCommand extends Command {
 				);
 
 				return message.channel.send({
-					embeds: [embed.json],
+					embeds: [embed.embed.toJSON()],
 				});
 			}
 
@@ -122,7 +122,7 @@ export default class ShopCommand extends Command {
 			});
 
 			const msg = await message.channel.send({
-				embeds: [embed.json],
+				embeds: [embed.embed.toJSON()],
 				components: [row],
 			});
 
@@ -171,7 +171,7 @@ export default class ShopCommand extends Command {
 						});
 
 						return btn.update({
-							embeds: [embed.json],
+							embeds: [embed.embed.toJSON()],
 						});
 					}
 
@@ -220,7 +220,7 @@ export default class ShopCommand extends Command {
 						});
 
 						return btn.update({
-							embeds: [embed.json],
+							embeds: [embed.embed.toJSON()],
 						});
 					}
 
@@ -257,7 +257,7 @@ export default class ShopCommand extends Command {
 			const name_answer = await this.client.functions.promptMessage(
 				message,
 				{
-					embeds: [name_embed.json],
+					embeds: [name_embed.embed.toJSON()],
 				},
 				15000
 			);
@@ -272,7 +272,7 @@ export default class ShopCommand extends Command {
 					true
 				);
 
-				return message.channel.send({ embeds: [embed.json] });
+				return message.channel.send({ embeds: [embed.embed.toJSON()] });
 			}
 
 			item_data.name = name_answer.toString();
@@ -293,7 +293,7 @@ export default class ShopCommand extends Command {
 				await this.client.functions.promptMessage(
 					message,
 					{
-						embeds: [description_embed.json],
+						embeds: [description_embed.embed.toJSON()],
 					},
 					15000
 				);
@@ -309,7 +309,7 @@ export default class ShopCommand extends Command {
 					true
 				);
 
-				return message.channel.send({ embeds: [embed.json] });
+				return message.channel.send({ embeds: [embed.embed.toJSON()] });
 			}
 
 			item_data.description = description_answer.toString();
@@ -328,7 +328,7 @@ export default class ShopCommand extends Command {
 			const cost_answer = await this.client.functions.promptMessage(
 				message,
 				{
-					embeds: [cost_embed.json],
+					embeds: [cost_embed.embed.toJSON()],
 				},
 				15000
 			);
@@ -343,7 +343,7 @@ export default class ShopCommand extends Command {
 					true
 				);
 
-				return message.channel.send({ embeds: [embed.json] });
+				return message.channel.send({ embeds: [embed.embed.toJSON()] });
 			}
 
 			if (!Number(cost_answer)) {
@@ -357,7 +357,7 @@ export default class ShopCommand extends Command {
 					true
 				);
 
-				return message.channel.send({ embeds: [embed.json] });
+				return message.channel.send({ embeds: [embed.embed.toJSON()] });
 			} else if (cost_answer.toString().includes("-")) {
 				const text = lang.ERRORS.NEGATIVE_NUMBER(
 					cost_answer.toString()
@@ -372,7 +372,7 @@ export default class ShopCommand extends Command {
 					true
 				);
 
-				return message.channel.send({ embeds: [embed.json] });
+				return message.channel.send({ embeds: [embed.embed.toJSON()] });
 			}
 
 			item_data.cost = Number(cost_answer);
@@ -391,7 +391,7 @@ export default class ShopCommand extends Command {
 			const role_answer = await this.client.functions.promptMessage(
 				message,
 				{
-					embeds: [role_embed.json],
+					embeds: [role_embed.embed.toJSON()],
 				},
 				15000
 			);
@@ -411,7 +411,9 @@ export default class ShopCommand extends Command {
 						true
 					);
 
-					return message.channel.send({ embeds: [embed.json] });
+					return message.channel.send({
+						embeds: [embed.embed.toJSON()],
+					});
 				}
 
 				item_data.role = role_answer
@@ -437,7 +439,7 @@ export default class ShopCommand extends Command {
 			);
 
 			return message.channel.send({
-				embeds: [embed.json],
+				embeds: [embed.embed.toJSON()],
 			});
 		} else if (action === "delete") {
 			const id_prompt = lang.ECONOMY.SHOP.BUY.PROMPTS.WRITE_ID(prefix);
@@ -453,7 +455,7 @@ export default class ShopCommand extends Command {
 			const id_answer = await this.client.functions.promptMessage(
 				message,
 				{
-					embeds: [id_embed.json],
+					embeds: [id_embed.embed.toJSON()],
 				},
 				15000
 			);
@@ -468,7 +470,7 @@ export default class ShopCommand extends Command {
 					true
 				);
 
-				return message.channel.send({ embeds: [embed.json] });
+				return message.channel.send({ embeds: [embed.embed.toJSON()] });
 			}
 
 			if (!Number(id_answer)) {
@@ -482,7 +484,7 @@ export default class ShopCommand extends Command {
 					true
 				);
 
-				return message.channel.send({ embeds: [embed.json] });
+				return message.channel.send({ embeds: [embed.embed.toJSON()] });
 			} else if (id_answer.toString().includes("-")) {
 				const text = lang.ERRORS.NEGATIVE_NUMBER(id_answer.toString());
 				const embed = this.client.functions.buildEmbed(
@@ -494,7 +496,7 @@ export default class ShopCommand extends Command {
 					true
 				);
 
-				return message.channel.send({ embeds: [embed.json] });
+				return message.channel.send({ embeds: [embed.embed.toJSON()] });
 			}
 
 			const items = (await this.client.economy.shop.all(
@@ -517,7 +519,7 @@ export default class ShopCommand extends Command {
 					true
 				);
 
-				return message.channel.send({ embeds: [embed.json] });
+				return message.channel.send({ embeds: [embed.embed.toJSON()] });
 			}
 
 			await this.client.economy.shop.delete(message.guild.id, item.id);
@@ -532,7 +534,7 @@ export default class ShopCommand extends Command {
 				true
 			);
 
-			return message.channel.send({ embeds: [embed.json] });
+			return message.channel.send({ embeds: [embed.embed.toJSON()] });
 		} else if (action === "buy") {
 			const id_prompt = lang.ECONOMY.SHOP.DELETE.PROMPTS.WRITE_ID(prefix);
 			const id_embed = this.client.functions.buildEmbed(
@@ -547,7 +549,7 @@ export default class ShopCommand extends Command {
 			const id_answer = await this.client.functions.promptMessage(
 				message,
 				{
-					embeds: [id_embed.json],
+					embeds: [id_embed.embed.toJSON()],
 				},
 				15000
 			);
@@ -562,7 +564,7 @@ export default class ShopCommand extends Command {
 					true
 				);
 
-				return message.channel.send({ embeds: [embed.json] });
+				return message.channel.send({ embeds: [embed.embed.toJSON()] });
 			}
 
 			if (!Number(id_answer)) {
@@ -576,7 +578,7 @@ export default class ShopCommand extends Command {
 					true
 				);
 
-				return message.channel.send({ embeds: [embed.json] });
+				return message.channel.send({ embeds: [embed.embed.toJSON()] });
 			} else if (id_answer.toString().includes("-")) {
 				const text = lang.ERRORS.NEGATIVE_NUMBER(id_answer.toString());
 				const embed = this.client.functions.buildEmbed(
@@ -588,7 +590,7 @@ export default class ShopCommand extends Command {
 					true
 				);
 
-				return message.channel.send({ embeds: [embed.json] });
+				return message.channel.send({ embeds: [embed.embed.toJSON()] });
 			}
 
 			const items = (await this.client.economy.shop.all(
@@ -611,7 +613,7 @@ export default class ShopCommand extends Command {
 					true
 				);
 
-				return message.channel.send({ embeds: [embed.json] });
+				return message.channel.send({ embeds: [embed.embed.toJSON()] });
 			}
 
 			if (item.cost > balance) {
@@ -626,7 +628,7 @@ export default class ShopCommand extends Command {
 					true
 				);
 
-				return message.channel.send({ embeds: [embed.json] });
+				return message.channel.send({ embeds: [embed.embed.toJSON()] });
 			}
 
 			await this.client.economy.items.buy(
@@ -645,7 +647,7 @@ export default class ShopCommand extends Command {
 				true
 			);
 
-			return message.channel.send({ embeds: [embed.json] });
+			return message.channel.send({ embeds: [embed.embed.toJSON()] });
 		}
 	}
 }
