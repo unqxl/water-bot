@@ -1253,7 +1253,8 @@ discord-api-types@^0.29.0:
 
 discord-giveaways@bad-boy-discord/discord-giveaways#develop:
   version "5.1.1"
-  resolved "https://codeload.github.com/bad-boy-discord/discord-giveaways/tar.gz/a75e15d7b1263ca5d860b56fb7cf17f7a8c1c603"
+  uid "990a68d2ddcb1db8de254527761f786a341522b3"
+  resolved "https://codeload.github.com/bad-boy-discord/discord-giveaways/tar.gz/990a68d2ddcb1db8de254527761f786a341522b3"
   dependencies:
     deepmerge "^4.2.2"
     serialize-javascript "^6.0.0"
