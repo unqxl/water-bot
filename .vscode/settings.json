@@ -6,27 +6,5 @@
 	"prettier.endOfLine": "lf",
 	"files.eol": "\n",
 	"window.title": "${activeEditorShort} | Water Discord",
-	"rpc.enabled": true,
-	"sqltools.connections": [
-		{
-			"mysqlOptions": {
-				"authProtocol": "default"
-			},
-			"previewLimit": 50,
-			"server": "94.250.255.241",
-			"port": 3306,
-			"driver": "MySQL",
-			"name": "Database",
-			"database": "akayobase",
-			"username": "admin",
-			"password": "xT1xY6eW5l"
-		},
-		{
-			"previewLimit": 50,
-			"driver": "SQLite",
-			"name": "Local Storage",
-			"database": "${workspaceFolder:water-bot}/src/db/enmap.sqlite"
-		}
-	],
-	"sqltools.useNodeRuntime": true
+	"rpc.enabled": true
 }
