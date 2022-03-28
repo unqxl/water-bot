@@ -1,3 +1,8 @@
+// import "dotenv/config";
+// if (process.env.DEVELOPMENT) {
+// 	process.env.NODE_TLS_REJECT_UNAUTHORIZED = "0";
+// }
+
 import "module-alias/register";
 
 import Bot from "./classes/Bot";

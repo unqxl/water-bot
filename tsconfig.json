@@ -1,7 +1,7 @@
 {
 	"compilerOptions": {
 		"target": "ESNext",
-		"lib": ["ESNext"],
+		"lib": ["ESNext", "DOM"],
 		"module": "commonjs",
 		"moduleResolution": "node",
 		"checkJs": false,
@@ -15,7 +15,6 @@
 		"skipDefaultLibCheck": true,
 		"declaration": false,
 		"resolveJsonModule": true,
-		"typeRoots": ["./src/types/index.d.ts"],
 
 		"baseUrl": "./src",
 		"paths": {

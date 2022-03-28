@@ -1,16 +1,14 @@
 import { Guild, EmbedBuilder, User, Util } from "discord.js";
-import { getRepository } from "typeorm";
 import { GuildConfiguration } from "../../typeorm/entities/GuildConfiguration";
-import Bot from "../../classes/Bot";
 import Event from "../../types/Event/Event";
+import Bot from "../../classes/Bot";
 
 export default class GuildCreateEvent extends Event {
-	constructor(
-		private readonly guildConfigRepository = getRepository(
-			GuildConfiguration
-		)
-	) {
+	constructor(private guildConfigRepository) {
 		super("guildCreate");
+
+		this.guildConfigRepository =
+			this.client.datasource.getRepository(GuildConfiguration);
 	}
 
 	async run(client: Bot, guild: Guild) {

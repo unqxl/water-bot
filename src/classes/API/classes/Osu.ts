@@ -18,9 +18,9 @@ export = class OsuAPI {
 
 	async getUserData(
 		name: string | number,
-		mode: OsuModes
+		mode?: OsuModes
 	): Promise<OsuUserData> {
-		const userData = await this.api.user.get(name, mode);
+		const userData = await this.api.user.get(name, mode ?? "osu");
 		// @ts-expect-error
 		return userData;
 	}

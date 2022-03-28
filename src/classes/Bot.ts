@@ -47,7 +47,7 @@ import { Command } from "../types/Command/Command";
 import Event from "../types/Event/Event";
 
 // MySQL
-import { createConnection, getRepository } from "typeorm";
+import { createConnection, DataSource, getRepository } from "typeorm";
 import { GuildConfiguration } from "../typeorm/entities/GuildConfiguration";
 
 // WebSocket
@@ -121,6 +121,7 @@ export = class Bot extends Client {
 	public levels: Leveling = new Leveling(this);
 	public logger: Logger = new Logger();
 	public twitchSystem: TwitchSystem = new TwitchSystem(this);
+	public datasource: DataSource = null;
 	public database: DBManager = null;
 
 	//? [Modules]
@@ -229,7 +230,7 @@ export = class Bot extends Client {
 		if (!this.application?.owner) await this.application?.fetch();
 
 		//? [MySQL Setup - Start]
-		await createConnection({
+		this.datasource = new DataSource({
 			name: "default",
 			type: "mysql",
 			host: this.config.mysql.host,
@@ -240,7 +241,9 @@ export = class Bot extends Client {
 			entities: [GuildConfiguration],
 		});
 
-		const configRepo = getRepository(GuildConfiguration);
+		await this.datasource.initialize();
+
+		const configRepo = this.datasource.getRepository(GuildConfiguration);
 		const guildConfigs = await configRepo.find();
 		const configMappings = new Collection<string, GuildConfiguration>();
 

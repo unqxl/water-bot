@@ -506,6 +506,11 @@
   resolved "https://registry.yarnpkg.com/@types/string-similarity/-/string-similarity-4.0.0.tgz#8cc03d5d1baad2b74530fe6c7d849d5768d391ad"
   integrity sha512-dMS4S07fbtY1AILG/RhuwmptmzK1Ql8scmAebOTJ/8iBtK/KI17NwGwKzu1uipjj8Kk+3mfPxum56kKZE93mzQ==
 
+"@types/turndown@^5.0.1":
+  version "5.0.1"
+  resolved "https://registry.yarnpkg.com/@types/turndown/-/turndown-5.0.1.tgz#fcda7b02cda4c9d445be1440036df20f335b9387"
+  integrity sha512-N8Ad4e3oJxh9n9BiZx9cbe/0M3kqDpOTm2wzj13wdDUxDPjfjloWIJaquZzWE1cYTAHpjOH3rcTnXQdpEfS/SQ==
+
 "@types/twemoji-parser@^13.1.1":
   version "13.1.1"
   resolved "https://registry.yarnpkg.com/@types/twemoji-parser/-/twemoji-parser-13.1.1.tgz#71e8a30cc542c51a893ee6583c401b56ad605b9f"
@@ -1268,6 +1273,11 @@ discord-api-types@^0.29.0:
   resolved "https://registry.yarnpkg.com/discord-api-types/-/discord-api-types-0.29.0.tgz#8346352b623ddd8d8eed386b6eb758e2d82d6005"
   integrity sha512-Ekq1ICNpOTVajXKZguNFrsDeTmam+ZeA38txsNLZnANdXUjU6QBPIZLUQTC6MzigFGb0Tt8vk4xLnXmzv0shNg==
 
+discord-api-types@^0.30.0:
+  version "0.30.0"
+  resolved "https://registry.yarnpkg.com/discord-api-types/-/discord-api-types-0.30.0.tgz#3050ff1f06b8bd4259bb2c2b1b67517268ea7188"
+  integrity sha512-wYst0jrT8EJs2tVlwUTQ2xT0oWMjUrRMpFTkNY3NMleWyQNHgWaKhqFfxdLPdC2im9IuR5EsxcEgjhf/npeftw==
+
 discord-giveaways@bad-boy-discord/discord-giveaways#develop:
   version "5.1.1"
   resolved "https://codeload.github.com/bad-boy-discord/discord-giveaways/tar.gz/a75e15d7b1263ca5d860b56fb7cf17f7a8c1c603"
@@ -1316,17 +1326,17 @@ discord.js@^13.1.0, discord.js@^13.5.0:
     node-fetch "^2.6.1"
     ws "^8.4.0"
 
-discord.js@^14.0.0-dev.1647259751.2297c2b:
-  version "14.0.0-dev.1647259751.2297c2b"
-  resolved "https://registry.yarnpkg.com/discord.js/-/discord.js-14.0.0-dev.1647259751.2297c2b.tgz#da996c08ab05780dbef0177ba3e9a3c76d5f16e3"
-  integrity sha512-3VgjiwAcJEEjzchvqFofClncISEivPawX7zeLT+7Kabqm7GIj+p5tfD8MIBbJPm/chcNDc/k2IN1uL154bKV7g==
+discord.js@^14.0.0-dev.1648339713-520f471:
+  version "14.0.0-dev.1648339713-520f471"
+  resolved "https://registry.yarnpkg.com/discord.js/-/discord.js-14.0.0-dev.1648339713-520f471.tgz#cd4bc2bfb49aa4879e0e8116a8a4ebc20e99269a"
+  integrity sha512-MmsFCHbaD5peDQwK5qt3Jes+25Rsympdfs3bBcoz5iBm5gOlERBX6Ny+TCFNHUHRdrwoTxFjqw3MxTacImwXcg==
   dependencies:
     "@discordjs/builders" "^0.13.0-dev"
     "@discordjs/collection" "^0.6.0-dev"
     "@discordjs/rest" "^0.4.0-dev"
     "@sapphire/snowflake" "^3.1.0"
     "@types/ws" "^8.2.2"
-    discord-api-types "^0.27.3"
+    discord-api-types "^0.29.0"
     fast-deep-equal "^3.1.3"
     lodash.snakecase "^4.1.1"
     undici "^4.14.1"
@@ -1342,6 +1352,11 @@ distube@^4.0.0-dev.2:
     "@distube/ytsr" "^1.1.5"
     prism-media "https://codeload.github.com/distubejs/prism-media/tar.gz/main#workaround.tar.gz"
     tiny-typed-emitter "^2.1.0"
+
+domino@^2.1.6:
+  version "2.1.6"
+  resolved "https://registry.yarnpkg.com/domino/-/domino-2.1.6.tgz#fe4ace4310526e5e7b9d12c7de01b7f485a57ffe"
+  integrity sha512-3VdM/SXBZX2omc9JF9nOPCtDaYQ67BGp5CoLpIQlO2KCAPETs8TcDHacF26jXadGbvUteZzRTeos2fhID5+ucQ==
 
 dot-prop@^5.2.0:
   version "5.3.0"
@@ -1410,6 +1425,16 @@ engine.io-parser@~5.0.0:
   integrity sha512-BtQxwF27XUNnSafQLvDi0dQ8s3i6VgzSoQMJacpIcGNrlUdfHSKbgm3jmjCVvQluGzqwujQMPAoMai3oYSTurg==
   dependencies:
     "@socket.io/base64-arraybuffer" "~1.0.2"
+
+enmap@^5.8.13:
+  version "5.8.13"
+  resolved "https://registry.yarnpkg.com/enmap/-/enmap-5.8.13.tgz#db803cee8da53d27536be7f1734dd63a32762d96"
+  integrity sha512-xIkHjYOV1OdIfKdNgcyiEtDL5/zTSk6NrIfd+0QNWWz8Pb5l0RLatNit4giG0K1Xs/y807TbybuC3X9t5jr14w==
+  dependencies:
+    better-sqlite3 "^7.1.0"
+    lodash "^4.17.20"
+    on-change "^2.0.1"
+    serialize-javascript "^5.0.1"
 
 enmap@^5.8.7:
   version "5.8.7"
@@ -2920,10 +2945,10 @@ open@^8.4.0:
     is-docker "^2.1.1"
     is-wsl "^2.2.0"
 
-osu-api-extended@^2.1.2:
-  version "2.1.2"
-  resolved "https://registry.yarnpkg.com/osu-api-extended/-/osu-api-extended-2.1.2.tgz#93bb5c5e24ec590ecfce93dffebf0e54506c1138"
-  integrity sha512-Vb3TSyzHsAmmSQHn1MdKlCtEgXiWyxFqHKAXkEL/pMrfXIrshKgNaF3BzFnvn0+gsLK5o/LxbxPBaVPbOVEO5Q==
+osu-api-extended@^2.1.3:
+  version "2.1.3"
+  resolved "https://registry.yarnpkg.com/osu-api-extended/-/osu-api-extended-2.1.3.tgz#be13cde3393d6cc72ea765524bff776bd7c8d555"
+  integrity sha512-jG4XOQiWuVxIyhwDMuRiJs5okuCYTrU838jPIM+NpXlvAgqsCkN7obt2CrSYJ1sFeoE8d/42DO8yKmGLogPSrw==
   dependencies:
     lzma-native "^8.0.1"
     node-osr "^1.2.1"
@@ -3876,6 +3901,13 @@ tunnel-agent@^0.6.0:
   dependencies:
     safe-buffer "^5.0.1"
 
+turndown@^7.1.1:
+  version "7.1.1"
+  resolved "https://registry.yarnpkg.com/turndown/-/turndown-7.1.1.tgz#96992f2d9b40a1a03d3ea61ad31b5a5c751ef77f"
+  integrity sha512-BEkXaWH7Wh7e9bd2QumhfAXk5g34+6QUmmWx+0q6ThaVOLuLUqsnkq35HQ5SBHSaxjSfSM7US5o4lhJNH7B9MA==
+  dependencies:
+    domino "^2.1.6"
+
 twemoji-parser@^13.0.0:
   version "13.1.0"
   resolved "https://registry.yarnpkg.com/twemoji-parser/-/twemoji-parser-13.1.0.tgz#65e7e449c59258791b22ac0b37077349127e3ea4"
@@ -3906,10 +3938,10 @@ typedarray-to-buffer@^3.1.5:
   dependencies:
     is-typedarray "^1.0.0"
 
-typeorm@^0.3.1:
-  version "0.3.1"
-  resolved "https://registry.yarnpkg.com/typeorm/-/typeorm-0.3.1.tgz#94c5600bb1ad8e63dbf48b2a6fc77c2e9c429b04"
-  integrity sha512-uuZzjiPfmRMQkzB3/Gw09vr8ytm3p0NY1+mBQzxwKbNRAi44ePORFM9oCIWUwZB3GzfU7or/pZL7zvWy2xegWg==
+typeorm@^0.3.4:
+  version "0.3.4"
+  resolved "https://registry.yarnpkg.com/typeorm/-/typeorm-0.3.4.tgz#6608f7efb15c40f3fa2863cefb45ff78a208c40c"
+  integrity sha512-6v3HH12viDhIQwQDod/B0Plt1o7IYIVDxP7zwatD6fzN+IDdqTTinW/sWNw84Edpbhh2t7XILTaQEqj0NXFP/Q==
   dependencies:
     "@sqltools/formatter" "^1.2.2"
     app-root-path "^3.0.0"
@@ -3934,7 +3966,7 @@ typescript@^4.2.3:
   resolved "https://registry.yarnpkg.com/typescript/-/typescript-4.5.5.tgz#d8c953832d28924a9e3d37c73d729c846c5896f3"
   integrity sha512-TCTIul70LyWe6IJWT8QSYeA54WQe8EjQFU4wY52Fasj5UKx88LNYKCgBEHcOMOrFF1rKGbD8v/xcNWVUq9SymA==
 
-undici@^4.14.1, undici@^4.15.0, undici@^4.16.0:
+undici@4.16.0, undici@^4.14.1, undici@^4.15.0:
   version "4.16.0"
   resolved "https://registry.yarnpkg.com/undici/-/undici-4.16.0.tgz#469bb87b3b918818d3d7843d91a1d08da357d5ff"
   integrity sha512-tkZSECUYi+/T1i4u+4+lwZmQgLXd4BLGlrc7KZPcLIW7Jpq99+Xpc30ONv7nS6F5UNOxp/HBZSSL9MafUrvJbw==

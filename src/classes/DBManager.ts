@@ -1,4 +1,4 @@
-import { getRepository, Repository } from "typeorm";
+import { DataSource, Repository } from "typeorm";
 import { GuildConfiguration } from "../typeorm/entities/GuildConfiguration";
 import { GuildConfig } from "../types/types";
 import Bot from "./Bot";
@@ -6,11 +6,12 @@ import Bot from "./Bot";
 export default class DBManager {
 	public client: Bot;
 
-	private readonly guildConfigRepository: Repository<GuildConfiguration> =
-		getRepository(GuildConfiguration);
+	private guildConfigRepository: Repository<GuildConfiguration>;
 
 	constructor(client: Bot) {
 		this.client = client;
+		this.guildConfigRepository =
+			this.client.datasource.getRepository(GuildConfiguration);
 	}
 
 	async getGuild(guild_id: string): Promise<GuildConfiguration> {

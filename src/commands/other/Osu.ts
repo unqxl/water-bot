@@ -64,7 +64,7 @@ export default class OsuCommand extends Command {
 		const mode = "osu";
 
 		const data = await this.client.apis.osu.getUserData(name, mode);
-		if (data["error"] && data["error"] === null) {
+		if (data["error"] && data["error"] !== null) {
 			const name = args.join(" ");
 			if (!name) {
 				const text = lang.ERRORS.NOT_FOUND("osu!users API");
