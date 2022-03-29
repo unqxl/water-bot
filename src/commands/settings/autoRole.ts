@@ -26,13 +26,13 @@ export default class AutoRoleCommand extends Command {
 	) {
 		const config = await this.client.database.getGuild(message.guild.id);
 
-		var actions = ["show", "set", "reset"];
-		var action = args[0];
+		const actions = ["show", "set", "reset"];
+		let action = args[0];
 
 		if (!action || !actions.includes(action)) action = "show";
 
 		if (action === "show") {
-			var role = config.auto_role;
+			let role = config.auto_role;
 
 			if (!role) role = lang.GLOBAL.NONE;
 			else role = message.guild.roles.cache.get(role).toString();

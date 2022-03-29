@@ -26,11 +26,11 @@ export default class COVIDCommand extends Command {
 		args: string[],
 		lang: typeof import("@locales/English").default
 	) {
-		let locale = await this.client.database.getSetting(
+		const locale = await this.client.database.getSetting(
 			message.guild.id,
 			"locale"
 		);
-		let query = args.join(" ");
+		const query = args.join(" ");
 		let country: Covid;
 
 		if (!query) {

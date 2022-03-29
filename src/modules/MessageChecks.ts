@@ -24,7 +24,7 @@ export = class MessageChecks {
 	async antiFish(
 		message: Message
 	): Promise<boolean | { type: string; domain: string }> {
-		var content = "";
+		let content = "";
 
 		if (message.content.startsWith("https://")) {
 			content = message.content.slice("https://".length);

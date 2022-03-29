@@ -16,9 +16,9 @@ import {
 	ApplicationCommandType,
 } from "discord.js";
 import { SlashCommand } from "../types/Command/SlashCommand";
+import { SubCommand } from "../types/Command/SubCommand";
 import { Command } from "../types/Command/Command";
 import { resolve } from "path";
-import { SubCommand } from "../types/Command/SubCommand";
 
 type Structures = Command | SlashCommand | SubCommand;
 
@@ -89,7 +89,7 @@ export = class Handlers {
 			if (!command) continue;
 			await this.validateFile(file, command);
 
-			var commandName;
+			let commandName;
 			if (command instanceof SubCommand) {
 				const groupName = command.options.groupName;
 				const topLevelName = command.options.commandName;
@@ -129,13 +129,14 @@ export = class Handlers {
 				type: ApplicationCommandType.ChatInput,
 				name: topLevelName,
 				description: `${topLevelName} Commands...`,
-				// @ts-expect-error
+				// @ts-expect-error ignore
 				options: cmds.map((v) => v.options),
 			};
 
 			await this.createSlashCommand(data);
 		}
 
+		// eslint-disable-next-line @typescript-eslint/no-explicit-any
 		const groupCache: any[] = [];
 
 		for (const groupName in commandGroups) {

@@ -27,7 +27,7 @@ export = async (client: Bot) => {
 						lang.EVENTS.MUSIC_EVENTS.ADD_SONG.REQUESTED_BY,
 					];
 
-				var text = [
+				const text = [
 					`› ${bold(title)}: ${bold(name)}`,
 					`› ${bold(url)}: ${bold(hyperlink("Click", song_url))}`,
 					`› ${bold(duration)}: ${bold(formattedDuration)}`,
@@ -70,7 +70,7 @@ export = async (client: Bot) => {
 						lang.EVENTS.MUSIC_EVENTS.PLAY_SONG.REQUESTED_BY,
 					];
 
-				var text = [
+				const text = [
 					`› ${bold(title)}: ${bold(name)}`,
 					`› ${bold(url)}: ${bold(hyperlink("Click", song_url))}`,
 					`› ${bold(duration)}: ${bold(formattedDuration)}`,
@@ -121,7 +121,7 @@ export = async (client: Bot) => {
 					lang.EVENTS.MUSIC_EVENTS.ADD_LIST.REQUESTED_BY,
 				];
 
-				var text = [
+				const text = [
 					`› ${bold(title)}: ${bold(name)}`,
 					`› ${bold(url)}: ${bold(hyperlink("Click", pl_link))}`,
 					`› ${bold(duration)}: ${bold(formattedDuration)}`,

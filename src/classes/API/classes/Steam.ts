@@ -4,8 +4,7 @@ import { request } from "undici";
 
 export = class SteamAPI {
 	public key: string;
-	public APP_LIST_URL =
-		"https://api.steampowered.com/ISteamApps/GetAppList/v0002/?format=json";
+	public APP_LIST_URL = "https://api.steampowered.com/ISteamApps/GetAppList/v0002/?format=json";
 
 	constructor(key: string) {
 		this.key = key;
@@ -35,9 +34,7 @@ export = class SteamAPI {
 
 	async getAppInfo(name: string, l: string): Promise<SteamAppDetail> {
 		const app_name = await (await this.getBestMatch(name)).target;
-		const app_id = await (
-			await this.getAppList()
-		).applist.apps.find((x) => x.name === app_name).appid;
+		const app_id = await (await this.getAppList()).applist.apps.find((x) => x.name === app_name).appid;
 		const app_url = this.getAppURL(app_id, l);
 
 		const app_info: SteamAppDetail = await (

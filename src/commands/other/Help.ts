@@ -283,7 +283,7 @@ export default class HelpCommand extends Command {
 				lang.OTHER.HELP.COMMAND.MEMBER_PERMISSIONS,
 			];
 
-			var categoryName = "";
+			let categoryName = "";
 
 			if (cmd.options.category === Categories.BOTOWNER)
 				categoryName = BotOwner;

@@ -8,7 +8,6 @@ import { SubCommand } from "../../types/Command/SubCommand";
 import { request } from "undici";
 import { bold } from "@discordjs/builders";
 import Bot from "../../classes/Bot";
-import e from "express";
 
 export default class COVIDCommand extends SubCommand {
 	constructor(client: Bot) {
@@ -36,14 +35,14 @@ export default class COVIDCommand extends SubCommand {
 		);
 
 		const query = command.options.getString("country", false);
-		var data: COVIDData;
+		let data: COVIDData;
 
 		if (!query) {
 			data = await (
 				await request("https://disease.sh/v3/covid-19/all")
 			).body.json();
 		} else {
-			var encoded = encodeURIComponent(query);
+			const encoded = encodeURIComponent(query);
 			data = await (
 				await request(
 					`https://disease.sh/v3/covid-19/countries/${encoded}`

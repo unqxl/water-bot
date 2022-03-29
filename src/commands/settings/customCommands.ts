@@ -29,8 +29,8 @@ export default class CustomCommandsCommand extends Command {
 			message.guild.id
 		);
 
-		var actions = ["show", "create", "delete"];
-		var action = args[0];
+		const actions = ["show", "create", "delete"];
+		let action = args[0];
 
 		if (!action) action = "show";
 		if (!actions.includes(action)) action = "show";

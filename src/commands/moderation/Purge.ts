@@ -78,7 +78,7 @@ export default class PurgeCommand extends Command {
 		args: string[],
 		lang: typeof import("@locales/English").default
 	) {
-		var amount = Number(args[0]);
+		let amount = Number(args[0]);
 		if (amount > 100) amount = 100;
 
 		return await (message.channel as TextChannel)

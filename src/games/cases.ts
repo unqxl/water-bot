@@ -48,7 +48,7 @@ export = async (
 	const description = bold(lang.ECONOMY.CASES.CHOOSE_TEXT);
 	const note = bold(lang.ECONOMY.CASES.NOTE);
 
-	var embedDescription = "";
+	let embedDescription = "";
 	embedDescription += description + "\n\n";
 	embedDescription += `[**1**] ${bold(bronzeName)} ${bold(
 		`($${cases[0].cost})`

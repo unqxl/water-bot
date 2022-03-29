@@ -11,12 +11,12 @@ export = class IMDBAPI {
 	}
 
 	generateSearchLink(name: string, l: string) {
-		var link = `https://imdb-api.com/${l}/API/Search/${this.key}/${name}`;
+		const link = `https://imdb-api.com/${l}/API/Search/${this.key}/${name}`;
 		return link;
 	}
 
 	generateInfoLink(id: string, l: string) {
-		var link = `https://imdb-api.com/${l}/API/Title/${this.key}/${id}`;
+		const link = `https://imdb-api.com/${l}/API/Title/${this.key}/${id}`;
 		return link;
 	}
 

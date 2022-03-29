@@ -47,8 +47,8 @@ import { Command } from "../types/Command/Command";
 import Event from "../types/Event/Event";
 
 // MySQL
-import { createConnection, DataSource, getRepository } from "typeorm";
 import { GuildConfiguration } from "../typeorm/entities/GuildConfiguration";
+import { DataSource } from "typeorm";
 
 // WebSocket
 import { io, Socket } from "socket.io-client";
@@ -66,7 +66,7 @@ export = class Bot extends Client {
 	//? [Other]
 	public owners: string[] = ["852921856800718908"];
 	public config: typeof config = config;
-	public twitchKey: string = "";
+	public twitchKey: string;
 	public version: string = "2.2.0-dev";
 
 	//? [Storages]
@@ -106,8 +106,8 @@ export = class Bot extends Client {
 	public imdb: IMDBClient = new IMDBClient({
 		apiKey: this.config.keys.imdb_key,
 	});
-	// @ts-expect-error
-	public together: DiscordTogether<{}> = new DiscordTogether(this);
+	// @ts-expect-error ignore
+	public together: DiscordTogether = new DiscordTogether(this);
 
 	public handlers: Handlers = new Handlers(this);
 	public functions: Functions = new Functions(this);
@@ -125,7 +125,7 @@ export = class Bot extends Client {
 	public database: DBManager = null;
 
 	//? [Modules]
-	// @ts-expect-error
+	// @ts-expect-error ignore
 	public moderation: Moderation = new Moderation(this, {
 		dbPath: "./db/",
 		locale: "en-US",
@@ -209,6 +209,7 @@ export = class Bot extends Client {
 				GatewayIntentBits.GuildEmojisAndStickers,
 				GatewayIntentBits.GuildMessageReactions,
 				GatewayIntentBits.GuildPresences,
+				GatewayIntentBits.MessageContent,
 			],
 
 			presence: {
@@ -222,8 +223,8 @@ export = class Bot extends Client {
 			},
 		});
 
-		this.music.setMaxListeners(100);
-		this.setMaxListeners(100);
+		this.music.setMaxListeners(Infinity);
+		this.setMaxListeners(Infinity);
 	}
 
 	async start() {

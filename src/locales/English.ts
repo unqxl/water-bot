@@ -2,7 +2,7 @@ import { time as build_time } from "@discordjs/builders";
 
 function declOfNum(n: number, text_forms: string[]) {
 	n = Math.abs(n) % 100;
-	var n1 = n % 10;
+	const n1 = n % 10;
 
 	if (n > 10 && n < 20) {
 		return text_forms[2];
@@ -32,7 +32,7 @@ export default {
 		BANK: "Bank",
 
 		TIME_ERROR: (time, unix) => {
-			var collectAt = build_time(unix, "R");
+			const collectAt = build_time(unix, "R");
 			return `You've already received your reward!\nTry again in ${time} (${collectAt})`;
 		},
 
@@ -46,7 +46,7 @@ export default {
 			`You've received ${coins} coins as a Weekly Reward!`,
 
 		BALANCE_ADDED: (amount, member) => {
-			var form = declOfNum(Number(amount.replace(" ", "")), [
+			const form = declOfNum(Number(amount.replace(" ", "")), [
 				"coin",
 				"coins",
 			]);
@@ -55,7 +55,7 @@ export default {
 		},
 
 		BALANCE_SUBT: (amount, member) => {
-			var form = declOfNum(Number(amount.replace(" ", "")), [
+			const form = declOfNum(Number(amount.replace(" ", "")), [
 				"coin",
 				"coins",
 			]);
@@ -64,7 +64,7 @@ export default {
 		},
 
 		BANK_DEPOSITED: (amount) => {
-			var form = declOfNum(Number(amount.replace(" ", "")), [
+			const form = declOfNum(Number(amount.replace(" ", "")), [
 				"coin",
 				"coins",
 			]);
@@ -73,7 +73,7 @@ export default {
 		},
 
 		BANK_WITHDREW: (amount) => {
-			var form = declOfNum(Number(amount.replace(" ", "")), [
+			const form = declOfNum(Number(amount.replace(" ", "")), [
 				"coin",
 				"coins",
 			]);
@@ -82,7 +82,7 @@ export default {
 		},
 
 		BALANCE_INFO: (balance, bank) => {
-			var [balance_form, bank_form] = [
+			const [balance_form, bank_form] = [
 				declOfNum(Number(balance.replace(" ", "")), ["coin", "coins"]),
 				declOfNum(Number(bank), ["coin", "coins"]),
 			];
@@ -91,7 +91,7 @@ export default {
 		},
 
 		GIFTED: (amount, user, balance) => {
-			var [amount_form, balance_form] = [
+			const [amount_form, balance_form] = [
 				declOfNum(Number(amount.replace(" ", "")), ["coin", "coins"]),
 				declOfNum(Number(balance.replace(" ", "")), ["coin", "coins"]),
 			];

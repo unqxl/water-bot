@@ -157,7 +157,7 @@ export default class UserinfoCommand extends Command {
 				)
 					return Nothing;
 				else {
-					var content = "";
+					let content = "";
 
 					const { web, mobile, desktop } =
 						member.presence.clientStatus;

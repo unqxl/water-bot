@@ -26,8 +26,8 @@ export default class TwitchSystemCommand extends Command {
 	) {
 		const config = this.client.configurations.get(message.guild.id);
 
-		var actions = ["enable", "disable"];
-		var action = args[0];
+		const actions = ["enable", "disable"];
+		let action = args[0];
 
 		if (!action)
 			action = config.twitchSystem === true ? "disable" : "enable";

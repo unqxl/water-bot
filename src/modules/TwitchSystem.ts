@@ -96,7 +96,7 @@ export = class TwitchSystem {
 			guild.id
 		);
 
-		var streamer = twitchStreamers.find((x) => x.name === username);
+		const streamer = twitchStreamers.find((x) => x.name === username);
 		streamer.latestStream = latestStream;
 
 		return this.client.database.setConfigProp(

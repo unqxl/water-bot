@@ -26,14 +26,14 @@ export default class TwitchStreamersCommand extends Command {
 	) {
 		const config = await this.client.configurations.get(message.guild.id);
 
-		var actions = ["show", "set", "delete"];
-		var action = args[0];
+		const actions = ["show", "set", "delete"];
+		let action = args[0];
 
 		if (!action) action = "show";
 		if (!actions.includes(action)) action = "show";
 
 		if (action === "show") {
-			var channels = config.twitchStreamers.length
+			const channels = config.twitchStreamers.length
 				? config.twitchStreamers.map((c) => c.name).join(", ")
 				: lang.GLOBAL.NONE;
 

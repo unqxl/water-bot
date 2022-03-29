@@ -67,7 +67,7 @@ export default class WarnsCommand extends Command {
 		// @ts-expect-error
 		const warns = await this.client.moderation.allWarns(member);
 
-		var text = "";
+		let text = "";
 		warns.forEach(async (warn, i) => {
 			const id = warn.id;
 			const moderator = message.guild.members.cache.get(warn.moderatorID);

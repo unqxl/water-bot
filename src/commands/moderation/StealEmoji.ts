@@ -79,7 +79,7 @@ export default class StealEmojiCommand extends Command {
 		args: string[],
 		lang: typeof import("@locales/English").default
 	) {
-		var discordEmojiURL = "https://cdn.discordapp.com/emojis";
+		const discordEmojiURL = "https://cdn.discordapp.com/emojis";
 
 		const emoji = args[0];
 		const name = args[1];

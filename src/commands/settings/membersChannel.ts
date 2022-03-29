@@ -26,14 +26,14 @@ export default class MembersChannelCommand extends Command {
 	) {
 		const config = await this.client.database.getGuild(message.guild.id);
 
-		var actions = ["show", "set", "reset"];
-		var action = args[0];
+		const actions = ["show", "set", "reset"];
+		let action = args[0];
 
 		if (!action) action = "show";
 		if (!actions.includes(action)) action = "show";
 
 		if (action === "show") {
-			var channel = config.members_channel;
+			let channel = config.members_channel;
 
 			if (!channel) channel = lang.GLOBAL.NONE;
 			else channel = message.guild.channels.cache.get(channel).toString();

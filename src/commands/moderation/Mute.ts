@@ -93,7 +93,7 @@ export default class MuteCommand extends Command {
 			message.mentions.members.first() ||
 			message.guild.members.cache.get(args[0]);
 
-		var reason = args.slice(1).join(" ");
+		let reason = args.slice(1).join(" ");
 		if (!reason) reason = "-";
 
 		const [accept, decline, confirmText] = [

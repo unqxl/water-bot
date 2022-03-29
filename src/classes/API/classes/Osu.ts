@@ -21,7 +21,7 @@ export = class OsuAPI {
 		mode?: OsuModes
 	): Promise<OsuUserData> {
 		const userData = await this.api.user.get(name, mode ?? "osu");
-		// @ts-expect-error
+		// @ts-expect-error ignore
 		return userData;
 	}
 };

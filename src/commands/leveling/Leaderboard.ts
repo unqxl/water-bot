@@ -37,8 +37,8 @@ export default class LeaderboardCommand extends Command {
 		const userLevel = this.client.functions.sp(userData.level);
 		const userXP = this.client.functions.sp(userData.xp);
 
-		var content = "";
-		var additionalContent = `\n————————————————————————\n[${inlineCode(
+		let content = "";
+		const additionalContent = `\n————————————————————————\n[${inlineCode(
 			`#${userPlace}`
 		)}] ${message.author.toString()} (${bold(
 			`${userLevel} LVL | ${userXP} XP`

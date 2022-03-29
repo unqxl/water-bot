@@ -66,7 +66,7 @@ export default class ClanListCommand extends Command {
 		let i1 = 10;
 		let page = 1;
 
-		var description = data
+		let description = data
 			.sort((a, b) => b.membersCount - a.membersCount)
 			.map((v) => v)
 			.map((v, i) => {

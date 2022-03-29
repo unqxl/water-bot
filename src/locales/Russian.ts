@@ -2,7 +2,7 @@ import { time as build_time } from "@discordjs/builders";
 
 function declOfNum(n: number, text_forms: string[]) {
 	n = Math.abs(n) % 100;
-	var n1 = n % 10;
+	const n1 = n % 10;
 
 	if (n > 10 && n < 20) {
 		return text_forms[2];
@@ -32,7 +32,7 @@ const Russian: typeof import("@locales/English").default = {
 		BANK: "Bank",
 
 		TIME_ERROR: (time, unix) => {
-			var collectAt = build_time(unix, "R");
+			const collectAt = build_time(unix, "R");
 			return `Вы уже забрали данную награду!\nПопробуйте ещё раз ${time} (${collectAt})`;
 		},
 
@@ -44,7 +44,7 @@ const Russian: typeof import("@locales/English").default = {
 			`Успешно забрали ${coins} коинов в качестве Еженедельной награды!`,
 
 		BALANCE_ADDED: (amount, member) => {
-			var form = declOfNum(Number(amount.replace(" ", "")), [
+			const form = declOfNum(Number(amount.replace(" ", "")), [
 				"монету",
 				"монеты",
 				"монет",
@@ -54,7 +54,7 @@ const Russian: typeof import("@locales/English").default = {
 		},
 
 		BALANCE_SUBT: (amount, member) => {
-			var form = declOfNum(Number(amount.replace(" ", "")), [
+			const form = declOfNum(Number(amount.replace(" ", "")), [
 				"монету",
 				"монеты",
 				"монет",
@@ -64,7 +64,7 @@ const Russian: typeof import("@locales/English").default = {
 		},
 
 		BANK_DEPOSITED: (amount) => {
-			var form = declOfNum(Number(amount.replace(" ", "")), [
+			const form = declOfNum(Number(amount.replace(" ", "")), [
 				"монету",
 				"монеты",
 				"монет",
@@ -74,7 +74,7 @@ const Russian: typeof import("@locales/English").default = {
 		},
 
 		BANK_WITHDREW: (amount) => {
-			var form = declOfNum(Number(amount.replace(" ", "")), [
+			const form = declOfNum(Number(amount.replace(" ", "")), [
 				"монету",
 				"монеты",
 				"монет",
@@ -84,7 +84,7 @@ const Russian: typeof import("@locales/English").default = {
 		},
 
 		BALANCE_INFO: (balance, bank) => {
-			var [balance_form, bank_form] = [
+			const [balance_form, bank_form] = [
 				declOfNum(Number(balance.replace(" ", "")), [
 					"монету",
 					"монеты",
@@ -102,7 +102,7 @@ const Russian: typeof import("@locales/English").default = {
 		},
 
 		GIFTED: (amount, user, balance) => {
-			var [amount_form, balance_form] = [
+			const [amount_form, balance_form] = [
 				declOfNum(Number(amount.replace(" ", "")), [
 					"монету",
 					"монеты",

@@ -27,8 +27,8 @@ export default class DJRolesCommand extends Command {
 	) {
 		const config = this.client.configurations.get(message.guild.id);
 
-		var actions = ["show", "add", "delete"];
-		var action = args[0];
+		const actions = ["show", "add", "delete"];
+		let action = args[0];
 
 		if (!action) action = "show";
 		if (!actions.includes(action)) action = "show";

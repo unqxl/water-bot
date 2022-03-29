@@ -1326,10 +1326,10 @@ discord.js@^13.1.0, discord.js@^13.5.0:
     node-fetch "^2.6.1"
     ws "^8.4.0"
 
-discord.js@^14.0.0-dev.1648339713-520f471:
-  version "14.0.0-dev.1648339713-520f471"
-  resolved "https://registry.yarnpkg.com/discord.js/-/discord.js-14.0.0-dev.1648339713-520f471.tgz#cd4bc2bfb49aa4879e0e8116a8a4ebc20e99269a"
-  integrity sha512-MmsFCHbaD5peDQwK5qt3Jes+25Rsympdfs3bBcoz5iBm5gOlERBX6Ny+TCFNHUHRdrwoTxFjqw3MxTacImwXcg==
+discord.js@^14.0.0-dev.1648515273-ac4bc3a:
+  version "14.0.0-dev.1648515273-ac4bc3a"
+  resolved "https://registry.yarnpkg.com/discord.js/-/discord.js-14.0.0-dev.1648515273-ac4bc3a.tgz#7a3abaf4cbe4dd468ab01fd6b628a19eb92594d0"
+  integrity sha512-ynRtZ/DC8htvwTYljbnnRGxNyL0ETxS/6tKt0Ov4c4vnUvM6d+ak2ffZ0mNlfM7a9ILEZpP8v9GF2Dd0oehWYg==
   dependencies:
     "@discordjs/builders" "^0.13.0-dev"
     "@discordjs/collection" "^0.6.0-dev"
@@ -1426,7 +1426,7 @@ engine.io-parser@~5.0.0:
   dependencies:
     "@socket.io/base64-arraybuffer" "~1.0.2"
 
-enmap@^5.8.13:
+enmap@^5.8.13, enmap@^5.8.8:
   version "5.8.13"
   resolved "https://registry.yarnpkg.com/enmap/-/enmap-5.8.13.tgz#db803cee8da53d27536be7f1734dd63a32762d96"
   integrity sha512-xIkHjYOV1OdIfKdNgcyiEtDL5/zTSk6NrIfd+0QNWWz8Pb5l0RLatNit4giG0K1Xs/y807TbybuC3X9t5jr14w==
@@ -1440,16 +1440,6 @@ enmap@^5.8.7:
   version "5.8.7"
   resolved "https://registry.yarnpkg.com/enmap/-/enmap-5.8.7.tgz#1b9a8fa13f91c670a0ef2e605a2b219665cd9fc0"
   integrity sha512-JmTRK0hFjatxz6tWN+E4IzuMz5rxKjQvweRXzlmhrgAa66b96DAySW3YRb5p0drpJ7ZLt1WX+PWIpnHDH134jQ==
-  dependencies:
-    better-sqlite3 "^7.1.0"
-    lodash "^4.17.20"
-    on-change "^2.0.1"
-    serialize-javascript "^5.0.1"
-
-enmap@^5.8.8:
-  version "5.8.8"
-  resolved "https://registry.yarnpkg.com/enmap/-/enmap-5.8.8.tgz#4e4aeb3c54e07432b19285f4894296e69b39d31d"
-  integrity sha512-nrvRhTtQ3MFbYQzoKqELXkZIGcF9rm+wFBqLC2q8nrJq6b9sD1bi0IhBbtES9qRtUmJrYakw2tJwCwPavqAGqw==
   dependencies:
     better-sqlite3 "^7.1.0"
     lodash "^4.17.20"
@@ -3966,7 +3956,12 @@ typescript@^4.2.3:
   resolved "https://registry.yarnpkg.com/typescript/-/typescript-4.5.5.tgz#d8c953832d28924a9e3d37c73d729c846c5896f3"
   integrity sha512-TCTIul70LyWe6IJWT8QSYeA54WQe8EjQFU4wY52Fasj5UKx88LNYKCgBEHcOMOrFF1rKGbD8v/xcNWVUq9SymA==
 
-undici@4.16.0, undici@^4.14.1, undici@^4.15.0:
+undici@5.0.0:
+  version "5.0.0"
+  resolved "https://registry.yarnpkg.com/undici/-/undici-5.0.0.tgz#3c1e08c7f0df90c485d5d8dbb0517e11e34f2090"
+  integrity sha512-VhUpiZ3No1DOPPQVQnsDZyfcbTTcHdcgWej1PdFnSvOeJmOVDgiOHkunJmBLfmjt4CqgPQddPVjSWW0dsTs5Yg==
+
+undici@^4.14.1, undici@^4.15.0:
   version "4.16.0"
   resolved "https://registry.yarnpkg.com/undici/-/undici-4.16.0.tgz#469bb87b3b918818d3d7843d91a1d08da357d5ff"
   integrity sha512-tkZSECUYi+/T1i4u+4+lwZmQgLXd4BLGlrc7KZPcLIW7Jpq99+Xpc30ONv7nS6F5UNOxp/HBZSSL9MafUrvJbw==

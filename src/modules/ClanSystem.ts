@@ -111,7 +111,7 @@ export = class ClanSystem {
 	): Promise<boolean | Return> {
 		const lang = await this.client.functions.getLanguageFile(guild_id);
 
-		var clansData = this.client.clansDB.get(guild_id);
+		const clansData = this.client.clansDB.get(guild_id);
 		if (!clansData.clans.find((x) => x.owner === owner)) {
 			return {
 				code: 404,

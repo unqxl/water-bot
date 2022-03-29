@@ -40,8 +40,8 @@ export default class ShopCommand extends Command {
 			message.author.id
 		);
 
-		var actions = ["all", "create", "delete", "buy"];
-		var action = args[0];
+		const actions = ["all", "create", "delete", "buy"];
+		let action = args[0];
 		if (!action || !actions.includes(action)) action = "all";
 
 		if (action === "all") {
@@ -65,7 +65,7 @@ export default class ShopCommand extends Command {
 				});
 			}
 
-			var res = shop_data
+			let res = shop_data
 				.map((v) => v)
 				.map((v, i) => {
 					const name = Util.escapeMarkdown(v.name);

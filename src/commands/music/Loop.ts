@@ -125,7 +125,7 @@ export default class LoopCommand extends Command {
 		lang: typeof import("@locales/English").default
 	) {
 		const queue = this.client.music.getQueue(message);
-		var mode = null;
+		let mode = null;
 
 		const [mode_off, mode_song, mode_queue] = await Promise.all([
 			lang.MUSIC.LOOP_MODES.OFF,

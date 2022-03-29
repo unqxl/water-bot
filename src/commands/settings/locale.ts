@@ -26,8 +26,8 @@ export default class LocaleCommand extends Command {
 	) {
 		const config = await this.client.database.getGuild(message.guild.id);
 
-		var actions = ["show", "set", "reset"];
-		var action = args[0];
+		const actions = ["show", "set", "reset"];
+		let action = args[0];
 
 		if (!action) action = "show";
 		if (!actions.includes(action)) action = "show";

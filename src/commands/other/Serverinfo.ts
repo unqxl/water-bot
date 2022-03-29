@@ -135,24 +135,24 @@ export default class ServerinfoCommand extends Command {
 		const channels = guild.channels.cache;
 
 		// Statuses
-		var online = 0;
-		var idle = 0;
-		var dnd = 0;
+		let online = 0;
+		let idle = 0;
+		let dnd = 0;
 
 		// Types
-		var humans = 0;
-		var bots = 0;
+		let humans = 0;
+		let bots = 0;
 
 		// Channels
-		var text_channels = 0;
-		var news_channels = 0;
-		var voice_channels = 0;
-		var stages_channels = 0;
-		var categories_channels = 0;
+		let text_channels = 0;
+		let news_channels = 0;
+		let voice_channels = 0;
+		let stages_channels = 0;
+		let categories_channels = 0;
 
 		// Percent
-		var humansPercent = 0;
-		var botsPercent = 0;
+		let humansPercent = 0;
+		let botsPercent = 0;
 
 		// Other
 		const emotes = [];
@@ -204,7 +204,7 @@ export default class ServerinfoCommand extends Command {
 		humansPercent = this.calculatePercent(humans, members.size);
 		botsPercent = this.calculatePercent(bots, members.size);
 
-		var createdAt = Math.floor(guild.createdTimestamp / 1000);
+		const createdAt = Math.floor(guild.createdTimestamp / 1000);
 
 		return {
 			name: guild.name,

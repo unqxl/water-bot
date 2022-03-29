@@ -64,7 +64,7 @@ export default class GuildsCommand extends Command {
 		let i1 = 10;
 		let page = 1;
 
-		var description = this.client.guilds.cache
+		let description = this.client.guilds.cache
 			.sort((a, b) => b.memberCount - a.memberCount)
 			.map((v) => v)
 			.map((v, i) => {

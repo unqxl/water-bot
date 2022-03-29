@@ -1,6 +1,6 @@
-import { DataSource, Repository } from "typeorm";
 import { GuildConfiguration } from "../typeorm/entities/GuildConfiguration";
 import { GuildConfig } from "../types/types";
+import { Repository } from "typeorm";
 import Bot from "./Bot";
 
 export default class DBManager {
@@ -63,7 +63,7 @@ export default class DBManager {
 		guild_id: string,
 		key: K
 	): Promise<GuildConfiguration[K]> {
-		var config = await this.guildConfigRepository.findOne({
+		let config = await this.guildConfigRepository.findOne({
 			where: { guild_id },
 		});
 		if (!config) config = await this.createGuild(guild_id);
@@ -72,7 +72,7 @@ export default class DBManager {
 	}
 
 	async getSettings(guild_id: string): Promise<GuildConfiguration> {
-		var config = await this.guildConfigRepository.findOne({
+		let config = await this.guildConfigRepository.findOne({
 			where: { guild_id },
 		});
 		if (!config) config = await this.createGuild(guild_id);
@@ -83,16 +83,16 @@ export default class DBManager {
 	async set<K extends keyof GuildConfiguration>(
 		guild_id: string,
 		key: K,
-		value: any
+		value: GuildConfiguration[K]
 	): Promise<boolean> {
-		var config = await this.guildConfigRepository.findOne({
+		let config = await this.guildConfigRepository.findOne({
 			where: { guild_id },
 		});
 		if (!config) config = await this.createGuild(guild_id);
 
 		config[key] = value;
 
-		var newConfig = await this.guildConfigRepository.save(config);
+		const newConfig = await this.guildConfigRepository.save(config);
 		this.client.configs.set(guild_id, newConfig);
 
 		return true;
@@ -101,9 +101,9 @@ export default class DBManager {
 	async setConfigProp<K extends keyof GuildConfig>(
 		guild_id: string,
 		key: K,
-		value: any
+		value: GuildConfig[K]
 	): Promise<boolean> {
-		var config = await this.client.configurations.get(guild_id);
+		const config = await this.client.configurations.get(guild_id);
 		if (!config) return;
 
 		config[key] = value;

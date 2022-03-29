@@ -129,7 +129,7 @@ export = async (
 	const randomGhost = ghosts[Math.floor(Math.random() * ghosts.length)];
 	const formattedName = randomGhost.name.replace("{", "").replace("}", "");
 
-	var ghostType = "";
+	let ghostType = "";
 	switch (formattedName) {
 		case "banshee":
 			ghostType = banshee;
@@ -367,7 +367,7 @@ function shuffle(...components: any[]): any[] {
 	const arr = [];
 	arr.push(...components);
 
-	var currentIndex = arr.length,
+	let currentIndex = arr.length,
 		randomIndex;
 
 	while (currentIndex !== 0) {

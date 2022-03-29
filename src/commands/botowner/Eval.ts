@@ -90,9 +90,9 @@ export default class EvalCommand extends Command {
 		lang: typeof import("@locales/English").default
 	) {
 		const bin_code = args[0];
-		var wasCanceled = false;
+		let wasCanceled = false;
 
-		var bin;
+		let bin;
 
 		try {
 			bin = await get(`https://sourceb.in/${bin_code}`, {

@@ -26,12 +26,10 @@ export class Leveling extends EventEmitter {
 	}
 
 	getData(guildID: string, userID: string): UserLeveling {
-		var checkData = this.client.leveling.has(`${guildID}-${userID}`);
+		const checkData = this.client.leveling.has(`${guildID}-${userID}`);
 		if (!checkData) this.createData(guildID, userID);
 
-		const data: UserLeveling = this.client.leveling.get(
-			`${guildID}-${userID}`
-		);
+		const data: UserLeveling = this.client.leveling.get(`${guildID}-${userID}`);
 		return data;
 	}
 
@@ -117,9 +115,7 @@ export class Leveling extends EventEmitter {
 				b.level - a.level || b.xp - a.xp
 		);
 
-		const index = sorted.findIndex(
-			(userData) => userData.userID === userID
-		);
+		const index = sorted.findIndex((data) => data.userID === userID);
 		return index + 1;
 	}
 

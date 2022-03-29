@@ -71,7 +71,7 @@ export = async (
 			return collector.stop("declined");
 		}
 
-		var content = lang.GAMES.RPS.VERSUS(
+		const content = lang.GAMES.RPS.VERSUS(
 			opponent.toString(),
 			message.author.toString()
 		);
@@ -124,8 +124,8 @@ export = async (
 		IDS.add(message.author.id);
 		IDS.add(opponent.id);
 
-		var opponentChoose = "";
-		var authorChoose = "";
+		let opponentChoose = "";
+		let authorChoose = "";
 
 		const SecondCollector = await reply.createMessageComponentCollector({
 			filter: (btn) => IDS.has(btn.user.id),
@@ -285,7 +285,7 @@ function GetWinner(
 	opChoose: string,
 	authorChoose: string
 ): "opponent" | "author" | "draw" {
-	var winner: "opponent" | "author" | "draw";
+	let winner: "opponent" | "author" | "draw";
 
 	if (opChoose === "rock" && authorChoose === "scissors") {
 		winner = "opponent";

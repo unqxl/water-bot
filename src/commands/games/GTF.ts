@@ -40,10 +40,10 @@ export default class GuessTheFlagCommand extends Command {
 			})
 		).body.json();
 
-		var common_name = Data.name.common;
-		var official_name = Data.name.official;
-		var russian_name = Data.translations.rus.common;
-		var languages = Object.values(Data.languages);
+		const common_name = Data.name.common;
+		const official_name = Data.name.official;
+		const russian_name = Data.translations.rus.common;
+		const languages = Object.values(Data.languages);
 
 		const text = lang.GAMES.GUESS_THE_FLAG.DESCRIPTION(reward.toString());
 		const embed = this.client.functions.buildEmbed(

@@ -26,14 +26,14 @@ export default class MuteRoleCommand extends Command {
 	) {
 		const config = await this.client.database.getGuild(message.guild.id);
 
-		var actions = ["show", "set", "reset"];
-		var action = args[0];
+		const actions = ["show", "set", "reset"];
+		let action = args[0];
 
 		if (!action) action = "show";
 		if (!actions.includes(action)) action = "show";
 
 		if (action === "show") {
-			var role = config.mute_role;
+			let role = config.mute_role;
 
 			if (!role) role = lang.GLOBAL.NONE;
 			else role = message.guild.roles.cache.get(role).toString();

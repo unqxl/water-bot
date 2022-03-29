@@ -71,7 +71,7 @@ export default class ConfigurationCommand extends Command {
 			: NONE;
 
 		//? Text
-		var text = "";
+		let text = "";
 		text += `› ${bold(PREFIX)}: ${bold(settings.prefix)}\n`;
 		text += `› ${bold(LANGUAGE)}: ${bold(settings.locale)}\n`;
 		text += "\n";
