@@ -10,7 +10,7 @@
 	},
 	"dependencies": {
 		"@anishshobith/deeptype": "^1.1.0",
-		"@badboy-discord/discordjs-economy": "^1.1.43",
+		"@badboy-discord/discordjs-economy": "^1.1.51",
 		"@discordjs/opus": "^0.7.0",
 		"@discordjs/rest": "^0.3.0",
 		"@discordjs/voice": "^0.8.0",
