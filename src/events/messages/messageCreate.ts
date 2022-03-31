@@ -79,6 +79,59 @@ export default class MessageCreateEvent extends Event {
 			client.commands.get(client.aliases.get(name));
 
 		if (command) {
+			const botPerms = command.options.botPermissions;
+			const userPerms = command.options.memberPermissions;
+
+			if (botPerms.length) {
+				const missing = message.guild.me.permissions.missing(botPerms);
+				if (!missing.length) {
+					const perms = missing
+						.map((perm) => lang.PERMISSIONS[perm])
+						.join(", ");
+
+					const color = this.client.functions.color("Red");
+					const author = this.client.functions.author(
+						message.guild.me
+					);
+
+					const text = lang.ERRORS.BOT_MISSINGPERMS(perms);
+					const embed = new EmbedBuilder();
+					embed.setColor(color);
+					embed.setAuthor(author);
+					embed.setDescription(`❌ | ${bold(text)}`);
+					embed.setTimestamp();
+
+					return message.channel.send({
+						embeds: [embed],
+					});
+				}
+			}
+
+			if (userPerms.length) {
+				const missing = message.member.permissions.missing(userPerms);
+				if (!missing.length) {
+					const perms = missing
+						.map((perm) => lang.PERMISSIONS[perm])
+						.join(", ");
+
+					const color = this.client.functions.color("Red");
+					const author = this.client.functions.author(
+						message.guild.me
+					);
+
+					const text = lang.ERRORS.MEMBER_MISSINGPERMS(perms);
+					const embed = new EmbedBuilder();
+					embed.setColor(color);
+					embed.setAuthor(author);
+					embed.setDescription(`❌ | ${bold(text)}`);
+					embed.setTimestamp();
+
+					return message.channel.send({
+						embeds: [embed],
+					});
+				}
+			}
+
 			if (command.validate) {
 				const { ok, error } = await command.validate(
 					message,

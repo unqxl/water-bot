@@ -1,6 +1,12 @@
 import Event from "../../types/Event/Event";
 import Bot from "../../classes/Bot";
-import { ChatInputCommandInteraction, Interaction } from "discord.js";
+import {
+	ChatInputCommandInteraction,
+	EmbedBuilder,
+	GuildMember,
+	Interaction,
+} from "discord.js";
+import { bold } from "@discordjs/builders";
 
 export default class InteractionCreateEvent extends Event {
 	constructor() {
@@ -23,6 +29,63 @@ export default class InteractionCreateEvent extends Event {
 			this.getCommandName(interaction)
 		);
 		if (!command) return console.log(1);
+
+		const botPerms = command.options.botPermissions;
+		const userPerms = command.options.memberPermissions;
+
+		if (botPerms.length) {
+			const missing = interaction.guild.me.permissions.missing(botPerms);
+			if (!missing.length) {
+				const perms = missing
+					.map((perm) => lang.PERMISSIONS[perm])
+					.join(", ");
+
+				const color = this.client.functions.color("Red");
+				const author = this.client.functions.author(
+					interaction.guild.me
+				);
+
+				const text = lang.ERRORS.BOT_MISSINGPERMS(perms);
+				const embed = new EmbedBuilder();
+				embed.setColor(color);
+				embed.setAuthor(author);
+				embed.setDescription(`❌ | ${bold(text)}`);
+				embed.setTimestamp();
+
+				return interaction.reply({
+					ephemeral: true,
+					embeds: [embed],
+				});
+			}
+		}
+
+		if (userPerms.length) {
+			const missing = (
+				interaction.member as GuildMember
+			).permissions.missing(userPerms);
+			if (!missing.length) {
+				const perms = missing
+					.map((perm) => lang.PERMISSIONS[perm])
+					.join(", ");
+
+				const color = this.client.functions.color("Red");
+				const author = this.client.functions.author(
+					interaction.guild.me
+				);
+
+				const text = lang.ERRORS.MEMBER_MISSINGPERMS(perms);
+				const embed = new EmbedBuilder();
+				embed.setColor(color);
+				embed.setAuthor(author);
+				embed.setDescription(`❌ | ${bold(text)}`);
+				embed.setTimestamp();
+
+				return interaction.reply({
+					ephemeral: true,
+					embeds: [embed],
+				});
+			}
+		}
 
 		if (command.validate) {
 			const { ok, error } = await command.validate(interaction, lang);
