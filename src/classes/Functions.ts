@@ -116,7 +116,9 @@ export = class Functions {
 		const sizes = ["Bytes", "KB", "MB", "GB", "TB", "PB", "EB", "ZB", "YB"];
 		const i = Math.floor(Math.log(bytes) / Math.log(1024));
 
-		return `${parseFloat((bytes / Math.pow(1024, i)).toFixed(2))} ${sizes[i]}`;
+		return `${parseFloat((bytes / Math.pow(1024, i)).toFixed(2))} ${
+			sizes[i]
+		}`;
 	}
 
 	checkGuildBirthday(guild: Guild): Birthday {
@@ -189,12 +191,16 @@ export = class Functions {
 			if (error?.message.includes("Missing Access")) return;
 			if (error?.message.includes("Missing Permissions")) return;
 			if (error?.message.includes("Unknown Message")) return;
-			if (error?.message.includes("Members didn't arrive in time.")) return;
+			if (error?.message.includes("Members didn't arrive in time."))
+				return;
 
-			const channelID = this.client.config.bot.logsChannelID as Snowflake | undefined;
+			const channelID = this.client.config.bot.logsChannelID as
+				| Snowflake
+				| undefined;
 			if (!channelID) return;
 
-			const channel = (this.client.channels.cache.get(channelID) || (await this.client.channels.fetch(channelID))) as TextChannel;
+			const channel = (this.client.channels.cache.get(channelID) ||
+				(await this.client.channels.fetch(channelID))) as TextChannel;
 			if (!channel) return;
 
 			const message = {
@@ -202,8 +208,10 @@ export = class Functions {
 			};
 
 			const code = "code" in error ? error.code : "N/A";
-			const httpStatus = "httpStatus" in error ? error["httpStatus"] : "N/A";
-			const requestData = "requestData" in error ? error["requestData"] : { json: {} };
+			const httpStatus =
+				"httpStatus" in error ? error["httpStatus"] : "N/A";
+			const requestData =
+				"requestData" in error ? error["requestData"] : { json: {} };
 			const name = error.name || "N/A";
 
 			let stack = error.stack || error;
@@ -223,7 +231,8 @@ export = class Functions {
 
 			if (typeof stack === "string" && stack.length >= 2048) {
 				console.warn(stack);
-				stack = "Произошла ошибка, но она большая для того, чтобы отправить её сюда.\nПроверьте консоль";
+				stack =
+					"Произошла ошибка, но она большая для того, чтобы отправить её сюда.\nПроверьте консоль";
 			}
 
 			const embed = this.buildEmbed(
@@ -305,6 +314,29 @@ export = class Functions {
 
 	color(color: ColorResolvable): number {
 		return Util.resolveColor(color);
+	}
+
+	voiceCheck(
+		me: GuildMember,
+		member: GuildMember
+	): { status: boolean; code?: 1 | 2 } {
+		if (!member.voice.channel) {
+			return {
+				status: false,
+				code: 1,
+			};
+		}
+
+		if (me && member.voice.channel.id !== me.voice.channel.id) {
+			return {
+				status: false,
+				code: 2,
+			};
+		}
+
+		return {
+			status: true,
+		};
 	}
 };
 

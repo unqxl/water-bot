@@ -1,4 +1,4 @@
-import { Message } from "discord.js";
+import { ChatInputCommandInteraction, GuildMember, Message } from "discord.js";
 import Bot from "../classes/Bot";
 
 export = class DJSystem {
@@ -8,7 +8,9 @@ export = class DJSystem {
 		this.client = client;
 	}
 
-	async check(message: Message): Promise<DJRoleStatus> {
+	async check(
+		message: Message | ChatInputCommandInteraction
+	): Promise<DJRoleStatus> {
 		const lang = await this.client.functions.getLanguageFile(
 			message.guild.id
 		);
@@ -23,7 +25,11 @@ export = class DJSystem {
 			const guildRole = message.guild.roles.cache.get(roleID);
 			if (!guildRole) continue;
 
-			if (message.member.roles.cache.hasAny(...djRoles.map((r) => r))) {
+			if (
+				(message.member as GuildMember).roles.cache.hasAny(
+					...djRoles.map((r) => r)
+				)
+			) {
 				return {
 					status: true,
 				};

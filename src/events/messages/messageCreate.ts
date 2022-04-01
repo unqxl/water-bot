@@ -84,7 +84,7 @@ export default class MessageCreateEvent extends Event {
 
 			if (botPerms.length) {
 				const missing = message.guild.me.permissions.missing(botPerms);
-				if (!missing.length) {
+				if (missing.length) {
 					const perms = missing
 						.map((perm) => lang.PERMISSIONS[perm])
 						.join(", ");
@@ -109,7 +109,7 @@ export default class MessageCreateEvent extends Event {
 
 			if (userPerms.length) {
 				const missing = message.member.permissions.missing(userPerms);
-				if (!missing.length) {
+				if (missing.length) {
 					const perms = missing
 						.map((perm) => lang.PERMISSIONS[perm])
 						.join(", ");

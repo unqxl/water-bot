@@ -1,5 +1,3 @@
-import Event from "../../types/Event/Event";
-import Bot from "../../classes/Bot";
 import {
 	ChatInputCommandInteraction,
 	EmbedBuilder,
@@ -7,6 +5,8 @@ import {
 	Interaction,
 } from "discord.js";
 import { bold } from "@discordjs/builders";
+import Event from "../../types/Event/Event";
+import Bot from "../../classes/Bot";
 
 export default class InteractionCreateEvent extends Event {
 	constructor() {
@@ -28,14 +28,14 @@ export default class InteractionCreateEvent extends Event {
 		const command = client.slashCommands.get(
 			this.getCommandName(interaction)
 		);
-		if (!command) return console.log(1);
+		if (!command) return;
 
 		const botPerms = command.options.botPermissions;
 		const userPerms = command.options.memberPermissions;
 
 		if (botPerms.length) {
 			const missing = interaction.guild.me.permissions.missing(botPerms);
-			if (!missing.length) {
+			if (missing.length) {
 				const perms = missing
 					.map((perm) => lang.PERMISSIONS[perm])
 					.join(", ");
@@ -63,7 +63,7 @@ export default class InteractionCreateEvent extends Event {
 			const missing = (
 				interaction.member as GuildMember
 			).permissions.missing(userPerms);
-			if (!missing.length) {
+			if (missing.length) {
 				const perms = missing
 					.map((perm) => lang.PERMISSIONS[perm])
 					.join(", ");
