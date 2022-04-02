@@ -655,8 +655,8 @@ export default {
 		JOIN_BOT_VOICE:
 			"To use this command You need to join Bot Voice Channel!",
 		QUEUE_EMPTY: "Server Queue is Empty!",
-		PAUSED: "Current Song is paused!",
-		RESUMED: "Current Song is resumed!",
+		PAUSED: "Current Song is already paused!",
+		RESUMED: "Current Song is already resumed!",
 		MISSING_IN_DB: (type) => `"${type}" value is missing in DB!`,
 		CANNOT_BE_EVERYONE: (type) => `"${type}" cannot be everyone!`,
 		SYSTEM_NOT_ENABLED: (type) => `"${type}" is not enabled!`,

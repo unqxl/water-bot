@@ -679,8 +679,8 @@ const Russian: typeof import("@locales/English").default = {
 		JOIN_BOT_VOICE:
 			"Для использования этой команды, вы должны зайти в единый голосовой канал с ботом!",
 		QUEUE_EMPTY: "Очередь сервера пустая!",
-		PAUSED: "Текущая песня на паузе!",
-		RESUMED: "Текущая песня возобновлена!",
+		PAUSED: "Текущая песня уже стоит на паузе!",
+		RESUMED: "Текущая песня уже возобновлена!",
 		MISSING_IN_DB: (type) => `"${type}" не найдено в Базе Данных!`,
 		CANNOT_BE_EVERYONE: (type) => `"${type}" не может быть everyone!`,
 		SYSTEM_NOT_ENABLED: (type) => `"${type}" не включен!`,
