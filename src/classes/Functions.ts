@@ -327,7 +327,10 @@ export = class Functions {
 			};
 		}
 
-		if (me && member.voice.channel.id !== me.voice.channel.id) {
+		if (
+			me.voice.channel &&
+			member.voice.channel.id !== me.voice.channel.id
+		) {
 			return {
 				status: false,
 				code: 2,

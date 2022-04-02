@@ -160,7 +160,7 @@ export default class UnmuteCommand extends Command {
 		collector.on("collect", async (btn: ButtonInteraction) => {
 			if (btn.customId === "confirm") {
 				// @ts-expect-error
-				await this.client.moderation.unmute(member);
+				await this.client.moderation.mutes.delete(member);
 
 				const text = lang.MODERATION.UNMUTED(member.toString());
 				const embed = this.client.functions.buildEmbed(

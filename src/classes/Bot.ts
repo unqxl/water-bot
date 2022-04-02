@@ -216,7 +216,7 @@ export = class Bot extends Client {
 				status: "idle",
 				activities: [
 					{
-						type: ActivityType.Watching,
+						type: ActivityType.Listening,
 						name: "music 🎶",
 					},
 				],

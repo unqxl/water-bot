@@ -137,7 +137,7 @@ export default class UnwarnCommand extends Command {
 		collector.on("collect", async (btn: ButtonInteraction) => {
 			if (btn.customId === "confirm") {
 				// @ts-expect-error
-				await this.client.moderation.unwarn(member);
+				await this.client.moderation.warns.delete(member);
 
 				const text = lang.MODERATION.UNWARNED(member.toString());
 				const embed = this.client.functions.buildEmbed(

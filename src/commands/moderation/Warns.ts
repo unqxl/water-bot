@@ -30,7 +30,7 @@ export default class WarnsCommand extends Command {
 			message.member;
 
 		// @ts-expect-error
-		const warns = await this.client.moderation.allWarns(member);
+		const warns = await this.client.moderation.warns.all(member);
 		if (!warns.length) {
 			const text = lang.ERRORS.NO_WARNS(member.toString());
 			const embed = this.client.functions.buildEmbed(

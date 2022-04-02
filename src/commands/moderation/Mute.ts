@@ -142,7 +142,7 @@ export default class MuteCommand extends Command {
 
 		collector.on("collect", async (btn: ButtonInteraction) => {
 			if (btn.customId === "confirm") {
-				await this.client.moderation.mute(
+				await this.client.moderation.mutes.create(
 					"mute",
 					// @ts-expect-error
 					message,

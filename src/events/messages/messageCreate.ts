@@ -79,8 +79,8 @@ export default class MessageCreateEvent extends Event {
 			client.commands.get(client.aliases.get(name));
 
 		if (command) {
-			const botPerms = command.options.botPermissions;
-			const userPerms = command.options.memberPermissions;
+			const botPerms = command.options.botPermissions ?? [];
+			const userPerms = command.options.memberPermissions ?? [];
 
 			if (botPerms.length) {
 				const missing = message.guild.me.permissions.missing(botPerms);

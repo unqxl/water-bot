@@ -8,11 +8,11 @@ import { SubCommand } from "../../types/Command/SubCommand";
 import { bold } from "@discordjs/builders";
 import Bot from "../../classes/Bot";
 
-export default class SkipCommand extends SubCommand {
+export default class ShuffleCommand extends SubCommand {
 	constructor(client: Bot) {
 		super(client, {
 			commandName: "music",
-			name: "skip",
+			name: "shuffle",
 			description: "Shuffles Music Queue!",
 		});
 	}

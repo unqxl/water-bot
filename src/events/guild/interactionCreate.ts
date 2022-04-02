@@ -30,8 +30,8 @@ export default class InteractionCreateEvent extends Event {
 		);
 		if (!command) return;
 
-		const botPerms = command.options.botPermissions;
-		const userPerms = command.options.memberPermissions;
+		const botPerms = command.options.botPermissions ?? [];
+		const userPerms = command.options.memberPermissions ?? [];
 
 		if (botPerms.length) {
 			const missing = interaction.guild.me.permissions.missing(botPerms);

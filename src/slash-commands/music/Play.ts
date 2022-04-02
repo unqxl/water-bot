@@ -104,10 +104,16 @@ export default class PlayCommand extends SubCommand {
 		lang: typeof import("@locales/English").default
 	) {
 		const song = command.options.getString("song", true);
-		return this.client.music.play(command.member.voice.channel, song, {
+
+		await command.reply({ content: "..." });
+		this.client.music.play(command.member.voice.channel, song, {
 			skip: false,
 			member: command.member as GuildMember,
 			textChannel: command.channel as TextChannel,
 		});
+
+		const msg = await command.fetchReply();
+		await this.client.wait(2000);
+		msg.delete();
 	}
 }

@@ -142,8 +142,12 @@ export default class WarnCommand extends Command {
 
 		collector.on("collect", async (btn: ButtonInteraction) => {
 			if (btn.customId === "confirm") {
-				// @ts-expect-error
-				await this.client.moderation.warn(message, member, reason);
+				await this.client.moderation.warns.create(
+					// @ts-expect-error
+					message,
+					member,
+					reason
+				);
 
 				const text = lang.MODERATION.WARNED(
 					member.toString(),
