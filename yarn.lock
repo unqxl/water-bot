@@ -7,14 +7,15 @@
   resolved "https://registry.yarnpkg.com/@anishshobith/deeptype/-/deeptype-1.1.0.tgz#38c8e634a563904753aedefdf0082a0b4f1b76a4"
   integrity sha512-C/NfCUQMydPrpVGVmcYjMxr4aIJ/tTps/voDSuDM3Zf0B5K5M0Kw4e9AeUppd55eH0j7DFHzc2eKsidz3qarRg==
 
-"@badboy-discord/discordjs-economy@^1.1.43":
-  version "1.1.43"
-  resolved "https://registry.yarnpkg.com/@badboy-discord/discordjs-economy/-/discordjs-economy-1.1.43.tgz#b4b337eb671286fcdefd82be476394d4662ecc00"
-  integrity sha512-D3gWrOhWLycwiN81r1nXl75nF7qv5zgneKBMMJtmY12Gp9DGF6YqobLlfh7FJ9nVmoq4WqhKMXm5BJoJbcOjBw==
+"@badboy-discord/discordjs-economy@^1.1.52":
+  version "1.1.52"
+  resolved "https://registry.yarnpkg.com/@badboy-discord/discordjs-economy/-/discordjs-economy-1.1.52.tgz#2834a3f45d9afe64f29793c57d4a13f05a9f1f6e"
+  integrity sha512-5vUVzUmQ3UmUjRC97038c2e67TXS5EstleH3AsJs8xIsnM0TZxmgXW7PzM0qdu+1m9newr7MOEJQsj0DwirA7w==
   dependencies:
     colors "^1.4.0"
-    enmap "^5.8.8"
-    undici "^4.15.0"
+    enmap "^5.8.13"
+    typescript "^4.6.3"
+    undici "^5.0.0"
 
 "@canvacord/assets@^2.0.5":
   version "2.1.0"
@@ -1395,7 +1396,7 @@ engine.io-parser@~5.0.0:
   dependencies:
     "@socket.io/base64-arraybuffer" "~1.0.2"
 
-enmap@^5.8.13, enmap@^5.8.7, enmap@^5.8.8:
+enmap@^5.8.13, enmap@^5.8.7:
   version "5.8.13"
   resolved "https://registry.yarnpkg.com/enmap/-/enmap-5.8.13.tgz#db803cee8da53d27536be7f1734dd63a32762d96"
   integrity sha512-xIkHjYOV1OdIfKdNgcyiEtDL5/zTSk6NrIfd+0QNWWz8Pb5l0RLatNit4giG0K1Xs/y807TbybuC3X9t5jr14w==
@@ -3903,12 +3904,12 @@ typeorm@^0.3.4:
     xml2js "^0.4.23"
     yargs "^17.3.1"
 
-typescript@^4.2.3:
-  version "4.5.5"
-  resolved "https://registry.yarnpkg.com/typescript/-/typescript-4.5.5.tgz#d8c953832d28924a9e3d37c73d729c846c5896f3"
-  integrity sha512-TCTIul70LyWe6IJWT8QSYeA54WQe8EjQFU4wY52Fasj5UKx88LNYKCgBEHcOMOrFF1rKGbD8v/xcNWVUq9SymA==
+typescript@^4.2.3, typescript@^4.6.3:
+  version "4.6.3"
+  resolved "https://registry.yarnpkg.com/typescript/-/typescript-4.6.3.tgz#eefeafa6afdd31d725584c67a0eaba80f6fc6c6c"
+  integrity sha512-yNIatDa5iaofVozS/uQJEl3JRWLKKGJKh6Yaiv0GLGSuhpFJe7P3SbHZ8/yjAHRQwKRoA6YZqlfjXWmVzoVSMw==
 
-undici@^4.14.1, undici@^4.15.0:
+undici@^4.14.1:
   version "4.16.0"
   resolved "https://registry.yarnpkg.com/undici/-/undici-4.16.0.tgz#469bb87b3b918818d3d7843d91a1d08da357d5ff"
   integrity sha512-tkZSECUYi+/T1i4u+4+lwZmQgLXd4BLGlrc7KZPcLIW7Jpq99+Xpc30ONv7nS6F5UNOxp/HBZSSL9MafUrvJbw==
