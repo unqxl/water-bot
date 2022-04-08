@@ -49,6 +49,7 @@ export default {
 			const form = declOfNum(Number(amount.replace(" ", "")), [
 				"coin",
 				"coins",
+				"coins",
 			]);
 
 			return `Successfully added ${amount} ${form} to ${member} Balance!`;
@@ -57,6 +58,7 @@ export default {
 		BALANCE_SUBT: (amount, member) => {
 			const form = declOfNum(Number(amount.replace(" ", "")), [
 				"coin",
+				"coins",
 				"coins",
 			]);
 
@@ -67,6 +69,7 @@ export default {
 			const form = declOfNum(Number(amount.replace(" ", "")), [
 				"coin",
 				"coins",
+				"coins",
 			]);
 
 			return `Successfully deposited ${amount} ${form} to Your Bank!`;
@@ -76,6 +79,7 @@ export default {
 			const form = declOfNum(Number(amount.replace(" ", "")), [
 				"coin",
 				"coins",
+				"coins",
 			]);
 
 			return `Successfully withdrew ${amount} ${form} from Your Bank!`;
@@ -83,8 +87,12 @@ export default {
 
 		BALANCE_INFO: (balance, bank) => {
 			const [balance_form, bank_form] = [
-				declOfNum(Number(balance.replace(" ", "")), ["coin", "coins"]),
-				declOfNum(Number(bank), ["coin", "coins"]),
+				declOfNum(Number(balance.replace(" ", "")), [
+					"coin",
+					"coins",
+					"coins",
+				]),
+				declOfNum(Number(bank), ["coin", "coins", "coins"]),
 			];
 
 			return `Balance: ${balance} ${balance_form}.\nBank Balance: ${bank} ${bank_form}.`;
@@ -92,8 +100,16 @@ export default {
 
 		GIFTED: (amount, user, balance) => {
 			const [amount_form, balance_form] = [
-				declOfNum(Number(amount.replace(" ", "")), ["coin", "coins"]),
-				declOfNum(Number(balance.replace(" ", "")), ["coin", "coins"]),
+				declOfNum(Number(amount.replace(" ", "")), [
+					"coin",
+					"coins",
+					"coins",
+				]),
+				declOfNum(Number(balance.replace(" ", "")), [
+					"coin",
+					"coins",
+					"coins",
+				]),
 			];
 
 			return `Successfully gifted ${amount} ${amount_form} to ${user}!\nYour balance: ${balance} ${balance_form}`;
