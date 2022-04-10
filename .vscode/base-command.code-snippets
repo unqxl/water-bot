@@ -10,7 +10,7 @@
 			"export default class TestCommand extends Command {",
 			"    constructor(client: Bot) {",
 			"        super(client, {",
-			"            name: '',",
+			"            name: \"\",",
 			"",
 			"            description: {},",
 			"        });",

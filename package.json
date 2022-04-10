@@ -47,7 +47,6 @@
 		"osu-api-extended": "^2.1.4",
 		"random": "^3.0.6",
 		"reflect-metadata": "^0.1.13",
-		"socket.io-client": "^4.4.1",
 		"sourcebin": "^4.3.5",
 		"string-similarity": "^4.0.4",
 		"tiny-typed-emitter": "^2.1.0",
@@ -81,6 +80,6 @@
 	},
 	"repository": {
 		"type": "git",
-		"url": "git+https://github.com/bad-boy-discord/Bot-rewrite.git"
+		"url": "git+https://github.com/bad-boy-discord/water-bot.git"
 	}
 }

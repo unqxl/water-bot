@@ -21,17 +21,17 @@ import DisTube from "distube";
 import logs from "discord-logs";
 
 // Other
-import DBManager from "./DBManager";
-import Handlers from "./Handlers";
-import Functions from "./Functions";
-import config from "../config";
+import distubeEvents from "../events/distubeEvents";
 import TwitchSystem from "../modules/TwitchSystem";
+import ClanSystem from "../modules/ClanSystem";
+import NekoClient from "nekos.life";
+import Functions from "./Functions";
+import DBManager from "./DBManager";
+import DJSystem from "../modules/DJSystem";
+import Handlers from "./Handlers";
 import Logger from "./Logger";
 import TopGG from "../modules/TopGG";
-import DJSystem from "../modules/DJSystem";
-import distubeEvents from "../events/distubeEvents";
-import NekoClient from "nekos.life";
-import ClanSystem from "../modules/ClanSystem";
+import config from "../config";
 
 // Distube Plugins
 import { YtDlpPlugin } from "@distube/yt-dlp";
@@ -51,7 +51,6 @@ import { GuildConfiguration } from "../typeorm/entities/GuildConfiguration";
 import { DataSource } from "typeorm";
 
 // WebSocket
-import { io, Socket } from "socket.io-client";
 import API from "./API";
 
 export = class Bot extends Client {
@@ -115,7 +114,6 @@ export = class Bot extends Client {
 	//? [Systems]
 	public apis: API = new API(this.config);
 	public web: WebServer = new WebServer({ port: 80 });
-	public socket: Socket = io("http://localhost:3001");
 	public clans: ClanSystem = new ClanSystem(this);
 	public DJSystem: DJSystem = new DJSystem(this);
 	public levels: Leveling = new Leveling(this);
