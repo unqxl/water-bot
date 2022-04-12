@@ -26,7 +26,7 @@
 		"cron": "^1.8.2",
 		"dagpijs": "^2.1.1",
 		"dayjs": "^1.11.0",
-		"discord-api-types": "^0.30.0",
+		"discord-api-types": "^0.31.1",
 		"discord-giveaways": "bad-boy-discord/discord-giveaways#develop",
 		"discord-logs": "bad-boy-discord/discord-logs",
 		"discord-moderation": "^2.1.51",
@@ -61,7 +61,7 @@
 		"@types/twemoji-parser": "^13.1.1",
 		"bufferutil": "^4.0.6",
 		"libsodium-wrappers": "^0.7.10",
-		"npm-check-updates": "^12.5.4",
+		"npm-check-updates": "^12.5.8",
 		"rimraf": "^3.0.2",
 		"utf-8-validate": "^5.0.9"
 	},
