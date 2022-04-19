@@ -12,7 +12,7 @@
 		"@anishshobith/deeptype": "^1.1.0",
 		"@badboy-discord/discordjs-economy": "^1.1.52",
 		"@discordjs/opus": "^0.7.0",
-		"@discordjs/rest": "^0.3.0",
+		"@discordjs/rest": "^0.4.1",
 		"@discordjs/voice": "^0.9.0",
 		"@distube/soundcloud": "^1.1.0",
 		"@distube/spotify": "^1.2.1",
