@@ -40,7 +40,7 @@
 		"module-alias": "^2.2.2",
 		"mysql": "^2.18.1",
 		"nekos.life": "^2.0.9",
-		"osu-api-extended": "^2.1.4",
+		"osu-api-extended": "^2.1.5",
 		"random": "^3.0.6",
 		"reflect-metadata": "^0.1.13",
 		"socket.io-client": "^4.4.1",
