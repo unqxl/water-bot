@@ -246,7 +246,7 @@ export = class Functions {
 			);
 
 			embed.data.setDescription(codeBlock(stack as string));
-			embed.data.addFields(
+			embed.data.addFields([
 				{
 					name: "Name",
 					value: name,
@@ -271,8 +271,8 @@ export = class Functions {
 					name: "Request Data",
 					value: codeBlock("json", jsonString.substring(0, 2045)),
 					inline: false,
-				}
-			);
+				},
+			]);
 
 			channel.send({
 				embeds: [embed.data.toJSON()],

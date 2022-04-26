@@ -96,7 +96,7 @@ export default class SteamCommand extends Command {
 		embed.setURL(data.website ?? app_url);
 		embed.setImage(data.header_image ?? null);
 
-		embed.addFields(
+		embed.addFields([
 			{
 				name: lang.OTHER.STEAM.FIELDS.ABOUT,
 				value: bold(data.about_the_game),
@@ -188,8 +188,8 @@ export default class SteamCommand extends Command {
 						? bold(data.content_descriptors.notes)
 						: bold(lang.GLOBAL.NONE),
 				inline: true,
-			}
-		);
+			},
+		]);
 
 		return message.channel.send({
 			embeds: [embed.toJSON()],

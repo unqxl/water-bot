@@ -195,7 +195,7 @@ export default class HelpCommand extends Command {
 			);
 
 			embed.data.data.description = undefined;
-			embed.data.addFields(
+			embed.data.addFields([
 				{
 					name: `[💰] ${Economy}`,
 					value: EconomyCommands,
@@ -226,8 +226,8 @@ export default class HelpCommand extends Command {
 				{
 					name: `[✨] ${Clans}`,
 					value: ClansCommands,
-				}
-			);
+				},
+			]);
 
 			embed.data.setFooter({
 				text: `${Length}: ${this.client.functions.sp(
@@ -237,10 +237,12 @@ export default class HelpCommand extends Command {
 			});
 
 			if (this.client.functions.checkOwner(message.author))
-				embed.data.addFields({
-					name: `[👑] ${BotOwner}`,
-					value: BotOwnerCommands,
-				});
+				embed.data.addFields([
+					{
+						name: `[👑] ${BotOwner}`,
+						value: BotOwnerCommands,
+					},
+				]);
 
 			return message.channel.send({
 				embeds: [embed.data.toJSON()],

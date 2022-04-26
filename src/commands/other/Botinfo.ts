@@ -93,21 +93,23 @@ export default class BotinfoCommand extends Command {
 			true
 		);
 
-		embed.data.addFields({
-			name: `${fieldName}:`,
-			value: [
-				`› **${guilds}**: **${botInfo.guilds}**`,
-				`› **${users}**: **${botInfo.users}**`,
-				`› **${emojis}**: **${botInfo.emojis}**`,
-				`› **${channels}**: **${botInfo.channels}**`,
-				`› **${commands}**: **${botInfo.commands}**`,
-				`› **${events}**: **${botInfo.events}**`,
-				`› **${apiPing}**: **${botInfo.apiPing}**`,
-				`› **${runnedAt}**: **${botInfo.runTime}**`,
-				`› **${botUptime}**: **${botInfo.uptime}**`,
-				`› **${botVersion}**: **${this.client.version}**`,
-			].join("\n"),
-		});
+		embed.data.addFields([
+			{
+				name: `${fieldName}:`,
+				value: [
+					`› **${guilds}**: **${botInfo.guilds}**`,
+					`› **${users}**: **${botInfo.users}**`,
+					`› **${emojis}**: **${botInfo.emojis}**`,
+					`› **${channels}**: **${botInfo.channels}**`,
+					`› **${commands}**: **${botInfo.commands}**`,
+					`› **${events}**: **${botInfo.events}**`,
+					`› **${apiPing}**: **${botInfo.apiPing}**`,
+					`› **${runnedAt}**: **${botInfo.runTime}**`,
+					`› **${botUptime}**: **${botInfo.uptime}**`,
+					`› **${botVersion}**: **${this.client.version}**`,
+				].join("\n"),
+			},
+		]);
 
 		embed.data.setThumbnail(this.client.user.displayAvatarURL());
 

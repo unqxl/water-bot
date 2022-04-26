@@ -90,7 +90,7 @@ export default class IMDBCommand extends Command {
 					: bold(data.plot)
 			);
 
-		embed.addFields(
+		embed.addFields([
 			{
 				name: lang.OTHER.IMDB.FIELDS.DIRECTORS,
 				value: bold(data.directors),
@@ -142,8 +142,8 @@ export default class IMDBCommand extends Command {
 						.humanize()
 				),
 				inline: true,
-			}
-		);
+			},
+		]);
 
 		embed.setFooter({
 			text: `${lang.OTHER.IMDB.RELEASE_DATE}: ${data.releaseDate}`,

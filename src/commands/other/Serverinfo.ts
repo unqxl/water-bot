@@ -75,7 +75,7 @@ export default class ServerinfoCommand extends Command {
 		embed.setTitle(title);
 		embed.setThumbnail(message.guild.iconURL());
 
-		embed.addFields(
+		embed.addFields([
 			{
 				name: `› ${bold(information)}:`,
 				value: [
@@ -121,8 +121,8 @@ export default class ServerinfoCommand extends Command {
 						inlineCode(info.channels.categoriesChannels)
 					)}`,
 				].join("\n"),
-			}
-		);
+			},
+		]);
 
 		return message.channel.send({
 			embeds: [embed.toJSON()],
@@ -139,7 +139,7 @@ export default class ServerinfoCommand extends Command {
 		let idle = 0;
 		let dnd = 0;
 
-		// Types
+		// Member Types
 		let humans = 0;
 		let bots = 0;
 
@@ -157,7 +157,7 @@ export default class ServerinfoCommand extends Command {
 		// Other
 		const emotes = [];
 
-		members.forEach((member) => {
+		for (const [id, member] of guild.members.cache) {
 			const status = member.presence?.clientStatus;
 
 			if (member.user.bot) bots++;
@@ -185,13 +185,13 @@ export default class ServerinfoCommand extends Command {
 				status.mobile === "dnd"
 			)
 				dnd++;
-		});
+		}
 
-		emojis.forEach((emoji) => {
+		for (const [id, emoji] of guild.emojis.cache) {
 			emotes.push(`${emoji.toString()}`);
-		});
+		}
 
-		channels.forEach((channel) => {
+		for (const [id, channel] of guild.channels.cache) {
 			if (channel.type === ChannelType.GuildText) text_channels++;
 			else if (channel.type === ChannelType.GuildNews) news_channels++;
 			else if (channel.type === ChannelType.GuildVoice) voice_channels++;
@@ -199,7 +199,7 @@ export default class ServerinfoCommand extends Command {
 				categories_channels++;
 			else if (channel.type === ChannelType.GuildStageVoice)
 				stages_channels++;
-		});
+		}
 
 		humansPercent = this.calculatePercent(humans, members.size);
 		botsPercent = this.calculatePercent(bots, members.size);

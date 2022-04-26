@@ -193,7 +193,7 @@ export default class UserinfoCommand extends Command {
 				iconURL: member.user.displayAvatarURL(),
 			});
 
-		embed.addFields(
+		embed.addFields([
 			{
 				name: `[1] ${main}:`,
 				value: [
@@ -216,8 +216,8 @@ export default class UserinfoCommand extends Command {
 					`› **${boosting}**: **${userInfo.boostCheck}**`,
 					`› **${bot}**: **${userInfo.botCheck}**`,
 				].join("\n"),
-			}
-		);
+			},
+		]);
 
 		embed.setThumbnail(userInfo.avatar);
 

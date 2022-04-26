@@ -75,22 +75,24 @@ export default class BotInfoCommand extends SubCommand {
 		const embed = new EmbedBuilder();
 		embed.setColor(this.client.functions.color("Blurple"));
 		embed.setAuthor(this.client.functions.author(command.member));
-		embed.addFields({
-			name: `${fieldName}:`,
-			value: [
-				`› **${guilds}**: **${botInfo.guilds}**`,
-				`› **${users}**: **${botInfo.users}**`,
-				`› **${emojis}**: **${botInfo.emojis}**`,
-				`› **${channels}**: **${botInfo.channels}**`,
-				"",
-				`› **${commands}**: **${botInfo.commands}**`,
-				`› **${events}**: **${botInfo.events}**`,
-				`› **${apiPing}**: **${botInfo.apiPing}**`,
-				"",
-				`› **${botUptime}**: **${botInfo.uptime} (${botInfo.runTime})**`,
-				`› **${botVersion}**: **${this.client.version}**`,
-			].join("\n"),
-		});
+		embed.addFields([
+			{
+				name: `${fieldName}:`,
+				value: [
+					`› **${guilds}**: **${botInfo.guilds}**`,
+					`› **${users}**: **${botInfo.users}**`,
+					`› **${emojis}**: **${botInfo.emojis}**`,
+					`› **${channels}**: **${botInfo.channels}**`,
+					"",
+					`› **${commands}**: **${botInfo.commands}**`,
+					`› **${events}**: **${botInfo.events}**`,
+					`› **${apiPing}**: **${botInfo.apiPing}**`,
+					"",
+					`› **${botUptime}**: **${botInfo.uptime} (${botInfo.runTime})**`,
+					`› **${botVersion}**: **${this.client.version}**`,
+				].join("\n"),
+			},
+		]);
 		embed.setThumbnail(this.client.user.displayAvatarURL());
 
 		await command.reply({

@@ -77,7 +77,7 @@ export default class COVIDCommand extends Command {
 			: "COVID-19";
 
 		embed.data.setTitle(title);
-		embed.data.addFields(
+		embed.data.addFields([
 			{
 				name: lang.OTHER.COVID.TOTAL,
 				value: [
@@ -128,7 +128,7 @@ export default class COVIDCommand extends Command {
 				name: lang.OTHER.COVID.TESTS,
 				value: bold(this.client.functions.formatNumber(country.tests)),
 			}
-		);
+		]);
 
 		embed.data.setThumbnail(country.countryInfo?.flag || "");
 		embed.data.setFooter({

@@ -98,7 +98,7 @@ export default class OsuCommand extends Command {
 			.setTitle(data.username)
 			.setURL("https://osu.ppy.sh/users/" + data.id);
 
-		embed.addFields(
+		embed.addFields([
 			{
 				name: lang.OTHER.OSU.FIELDS.STATISTICS,
 				value: [
@@ -171,8 +171,8 @@ export default class OsuCommand extends Command {
 				name: lang.OTHER.OSU.FIELDS.OTHER_USERNAMES,
 				value: bold(data.previous_usernames.join(", ")),
 				inline: true,
-			}
-		);
+			},
+		]);
 
 		return message.channel.send({
 			embeds: [embed.toJSON()],
