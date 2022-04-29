@@ -48,7 +48,7 @@ import Event from "../types/Event/Event";
 
 // MySQL
 import { GuildConfiguration } from "../typeorm/entities/GuildConfiguration";
-import { DataSource } from "typeorm";
+import { getRepository } from "../services/Repository";
 
 // WebSocket
 import API from "./API";
@@ -66,7 +66,7 @@ export = class Bot extends Client {
 	public owners: string[] = ["852921856800718908"];
 	public config: typeof config = config;
 	public twitchKey: string;
-	public version: string = "2.2.0-dev";
+	public version: string = "2.3.0-dev";
 
 	//? [Storages]
 	public custom_commands: Enmap<string, CustomCommand[]> = new Enmap({
@@ -119,7 +119,6 @@ export = class Bot extends Client {
 	public levels: Leveling = new Leveling(this);
 	public logger: Logger = new Logger();
 	public twitchSystem: TwitchSystem = new TwitchSystem(this);
-	public datasource: DataSource = null;
 	public database: DBManager = null;
 
 	//? [Modules]
@@ -229,20 +228,7 @@ export = class Bot extends Client {
 		if (!this.application?.owner) await this.application?.fetch();
 
 		//? [MySQL Setup - Start]
-		this.datasource = new DataSource({
-			name: "default",
-			type: "mysql",
-			host: this.config.mysql.host,
-			port: 3306,
-			username: this.config.mysql.username,
-			password: this.config.mysql.password,
-			database: this.config.mysql.database,
-			entities: [GuildConfiguration],
-		});
-
-		await this.datasource.initialize();
-
-		const configRepo = this.datasource.getRepository(GuildConfiguration);
+		const configRepo = await getRepository();
 		const guildConfigs = await configRepo.find();
 		const configMappings = new Collection<string, GuildConfiguration>();
 

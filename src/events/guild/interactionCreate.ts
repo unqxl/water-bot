@@ -4,6 +4,7 @@ import {
 	GuildMember,
 	Interaction,
 } from "discord.js";
+import { LanguageService } from "../../services/Language";
 import { bold } from "@discordjs/builders";
 import Event from "../../types/Event/Event";
 import Bot from "../../classes/Bot";
@@ -17,9 +18,12 @@ export default class InteractionCreateEvent extends Event {
 		if (!interaction.inGuild()) return;
 		if (!interaction.isChatInputCommand()) return;
 
-		const lang = await client.functions.getLanguageFile(
-			interaction.guild.id
+		const lang = await this.client.functions.getLanguageFile(
+			interaction.guildId
 		);
+
+		//TODO: new LanguageService(interaction.guildId);
+		//TODO: const { PERMISSIONS, ERRORS } = await lang.all();
 
 		await client.application?.commands
 			.fetch(interaction.commandId)
