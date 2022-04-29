@@ -2,12 +2,11 @@ import { LocaleTemplate } from "./locales/index";
 import { GuildService } from "./Guild";
 
 type TwoDotPrefix<T extends string> = T extends "" ? "" : `:${T}`;
+// prettier-ignore
 type SearchFormat<T> = (
 	T extends object
 		? {
-				[K in Exclude<keyof T, symbol>]: `${K}${TwoDotPrefix<
-					SearchFormat<T[K]>
-				>}`;
+			[K in Exclude<keyof T, symbol>]: `${K}${TwoDotPrefix<SearchFormat<T[K]>>}`;
 		  }[Exclude<keyof T, symbol>]
 		: ""
 ) extends infer D
