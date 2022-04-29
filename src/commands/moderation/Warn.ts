@@ -114,10 +114,10 @@ export default class WarnCommand extends Command {
 			.setLabel(decline)
 			.setEmoji({ name: "❌" });
 
-		const confirmRow = new ActionRowBuilder<ButtonBuilder>().addComponents(
+		const confirmRow = new ActionRowBuilder<ButtonBuilder>().addComponents([
 			confirmButton,
-			cancelButton
-		);
+			cancelButton,
+		]);
 
 		const confirmEmbed = this.client.functions.buildEmbed(
 			message,

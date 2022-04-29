@@ -39,11 +39,11 @@ export = async (
 		.setCustomId("golden_case")
 		.setEmoji({ name: "3️⃣" });
 
-	const casesRow = new ActionRowBuilder<ButtonBuilder>().addComponents(
+	const casesRow = new ActionRowBuilder<ButtonBuilder>().addComponents([
 		bronzeCase,
 		silverCase,
-		goldenCase
-	);
+		goldenCase,
+	]);
 
 	const description = bold(lang.ECONOMY.CASES.CHOOSE_TEXT);
 	const note = bold(lang.ECONOMY.CASES.NOTE);

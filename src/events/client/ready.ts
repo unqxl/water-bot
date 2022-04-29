@@ -1,6 +1,6 @@
-import { Job } from "../../plugins/Job";
 import { Guild, EmbedBuilder, TextChannel, Util } from "discord.js";
 import { bold } from "@discordjs/builders";
+import { Job } from "../../plugins/Job";
 import Bot from "../../classes/Bot";
 import Event from "../../types/Event/Event";
 

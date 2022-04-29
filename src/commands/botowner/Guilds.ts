@@ -94,7 +94,7 @@ export default class GuildsCommand extends Command {
 			.setCustomId("delete");
 
 		const row = new ActionRowBuilder<ButtonBuilder>();
-		row.addComponents(previousPage, nextPage, deletePage);
+		row.addComponents([previousPage, nextPage, deletePage]);
 
 		const embed = this.client.functions.buildEmbed(
 			message,
@@ -132,9 +132,10 @@ export default class GuildsCommand extends Command {
 					if (i0 < 0) {
 						collector.stop();
 
-						return btn.update({
+						btn.update({
 							components: [],
 						});
+						return;
 					}
 
 					description = this.client.guilds.cache
@@ -162,9 +163,10 @@ export default class GuildsCommand extends Command {
 						)}`,
 					});
 
-					return btn.update({
+					btn.update({
 						embeds: [embed.data.toJSON()],
 					});
+					return;
 				}
 
 				case "next": {
@@ -175,17 +177,19 @@ export default class GuildsCommand extends Command {
 					if (i1 > this.client.guilds.cache.size + 10) {
 						collector.stop();
 
-						return btn.update({
+						btn.update({
 							components: [],
 						});
+						return;
 					}
 
 					if (!i0 || !i1) {
 						collector.stop();
 
-						return btn.update({
+						btn.update({
 							components: [],
 						});
+						return;
 					}
 
 					description = this.client.guilds.cache
@@ -213,9 +217,10 @@ export default class GuildsCommand extends Command {
 						)}`,
 					});
 
-					return btn.update({
+					btn.update({
 						embeds: [embed.data.toJSON()],
 					});
+					return;
 				}
 
 				case "delete": {

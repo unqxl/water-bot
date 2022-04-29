@@ -38,7 +38,7 @@ export = async (
 	GoToButton.setURL(`https://twitch.tv/${data.name}`);
 	GoToButton.setEmoji({ name: "⏯" });
 
-	row.addComponents(GoToButton);
+	row.addComponents([GoToButton]);
 
 	return channel.send({
 		embeds: [embed.toJSON()],

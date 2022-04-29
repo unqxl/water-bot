@@ -1,4 +1,4 @@
-import { MessageAttachment } from "discord.js";
+import { Attachment } from "discord.js";
 import { Command } from "../../types/Command/Command";
 import { Categories } from "../../types/Command/BaseCommand";
 import { Rank } from "canvacord";
@@ -58,7 +58,7 @@ export default class RankCommand extends Command {
 				fontY: "Sans",
 			})
 			.then(async (data) => {
-				const attachment = new MessageAttachment(data, "rank.png");
+				const attachment = new Attachment(data, "rank.png");
 
 				return message.channel.send({
 					files: [attachment],

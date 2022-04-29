@@ -153,9 +153,9 @@ export default class EvalCommand extends Command {
 			.setStyle(1)
 			.setEmoji({ name: "❌" });
 
-		const row = new ActionRowBuilder<ButtonBuilder>().addComponents(
-			deleteBTN
-		);
+		const row = new ActionRowBuilder<ButtonBuilder>().addComponents([
+			deleteBTN,
+		]);
 		const embed = this.client.functions.buildEmbed(
 			message,
 			"Blurple",

@@ -43,10 +43,10 @@ export = async (
 		.setLabel(lang.GLOBAL.DECLINE)
 		.setEmoji({ name: "❌" });
 
-	const ChooseRow = new ActionRowBuilder<ButtonBuilder>().addComponents(
+	const ChooseRow = new ActionRowBuilder<ButtonBuilder>().addComponents([
 		AcceptButton,
-		DeclineButton
-	);
+		DeclineButton,
+	]);
 
 	const reply = await msg.edit({
 		content: lang.GAMES.RPS.ACCEPT_CHALLENGE(
@@ -107,11 +107,11 @@ export = async (
 			.setLabel(lang.GAMES.RPS.ITEMS.SCISSORS)
 			.setEmoji({ name: "✂" });
 
-		const ItemsRow = new ActionRowBuilder<ButtonBuilder>().addComponents(
+		const ItemsRow = new ActionRowBuilder<ButtonBuilder>().addComponents([
 			rock,
 			paper,
-			scissors
-		);
+			scissors,
+		]);
 
 		await reply.edit({
 			content: null,

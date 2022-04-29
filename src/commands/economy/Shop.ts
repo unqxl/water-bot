@@ -102,11 +102,11 @@ export default class ShopCommand extends Command {
 				.setEmoji({ name: "❌" })
 				.setCustomId("delete");
 
-			const row = new ActionRowBuilder<ButtonBuilder>().addComponents(
+			const row = new ActionRowBuilder<ButtonBuilder>().addComponents([
 				previousPage,
 				nextPage,
-				deletePage
-			);
+				deletePage,
+			]);
 
 			const embed = this.client.functions.buildEmbed(
 				message,
@@ -142,9 +142,10 @@ export default class ShopCommand extends Command {
 						if (i0 < 0) {
 							collector.stop();
 
-							return btn.update({
+							btn.update({
 								components: [],
 							});
+							return;
 						}
 
 						res = shop_data
@@ -170,9 +171,10 @@ export default class ShopCommand extends Command {
 							)}`,
 						});
 
-						return btn.update({
+						btn.update({
 							embeds: [embed.data.toJSON()],
 						});
+						return;
 					}
 
 					case "next": {
@@ -183,17 +185,19 @@ export default class ShopCommand extends Command {
 						if (i1 > this.client.guilds.cache.size + 10) {
 							collector.stop();
 
-							return btn.update({
+							btn.update({
 								components: [],
 							});
+							return;
 						}
 
 						if (!i0 || !i1) {
 							collector.stop();
 
-							return btn.update({
+							btn.update({
 								components: [],
 							});
+							return;
 						}
 
 						res = shop_data
@@ -219,9 +223,10 @@ export default class ShopCommand extends Command {
 							)}`,
 						});
 
-						return btn.update({
+						btn.update({
 							embeds: [embed.data.toJSON()],
 						});
+						return;
 					}
 
 					case "delete": {

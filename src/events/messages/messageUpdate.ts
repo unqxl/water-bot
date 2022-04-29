@@ -52,9 +52,9 @@ export default class MessageUpdateEvent extends Event {
 			.setURL(new_message.url)
 			.setLabel(lang_file.EVENTS.MESSAGE_EVENTS.UPDATE.GO_TO);
 
-		const row = new ActionRowBuilder<ButtonBuilder>().addComponents(
-			RedirectButton
-		);
+		const row = new ActionRowBuilder<ButtonBuilder>().addComponents([
+			RedirectButton,
+		]);
 		const embed = new EmbedBuilder()
 			.setColor(Util.resolveColor("Blurple"))
 			.setAuthor({

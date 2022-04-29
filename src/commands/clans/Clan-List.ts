@@ -101,11 +101,11 @@ export default class ClanListCommand extends Command {
 			.setEmoji({ name: "❌" })
 			.setCustomId("delete");
 
-		const row = new ActionRowBuilder<ButtonBuilder>().addComponents(
+		const row = new ActionRowBuilder<ButtonBuilder>().addComponents([
 			previousPage,
 			nextPage,
-			deletePage
-		);
+			deletePage,
+		]);
 
 		const embed = this.client.functions.buildEmbed(
 			message,
@@ -141,9 +141,10 @@ export default class ClanListCommand extends Command {
 					if (i0 < 0) {
 						collector.stop();
 
-						return btn.update({
+						btn.update({
 							components: [],
 						});
+						return;
 					}
 
 					description = data
@@ -173,9 +174,10 @@ export default class ClanListCommand extends Command {
 						text: `Page: ${page}/${Math.ceil(data.length / 10)}`,
 					});
 
-					return btn.update({
+					btn.update({
 						embeds: [embed.data.toJSON()],
 					});
+					return;
 				}
 
 				case "next": {
@@ -186,17 +188,19 @@ export default class ClanListCommand extends Command {
 					if (i1 > data.length + 10) {
 						collector.stop();
 
-						return btn.update({
+						btn.update({
 							components: [],
 						});
+						return;
 					}
 
 					if (!i0 || !i1) {
 						collector.stop();
 
-						return btn.update({
+						btn.update({
 							components: [],
 						});
+						return;
 					}
 
 					description = data
@@ -226,9 +230,10 @@ export default class ClanListCommand extends Command {
 						text: `Page: ${page}/${Math.ceil(data.length / 10)}`,
 					});
 
-					return btn.update({
+					btn.update({
 						embeds: [embed.data.toJSON()],
 					});
+					return;
 				}
 
 				case "delete": {

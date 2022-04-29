@@ -255,7 +255,7 @@ export = async (
 	});
 
 	const buttons = new ActionRowBuilder<ButtonBuilder>();
-	buttons.addComponents(
+	buttons.addComponents([
 		...shuffle(
 			new ButtonBuilder()
 				.setStyle(2)
@@ -275,8 +275,8 @@ export = async (
 				.setLabel(
 					`${secondFake.first}, ${secondFake.second}, ${secondFake.third}`
 				)
-		)
-	);
+		),
+	]);
 
 	await message
 		.edit({

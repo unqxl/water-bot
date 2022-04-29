@@ -146,7 +146,7 @@ export default class QueueCommand extends SubCommand {
 			.setCustomId("delete");
 
 		const row = new ActionRowBuilder<ButtonBuilder>();
-		row.addComponents(previousPage, nextPage, deletePage);
+		row.addComponents([previousPage, nextPage, deletePage]);
 
 		const color = this.client.functions.color("Blurple");
 		const author = this.client.functions.author(command.member);
@@ -182,9 +182,11 @@ export default class QueueCommand extends SubCommand {
 
 					if (i0 < 0) {
 						collector.stop();
-						return int.update({
+
+						int.update({
 							components: [],
 						});
+						return;
 					}
 
 					description = queue.songs
@@ -209,9 +211,10 @@ export default class QueueCommand extends SubCommand {
 						)}`,
 					});
 
-					return int.update({
+					int.update({
 						embeds: [embed.toJSON()],
 					});
+					return;
 				}
 
 				case "next": {
@@ -221,16 +224,20 @@ export default class QueueCommand extends SubCommand {
 
 					if (i1 > queue.songs.length) {
 						collector.stop();
-						return int.update({
+
+						int.update({
 							components: [],
 						});
+						return;
 					}
 
 					if (!i0 || !i1) {
 						collector.stop();
-						return int.update({
+
+						int.update({
 							components: [],
 						});
+						return;
 					}
 
 					description = queue.songs
@@ -255,9 +262,10 @@ export default class QueueCommand extends SubCommand {
 						)}`,
 					});
 
-					return int.update({
+					int.update({
 						embeds: [embed.toJSON()],
 					});
+					return;
 				}
 
 				case "delete": {
