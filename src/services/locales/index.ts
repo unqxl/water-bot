@@ -1,5 +1,5 @@
 import { PermissionsString } from "discord.js";
-import EnglishLocale from "./en-US";
+import EnglishLocale from "./en-US.json";
 
 export interface LocaleTemplate {
 	ERRORS: {};
