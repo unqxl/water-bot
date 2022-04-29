@@ -1,5 +1,11 @@
 {
-	"ERRORS": {},
+	"ERRORS": {
+		"BOT_MISSING_PERMISSIONS": "Oh, it looks like I don't have some permissions to run this command: %s",
+		"USER_MISSING_PERMISSIONS": "Oh, it looks like you don't have some rights to run this command: %s",
+		"JOIN_VOICE": "To use this command, you need to log into the voice channel!",
+		"JOIN_BOT_VOICE": "To use this command, you need to log into the voice channel where the bot is located!",
+		"QUEUE_IS_EMPTY": "The song's music queue is empty now!"
+	},
 	"EVENTS": {},
 	"PERMISSIONS": {
 		"AddReactions": "Add Reactions",
@@ -44,5 +50,10 @@
 		"ViewChannel": "View Channel",
 		"ViewGuildInsights": "View Guild Insights"
 	},
-	"COMMANDS": {}
+	"MUSIC_COMMANDS": {
+		"NOWPLAYING_TITLE": "Now Playing - %s",
+		"NOWPLAYING_NAME": "Song Name",
+		"NOWPLAYING_DURATION": "Song Duration",
+		"NOWPLAYING_REQUESTEDBY": "Requested By"
+	}
 }

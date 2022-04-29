@@ -1,131 +1,79 @@
-import { EmbedBuilder, Guild, Util, ChannelType } from "discord.js";
+import {
+	ChannelType,
+	ChatInputCommandInteraction,
+	EmbedBuilder,
+	Guild,
+} from "discord.js";
 import { bold, inlineCode } from "@discordjs/builders";
-import { Command } from "../../types/Command/Command";
-import { Categories } from "../../types/Command/BaseCommand";
-import { Message } from "discord.js";
+import { SubCommand } from "../../types/Command/SubCommand";
 import Bot from "../../classes/Bot";
 
-export default class ServerinfoCommand extends Command {
+export default class ServerInfoCommand extends SubCommand {
 	constructor(client: Bot) {
 		super(client, {
+			commandName: "other",
 			name: "serverinfo",
-			aliases: ["si", "serveri", "sinfo"],
-
-			description: {
-				en: "Displays Server Information!",
-				ru: "Показывает Информацию Сервера!",
-			},
-
-			category: Categories.OTHER,
+			description: "Displays Server Information!",
 		});
 	}
 
 	async run(
-		message: Message,
-		args: string[],
+		command: ChatInputCommandInteraction<"cached">,
 		lang: typeof import("@locales/English").default
 	) {
-		const info = await this.getInfo(message.guild);
+		const info = await this.getInfo(command.guild);
 		const embed = new EmbedBuilder();
 
-		// Embed Title and Field Names
-		const [title, information, precences, members, channels] = [
-			lang.OTHER.SERVER_INFO.TITLE,
-			lang.OTHER.SERVER_INFO.FIELDS.ZERO,
-			lang.OTHER.SERVER_INFO.FIELDS.FIRST,
-			lang.OTHER.SERVER_INFO.FIELDS.SECOND,
-			lang.OTHER.SERVER_INFO.FIELDS.THIRD,
-		];
+		const { FIELDS, STATUSES, MEMBER_TYPES, CHANNELS, OTHER } =
+			lang.OTHER.SERVER_INFO;
+		const author = this.client.functions.author(command.member);
+		const color = this.client.functions.color("Blurple");
 
-		// Precences
-		const [online, idle, dnd] = [
-			lang.OTHER.SERVER_INFO.STATUSES.ONLINE,
-			lang.OTHER.SERVER_INFO.STATUSES.IDLE,
-			lang.OTHER.SERVER_INFO.STATUSES.DND,
-		];
+		const res = [
+			`› ${bold(FIELDS.ZERO)}:`,
+			`» ${bold(OTHER.GUILD_ID)}: ${bold(inlineCode(info.id))}`,
+			`» ${bold(OTHER.OWNER)}: ${bold(info.owner.toString())}`,
+			`» ${bold(OTHER.MEMBER_COUNT)}: ${bold(inlineCode(info.members))}`,
+			`» ${bold(OTHER.CREATED_AT)}: ${bold(info.created_at)}`,
+			"",
+			`› ${bold(FIELDS.FIRST)}:`,
+			`» ${bold(STATUSES.ONLINE)}: ${bold(inlineCode(info.onlineUsers))}`,
+			`» ${bold(STATUSES.IDLE)}: ${bold(inlineCode(info.idleUsers))}`,
+			`» ${bold(STATUSES.DND)}: ${bold(inlineCode(info.dndUsers))}`,
+			"",
+			`› ${bold(FIELDS.SECOND)}:`,
+			`» ${bold(MEMBER_TYPES.HUMANS)}: ${bold(
+				inlineCode(info.users.humans)
+			)}`,
+			`» ${bold(MEMBER_TYPES.BOTS)}: ${bold(
+				inlineCode(info.users.bots)
+			)}`,
+			"",
+			`› ${bold(FIELDS.THIRD)}:`,
+			`» ${bold(CHANNELS.TEXT)}: ${bold(
+				inlineCode(info.channels.textChannels)
+			)}`,
+			`» ${bold(CHANNELS.NEWS)}: ${bold(
+				inlineCode(info.channels.newsChannels)
+			)}`,
+			`» ${bold(CHANNELS.VOICE)}: ${bold(
+				inlineCode(info.channels.voiceChannels)
+			)}`,
+			`» ${bold(CHANNELS.STAGE)}: ${bold(
+				inlineCode(info.channels.stagesChannels)
+			)}`,
+			`» ${bold(CHANNELS.CATEGORIES)}: ${bold(
+				inlineCode(info.channels.categoriesChannels)
+			)}`,
+		].join("\n");
 
-		// Users
-		const [humans, bots] = [
-			lang.OTHER.SERVER_INFO.MEMBER_TYPES.HUMANS,
-			lang.OTHER.SERVER_INFO.MEMBER_TYPES.BOTS,
-		];
+		embed.setColor(color);
+		embed.setAuthor(author);
+		embed.setDescription(res);
+		embed.setTimestamp();
 
-		// Channels
-		const [text, news, voice, stage, categories] = [
-			lang.OTHER.SERVER_INFO.CHANNELS.TEXT,
-			lang.OTHER.SERVER_INFO.CHANNELS.NEWS,
-			lang.OTHER.SERVER_INFO.CHANNELS.VOICE,
-			lang.OTHER.SERVER_INFO.CHANNELS.STAGE,
-			lang.OTHER.SERVER_INFO.CHANNELS.CATEGORIES,
-		];
-
-		// Other
-		const [guild_id, owner, member_count, createdAt] = [
-			lang.OTHER.SERVER_INFO.OTHER.GUILD_ID,
-			lang.OTHER.SERVER_INFO.OTHER.OWNER,
-			lang.OTHER.SERVER_INFO.OTHER.MEMBER_COUNT,
-			lang.OTHER.SERVER_INFO.OTHER.CREATED_AT,
-		];
-
-		embed.setColor(Util.resolveColor("Blurple"));
-		embed.setAuthor({
-			name: message.author.username,
-			iconURL: message.author.displayAvatarURL(),
-		});
-		embed.setTitle(title);
-		embed.setThumbnail(message.guild.iconURL());
-
-		embed.addFields([
-			{
-				name: `› ${bold(information)}:`,
-				value: [
-					`» ${bold(guild_id)}: ${bold(inlineCode(info.id))}`,
-					`» ${bold(owner)}: ${bold(info.owner.toString())}`,
-					`» ${bold(member_count)}: ${bold(
-						inlineCode(info.members)
-					)}`,
-					`» ${bold(createdAt)}: ${bold(info.created_at)}`,
-				].join("\n"),
-			},
-			{
-				name: `› ${bold(precences)}:`,
-				value: [
-					`» ${bold(online)}: ${bold(inlineCode(info.onlineUsers))}`,
-					`» ${bold(idle)}: ${bold(inlineCode(info.idleUsers))}`,
-					`» ${bold(dnd)}: ${bold(inlineCode(info.dndUsers))}`,
-				].join("\n"),
-			},
-			{
-				name: `› ${bold(members)}:`,
-				value: [
-					`» ${bold(humans)}: ${bold(inlineCode(info.users.humans))}`,
-					`» ${bold(bots)}: ${bold(inlineCode(info.users.bots))}`,
-				].join("\n"),
-			},
-			{
-				name: `› ${bold(channels)}:`,
-				value: [
-					`» ${bold(text)}: ${bold(
-						inlineCode(info.channels.textChannels)
-					)}`,
-					`» ${bold(news)}: ${bold(
-						inlineCode(info.channels.newsChannels)
-					)}`,
-					`» ${bold(voice)}: ${bold(
-						inlineCode(info.channels.voiceChannels)
-					)}`,
-					`» ${bold(stage)}: ${bold(
-						inlineCode(info.channels.stagesChannels)
-					)}`,
-					`» ${bold(categories)}: ${bold(
-						inlineCode(info.channels.categoriesChannels)
-					)}`,
-				].join("\n"),
-			},
-		]);
-
-		return message.channel.send({
-			embeds: [embed.toJSON()],
+		return command.reply({
+			embeds: [embed],
 		});
 	}
 
@@ -139,7 +87,7 @@ export default class ServerinfoCommand extends Command {
 		let idle = 0;
 		let dnd = 0;
 
-		// Member Types
+		// Types
 		let humans = 0;
 		let bots = 0;
 
@@ -157,7 +105,7 @@ export default class ServerinfoCommand extends Command {
 		// Other
 		const emotes = [];
 
-		for (const [id, member] of guild.members.cache) {
+		members.forEach((member) => {
 			const status = member.presence?.clientStatus;
 
 			if (member.user.bot) bots++;
@@ -185,13 +133,13 @@ export default class ServerinfoCommand extends Command {
 				status.mobile === "dnd"
 			)
 				dnd++;
-		}
+		});
 
-		for (const [id, emoji] of guild.emojis.cache) {
+		emojis.forEach((emoji) => {
 			emotes.push(`${emoji.toString()}`);
-		}
+		});
 
-		for (const [id, channel] of guild.channels.cache) {
+		channels.forEach((channel) => {
 			if (channel.type === ChannelType.GuildText) text_channels++;
 			else if (channel.type === ChannelType.GuildNews) news_channels++;
 			else if (channel.type === ChannelType.GuildVoice) voice_channels++;
@@ -199,7 +147,7 @@ export default class ServerinfoCommand extends Command {
 				categories_channels++;
 			else if (channel.type === ChannelType.GuildStageVoice)
 				stages_channels++;
-		}
+		});
 
 		humansPercent = this.calculatePercent(humans, members.size);
 		botsPercent = this.calculatePercent(bots, members.size);

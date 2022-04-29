@@ -1,94 +1,103 @@
-import { Categories, ValidateReturn } from "../../types/Command/BaseCommand";
-import { Util } from "discord.js";
-import { Command } from "../../types/Command/Command";
-import { Message } from "discord.js";
-import { bold } from "@discordjs/builders";
+import {
+	ChatInputCommandInteraction,
+	EmbedBuilder,
+	GuildMember,
+	Util,
+} from "discord.js";
+import { bold, hyperlink } from "@discordjs/builders";
+import { LanguageService } from "../../services/Language";
+import { ValidateReturn } from "../../types/Command/BaseSlashCommand";
+import { SubCommand } from "../../types/Command/SubCommand";
 import Bot from "../../classes/Bot";
 
-export default class NowPlayingCommand extends Command {
+export default class NowPlayingCommand extends SubCommand {
 	constructor(client: Bot) {
 		super(client, {
+			commandName: "music",
 			name: "nowplaying",
-			aliases: ["np"],
-
-			description: {
-				en: "Displays Information about Current Playing Song!",
-				ru: "Показывает Информацию о Играющей Песне!",
-			},
-
-			category: Categories.MUSIC,
-			usage: "<prefix>nowplaying",
+			description: "Displays Information of Current Playing Music!",
 		});
 	}
 
 	async validate(
-		message: Message,
-		args: string[],
-		lang: typeof import("@locales/English").default
+		command: ChatInputCommandInteraction<"cached">,
+		lang: LanguageService
 	): Promise<ValidateReturn> {
-		const [error, voice_error] = await Promise.all([
-			lang.ERRORS.NOT_JOINED_VOICE,
-			lang.ERRORS.JOIN_BOT_VOICE,
-		]);
+		const color = this.client.functions.color("Red");
+		const author = this.client.functions.author(command.member);
 
-		if (!message.member.voice.channel) {
-			const embed = this.client.functions.buildEmbed(
-				message,
-				"Red",
-				error,
-				false,
-				"❌",
-				true
+		const { djRoles } = this.client.configurations.get(command.guild.id);
+		if (djRoles.length) {
+			const { status, message } = await this.client.DJSystem.check(
+				command
 			);
+			if (!status) {
+				const embed = new EmbedBuilder();
+				embed.setColor(color);
+				embed.setAuthor(author);
+				embed.setDescription(`❌ | ${bold(message)}`);
+				embed.setTimestamp();
 
-			return {
-				ok: false,
-				error: {
-					embeds: [embed.data.toJSON()],
-				},
-			};
+				return {
+					ok: false,
+					error: {
+						embeds: [embed],
+					},
+				};
+			}
 		}
 
-		if (
-			message.guild.me.voice.channel &&
-			message.member.voice.channel &&
-			message.member.voice.channel !== message.guild.me.voice.channel
-		) {
-			const embed = this.client.functions.buildEmbed(
-				message,
-				"Red",
-				voice_error,
-				false,
-				"❌",
-				true
-			);
+		const voiceCheck = this.client.functions.voiceCheck(
+			command.guild.me,
+			command.member as GuildMember
+		);
+		if (!voiceCheck) {
+			if (voiceCheck.code === 1) {
+				const text = await lang.get("ERRORS:JOIN_VOICE");
+				const embed = new EmbedBuilder();
+				embed.setColor(color);
+				embed.setAuthor(author);
+				embed.setDescription(`❌ | ${bold(text)}`);
+				embed.setTimestamp();
 
-			return {
-				ok: false,
-				error: {
-					embeds: [embed.data.toJSON()],
-				},
-			};
-		}
+				return {
+					ok: false,
+					error: {
+						embeds: [embed],
+					},
+				};
+			} else if (voiceCheck.code === 2) {
+				const text = await lang.get("ERRORS:JOIN_BOT_VOICE");
+				const embed = new EmbedBuilder();
+				embed.setColor(color);
+				embed.setAuthor(author);
+				embed.setDescription(`❌ | ${bold(text)}`);
+				embed.setTimestamp();
 
-		const queue = this.client.music.getQueue(message);
-		if (!queue || !queue.songs.length) {
-			const text = lang.ERRORS.QUEUE_EMPTY;
-			const embed = this.client.functions.buildEmbed(
-				message,
-				"Red",
-				text,
-				false,
-				"❌",
-				true
-			);
+				return {
+					ok: false,
+					error: {
+						embeds: [embed],
+					},
+				};
+			}
 
-			return {
-				ok: false,
-				error: {
-					embeds: [embed.data.toJSON()],
-				},
-			};
+			const queue = this.client.music.getQueue(command.guild);
+			if (!queue) {
+				const text = await lang.get("ERRORS:QUEUE_IS_EMPTY");
+				const embed = new EmbedBuilder();
+				embed.setColor(color);
+				embed.setAuthor(author);
+				embed.setDescription(`❌ | ${bold(text)}`);
+				embed.setTimestamp();
+
+				return {
+					ok: false,
+					error: {
+						embeds: [embed],
+					},
+				};
+			}
 		}
 
 		return {
@@ -97,48 +106,39 @@ export default class NowPlayingCommand extends Command {
 	}
 
 	async run(
-		message: Message,
-		args: string[],
-		lang: typeof import("@locales/English").default
+		command: ChatInputCommandInteraction<"cached">,
+		lang: LanguageService
 	) {
-		const queue = this.client.music.getQueue(message);
-		const description = lang.MUSIC.NOW_PLAYING(
-			Util.escapeMarkdown(queue.songs[0].name!)
-		);
-
-		const [songTitle, songURL, songViews, durationText, requestedByText] =
-			await Promise.all([
-				lang.MUSIC.SONG_INFO.NAME,
-				lang.MUSIC.SONG_INFO.URL,
-				lang.MUSIC.SONG_INFO.VIEWS,
-				lang.MUSIC.SONG_INFO.DURATION,
-				lang.MUSIC.SONG_INFO.REQUESTED_BY,
-			]);
-
+		const queue = this.client.music.getQueue(command.guild);
 		const song = queue.songs[0];
-		const title = Util.escapeMarkdown(song.name);
-		const info = [
-			`› ${bold(songTitle)}: ${bold(title)}`,
-			`› ${bold(songURL)}: ${bold(`<${song.url}>`)}`,
-			`› ${bold(songViews)}: ${bold(
-				this.client.functions.sp(song.views)
-			)}`,
-			`› ${bold(durationText)}: ${bold(song.formattedDuration)}`,
-			`› ${bold(requestedByText)}: ${bold(song.user.toString())}`,
-		];
+		const name = Util.escapeMarkdown(song.name);
+		const {
+			NOWPLAYING_TITLE,
+			NOWPLAYING_NAME,
+			NOWPLAYING_DURATION,
+			NOWPLAYING_REQUESTEDBY,
+		} = await (
+			await lang.all()
+		).MUSIC_COMMANDS;
 
-		const text = `${bold(description)}:\n${info.join("\n")}`;
-		const embed = this.client.functions.buildEmbed(
-			message,
-			"Blurple",
-			text,
-			false,
-			false,
-			true
-		);
+		const text = [
+			`${bold(NOWPLAYING_TITLE)}`,
+			"",
+			`› ${bold(NOWPLAYING_NAME)}: ${bold(hyperlink(name, song.url))}`,
+			`› ${bold(NOWPLAYING_DURATION)}: ${bold(song.formattedDuration)}`,
+			`› ${bold(NOWPLAYING_REQUESTEDBY)}: ${bold(song.user.toString())}`,
+		].join("\n");
 
-		return message.channel.send({
-			embeds: [embed.data.toJSON()],
+		const color = this.client.functions.color("Blurple");
+		const author = this.client.functions.author(command.member);
+		const embed = new EmbedBuilder();
+		embed.setColor(color);
+		embed.setAuthor(author);
+		embed.setDescription(text);
+		embed.setTimestamp();
+
+		return command.reply({
+			embeds: [embed],
 		});
 	}
 }

@@ -1,134 +1,117 @@
-import { Categories, ValidateReturn } from "../../types/Command/BaseCommand";
-import { Command } from "../../types/Command/Command";
-import { Message } from "discord.js";
+import {
+	ChatInputCommandInteraction,
+	EmbedBuilder,
+	GuildMember,
+} from "discord.js";
+import { ValidateReturn } from "../../types/Command/BaseSlashCommand";
+import { SubCommand } from "../../types/Command/SubCommand";
+import { bold } from "@discordjs/builders";
 import Bot from "../../classes/Bot";
 
-export default class ResumeCommand extends Command {
+export default class ResumeCommand extends SubCommand {
 	constructor(client: Bot) {
 		super(client, {
+			commandName: "music",
 			name: "resume",
-
-			description: {
-				en: "Resumes Paused Music!",
-				ru: "Возобновляет Поставленную на Паузу Песню!",
-			},
-
-			category: Categories.MUSIC,
-			usage: "<prefix>resume",
+			description: "Resumes Current Song!",
 		});
 	}
 
 	async validate(
-		message: Message,
-		args: string[],
+		command: ChatInputCommandInteraction<"cached">,
 		lang: typeof import("@locales/English").default
 	): Promise<ValidateReturn> {
-		const { djRoles } = this.client.configurations.get(message.guild.id);
+		const color = this.client.functions.color("Red");
+		const author = this.client.functions.author(command.member);
+
+		const { djRoles } = this.client.configurations.get(command.guild.id);
 		if (djRoles.length) {
-			const { status, message: error } = await this.client.DJSystem.check(
-				message
+			const { status, message } = await this.client.DJSystem.check(
+				command
 			);
 			if (!status) {
-				const embed = this.client.functions.buildEmbed(
-					message,
-					"Red",
-					error,
-					false,
-					"❌",
-					true
-				);
+				const embed = new EmbedBuilder();
+				embed.setColor(color);
+				embed.setAuthor(author);
+				embed.setDescription(`❌ | ${bold(message)}`);
+				embed.setTimestamp();
 
 				return {
 					ok: false,
 					error: {
-						embeds: [embed.data.toJSON()],
+						embeds: [embed],
 					},
 				};
 			}
 		}
 
-		const [error, voice_error] = await Promise.all([
-			lang.ERRORS.NOT_JOINED_VOICE,
-			lang.ERRORS.JOIN_BOT_VOICE,
-		]);
+		const voiceCheck = this.client.functions.voiceCheck(
+			command.guild.me,
+			command.member as GuildMember
+		);
+		if (!voiceCheck) {
+			if (voiceCheck.code === 1) {
+				const text = lang.ERRORS.NOT_JOINED_VOICE;
+				const embed = new EmbedBuilder();
+				embed.setColor(color);
+				embed.setAuthor(author);
+				embed.setDescription(`❌ | ${bold(text)}`);
+				embed.setTimestamp();
 
-		if (!message.member.voice.channel) {
-			const embed = this.client.functions.buildEmbed(
-				message,
-				"Red",
-				error,
-				false,
-				"❌",
-				true
-			);
+				return {
+					ok: false,
+					error: {
+						embeds: [embed],
+					},
+				};
+			} else if (voiceCheck.code === 2) {
+				const text = lang.ERRORS.JOIN_BOT_VOICE;
+				const embed = new EmbedBuilder();
+				embed.setColor(color);
+				embed.setAuthor(author);
+				embed.setDescription(`❌ | ${bold(text)}`);
+				embed.setTimestamp();
 
-			return {
-				ok: false,
-				error: {
-					embeds: [embed.data.toJSON()],
-				},
-			};
-		}
+				return {
+					ok: false,
+					error: {
+						embeds: [embed],
+					},
+				};
+			}
 
-		if (
-			message.guild.me.voice.channel &&
-			message.member.voice.channel &&
-			message.member.voice.channel !== message.guild.me.voice.channel
-		) {
-			const embed = this.client.functions.buildEmbed(
-				message,
-				"Red",
-				voice_error,
-				false,
-				"❌",
-				true
-			);
+			const queue = this.client.music.getQueue(command.guild);
+			if (!queue) {
+				const text = lang.ERRORS.QUEUE_EMPTY;
+				const embed = new EmbedBuilder();
+				embed.setColor(color);
+				embed.setAuthor(author);
+				embed.setDescription(`❌ | ${bold(text)}`);
+				embed.setTimestamp();
 
-			return {
-				ok: false,
-				error: {
-					embeds: [embed.data.toJSON()],
-				},
-			};
-		}
+				return {
+					ok: false,
+					error: {
+						embeds: [embed],
+					},
+				};
+			}
 
-		const queue = this.client.music.getQueue(message);
-		if (!queue) {
-			const text = lang.ERRORS.QUEUE_EMPTY;
-			const embed = this.client.functions.buildEmbed(
-				message,
-				"Red",
-				text,
-				false,
-				"❌",
-				true
-			);
+			if (!queue.paused) {
+				const text = lang.ERRORS.RESUMED;
+				const embed = new EmbedBuilder();
+				embed.setColor(color);
+				embed.setAuthor(author);
+				embed.setDescription(`❌ | ${bold(text)}`);
+				embed.setTimestamp();
 
-			return {
-				ok: false,
-				error: {
-					embeds: [embed.data.toJSON()],
-				},
-			};
-		}
-
-		if (queue.playing) {
-			const text = lang.ERRORS.RESUMED;
-			const embed = this.client.functions.buildEmbed(
-				message,
-				"Red",
-				text,
-				false,
-				"❌",
-				true
-			);
-
-			return {
-				ok: false,
-				error: {
-					embeds: [embed.data.toJSON()],
-				},
-			};
+				return {
+					ok: false,
+					error: {
+						embeds: [embed],
+					},
+				};
+			}
 		}
 
 		return {
@@ -137,25 +120,23 @@ export default class ResumeCommand extends Command {
 	}
 
 	async run(
-		message: Message,
-		args: string[],
+		command: ChatInputCommandInteraction<"cached">,
 		lang: typeof import("@locales/English").default
 	) {
-		const queue = this.client.music.getQueue(message);
+		const queue = this.client.music.getQueue(command.guild);
 		queue.resume();
 
 		const text = lang.MUSIC.RESUMED;
-		const embed = this.client.functions.buildEmbed(
-			message,
-			"Blurple",
-			text,
-			false,
-			"❌",
-			true
-		);
+		const color = this.client.functions.color("Blurple");
+		const author = this.client.functions.author(command.member);
+		const embed = new EmbedBuilder();
+		embed.setColor(color);
+		embed.setAuthor(author);
+		embed.setDescription(`✅ | ${bold(text)}`);
+		embed.setTimestamp();
 
-		return message.channel.send({
-			embeds: [embed.data.toJSON()],
+		return command.reply({
+			embeds: [embed],
 		});
 	}
 }

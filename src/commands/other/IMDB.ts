@@ -1,6 +1,9 @@
-import { Message, EmbedBuilder, Util } from "discord.js";
-import { Categories, ValidateReturn } from "../../types/Command/BaseCommand";
-import { Command } from "../../types/Command/Command";
+import {
+	ApplicationCommandOptionType,
+	ChatInputCommandInteraction,
+	EmbedBuilder,
+} from "discord.js";
+import { SubCommand } from "../../types/Command/SubCommand";
 import { bold } from "@discordjs/builders";
 import Bot from "../../classes/Bot";
 
@@ -15,142 +18,90 @@ import relativeTime from "dayjs/plugin/relativeTime";
 dayjs.extend(duration);
 dayjs.extend(relativeTime);
 
-export default class IMDBCommand extends Command {
+export default class IMDBCommand extends SubCommand {
 	constructor(client: Bot) {
 		super(client, {
+			commandName: "other",
 			name: "imdb",
-
-			description: {
-				en: "Shows information about film!",
-				ru: "Показывает информацию о фильме!",
-			},
-
-			category: Categories.OTHER,
-			usage: "<prefix>imdb <film_name>",
-		});
-	}
-
-	async validate(
-		message: Message,
-		args: string[],
-		lang: typeof import("@locales/English").default
-	): Promise<ValidateReturn> {
-		const name = args.join(" ");
-		if (!name) {
-			const text = lang.ERRORS.ARGS_MISSING("imdb");
-			const embed = this.client.functions.buildEmbed(
-				message,
-				"Red",
-				text,
-				false,
-				"❌",
-				true
-			);
-
-			return {
-				ok: false,
-				error: {
-					embeds: [embed.data.toJSON()],
+			description: "Shows information about the film!",
+			options: [
+				{
+					type: ApplicationCommandOptionType.String,
+					name: "film",
+					description: "Film to search",
+					required: true,
 				},
-			};
-		}
-
-		return {
-			ok: true,
-		};
+			],
+		});
 	}
 
 	async run(
-		message: Message,
-		args: string[],
+		command: ChatInputCommandInteraction<"cached">,
 		lang: typeof import("@locales/English").default
 	) {
-		const locale = await this.client.database.getSetting(
-			message.guild.id,
-			"locale"
-		);
-		const l = locale === "en-US" ? "en" : "ru";
+		const locale =
+			(await this.client.database.getSetting(
+				command.guildId,
+				"locale"
+			)) == "en-US"
+				? "en"
+				: "ru";
 
-		const name = args.join(" ");
-		const data = await this.client.apis.imdb.getData(name, l);
+		const query = command.options.getString("film", true);
+		const data = await this.client.apis.imdb.getData(query, locale);
 		if (!data) {
+			const author = this.client.functions.author(command.member);
+			const color = this.client.functions.color("Red");
+
+			const text = lang.ERRORS.NOT_FOUND("IMDB");
+			const embed = new EmbedBuilder();
+			embed.setColor(color);
+			embed.setAuthor(author);
+			embed.setDescription(`❌ | ${bold(text)}`);
+			embed.setTimestamp();
+
+			return command.reply({
+				ephemeral: true,
+				embeds: [embed],
+			});
 		}
 
-		const embed = new EmbedBuilder()
-			.setColor(Util.resolveColor("Blurple"))
-			.setAuthor({
-				name: message.author.username,
-				iconURL: message.author.displayAvatarURL(),
-			})
-			.setTitle(data.fullTitle)
-			.setThumbnail(data.image)
-			.setDescription(
-				data.plotLocal.length > 1
-					? bold(data.plotLocal)
-					: bold(data.plot)
-			);
+		const length = dayjs
+			.duration(Number(data.runtimeMins), "minutes")
+			.locale(locale)
+			.format(lang.GLOBAL.DAYJS_FORMAT);
 
-		embed.addFields([
-			{
-				name: lang.OTHER.IMDB.FIELDS.DIRECTORS,
-				value: bold(data.directors),
-				inline: true,
-			},
-			{
-				name: lang.OTHER.IMDB.FIELDS.WRITERS,
-				value: bold(data.writers),
-				inline: true,
-			},
-			{
-				name: lang.OTHER.IMDB.FIELDS.STARS,
-				value: bold(data.stars),
-				inline: true,
-			},
-			{
-				name: lang.OTHER.IMDB.FIELDS.COMPANIES,
-				value: bold(data.companies),
-				inline: true,
-			},
-			{
-				name: lang.OTHER.IMDB.FIELDS.COUNTRIES,
-				value: bold(data.countries),
-				inline: true,
-			},
-			{
-				name: lang.OTHER.IMDB.FIELDS.LANGUAGES,
-				value: bold(data.languages),
-				inline: true,
-			},
-			{
-				name: lang.OTHER.IMDB.FIELDS.RATINGS,
-				value: [
-					`› ${bold(lang.OTHER.IMDB.CONTENT_RATING)}: ${bold(
-						data.contentRating
-					)}`,
-					`› ${bold(lang.OTHER.IMDB.IMDB_RATING)}: ${bold(
-						data.imDbRating
-					)}`,
-				].join("\n"),
-				inline: true,
-			},
-			{
-				name: lang.OTHER.IMDB.FIELDS.LENGTH,
-				value: bold(
-					dayjs
-						.duration(Number(data.runtimeMins), "minutes")
-						.locale(l)
-						.humanize()
-				),
-				inline: true,
-			},
-		]);
+		const author = this.client.functions.author(command.member);
+		const color = this.client.functions.color("Blurple");
+		const pack = lang.OTHER.IMDB;
 
-		embed.setFooter({
-			text: `${lang.OTHER.IMDB.RELEASE_DATE}: ${data.releaseDate}`,
-		});
+		const res = [
+			data.plotLocal.length >= 1 ? bold(data.plotLocal) : bold(data.plot),
+			"",
+			`› ${bold(pack.FIELDS.DIRECTORS)}: ${bold(data.directors)}`,
+			`› ${bold(pack.FIELDS.WRITERS)}: ${bold(data.writers)}`,
+			`› ${bold(pack.FIELDS.STARS)}: ${bold(data.stars)}`,
+			`› ${bold(pack.FIELDS.COMPANIES)}: ${bold(data.companies)}`,
+			`› ${bold(pack.FIELDS.COUNTRIES)}: ${bold(data.countries)}`,
+			`› ${bold(pack.FIELDS.LANGUAGES)}: ${bold(data.languages)}`,
+			"",
+			`› ${bold(pack.FIELDS.RATINGS)}:`,
+			`» ${bold(pack.CONTENT_RATING)}: ${bold(data.contentRating)}`,
+			`» ${bold(pack.IMDB_RATING)}: ${bold(data.imDbRating)}`,
+			"",
+			`› ${bold(pack.FIELDS.LENGTH)}: ${bold(length)}`,
+		].join("\n");
 
-		return message.channel.send({
-			embeds: [embed.toJSON()],
+		const embed = new EmbedBuilder();
+		embed.setColor(color);
+		embed.setAuthor(author);
+		embed.setTitle(data.fullTitle);
+		embed.setThumbnail(data.image);
+		embed.setDescription(res);
+		embed.setTimestamp();
+
+		return command.reply({
+			embeds: [embed],
 		});
 	}
 }

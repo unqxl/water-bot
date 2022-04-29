@@ -55,26 +55,6 @@ export = class Handlers {
 	}
 
 	async loadCommands() {
-		const files = glob_cmds.sync("./commands/**/*.{js,ts}");
-
-		for (const file of files) {
-			delete require.cache[file];
-
-			const command = await this.resolveFile<Command>(file, this.client);
-			if (!command) continue;
-			await this.validateFile(file, command);
-
-			this.client.commands.set(command.name, command);
-
-			if (command.options.aliases) {
-				command.options.aliases.forEach((alias) =>
-					this.client.aliases.set(alias, command.name)
-				);
-			}
-		}
-	}
-
-	async loadSlashCommands() {
 		const files = glob_cmds.sync("./slash-commands/**/*.{js,ts}");
 		const subCommands: Record<string, SubCommand[]> = {};
 		const commandGroups: Record<string, [string, SubCommand[]]> = {};

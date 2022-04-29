@@ -1,84 +1,63 @@
-import { Categories, ValidateReturn } from "../../types/Command/BaseCommand";
-import { Command } from "../../types/Command/Command";
-import { EmbedBuilder } from "discord.js";
+import {
+	ApplicationCommandOptionType,
+	ChatInputCommandInteraction,
+	EmbedBuilder,
+	Util,
+} from "discord.js";
+import { SubCommand } from "../../types/Command/SubCommand";
 import { request } from "undici";
-import { Message } from "discord.js";
+import { bold } from "@discordjs/builders";
 import Bot from "../../classes/Bot";
 
-export default class MDNCommand extends Command {
+export default class MDNCommand extends SubCommand {
 	constructor(client: Bot) {
 		super(client, {
+			commandName: "other",
 			name: "mdn",
-
-			description: {
-				en: "Gives You information about your query from MDN!",
-				ru: "Предоставляем вам информацию по поводу вашего запроса с MDN!",
-			},
-
-			category: Categories.OTHER,
-			usage: "<prefix>mdn <query>",
+			description: "Shows information about something from MDN!",
+			options: [
+				{
+					type: ApplicationCommandOptionType.String,
+					name: "query",
+					description: "Query to search from MDN",
+					required: true,
+				},
+			],
 		});
 	}
 
-	async validate(
-		message: Message,
-		args: string[],
-		lang: typeof import("@locales/English").default
-	): Promise<ValidateReturn> {
-		const query = args[0];
-		if (!query) {
-			const text = lang.ERRORS.ARGS_MISSING("mdn");
-			const embed = this.client.functions.buildEmbed(
-				message,
-				"Red",
-				text,
-				false,
-				"❌",
-				true
-			);
-
-			return {
-				ok: false,
-				error: {
-					embeds: [embed.data.toJSON()],
-				},
-			};
-		}
-
-		return {
-			ok: true,
-		};
-	}
-
 	async run(
-		message: Message,
-		args: string[],
+		command: ChatInputCommandInteraction<"cached">,
 		lang: typeof import("@locales/English").default
 	) {
 		const url = "https://mdn.gideonbot.com/embed?q=";
-		const query = args[0];
+		const query = encodeURIComponent(
+			command.options.getString("query", true)
+		);
 
 		const data = await (await request(`${url}${query}`)).body.json();
 		if (data.code && data.code === 404) {
-			const text = lang.ERRORS.NOT_FOUND("MDN");
-			const embed = this.client.functions.buildEmbed(
-				message,
-				"Red",
-				text,
-				false,
-				"❌",
-				true
-			);
+			const author = this.client.functions.author(command.member);
+			const color = this.client.functions.color("Red");
 
-			return message.channel.send({
-				embeds: [embed.data.toJSON()],
+			const text = lang.ERRORS.NOT_FOUND("MDN");
+			const embed = new EmbedBuilder();
+			embed.setColor(color);
+			embed.setAuthor(author);
+			embed.setDescription(`❌ | ${bold(text)}`);
+			embed.setTimestamp();
+
+			return command.reply({
+				ephemeral: true,
+				embeds: [embed],
 			});
 		}
 
+		data.color = Util.resolveColor(data.color);
 		const embed = new EmbedBuilder(data);
 
-		return message.channel.send({
-			embeds: [embed.toJSON()],
+		return command.reply({
+			embeds: [embed],
 		});
 	}
 }

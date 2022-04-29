@@ -2,9 +2,11 @@ import {
 	ApplicationCommandOption,
 	ApplicationCommandOptionData,
 	ChatInputCommandInteraction,
+	CommandInteractionOptionResolver,
 	InteractionReplyOptions,
 	PermissionsString,
 } from "discord.js";
+import { LanguageService } from "../../services/Language";
 import Bot from "../../classes/Bot";
 
 export interface BaseSlashCommandOptions {
@@ -42,11 +44,11 @@ export abstract class BaseSlashCommand<
 
 	validate?(
 		interaction: ChatInputCommandInteraction<"cached" | "raw">,
-		lang: typeof import("@locales/English").default
+		lang: LanguageService
 	): Promise<ValidateReturn>;
 
 	abstract run(
 		interaction: ChatInputCommandInteraction<"cached" | "raw">,
-		lang: typeof import("@locales/English").default
+		lang: LanguageService
 	): Promise<unknown>;
 }

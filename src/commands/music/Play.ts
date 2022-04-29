@@ -1,116 +1,97 @@
-import { Categories, ValidateReturn } from "../../types/Command/BaseCommand";
-import { TextChannel } from "discord.js";
-import { Command } from "../../types/Command/Command";
-import { Message } from "discord.js";
+import {
+	ApplicationCommandOptionType,
+	ChatInputCommandInteraction,
+	EmbedBuilder,
+	GuildMember,
+	TextChannel,
+} from "discord.js";
+import { ValidateReturn } from "../../types/Command/BaseSlashCommand";
+import { SubCommand } from "../../types/Command/SubCommand";
+import { bold } from "@discordjs/builders";
 import Bot from "../../classes/Bot";
 
-export default class PlayCommand extends Command {
+export default class PlayCommand extends SubCommand {
 	constructor(client: Bot) {
 		super(client, {
+			commandName: "music",
 			name: "play",
-
-			description: {
-				en: "Plays Song from YouTube/Spotify/SoundCloud!",
-				ru: "Проигрывает песню с YouTube/Spotify/SoundCloud!",
-			},
-
-			category: Categories.MUSIC,
-			usage: "<prefix>play <song>",
+			description: "Plays Song from YT/Spotify!",
+			options: [
+				{
+					type: ApplicationCommandOptionType.String,
+					name: "song",
+					description: "Song Name or URL",
+					required: true,
+				},
+			],
 		});
 	}
 
 	async validate(
-		message: Message,
-		args: string[],
+		command: ChatInputCommandInteraction<"cached">,
 		lang: typeof import("@locales/English").default
 	): Promise<ValidateReturn> {
-		const { djRoles } = this.client.configurations.get(message.guild.id);
+		const { djRoles } = this.client.configurations.get(command.guild.id);
 		if (djRoles.length) {
-			const { status, message: error } = await this.client.DJSystem.check(
-				message
+			const { status, message } = await this.client.DJSystem.check(
+				command
 			);
 			if (!status) {
-				const embed = this.client.functions.buildEmbed(
-					message,
-					"Red",
-					error,
-					false,
-					"❌",
-					true
-				);
+				const color = this.client.functions.color("Red");
+				const author = this.client.functions.author(command.member);
+				const embed = new EmbedBuilder();
+				embed.setColor(color);
+				embed.setAuthor(author);
+				embed.setDescription(`❌ | ${bold(message)}`);
+				embed.setTimestamp();
 
 				return {
 					ok: false,
 					error: {
-						embeds: [embed.data.toJSON()],
+						embeds: [embed],
 					},
 				};
 			}
 		}
 
-		const [error, voice_error] = await Promise.all([
-			lang.ERRORS.NOT_JOINED_VOICE,
-			lang.ERRORS.JOIN_BOT_VOICE,
-		]);
+		const voiceCheck = this.client.functions.voiceCheck(
+			command.guild.me,
+			command.member as GuildMember
+		);
+		if (!voiceCheck) {
+			if (voiceCheck.code === 1) {
+				const color = this.client.functions.color("Red");
+				const author = this.client.functions.author(command.member);
+				const text = lang.ERRORS.NOT_JOINED_VOICE;
+				const embed = new EmbedBuilder();
+				embed.setColor(color);
+				embed.setAuthor(author);
+				embed.setDescription(`❌ | ${bold(text)}`);
+				embed.setTimestamp();
 
-		if (!message.member.voice.channel) {
-			const embed = this.client.functions.buildEmbed(
-				message,
-				"Red",
-				error,
-				false,
-				"❌",
-				true
-			);
+				return {
+					ok: false,
+					error: {
+						embeds: [embed],
+					},
+				};
+			} else if (voiceCheck.code === 2) {
+				const color = this.client.functions.color("Red");
+				const author = this.client.functions.author(command.member);
+				const text = lang.ERRORS.JOIN_BOT_VOICE;
+				const embed = new EmbedBuilder();
+				embed.setColor(color);
+				embed.setAuthor(author);
+				embed.setDescription(`❌ | ${bold(text)}`);
+				embed.setTimestamp();
 
-			return {
-				ok: false,
-				error: {
-					embeds: [embed.data.toJSON()],
-				},
-			};
-		}
-
-		if (
-			message.guild.me.voice.channel &&
-			message.member.voice.channel &&
-			message.member.voice.channel !== message.guild.me.voice.channel
-		) {
-			const embed = this.client.functions.buildEmbed(
-				message,
-				"Red",
-				voice_error,
-				false,
-				"❌",
-				true
-			);
-
-			return {
-				ok: false,
-				error: {
-					embeds: [embed.data.toJSON()],
-				},
-			};
-		}
-
-		const song = args.join(" ");
-		if (!song) {
-			const text = lang.ERRORS.ARGS_MISSING("play");
-			const embed = this.client.functions.buildEmbed(
-				message,
-				"Red",
-				text,
-				false,
-				"❌",
-				true
-			);
-
-			return {
-				ok: false,
-				error: {
-					embeds: [embed.data.toJSON()],
-				},
-			};
+				return {
+					ok: false,
+					error: {
+						embeds: [embed],
+					},
+				};
+			}
 		}
 
 		return {
@@ -119,16 +100,20 @@ export default class PlayCommand extends Command {
 	}
 
 	async run(
-		message: Message,
-		args: string[],
+		command: ChatInputCommandInteraction<"cached">,
 		lang: typeof import("@locales/English").default
 	) {
-		const song = args.join(" ");
-		return this.client.music.play(message.member.voice.channel, song, {
+		const song = command.options.getString("song", true);
+
+		await command.reply({ content: "..." });
+		this.client.music.play(command.member.voice.channel, song, {
 			skip: false,
-			member: message.member,
-			textChannel: message.channel as TextChannel,
-			message: message,
+			member: command.member as GuildMember,
+			textChannel: command.channel as TextChannel,
 		});
+
+		const msg = await command.fetchReply();
+		await this.client.wait(2000);
+		msg.delete();
 	}
 }

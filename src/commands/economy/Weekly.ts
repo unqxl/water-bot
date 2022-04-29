@@ -1,35 +1,29 @@
-import { Message } from "discord.js";
-import { Command } from "../../types/Command/Command";
-import { Categories } from "../../types/Command/BaseCommand";
+import { ChatInputCommandInteraction, EmbedBuilder } from "discord.js";
+import { SubCommand } from "../../types/Command/SubCommand";
+import { bold } from "@discordjs/builders";
 import Bot from "../../classes/Bot";
 
-export default class WeeklyCommand extends Command {
+export default class WeeklyCommand extends SubCommand {
 	constructor(client: Bot) {
 		super(client, {
+			commandName: "economy",
 			name: "weekly",
-
-			description: {
-				en: "Get Your Weekly Reward!",
-				ru: "Получите свою Еженедельную Награду!",
-			},
-
-			category: Categories.ECONOMY,
+			description: "Adds Weekly Amount to Your Balance!",
 		});
 	}
 
 	async run(
-		message: Message,
-		args: string[],
+		command: ChatInputCommandInteraction<"cached">,
 		lang: typeof import("@locales/English").default
 	) {
 		const weekly = await this.client.economy.rewards.weekly(
-			message.guild.id,
-			message.author.id
+			command.guildId,
+			command.user.id
 		);
 
 		if ("status" in weekly) {
 			const locale = await this.client.database.getSetting(
-				message.guild.id,
+				command.guildId,
 				"locale"
 			);
 
@@ -39,32 +33,31 @@ export default class WeeklyCommand extends Command {
 				collectAt
 			);
 
-			const embed = this.client.functions.buildEmbed(
-				message,
-				"Red",
-				text,
-				false,
-				"❌",
-				true
-			);
+			const color = this.client.functions.color("Red");
+			const author = this.client.functions.author(command.member);
+			const embed = new EmbedBuilder();
+			embed.setColor(color);
+			embed.setAuthor(author);
+			embed.setDescription(`❌ | ${bold(text)}`);
+			embed.setTimestamp();
 
-			return message.channel.send({
-				embeds: [embed.data.toJSON()],
+			return command.reply({
+				embeds: [embed],
+				ephemeral: true,
 			});
 		}
 
 		const text = lang.ECONOMY.WEEKLY_REWARD(weekly.amount);
-		const embed = this.client.functions.buildEmbed(
-			message,
-			"Blurple",
-			text,
-			false,
-			"✅",
-			true
-		);
+		const color = this.client.functions.color("Blurple");
+		const author = this.client.functions.author(command.member);
+		const embed = new EmbedBuilder();
+		embed.setColor(color);
+		embed.setAuthor(author);
+		embed.setDescription(`✅ | ${bold(text)}`);
+		embed.setTimestamp();
 
-		return message.channel.send({
-			embeds: [embed.data.toJSON()],
+		return command.reply({
+			embeds: [embed],
 		});
 	}
 }

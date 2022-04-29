@@ -18,12 +18,8 @@ export default class InteractionCreateEvent extends Event {
 		if (!interaction.inGuild()) return;
 		if (!interaction.isChatInputCommand()) return;
 
-		const lang = await this.client.functions.getLanguageFile(
-			interaction.guildId
-		);
-
-		//TODO: new LanguageService(interaction.guildId);
-		//TODO: const { PERMISSIONS, ERRORS } = await lang.all();
+		const lang = new LanguageService(interaction.guildId);
+		const { PERMISSIONS } = await lang.all();
 
 		await client.application?.commands
 			.fetch(interaction.commandId)
@@ -41,15 +37,19 @@ export default class InteractionCreateEvent extends Event {
 			const missing = interaction.guild.me.permissions.missing(botPerms);
 			if (missing.length) {
 				const perms = missing
-					.map((perm) => lang.PERMISSIONS[perm])
-					.join(", ");
+					.map((perm) => PERMISSIONS[perm])
+					.join("\n");
 
 				const color = this.client.functions.color("Red");
 				const author = this.client.functions.author(
 					interaction.guild.me
 				);
 
-				const text = lang.ERRORS.BOT_MISSINGPERMS(perms);
+				const text = await lang.get(
+					"ERRORS:BOT_MISSING_PERMISSIONS",
+					perms
+				);
+
 				const embed = new EmbedBuilder();
 				embed.setColor(color);
 				embed.setAuthor(author);
@@ -69,15 +69,19 @@ export default class InteractionCreateEvent extends Event {
 			).permissions.missing(userPerms);
 			if (missing.length) {
 				const perms = missing
-					.map((perm) => lang.PERMISSIONS[perm])
+					.map((perm) => PERMISSIONS[perm])
 					.join(", ");
 
 				const color = this.client.functions.color("Red");
 				const author = this.client.functions.author(
-					interaction.guild.me
+					interaction.member as GuildMember
 				);
 
-				const text = lang.ERRORS.MEMBER_MISSINGPERMS(perms);
+				const text = await lang.get(
+					"ERRORS:USER_MISSING_PERMISSIONS",
+					perms
+				);
+
 				const embed = new EmbedBuilder();
 				embed.setColor(color);
 				embed.setAuthor(author);

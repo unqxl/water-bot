@@ -1,145 +1,119 @@
-import { Message } from "discord.js";
-import { Command } from "../../types/Command/Command";
-import { Categories } from "../../types/Command/BaseCommand";
+import {
+	ApplicationCommandOptionType,
+	ChatInputCommandInteraction,
+	EmbedBuilder,
+} from "discord.js";
+import { Covid as COVIDData } from "../../interfaces/Covid";
+import { SubCommand } from "../../types/Command/SubCommand";
 import { request } from "undici";
-import { Covid } from "../../interfaces/Covid";
 import { bold } from "@discordjs/builders";
 import Bot from "../../classes/Bot";
 
-export default class COVIDCommand extends Command {
+export default class COVIDCommand extends SubCommand {
 	constructor(client: Bot) {
 		super(client, {
+			commandName: "other",
 			name: "covid",
-
-			description: {
-				en: "Shows Covid-19 Statistics in Country/World!",
-				ru: "Показывает статистику Коронавируса в Стране/Городе!",
-			},
-
-			category: Categories.OTHER,
-			usage: "<prefix>covid [coutry]",
+			description: "Displays COVID-19 Statistics in World/Country.",
+			options: [
+				{
+					type: ApplicationCommandOptionType.String,
+					name: "country",
+					description: "Country",
+					required: false,
+				},
+			],
 		});
 	}
 
 	async run(
-		message: Message,
-		args: string[],
+		command: ChatInputCommandInteraction<"cached">,
 		lang: typeof import("@locales/English").default
 	) {
-		const locale = await this.client.database.getSetting(
-			message.guild.id,
-			"locale"
+		const { locale } = await this.client.database.getSettings(
+			command.guildId
 		);
-		const query = args.join(" ");
-		let country: Covid;
+
+		const query = command.options.getString("country", false);
+		let data: COVIDData;
 
 		if (!query) {
-			country = await (
+			data = await (
 				await request("https://disease.sh/v3/covid-19/all")
 			).body.json();
 		} else {
-			country = await (
+			const encoded = encodeURIComponent(query);
+			data = await (
 				await request(
-					`https://disease.sh/v3/covid-19/countries/${encodeURIComponent(
-						query
-					)}`
+					`https://disease.sh/v3/covid-19/countries/${encoded}`
 				)
 			).body.json();
 		}
 
-		if (country.message) {
-			const text = lang.ERRORS.COVID_NOT_FOUND(query);
-			const embed = this.client.functions.buildEmbed(
-				message,
-				"Red",
-				text,
-				false,
-				"❌",
-				true
-			);
+		if (data.message) {
+			const author = this.client.functions.author(command.member);
+			const color = this.client.functions.color("Red");
 
-			return message.channel.send({
-				embeds: [embed.data.toJSON()],
+			const text = lang.ERRORS.COVID_NOT_FOUND(query);
+			const embed = new EmbedBuilder();
+			embed.setColor(color);
+			embed.setAuthor(author);
+			embed.setDescription(`❌ | ${bold(text)}`);
+			embed.setTimestamp();
+
+			return await command.reply({
+				ephemeral: true,
+				embeds: [embed],
 			});
 		}
 
-		const embed = this.client.functions.buildEmbed(
-			message,
-			"Blurple",
+		const covid_pack = lang.OTHER.COVID;
+		const formatNumber = this.client.functions.formatNumber;
+		const date_updated = new Date(data.updated).toLocaleString(locale);
+
+		const response = [
+			`› ${bold(covid_pack.TOTAL)}:`,
+			`» ${bold(covid_pack.CASES)}: ${bold(formatNumber(data.cases))}`,
+			`» ${bold(covid_pack.RECOVERED)}: ${bold(
+				formatNumber(data.recovered)
+			)}`,
+			`» ${bold(covid_pack.DEATHS)}: ${bold(formatNumber(data.deaths))}`,
+			`» ${bold(covid_pack.TOTAL_POPULATION)}: ${bold(
+				formatNumber(data.population)
+			)}`,
 			"",
-			false,
-			false,
-			true
-		);
+			`› ${bold(covid_pack.TODAY)}:`,
+			`» ${bold(covid_pack.CASES)}: ${bold(
+				formatNumber(data.todayCases)
+			)}`,
+			`» ${bold(covid_pack.RECOVERED)}: ${bold(
+				formatNumber(data.todayRecovered)
+			)}`,
+			`» ${bold(covid_pack.DEATHS)}: ${bold(
+				formatNumber(data.todayDeaths)
+			)}`,
+			"",
+			`› ${bold(covid_pack.CRITICAL)}: ${bold(
+				formatNumber(data.critical)
+			)}`,
+			`› ${bold(covid_pack.TESTS)}: ${bold(formatNumber(data.tests))}`,
+		].join("\n");
 
-		const title = country.country
-			? `COVID-19: ${country.country}`
-			: "COVID-19";
-
-		embed.data.setTitle(title);
-		embed.data.addFields([
-			{
-				name: lang.OTHER.COVID.TOTAL,
-				value: [
-					`${bold(lang.OTHER.COVID.CASES)}: ${bold(
-						this.client.functions.formatNumber(country.cases)
-					)}`,
-
-					`${bold(lang.OTHER.COVID.RECOVERED)}: ${bold(
-						this.client.functions.formatNumber(country.recovered)
-					)}`,
-
-					`${bold(lang.OTHER.COVID.DEATHS)}: ${bold(
-						this.client.functions.formatNumber(country.deaths)
-					)}`,
-
-					`${bold(lang.OTHER.COVID.TOTAL_POPULATION)}: ${bold(
-						this.client.functions.formatNumber(country.population)
-					)}`,
-				].join("\n"),
-				inline: true,
-			},
-			{
-				name: lang.OTHER.COVID.TODAY,
-				value: [
-					`${bold(lang.OTHER.COVID.CASES)}: ${bold(
-						this.client.functions.formatNumber(country.todayCases)
-					)}`,
-
-					`${bold(lang.OTHER.COVID.RECOVERED)}: ${bold(
-						this.client.functions.formatNumber(
-							country.todayRecovered
-						)
-					)}`,
-
-					`${bold(lang.OTHER.COVID.DEATHS)}: ${bold(
-						this.client.functions.formatNumber(country.todayDeaths)
-					)}`,
-				].join("\n"),
-				inline: true,
-			},
-			{
-				name: lang.OTHER.COVID.CRITICAL,
-				value: bold(
-					this.client.functions.formatNumber(country.critical)
-				),
-			},
-			{
-				name: lang.OTHER.COVID.TESTS,
-				value: bold(this.client.functions.formatNumber(country.tests)),
-			}
-		]);
-
-		embed.data.setThumbnail(country.countryInfo?.flag || "");
-		embed.data.setFooter({
-			text: `${lang.OTHER.COVID.LAST_UPDATED}: ${new Date(
-				country.updated
-			).toLocaleString(locale)}`,
-			iconURL: message.author.displayAvatarURL(),
+		const author = this.client.functions.author(command.member);
+		const color = this.client.functions.color("Blurple");
+		const embed = new EmbedBuilder();
+		embed.setColor(color);
+		embed.setAuthor(author);
+		embed.setDescription(response);
+		embed.setThumbnail(data.countryInfo?.flag ?? null);
+		embed.setFooter({
+			text: `${covid_pack.LAST_UPDATED}: ${date_updated}`,
+			iconURL: data.countryInfo?.flag ?? null,
 		});
+		embed.setTimestamp();
 
-		return message.channel.send({
-			embeds: [embed.data.toJSON()],
+		return await command.reply({
+			embeds: [embed],
 		});
 	}
 }

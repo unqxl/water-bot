@@ -1,7 +1,11 @@
-import { EmbedBuilder, Util } from "discord.js";
-import { Message } from "discord.js";
-import { Command } from "../../types/Command/Command";
-import { Categories } from "../../types/Command/BaseCommand";
+import {
+	ApplicationCommandOptionType,
+	ChatInputCommandInteraction,
+	EmbedBuilder,
+	type PresenceStatus,
+} from "discord.js";
+import { bold, hyperlink, time } from "@discordjs/builders";
+import { SubCommand } from "../../types/Command/SubCommand";
 import Bot from "../../classes/Bot";
 
 // DayJS
@@ -12,231 +16,155 @@ dayjs.extend(relativeTime);
 import("dayjs/locale/en");
 import("dayjs/locale/ru");
 
-export default class UserinfoCommand extends Command {
+export default class UserInfoCommand extends SubCommand {
 	constructor(client: Bot) {
 		super(client, {
+			commandName: "other",
 			name: "userinfo",
-			aliases: ["ui"],
-
-			description: {
-				en: "Displays User Information!",
-				ru: "Показывает Информацию Пользователя!",
-			},
-
-			usage: "<prefix>userinfo [member]",
-			category: Categories.OTHER,
+			description: "Displays Discord User Information!",
+			options: [
+				{
+					type: ApplicationCommandOptionType.User,
+					name: "member",
+					description: "Member to information display",
+					required: false,
+				},
+			],
 		});
 	}
 
 	async run(
-		message: Message,
-		args: string[],
+		command: ChatInputCommandInteraction<"cached">,
 		lang: typeof import("@locales/English").default
 	) {
-		const locale = await this.client.database.getSetting(
-			message.guild.id,
-			"locale"
-		);
+		const locale =
+			(await this.client.database.getSetting(
+				command.guildId,
+				"locale"
+			)) == "en-US"
+				? "en"
+				: "ru";
+		locale === "en" ? dayjs.locale("en") : dayjs.locale("ru");
 
-		// Statuses
-		const [online, idle, dnd, offline] = [
-			lang.GLOBAL.STATUSES.ONLINE,
-			lang.GLOBAL.STATUSES.IDLE,
-			lang.GLOBAL.STATUSES.DND,
-			lang.GLOBAL.STATUSES.OFFLINE,
-		];
+		const { CLIENT_STATUSES, OTHER, FIELDS, TEXTS } = lang.OTHER.USER_INFO;
+		const { YES, NO, STATUSES } = lang.GLOBAL;
+		const member = command.options.getMember("member") || command.member;
 
-		// Client Statuses
-		const [status_web, status_desktop, status_mobile] = [
-			lang.OTHER.USER_INFO.CLIENT_STATUSES.WEB,
-			lang.OTHER.USER_INFO.CLIENT_STATUSES.DESKTOP,
-			lang.OTHER.USER_INFO.CLIENT_STATUSES.MOBILE,
-		];
+		const gif = member.displayAvatarURL({ extension: "gif", size: 2048 });
+		const png = member.displayAvatarURL({ extension: "png", size: 2048 });
+		const jpg = member.displayAvatarURL({ extension: "jpg", size: 2048 });
+		const avatars = `${hyperlink("GIF", gif)} | ${hyperlink(
+			"PNG",
+			png
+		)} | ${hyperlink("JPG", jpg)}`;
 
-		// Other
-		const [notPlaying, Nothing] = [
-			lang.OTHER.USER_INFO.OTHER.NOT_PLAYING,
-			lang.OTHER.USER_INFO.OTHER.NOTHING,
-		];
+		const reg_date_unix = Math.ceil(member.user.createdTimestamp / 1000);
+		const reg_date = `${time(reg_date_unix)} (${time(reg_date_unix, "R")})`;
 
-		// Yes or No
-		const [yes, no] = [lang.GLOBAL.YES, lang.GLOBAL.NO];
+		const join_date_unix = Math.ceil(member.joinedTimestamp / 1000);
+		const join_date = `${time(join_date_unix)} (${time(
+			join_date_unix,
+			"R"
+		)})`;
 
-		// Field Names
-		const [main, other] = [
-			lang.OTHER.USER_INFO.FIELDS.MAIN,
-			lang.OTHER.USER_INFO.FIELDS.OTHER,
-		];
-
-		// Main Texts
-		const [username, tag, avatar] = [
-			lang.OTHER.USER_INFO.TEXTS.MAIN.USERNAME,
-			lang.OTHER.USER_INFO.TEXTS.MAIN.TAG,
-			lang.OTHER.USER_INFO.TEXTS.MAIN.AVATAR,
-		];
-
-		// Other Texts
-		const [
-			online_using,
-			presence,
-			playing,
-			reg_date,
-			join_date,
-			in_voice,
-			boosting,
-			bot,
-		] = [
-			lang.OTHER.USER_INFO.TEXTS.OTHER.ONLINE_USING,
-			lang.OTHER.USER_INFO.TEXTS.OTHER.PRESENCE,
-			lang.OTHER.USER_INFO.TEXTS.OTHER.PLAYING,
-			lang.OTHER.USER_INFO.TEXTS.OTHER.REG_DATE,
-			lang.OTHER.USER_INFO.TEXTS.OTHER.JOIN_DATE,
-			lang.OTHER.USER_INFO.TEXTS.OTHER.IN_VOICE,
-			lang.OTHER.USER_INFO.TEXTS.OTHER.BOOSTING,
-			lang.OTHER.USER_INFO.TEXTS.OTHER.BOT,
-		];
-
-		const member = message.mentions.members.first() || message.member;
-		const userInfo = {
-			name: member.user.username,
+		const user_info = {
+			name: member.displayName,
 			tag: member.user.tag,
-			avatar: member.user.displayAvatarURL(),
-			regDate: new Date(member.user.createdTimestamp).toLocaleString(
-				locale === "en-US" ? "en-US" : "ru-RU"
-			),
-			joinDate: new Date(member.joinedTimestamp).toLocaleString(
-				locale === "en-US" ? "en-US" : "ru-RU"
-			),
+			avatars: avatars,
 
-			regTimeAgo: await timeSince(
-				this.client,
-				message,
-				member.user.createdTimestamp
-			),
-			joinTimeAgo: await timeSince(
-				this.client,
-				message,
-				member.joinedTimestamp
-			),
+			reg_date: reg_date,
+			join_date: join_date,
 
-			presence: () => {
-				if (!member.presence || !member.presence?.status)
-					return `⚫ ${offline}`;
-
-				if (member.presence.status === "online") return `🟢 ${online}`;
-				if (member.presence.status === "idle") return `🟡 ${idle}`;
-				if (member.presence.status === "dnd") return `🔴 ${dnd}`;
-				if (member.presence.status === "offline")
-					return `⚫ ${offline}`;
-				if (member.presence.status === "invisible")
-					return `⚫ ${offline}`;
+			status: () => {
+				if (!member.presence || !member.presence?.status) {
+					return `⚫ ${STATUSES.OFFLINE}`;
+				} else if (member.presence.status === "online") {
+					return `🟢 ${STATUSES.ONLINE}`;
+				} else if (member.presence.status === "idle") {
+					return `🟡 ${STATUSES.IDLE}`;
+				} else if (member.presence.status === "dnd") {
+					return `🔴 ${STATUSES.DND}`;
+				} else if (member.presence.status === "offline") {
+					return `⚫ ${STATUSES.OFFLINE}`;
+				} else if (member.presence.status === "invisible") {
+					return `⚫ ${STATUSES.OFFLINE}`;
+				}
 			},
 
-			presenceGame: () => {
-				if (!member.presence) return notPlaying;
+			game: () => {
+				if (!member.presence) {
+					return OTHER.NOT_PLAYING;
+				}
 
 				if (
 					["online", "dnd", "idle"].includes(
 						member.presence.status
 					) &&
-					member.presence.activities.length
+					member.presence.activities
 				) {
-					return `${member.presence.activities
-						.join(", ")
-						.toString()}`;
+					const activities = member.presence.activities
+						.map((activity) => activity.name)
+						.join(", ");
+
+					return activities;
 				} else {
-					return notPlaying;
-				}
-			},
-			onlineUsing: () => {
-				if (!member.presence) return Nothing;
-
-				if (
-					member.presence.status === "invisible" ||
-					member.presence.status === "offline"
-				)
-					return Nothing;
-				else {
-					let content = "";
-
-					const { web, mobile, desktop } =
-						member.presence.clientStatus;
-
-					if (web) content = status_web;
-					if (desktop) content = status_desktop;
-					if (mobile) content = status_mobile;
-
-					if (desktop && web)
-						content = `${status_desktop}, ${status_web}`;
-					if (desktop && mobile)
-						content = `${status_desktop}, ${status_mobile}`;
-					if (mobile && web)
-						content = `${status_mobile}, ${status_web}`;
-					if (mobile && web && desktop)
-						content = `${status_desktop}, ${status_web}, ${status_mobile}`;
-					if (web && mobile)
-						content = `${status_web}, ${status_mobile}`;
-
-					return content;
+					return OTHER.NOT_PLAYING;
 				}
 			},
 
-			boostCheck: member.premiumSince ? yes : no,
-			voiceCheck: member.voice.channel ? yes : no,
-			botCheck: member.user.bot ? yes : no,
+			online_with: () => {
+				if (!member.presence.clientStatus) return OTHER.NOTHING;
+
+				var platforms = [];
+				const { web, mobile, desktop } = member.presence.clientStatus;
+
+				if (web) platforms.push(CLIENT_STATUSES.WEB);
+				if (mobile) platforms.push(CLIENT_STATUSES.MOBILE);
+				if (desktop) platforms.push(CLIENT_STATUSES.DESKTOP);
+
+				return platforms.join(", ");
+			},
+
+			boosting: member.premiumSince ? YES : NO,
+			in_voice: member.voice.channel ? YES : NO,
+			is_bot: member.user.bot ? YES : NO,
 		};
 
-		const embed = new EmbedBuilder()
-			.setColor(Util.resolveColor("Blurple"))
-			.setAuthor({
-				name: member.user.username,
-				iconURL: member.user.displayAvatarURL(),
-			});
+		const author = this.client.functions.author(member);
+		const color = this.client.functions.color("Blurple");
 
-		embed.addFields([
-			{
-				name: `[1] ${main}:`,
-				value: [
-					`› **${username}**: **${userInfo.name}**`,
-					`› **${tag}**: **${userInfo.tag}**`,
-					`› **${avatar}**: **[Click](${userInfo.avatar})**`,
-				].join("\n"),
-			},
-			{
-				name: `[2] ${other}:`,
-				value: [
-					`› **${online_using}**: **${userInfo.onlineUsing()}**`,
-					`› **${presence}**: **${userInfo.presence()}**`,
-					`› **${playing}**: **${userInfo.presenceGame()}**`,
-					"",
-					`› **${reg_date}**: **${userInfo.regDate}** (**${userInfo.regTimeAgo}**)`,
-					`› **${join_date}**: **${userInfo.joinDate}** (**${userInfo.joinTimeAgo}**)`,
-					"",
-					`› **${in_voice}**: **${userInfo.voiceCheck}**`,
-					`› **${boosting}**: **${userInfo.boostCheck}**`,
-					`› **${bot}**: **${userInfo.botCheck}**`,
-				].join("\n"),
-			},
-		]);
+		const online_with = user_info.online_with();
+		const playing = user_info.game();
+		const status = user_info.status();
 
-		embed.setThumbnail(userInfo.avatar);
+		const res = [
+			`› ${bold(FIELDS.MAIN)}:`,
+			`» ${bold(TEXTS.MAIN.USERNAME)}: ${bold(user_info.name)}`,
+			`» ${bold(TEXTS.MAIN.TAG)}: ${bold(user_info.tag)}`,
+			`» ${bold(TEXTS.MAIN.AVATAR)}: ${bold(user_info.avatars)}`,
+			"",
+			`› ${bold(FIELDS.OTHER)}:`,
+			`» ${bold(TEXTS.OTHER.ONLINE_USING)}: ${bold(online_with)}`,
+			`» ${bold(TEXTS.OTHER.PRESENCE)}: ${bold(status)}`,
+			`» ${bold(TEXTS.OTHER.PLAYING)}: ${bold(playing)}`,
+			"",
+			`» ${bold(TEXTS.OTHER.REG_DATE)}: ${bold(user_info.reg_date)}`,
+			`» ${bold(TEXTS.OTHER.JOIN_DATE)}: ${bold(user_info.join_date)}`,
+			"",
+			`» ${bold(TEXTS.OTHER.BOT)}: ${bold(user_info.is_bot)}`,
+			`» ${bold(TEXTS.OTHER.IN_VOICE)}: ${bold(user_info.in_voice)}`,
+			`» ${bold(TEXTS.OTHER.BOOSTING)}: ${bold(user_info.boosting)}`,
+		].join("\n");
 
-		return message.channel.send({
-			embeds: [embed.toJSON()],
+		const embed = new EmbedBuilder();
+		embed.setColor(color);
+		embed.setAuthor(author);
+		embed.setDescription(res);
+		embed.setThumbnail(member.displayAvatarURL());
+		embed.setTimestamp();
+
+		return command.reply({
+			embeds: [embed],
 		});
 	}
-}
-
-async function timeSince(
-	client: Bot,
-	message: Message,
-	date: number,
-	ws?: boolean
-) {
-	const locale = await client.database.getSetting(message.guild.id, "locale");
-
-	if (locale === "en-US") dayjs.locale("en");
-	else if (locale === "ru-RU") dayjs.locale("ru");
-
-	return dayjs(date).fromNow(ws);
 }
