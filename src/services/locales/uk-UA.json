@@ -1,85 +1,85 @@
 {
 	"ERRORS": {
-		"BOT_MISSING_PERMISSIONS": "Ой-ой, кажется, что у меня нет некоторых прав для запуска этой команды: %s",
-		"USER_MISSING_PERMISSIONS": "Ой-ой, кажется, что у вас нет некоторых прав для запуска этой команды: %s",
-		"JOIN_VOICE": "Для использования этой команды, вам нужно зайти в голосовой канал!",
-		"JOIN_BOT_VOICE": "Для использования этой команды, вам необходимо войти в голосовой канал, где находится бот!",
-		"QUEUE_IS_EMPTY": "Музыкальная очередь песни сейчас пустая!",
-		"MUSIC_IS_PAUSED": "Песня уже стоит на паузе!",
-		"MUSIC_IS_RESUMED": "Песня уже проигрывается!"
+		"BOT_MISSING_PERMISSIONS": "Ой-ой, здається, що в мене немає деяких прав для запуску цієї команди: %s",
+		"USER_MISSING_PERMISSIONS": "Ой-ой, здається, що у вас немає деяких прав для запуску цієї команди: %s",
+		"JOIN_VOICE": "Для використання цієї команди, вам потрібно зайти в голосовий канал!",
+		"JOIN_BOT_VOICE": "Для використання цієї команди, вам необхідно зайти в голосовий канал, де знаходиться бот!",
+		"QUEUE_IS_EMPTY": "Музикальна черга пісні зараз порожня!",
+		"MUSIC_IS_PAUSED": "Пісня вже стоїть на паузі!",
+		"MUSIC_IS_RESUMED": "Пісня вже програється!"
 	},
 	"EVENTS": {},
 	"PERMISSIONS": {
-		"AddReactions": "Добавлять реакции",
-		"Administrator": "Администратор",
-		"AttachFiles": "Прикреплять файлы",
-		"BanMembers": "Банить участников",
-		"ChangeNickname": "Изменять ник",
-		"Connect": "Подключаться",
-		"CreateInstantInvite": "Создавать приглашения",
-		"CreatePrivateThreads": "Создавать личные ветки",
-		"CreatePublicThreads": "Создавать публичные ветки",
-		"DeafenMembers": "Заглушать участников",
-		"EmbedLinks": "Встраивать ссылки",
-		"KickMembers": "Выгонять участников",
-		"ManageChannels": "Управлять каналами",
-		"ManageEmojisAndStickers": "Управлять смайлами и стикерами",
-		"ManageEvents": "Управлять событиями",
-		"ManageGuild": "Управлять сервером",
-		"ManageMessages": "Управлять сообщениями",
-		"ManageNicknames": "Управлять никами",
-		"ManageRoles": "Управлять ролями",
-		"ManageThreads": "Управлять ветками",
-		"ManageWebhooks": "Управлять вебхуками",
-		"MentionEveryone": "Упоминать всех",
-		"ModerateMembers": "Модерировать участников",
-		"MoveMembers": "Перемещать участников",
-		"MuteMembers": "Заглушать участников",
-		"PrioritySpeaker": "Приоритет",
-		"ReadMessageHistory": "Читать историю сообщений",
-		"RequestToSpeak": "Запрашивать разрешение говорить",
-		"SendMessages": "Отправлять сообщения",
-		"SendMessagesInThreads": "Отправлять сообщения в ветках",
-		"SendTTSMessages": "Отправлять сообщения текст-в-речь",
-		"Speak": "Говорить",
-		"Stream": "Стрим",
-		"UseApplicationCommands": "Использовать команды приложения",
-		"UseEmbeddedActivities": "Использовать встроенные активности",
-		"UseExternalEmojis": "Использовать внешние смайлы",
-		"UseExternalStickers": "Использовать внешние стикеры",
-		"UseVAD": "Использовать активность голоса",
-		"ViewAuditLog": "Просматривать лог аудита",
-		"ViewChannel": "Просматривать канал",
-		"ViewGuildInsights": "Просматривать инсайды сервера"
+		"AddReactions": "Додавати реакції",
+		"Administrator": "Адміністратор",
+		"AttachFiles": "Прикріплювати файли",
+		"BanMembers": "Блокувати учасників",
+		"ChangeNickname": "Змінювати нік",
+		"Connect": "Підключатися",
+		"CreateInstantInvite": "Створити запрошення",
+		"CreatePrivateThreads": "Створювати особисті гілки",
+		"CreatePublicThreads": "Створювати публічні гілки",
+		"DeafenMembers": "Заглушати учасників",
+		"EmbedLinks": "Вбудовувати посилання",
+		"KickMembers": "Виганяти учасників",
+		"ManageChannels": "Керувати каналами",
+		"ManageEmojisAndStickers": "Керувати смайлами та наліпками",
+		"ManageEvents": "Керувати подіями",
+		"ManageGuild": "Керувати сервером",
+		"ManageMessages": "Керувати повідомленнями",
+		"ManageNicknames": "Керувати ніками",
+		"ManageRoles": "Керувати ролями",
+		"ManageThreads": "Керувати гілками",
+		"ManageWebhooks": "Керувати вебхуками",
+		"MentionEveryone": "Згадати всіх",
+		"ModerateMembers": "Модерувати учасників",
+		"MoveMembers": "Переміщати учасників",
+		"MuteMembers": "Заглушати учасників",
+		"PrioritySpeaker": "Пріоритет",
+		"ReadMessageHistory": "Читати історію повідомлень",
+		"RequestToSpeak": "Запросити дозвіл на розмову",
+		"SendMessages": "Відправляти повідомлення",
+		"SendMessagesInThreads": "Відправляти повідомлення в гілках",
+		"SendTTSMessages": "Відправляти повідомлення синтезу-мовлення",
+		"Speak": "Говорити",
+		"Stream": "Трансляція",
+		"UseApplicationCommands": "Використовувати команди додатку",
+		"UseEmbeddedActivities": "Використовувати вбудовану активність",
+		"UseExternalEmojis": "Використовувати зовнішні смайли",
+		"UseExternalStickers": "Використовувати зовнішні смайли",
+		"UseVAD": "Використовувати активність голосу",
+		"ViewAuditLog": "Продивлятись лог аудиту",
+		"ViewChannel": "Продивлятись канал",
+		"ViewGuildInsights": "Продивлятись інсайди сервера"
 	},
 	"MUSIC_COMMANDS": {
 		"NOWPLAYING": {
-			"TITLE": "Сейчас играет - %s",
-			"NAME": "Название песни",
-			"DURATION": "Длина песни",
-			"REQUESTEDBY": "Запросил"
+			"TITLE": "Зараз грає - %s",
+			"NAME": "Назва пісні",
+			"DURATION": "Тривалість пісні",
+			"REQUESTEDBY": "Запросив"
 		},
 		"PAUSE": {
-			"TEXT": "%s приостановил песню!"
+			"TEXT": "%s призупинив пісню!"
 		},
 		"REPEAT": {
-			"QUEUE_MODE": "Очередь",
-			"SONG_MODE": "Песня",
-			"DISABLED": "Выключен",
-			"TEXT": "Режим повтора изменён на `%s` (%s)!"
+			"QUEUE_MODE": "Черга",
+			"SONG_MODE": "Пісня",
+			"DISABLED": "Вимкнено",
+			"TEXT": "Режим повтору змінений на `%s` (%s)!"
 		},
 		"SHUFFLE": {
-			"TEXT": "%s перемешал очередь песен!"
+			"TEXT": "%s перемішав чергу пісень!"
 		},
 		"SKIP": {
-			"TEXT": "%s пропустил текущую песню!"
+			"TEXT": "%s пропустив поточну пісню!"
 		},
 		"STOP": {
-			"TEXT": "%s остановил очередь песен!"
+			"TEXT": "%s зупинив чергу пісень!"
 		},
 		"VOLUME": {
-			"CURRENT": "Текущая громкость - %s.",
-			"TEXT": "Громкость песни изменена на `%s` (%s)!"
+			"CURRENT": "Поточна гучність - %s.",
+			"TEXT": "Гучність пісні змінена на `%s` (%s)!"
 		}
 	}
 }
