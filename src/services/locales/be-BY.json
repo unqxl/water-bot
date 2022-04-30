@@ -1,0 +1,85 @@
+{
+	"ERRORS": {
+		"BOT_MISSING_PERMISSIONS": "Ой-ой, кажется, что у меня нет некоторых прав для запуска этой команды: %s",
+		"USER_MISSING_PERMISSIONS": "Ой-ой, кажется, что у вас нет некоторых прав для запуска этой команды: %s",
+		"JOIN_VOICE": "Для использования этой команды, вам нужно зайти в голосовой канал!",
+		"JOIN_BOT_VOICE": "Для использования этой команды, вам необходимо войти в голосовой канал, где находится бот!",
+		"QUEUE_IS_EMPTY": "Музыкальная очередь песни сейчас пустая!",
+		"MUSIC_IS_PAUSED": "Песня уже стоит на паузе!",
+		"MUSIC_IS_RESUMED": "Песня уже проигрывается!"
+	},
+	"EVENTS": {},
+	"PERMISSIONS": {
+		"AddReactions": "Добавлять реакции",
+		"Administrator": "Администратор",
+		"AttachFiles": "Прикреплять файлы",
+		"BanMembers": "Банить участников",
+		"ChangeNickname": "Изменять ник",
+		"Connect": "Подключаться",
+		"CreateInstantInvite": "Создавать приглашения",
+		"CreatePrivateThreads": "Создавать личные ветки",
+		"CreatePublicThreads": "Создавать публичные ветки",
+		"DeafenMembers": "Заглушать участников",
+		"EmbedLinks": "Встраивать ссылки",
+		"KickMembers": "Выгонять участников",
+		"ManageChannels": "Управлять каналами",
+		"ManageEmojisAndStickers": "Управлять смайлами и стикерами",
+		"ManageEvents": "Управлять событиями",
+		"ManageGuild": "Управлять сервером",
+		"ManageMessages": "Управлять сообщениями",
+		"ManageNicknames": "Управлять никами",
+		"ManageRoles": "Управлять ролями",
+		"ManageThreads": "Управлять ветками",
+		"ManageWebhooks": "Управлять вебхуками",
+		"MentionEveryone": "Упоминать всех",
+		"ModerateMembers": "Модерировать участников",
+		"MoveMembers": "Перемещать участников",
+		"MuteMembers": "Заглушать участников",
+		"PrioritySpeaker": "Приоритет",
+		"ReadMessageHistory": "Читать историю сообщений",
+		"RequestToSpeak": "Запрашивать разрешение говорить",
+		"SendMessages": "Отправлять сообщения",
+		"SendMessagesInThreads": "Отправлять сообщения в ветках",
+		"SendTTSMessages": "Отправлять сообщения текст-в-речь",
+		"Speak": "Говорить",
+		"Stream": "Стрим",
+		"UseApplicationCommands": "Использовать команды приложения",
+		"UseEmbeddedActivities": "Использовать встроенные активности",
+		"UseExternalEmojis": "Использовать внешние смайлы",
+		"UseExternalStickers": "Использовать внешние стикеры",
+		"UseVAD": "Использовать активность голоса",
+		"ViewAuditLog": "Просматривать лог аудита",
+		"ViewChannel": "Просматривать канал",
+		"ViewGuildInsights": "Просматривать инсайды сервера"
+	},
+	"MUSIC_COMMANDS": {
+		"NOWPLAYING": {
+			"TITLE": "Сейчас играет - %s",
+			"NAME": "Название песни",
+			"DURATION": "Длина песни",
+			"REQUESTEDBY": "Запросил"
+		},
+		"PAUSE": {
+			"TEXT": "%s приостановил песню!"
+		},
+		"REPEAT": {
+			"QUEUE_MODE": "Очередь",
+			"SONG_MODE": "Песня",
+			"DISABLED": "Выключен",
+			"TEXT": "Режим повтора изменён на `%s` (%s)!"
+		},
+		"SHUFFLE": {
+			"TEXT": "%s перемешал очередь песен!"
+		},
+		"SKIP": {
+			"TEXT": "%s пропустил текущую песню!"
+		},
+		"STOP": {
+			"TEXT": "%s остановил очередь песен!"
+		},
+		"VOLUME": {
+			"CURRENT": "Текущая громкость - %s.",
+			"TEXT": "Громкость песни изменена на `%s` (%s)!"
+		}
+	}
+}
