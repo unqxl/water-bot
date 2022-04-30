@@ -5,6 +5,7 @@ import {
 	GuildMember,
 	TextChannel,
 } from "discord.js";
+import { LanguageService } from "../../services/Language";
 import { ValidateReturn } from "../../types/Command/BaseSlashCommand";
 import { SubCommand } from "../../types/Command/SubCommand";
 import { bold } from "@discordjs/builders";
@@ -29,8 +30,10 @@ export default class PlayCommand extends SubCommand {
 
 	async validate(
 		command: ChatInputCommandInteraction<"cached">,
-		lang: typeof import("@locales/English").default
+		lang: LanguageService
 	): Promise<ValidateReturn> {
+		const color = this.client.functions.color("Red");
+		const author = this.client.functions.author(command.member);
 		const { djRoles } = this.client.configurations.get(command.guild.id);
 		if (djRoles.length) {
 			const { status, message } = await this.client.DJSystem.check(
@@ -60,9 +63,7 @@ export default class PlayCommand extends SubCommand {
 		);
 		if (!voiceCheck) {
 			if (voiceCheck.code === 1) {
-				const color = this.client.functions.color("Red");
-				const author = this.client.functions.author(command.member);
-				const text = lang.ERRORS.NOT_JOINED_VOICE;
+				const text = await lang.get("ERRORS:JOIN_VOICE");
 				const embed = new EmbedBuilder();
 				embed.setColor(color);
 				embed.setAuthor(author);
@@ -76,9 +77,7 @@ export default class PlayCommand extends SubCommand {
 					},
 				};
 			} else if (voiceCheck.code === 2) {
-				const color = this.client.functions.color("Red");
-				const author = this.client.functions.author(command.member);
-				const text = lang.ERRORS.JOIN_BOT_VOICE;
+				const text = await lang.get("ERRORS:JOIN_BOT_VOICE");
 				const embed = new EmbedBuilder();
 				embed.setColor(color);
 				embed.setAuthor(author);
@@ -101,7 +100,7 @@ export default class PlayCommand extends SubCommand {
 
 	async run(
 		command: ChatInputCommandInteraction<"cached">,
-		lang: typeof import("@locales/English").default
+		lang: LanguageService
 	) {
 		const song = command.options.getString("song", true);
 

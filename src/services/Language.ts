@@ -26,7 +26,7 @@ export class LanguageService {
 		key: SearchFormat<LocaleTemplate>,
 		...args: string[]
 	): Promise<null | string> {
-		const [category, prop] = key.split(":");
+		const [category, subcategory, prop] = key.split(":");
 		const locale = await this.GuildService.getSetting(
 			this.guild_id,
 			"locale"
@@ -36,7 +36,13 @@ export class LanguageService {
 			(module) => module.default
 		)) as LocaleTemplate;
 
-		var value = LocaleFile[category][prop] as string;
+		var value: string;
+		if (subcategory) {
+			value = LocaleFile[category][subcategory][prop];
+		} else {
+			value = LocaleFile[category][prop];
+		}
+
 		if (value === undefined) return null;
 
 		const regex = /%s/g;

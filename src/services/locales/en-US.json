@@ -4,7 +4,9 @@
 		"USER_MISSING_PERMISSIONS": "Oh, it looks like you don't have some rights to run this command: %s",
 		"JOIN_VOICE": "To use this command, you need to log into the voice channel!",
 		"JOIN_BOT_VOICE": "To use this command, you need to log into the voice channel where the bot is located!",
-		"QUEUE_IS_EMPTY": "The song's music queue is empty now!"
+		"QUEUE_IS_EMPTY": "The song's music queue is empty now!",
+		"MUSIC_IS_PAUSED": "The song is already paused!",
+		"MUSIC_IS_RESUMED": "The song is already playing!"
 	},
 	"EVENTS": {},
 	"PERMISSIONS": {
@@ -51,9 +53,33 @@
 		"ViewGuildInsights": "View Guild Insights"
 	},
 	"MUSIC_COMMANDS": {
-		"NOWPLAYING_TITLE": "Now Playing - %s",
-		"NOWPLAYING_NAME": "Song Name",
-		"NOWPLAYING_DURATION": "Song Duration",
-		"NOWPLAYING_REQUESTEDBY": "Requested By"
+		"NOWPLAYING": {
+			"TITLE": "Now Playing - %s",
+			"NAME": "Song Name",
+			"DURATION": "Song Duration",
+			"REQUESTEDBY": "Requested By"
+		},
+		"PAUSE": {
+			"TEXT": "Music is paused by %s!"
+		},
+		"REPEAT": {
+			"QUEUE_MODE": "Queue",
+			"SONG_MODE": "Song",
+			"DISABLED": "Disabled",
+			"TEXT": "Repeat Mode is changed to `%s` by %s!"
+		},
+		"SHUFFLE": {
+			"TEXT": "Music Queue is shuffled by %s!"
+		},
+		"SKIP": {
+			"TEXT": "Song is skipped by %s!"
+		},
+		"STOP": {
+			"TEXT": "Music is stopped by %s!"
+		},
+		"VOLUME": {
+			"CURRENT": "Current Volume is %s.",
+			"TEXT": "Volume is changed to `%s` by %s!"
+		}
 	}
 }

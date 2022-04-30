@@ -25,7 +25,6 @@ export default class NowPlayingCommand extends SubCommand {
 	): Promise<ValidateReturn> {
 		const color = this.client.functions.color("Red");
 		const author = this.client.functions.author(command.member);
-
 		const { djRoles } = this.client.configurations.get(command.guild.id);
 		if (djRoles.length) {
 			const { status, message } = await this.client.DJSystem.check(
@@ -112,21 +111,14 @@ export default class NowPlayingCommand extends SubCommand {
 		const queue = this.client.music.getQueue(command.guild);
 		const song = queue.songs[0];
 		const name = Util.escapeMarkdown(song.name);
-		const {
-			NOWPLAYING_TITLE,
-			NOWPLAYING_NAME,
-			NOWPLAYING_DURATION,
-			NOWPLAYING_REQUESTEDBY,
-		} = await (
-			await lang.all()
-		).MUSIC_COMMANDS;
+		const { NOWPLAYING } = await (await lang.all()).MUSIC_COMMANDS;
 
 		const text = [
-			`${bold(NOWPLAYING_TITLE)}`,
+			`${bold(NOWPLAYING.TITLE)}`,
 			"",
-			`› ${bold(NOWPLAYING_NAME)}: ${bold(hyperlink(name, song.url))}`,
-			`› ${bold(NOWPLAYING_DURATION)}: ${bold(song.formattedDuration)}`,
-			`› ${bold(NOWPLAYING_REQUESTEDBY)}: ${bold(song.user.toString())}`,
+			`› ${bold(NOWPLAYING.NAME)}: ${bold(hyperlink(name, song.url))}`,
+			`› ${bold(NOWPLAYING.DURATION)}: ${bold(song.formattedDuration)}`,
+			`› ${bold(NOWPLAYING.REQUESTEDBY)}: ${bold(song.user.toString())}`,
 		].join("\n");
 
 		const color = this.client.functions.color("Blurple");

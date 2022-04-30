@@ -13,17 +13,52 @@ export interface LocaleTemplate {
 
 		// Music Errors
 		QUEUE_IS_EMPTY: string;
+		MUSIC_IS_PAUSED: string;
+		MUSIC_IS_RESUMED: string;
 	};
 	EVENTS: {};
 	PERMISSIONS: Record<PermissionsString, string>;
 
 	// Commands
 	MUSIC_COMMANDS: {
-		//? Now Playing Command
-		NOWPLAYING_TITLE: string;
-		NOWPLAYING_NAME: string;
-		NOWPLAYING_DURATION: string;
-		NOWPLAYING_REQUESTEDBY: string;
+		NOWPLAYING: {
+			TITLE: string;
+			NAME: string;
+			DURATION: string;
+			REQUESTEDBY: string;
+		};
+
+		PAUSE: {
+			TEXT: string;
+		};
+
+		REPEAT: {
+			QUEUE_MODE: string;
+			SONG_MODE: string;
+			DISABLED: string;
+			TEXT: string;
+		};
+
+		RESUME: {
+			TEXT: string;
+		};
+
+		SHUFFLE: {
+			TEXT: string;
+		};
+
+		SKIP: {
+			TEXT: string;
+		};
+
+		STOP: {
+			TEXT: string;
+		};
+
+		VOLUME: {
+			CURRENT: string;
+			TEXT: string;
+		};
 	};
 }
 

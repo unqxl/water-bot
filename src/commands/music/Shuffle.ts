@@ -3,6 +3,7 @@ import {
 	EmbedBuilder,
 	GuildMember,
 } from "discord.js";
+import { LanguageService } from "../../services/Language";
 import { ValidateReturn } from "../../types/Command/BaseSlashCommand";
 import { SubCommand } from "../../types/Command/SubCommand";
 import { bold } from "@discordjs/builders";
@@ -19,16 +20,16 @@ export default class ShuffleCommand extends SubCommand {
 
 	async validate(
 		command: ChatInputCommandInteraction<"cached">,
-		lang: typeof import("@locales/English").default
+		lang: LanguageService
 	): Promise<ValidateReturn> {
+		const color = this.client.functions.color("Red");
+		const author = this.client.functions.author(command.member);
 		const { djRoles } = this.client.configurations.get(command.guild.id);
 		if (djRoles.length) {
 			const { status, message } = await this.client.DJSystem.check(
 				command
 			);
 			if (!status) {
-				const color = this.client.functions.color("Red");
-				const author = this.client.functions.author(command.member);
 				const embed = new EmbedBuilder();
 				embed.setColor(color);
 				embed.setAuthor(author);
@@ -50,9 +51,7 @@ export default class ShuffleCommand extends SubCommand {
 		);
 		if (!voiceCheck) {
 			if (voiceCheck.code === 1) {
-				const color = this.client.functions.color("Red");
-				const author = this.client.functions.author(command.member);
-				const text = lang.ERRORS.NOT_JOINED_VOICE;
+				const text = await lang.get("ERRORS:JOIN_VOICE");
 				const embed = new EmbedBuilder();
 				embed.setColor(color);
 				embed.setAuthor(author);
@@ -66,28 +65,7 @@ export default class ShuffleCommand extends SubCommand {
 					},
 				};
 			} else if (voiceCheck.code === 2) {
-				const color = this.client.functions.color("Red");
-				const author = this.client.functions.author(command.member);
-				const text = lang.ERRORS.JOIN_BOT_VOICE;
-				const embed = new EmbedBuilder();
-				embed.setColor(color);
-				embed.setAuthor(author);
-				embed.setDescription(`❌ | ${bold(text)}`);
-				embed.setTimestamp();
-
-				return {
-					ok: false,
-					error: {
-						embeds: [embed],
-					},
-				};
-			}
-
-			const queue = this.client.music.getQueue(command.guild);
-			if (!queue) {
-				const text = lang.ERRORS.QUEUE_EMPTY;
-				const color = this.client.functions.color("Red");
-				const author = this.client.functions.author(command.member);
+				const text = await lang.get("ERRORS:JOIN_BOT_VOICE");
 				const embed = new EmbedBuilder();
 				embed.setColor(color);
 				embed.setAuthor(author);
@@ -103,6 +81,23 @@ export default class ShuffleCommand extends SubCommand {
 			}
 		}
 
+		const queue = this.client.music.getQueue(command.guild);
+		if (!queue) {
+			const text = await lang.get("ERRORS:QUEUE_IS_EMPTY");
+			const embed = new EmbedBuilder();
+			embed.setColor(color);
+			embed.setAuthor(author);
+			embed.setDescription(`❌ | ${bold(text)}`);
+			embed.setTimestamp();
+
+			return {
+				ok: false,
+				error: {
+					embeds: [embed],
+				},
+			};
+		}
+
 		return {
 			ok: true,
 		};
@@ -110,12 +105,16 @@ export default class ShuffleCommand extends SubCommand {
 
 	async run(
 		command: ChatInputCommandInteraction<"cached">,
-		lang: typeof import("@locales/English").default
+		lang: LanguageService
 	) {
 		const queue = this.client.music.getQueue(command.guild);
 		queue.shuffle();
 
-		const text = lang.MUSIC.SHUFFLED;
+		const text = await lang.get(
+			"MUSIC_COMMANDS:SHUFFLE:TEXT",
+			command.user.toString()
+		);
+
 		const color = this.client.functions.color("Blurple");
 		const author = this.client.functions.author(command.member);
 		const embed = new EmbedBuilder();
