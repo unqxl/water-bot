@@ -1,5 +1,6 @@
 import { ChatInputCommandInteraction, EmbedBuilder } from "discord.js";
 import { LanguageService } from "../../services/Language";
+import { GuildService } from "../../services/Guild";
 import { SubCommand } from "../../types/Command/SubCommand";
 import { time } from "@discordjs/builders";
 import Bot from "../../classes/Bot";
@@ -7,7 +8,6 @@ import Bot from "../../classes/Bot";
 // DayJS
 import dayjs from "dayjs";
 import duration from "dayjs/plugin/duration";
-import { GuildService } from "../../services/Guild";
 
 dayjs.extend(duration);
 import("dayjs/locale/en");
