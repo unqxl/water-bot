@@ -3,6 +3,7 @@ import {
 	ChatInputCommandInteraction,
 	EmbedBuilder,
 } from "discord.js";
+import { LanguageService } from "../../../services/Language";
 import { ValidateReturn } from "../../../types/Command/BaseSlashCommand";
 import { SubCommand } from "../../../types/Command/SubCommand";
 import { bold } from "@discordjs/builders";
@@ -28,7 +29,7 @@ export default class DepositCommand extends SubCommand {
 
 	async validate(
 		command: ChatInputCommandInteraction<"cached">,
-		lang: typeof import("@locales/English").default
+		lang: LanguageService
 	): Promise<ValidateReturn> {
 		const amount = command.options.getNumber("amount");
 		const balance = await this.client.economy.balance.get(
@@ -39,8 +40,9 @@ export default class DepositCommand extends SubCommand {
 		if (amount > balance) {
 			const color = this.client.functions.color("Red");
 			const author = this.client.functions.author(command.member);
-			const action = lang.ECONOMY_ACTIONS.DEPOSIT;
-			const text = lang.ERRORS.NOT_ENOUGH_MONEY(action);
+			const action = await lang.get("ECONOMY_ACTIONS:DEPOSIT");
+			const text = await lang.get("ERRORS:NOT_ENOUGH_MONEY", action);
+
 			const embed = new EmbedBuilder();
 			embed.setColor(color);
 			embed.setAuthor(author);
@@ -63,7 +65,7 @@ export default class DepositCommand extends SubCommand {
 
 	async run(
 		command: ChatInputCommandInteraction<"cached">,
-		lang: typeof import("@locales/English").default
+		lang: LanguageService
 	) {
 		const sp = (num: string | number) => this.client.functions.sp(num);
 
@@ -83,7 +85,11 @@ export default class DepositCommand extends SubCommand {
 
 		const color = this.client.functions.color("Blurple");
 		const author = this.client.functions.author(command.member);
-		const text = lang.ECONOMY.BANK_DEPOSITED(sp(amount));
+		const text = await lang.get(
+			"ECONOMY_COMMANDS:BANK_DEPOSIT:TEXT",
+			sp(amount)
+		);
+		
 		const embed = new EmbedBuilder();
 		embed.setColor(color);
 		embed.setAuthor(author);

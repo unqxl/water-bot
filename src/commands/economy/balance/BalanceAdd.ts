@@ -3,6 +3,7 @@ import {
 	ChatInputCommandInteraction,
 	EmbedBuilder,
 } from "discord.js";
+import { LanguageService } from "../../../services/Language";
 import { ValidateReturn } from "../../../types/Command/BaseSlashCommand";
 import { SubCommand } from "../../../types/Command/SubCommand";
 import { bold } from "@discordjs/builders";
@@ -35,13 +36,13 @@ export default class BalanceSubtractCommand extends SubCommand {
 
 	async validate(
 		command: ChatInputCommandInteraction<"cached">,
-		lang: typeof import("@locales/English").default
+		lang: LanguageService
 	): Promise<ValidateReturn> {
 		const target = command.options.getMember("target");
 		if (target.user.bot) {
 			const color = this.client.functions.color("Red");
 			const author = this.client.functions.author(command.member);
-			const text = lang.ERRORS.USER_BOT(target.toString());
+			const text = await lang.get("ERRORS:USER_IS_BOT");
 			const embed = new EmbedBuilder();
 			embed.setColor(color);
 			embed.setAuthor(author);
@@ -64,7 +65,7 @@ export default class BalanceSubtractCommand extends SubCommand {
 
 	async run(
 		command: ChatInputCommandInteraction<"cached">,
-		lang: typeof import("@locales/English").default
+		lang: LanguageService
 	) {
 		const sp = (num: string | number) => this.client.functions.sp(num);
 
@@ -79,7 +80,12 @@ export default class BalanceSubtractCommand extends SubCommand {
 
 		const color = this.client.functions.color("Blurple");
 		const author = this.client.functions.author(command.member);
-		const text = lang.ECONOMY.BALANCE_SUBT(sp(amount), target.toString());
+		const text = await lang.get(
+			"ECONOMY_COMMANDS:BALANCE_ADD:TEXT",
+			sp(amount),
+			target.user.toString()
+		);
+
 		const embed = new EmbedBuilder();
 		embed.setColor(color);
 		embed.setAuthor(author);

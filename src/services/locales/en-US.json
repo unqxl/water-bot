@@ -6,7 +6,10 @@
 		"JOIN_BOT_VOICE": "To use this command, you need to log into the voice channel where the bot is located!",
 		"QUEUE_IS_EMPTY": "The song's music queue is empty now!",
 		"MUSIC_IS_PAUSED": "The song is already paused!",
-		"MUSIC_IS_RESUMED": "The song is already playing!"
+		"MUSIC_IS_RESUMED": "The song is already playing!",
+		"NOT_ENOUGH_MONEY": "You don't have enough money to %s!",
+		"TIME_ERROR": "You've already received your reward!\nTry again in %s (%s)",
+		"USER_IS_BOT": "This user is a bot!"
 	},
 	"EVENTS": {},
 	"PERMISSIONS": {
@@ -81,5 +84,35 @@
 			"CURRENT": "Current Volume is %s.",
 			"TEXT": "Volume is changed to `%s` by %s!"
 		}
+	},
+	"ECONOMY_COMMANDS": {
+		"BALANCE_ADD": {
+			"TEXT": "You have added `%s` coins to %s balance!"
+		},
+		"BALANCE_SUBT": {
+			"TEXT": "You have subtracted `%s` coins from %s balance!"
+		},
+		"BALANCE_GET": {
+			"TEXT": "Your current balance is `%s` coins (`%s` is in bank)!"
+		},
+		"BANK_DEPOSIT": {
+			"TEXT": "You have deposited `%s` coins to the bank!"
+		},
+		"BANK_WITHDRAW": {
+			"TEXT": "You have withdrawn `%s` coins from the bank!"
+		},
+		"DAILY": {
+			"TEXT": "You have received `%s` coins from daily reward!"
+		},
+		"WEEKLY": {
+			"TEXT": "You have received `%s` coins from weekly reward!"
+		},
+		"WORK": {
+			"TEXT": "You have received `%s` coins from work!"
+		}
+	},
+	"ECONOMY_ACTIONS": {
+		"DEPOSIT": "deposit in bank",
+		"WITHDRAW": "withdraw frow the bank"
 	}
 }

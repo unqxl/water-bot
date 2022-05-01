@@ -1,4 +1,5 @@
 import { ChatInputCommandInteraction, EmbedBuilder } from "discord.js";
+import { LanguageService } from "../../../services/Language";
 import { SubCommand } from "../../../types/Command/SubCommand";
 import { bold } from "@discordjs/builders";
 import Bot from "../../../classes/Bot";
@@ -15,7 +16,7 @@ export default class BalanceCommand extends SubCommand {
 
 	async run(
 		command: ChatInputCommandInteraction<"cached">,
-		lang: typeof import("@locales/English").default
+		lang: LanguageService
 	) {
 		const sp = (num: string | number) => this.client.functions.sp(num);
 		const [balance, bank] = [
@@ -31,7 +32,12 @@ export default class BalanceCommand extends SubCommand {
 
 		const color = this.client.functions.color("Blurple");
 		const author = this.client.functions.author(command.member);
-		const text = lang.ECONOMY.BALANCE_INFO(sp(balance), sp(bank));
+		const text = await lang.get(
+			"ECONOMY_COMMANDS:BALANCE_GET:TEXT",
+			sp(balance),
+			sp(bank)
+		);
+
 		const embed = new EmbedBuilder();
 		embed.setColor(color);
 		embed.setAuthor(author);

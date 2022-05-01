@@ -1,4 +1,5 @@
-import { ChatInputCommandInteraction, EmbedBuilder } from "discord.js";
+import { ChatInputCommandInteraction, EmbedBuilder, time } from "discord.js";
+import { LanguageService } from "../../services/Language";
 import { SubCommand } from "../../types/Command/SubCommand";
 import { bold } from "@discordjs/builders";
 import Bot from "../../classes/Bot";
@@ -14,7 +15,7 @@ export default class DailyCommand extends SubCommand {
 
 	async run(
 		command: ChatInputCommandInteraction<"cached">,
-		lang: typeof import("@locales/English").default
+		lang: LanguageService
 	) {
 		const daily = await this.client.economy.rewards.daily(
 			command.guildId,
@@ -28,9 +29,11 @@ export default class DailyCommand extends SubCommand {
 			);
 
 			const collectAt = new Date(daily.data);
-			const text = lang.ECONOMY.TIME_ERROR(
+			const collectAtFormat = time(Math.ceil(daily.data / 1000), "R");
+			const text = await lang.get(
+				"ERRORS:TIME_ERROR",
 				collectAt.toLocaleString(locale),
-				collectAt
+				collectAtFormat
 			);
 
 			const color = this.client.functions.color("Red");
@@ -47,9 +50,14 @@ export default class DailyCommand extends SubCommand {
 			});
 		}
 
-		const text = lang.ECONOMY.DAILY_REWARD(daily.amount);
+		const sp = (num: string | number) => this.client.functions.sp(num);
 		const color = this.client.functions.color("Blurple");
 		const author = this.client.functions.author(command.member);
+		const text = await lang.get(
+			"ECONOMY_COMMANDS:DAILY:TEXT",
+			sp(daily.amount)
+		);
+
 		const embed = new EmbedBuilder();
 		embed.setColor(color);
 		embed.setAuthor(author);
