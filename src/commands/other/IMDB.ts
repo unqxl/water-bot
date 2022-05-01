@@ -3,6 +3,8 @@ import {
 	ChatInputCommandInteraction,
 	EmbedBuilder,
 } from "discord.js";
+import { LanguageService } from "../../services/Language";
+import { GuildService } from "../../services/Guild";
 import { SubCommand } from "../../types/Command/SubCommand";
 import { bold } from "@discordjs/builders";
 import Bot from "../../classes/Bot";
@@ -10,6 +12,7 @@ import Bot from "../../classes/Bot";
 // DayJS
 import "dayjs/locale/en";
 import "dayjs/locale/ru";
+import "dayjs/locale/uk";
 
 import dayjs from "dayjs";
 import duration from "dayjs/plugin/duration";
@@ -37,23 +40,39 @@ export default class IMDBCommand extends SubCommand {
 
 	async run(
 		command: ChatInputCommandInteraction<"cached">,
-		lang: typeof import("@locales/English").default
+		lang: LanguageService
 	) {
-		const locale =
-			(await this.client.database.getSetting(
-				command.guildId,
-				"locale"
-			)) == "en-US"
-				? "en"
-				: "ru";
+		const service = new GuildService();
+		const locale = await service.getSetting(command.guildId, "locale");
+		locale === "en-US"
+			? dayjs.locale("en")
+			: locale === "ru-RU"
+			? dayjs.locale("ru")
+			: dayjs.locale("uk");
+
+		const duration = (data) => {
+			if (locale === "en-US") {
+				return dayjs
+					.duration(Number(data.runtimeMins), "minutes")
+					.format("DD [days], HH [hours], mm [minutes]");
+			} else if (locale === "ru-RU") {
+				return dayjs
+					.duration(Number(data.runtimeMins), "minutes")
+					.format("DD [days], HH [hours], mm [minutes]");
+			} else if (locale === "uk-UA") {
+				return dayjs
+					.duration(Number(data.runtimeMins), "minutes")
+					.format("DD [days], HH [hours], mm [minutes]");
+			}
+		};
 
 		const query = command.options.getString("film", true);
 		const data = await this.client.apis.imdb.getData(query, locale);
 		if (!data) {
 			const author = this.client.functions.author(command.member);
 			const color = this.client.functions.color("Red");
+			const text = await lang.get("ERRORS:DATA_NOT_FOUND", "IMDB");
 
-			const text = lang.ERRORS.NOT_FOUND("IMDB");
 			const embed = new EmbedBuilder();
 			embed.setColor(color);
 			embed.setAuthor(author);
@@ -66,30 +85,25 @@ export default class IMDBCommand extends SubCommand {
 			});
 		}
 
-		const length = dayjs
-			.duration(Number(data.runtimeMins), "minutes")
-			.locale(locale)
-			.format(lang.GLOBAL.DAYJS_FORMAT);
-
 		const author = this.client.functions.author(command.member);
 		const color = this.client.functions.color("Blurple");
-		const pack = lang.OTHER.IMDB;
+		const { IMDB } = await (await lang.all()).OTHER_COMMANDS;
 
 		const res = [
 			data.plotLocal.length >= 1 ? bold(data.plotLocal) : bold(data.plot),
 			"",
-			`› ${bold(pack.FIELDS.DIRECTORS)}: ${bold(data.directors)}`,
-			`› ${bold(pack.FIELDS.WRITERS)}: ${bold(data.writers)}`,
-			`› ${bold(pack.FIELDS.STARS)}: ${bold(data.stars)}`,
-			`› ${bold(pack.FIELDS.COMPANIES)}: ${bold(data.companies)}`,
-			`› ${bold(pack.FIELDS.COUNTRIES)}: ${bold(data.countries)}`,
-			`› ${bold(pack.FIELDS.LANGUAGES)}: ${bold(data.languages)}`,
+			`› ${bold(IMDB.DIRECTORS)}: ${bold(data.directors)}`,
+			`› ${bold(IMDB.WRITERS)}: ${bold(data.writers)}`,
+			`› ${bold(IMDB.STARS)}: ${bold(data.stars)}`,
+			`› ${bold(IMDB.COMPANIES)}: ${bold(data.companies)}`,
+			`› ${bold(IMDB.COUNTRIES)}: ${bold(data.countries)}`,
+			`› ${bold(IMDB.LANGUAGES)}: ${bold(data.languages)}`,
 			"",
-			`› ${bold(pack.FIELDS.RATINGS)}:`,
-			`» ${bold(pack.CONTENT_RATING)}: ${bold(data.contentRating)}`,
-			`» ${bold(pack.IMDB_RATING)}: ${bold(data.imDbRating)}`,
+			`› ${bold(IMDB.RATINGS)}:`,
+			`» ${bold(IMDB.CONTENT_RATING)}: ${bold(data.contentRating)}`,
+			`» ${bold(IMDB.IMDB_RATING)}: ${bold(data.imDbRating)}`,
 			"",
-			`› ${bold(pack.FIELDS.LENGTH)}: ${bold(length)}`,
+			`› ${bold(IMDB.LENGTH)}: ${bold(duration(data))}`,
 		].join("\n");
 
 		const embed = new EmbedBuilder();

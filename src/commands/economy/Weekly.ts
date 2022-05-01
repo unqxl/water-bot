@@ -29,7 +29,7 @@ export default class WeeklyCommand extends SubCommand {
 			);
 
 			const collectAt = new Date(weekly.data);
-			const collectAtFormat = time(Math.ceil(weekly.data / 1000), "R");
+			const collectAtFormat = time(collectAt, "R");
 			const text = await lang.get(
 				"ERRORS:TIME_ERROR",
 				collectAt.toLocaleString(locale),

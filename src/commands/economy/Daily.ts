@@ -29,7 +29,7 @@ export default class DailyCommand extends SubCommand {
 			);
 
 			const collectAt = new Date(daily.data);
-			const collectAtFormat = time(Math.ceil(daily.data / 1000), "R");
+			const collectAtFormat = time(collectAt, "R");
 			const text = await lang.get(
 				"ERRORS:TIME_ERROR",
 				collectAt.toLocaleString(locale),

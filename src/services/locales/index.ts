@@ -22,6 +22,7 @@ export interface LocaleTemplate {
 
 		// Other Errors
 		USER_IS_BOT: string;
+		DATA_NOT_FOUND: string;
 	};
 	EVENTS: {};
 	PERMISSIONS: Record<PermissionsString, string>;
@@ -99,6 +100,44 @@ export interface LocaleTemplate {
 
 		WORK: {
 			TEXT: string;
+		};
+	};
+
+	// Other Commands
+	OTHER_COMMANDS: {
+		BOTINFO: {
+			BOT_GUILDS: string;
+			BOT_USERS: string;
+			BOT_CHANNELS: string;
+			BOT_PING: string;
+			BOT_COMMANDS: string;
+			BOT_VERSION: string;
+			BOT_CREATED: string;
+			BOT_STARTED: string;
+		};
+
+		COVID: {
+			TOTAL: string;
+			TODAY: string;
+			CASES: string;
+			RECOVERED: string;
+			DEATHS: string;
+			POPULATION: string;
+			CRITICAL: string;
+			LAST_UPDATE: string;
+		};
+
+		IMDB: {
+			DIRECTORS: string;
+			WRITERS: string;
+			STARS: string;
+			COMPANIES: string;
+			COUNTRIES: string;
+			LANGUAGES: string;
+			RATINGS: string;
+			CONTENT_RATING: string;
+			IMDB_RATING: string;
+			LENGTH: string;
 		};
 	};
 

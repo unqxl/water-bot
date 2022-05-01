@@ -9,7 +9,8 @@
 		"MUSIC_IS_RESUMED": "The song is already playing!",
 		"NOT_ENOUGH_MONEY": "You don't have enough money to %s!",
 		"TIME_ERROR": "You've already received your reward!\nTry again in %s (%s)",
-		"USER_IS_BOT": "This user is a bot!"
+		"USER_IS_BOT": "This user is a bot!",
+		"DATA_NOT_FOUND": "%s data not found!"
 	},
 	"EVENTS": {},
 	"PERMISSIONS": {
@@ -109,6 +110,28 @@
 		},
 		"WORK": {
 			"TEXT": "You have received `%s` coins from work!"
+		}
+	},
+	"OTHER_COMMANDS": {
+		"BOTINFO": {
+			"BOT_GUILDS": "Servers",
+			"BOT_USERS": "Users",
+			"BOT_CHANNELS": "Channels",
+			"BOT_PING": "Ping",
+			"BOT_COMMANDS": "Commands",
+			"BOT_VERSION": "Version",
+			"BOT_CREATED": "Created At",
+			"BOT_STARTED": "Started At"
+		},
+		"COVID": {
+			"TOTAL": "Total",
+			"TODAY": "Today",
+			"CASES": "Cases",
+			"RECOVERED": "Recovered",
+			"DEATHS": "Deaths",
+			"POPULATION": "Population",
+			"CRITICAL": "Critical",
+			"LAST_UPDATE": "Last Update"
 		}
 	},
 	"ECONOMY_ACTIONS": {

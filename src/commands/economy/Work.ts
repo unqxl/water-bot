@@ -29,7 +29,7 @@ export default class WorkCommand extends SubCommand {
 			);
 
 			const collectAt = new Date(work.data);
-			const collectAtFormat = time(Math.ceil(work.data / 1000), "R");
+			const collectAtFormat = time(collectAt, "R");
 			const text = await lang.get(
 				"ERRORS:TIME_ERROR",
 				collectAt.toLocaleString(locale),
