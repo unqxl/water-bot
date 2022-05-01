@@ -8,7 +8,8 @@
 		"MUSIC_IS_PAUSED": "Пісня вже стоїть на паузі!",
 		"MUSIC_IS_RESUMED": "Пісня вже програється!",
 		"NOT_ENOUGH_MONEY": "У вас недостатньо грошей для %s!",
-		"USER_IS_BOT": "Цей користувач є ботом!"
+		"USER_IS_BOT": "Цей користувач є ботом!",
+		"DATA_NOT_FOUND": "Информация %s не найдена!"
 	},
 	"EVENTS": {},
 	"PERMISSIONS": {
@@ -102,6 +103,28 @@
 		},
 		"WORK": {
 			"TEXT": "Ви заробили `%s` коїнів на роботі!"
+		}
+	},
+	"OTHER_COMMANDS": {
+		"BOTINFO": {
+			"BOT_GUILDS": "Серверов",
+			"BOT_USERS": "Пользователей",
+			"BOT_CHANNELS": "Каналов",
+			"BOT_PING": "Пинг",
+			"BOT_COMMANDS": "Команд",
+			"BOT_VERSION": "Версия",
+			"BOT_CREATED": "Создан",
+			"BOT_STARTED": "Запущен"
+		},
+		"COVID": {
+			"TOTAL": "Всего",
+			"TODAY": "Сегодня",
+			"CASES": "Случаев",
+			"RECOVERED": "Спасено",
+			"DEATHS": "Смертей",
+			"POPULATION": "Популяция",
+			"CRITICAL": "В критичном сост.",
+			"LAST_UPDATE": "Дата обновления"
 		}
 	},
 	"ECONOMY_ACTIONS": {
