@@ -132,6 +132,18 @@
 			"POPULATION": "Population",
 			"CRITICAL": "Critical",
 			"LAST_UPDATE": "Last Update"
+		},
+		"IMDB": {
+			"DIRECTORS": "Directors",
+			"WRITERS": "Writers",
+			"STARS": "Stars",
+			"COMPANIES": "Companies",
+			"COUNTRIES": "Countries",
+			"LANGUAGES": "Languages",
+			"RATINGS": "Ratings",
+			"CONTENT_RATING": "Content Rating",
+			"IMDB_RATING": "IMDB Rating",
+			"LENGTH": "Length"
 		}
 	},
 	"ECONOMY_ACTIONS": {

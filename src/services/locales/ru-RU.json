@@ -125,6 +125,18 @@
 			"POPULATION": "Популяция",
 			"CRITICAL": "В критичном сост.",
 			"LAST_UPDATE": "Дата обновления"
+		},
+		"IMDB": {
+			"DIRECTORS": "Режиссеры",
+			"WRITERS": "Сценаристы",
+			"STARS": "Актеры",
+			"COMPANIES": "Компании",
+			"COUNTRIES": "Страны",
+			"LANGUAGES": "Языки",
+			"RATINGS": "Рейтинги",
+			"CONTENT_RATING": "Контент",
+			"IMDB_RATING": "IMDB",
+			"LENGTH": "Продолжительность"
 		}
 	},
 	"ECONOMY_ACTIONS": {
