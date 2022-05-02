@@ -112,31 +112,31 @@
 			"BOT_CHANNELS": "Каналів",
 			"BOT_PING": "Пінг",
 			"BOT_COMMANDS": "Команд",
-			"BOT_VERSION": "Версия",
-			"BOT_CREATED": "Создан",
-			"BOT_STARTED": "Запущен"
+			"BOT_VERSION": "Версія",
+			"BOT_CREATED": "Створений",
+			"BOT_STARTED": "Запущений"
 		},
 		"COVID": {
-			"TOTAL": "Всего",
-			"TODAY": "Сегодня",
-			"CASES": "Случаев",
-			"RECOVERED": "Спасено",
+			"TOTAL": "Всього",
+			"TODAY": "Сьогодні",
+			"CASES": "Випадків",
+			"RECOVERED": "Врятовано",
 			"DEATHS": "Смертей",
-			"POPULATION": "Популяция",
-			"CRITICAL": "В критичном сост.",
-			"LAST_UPDATE": "Дата обновления"
+			"POPULATION": "Популяція",
+			"CRITICAL": "В критичному стані.",
+			"LAST_UPDATE": "Дата оновлення"
 		},
 		"IMDB": {
-			"DIRECTORS": "Режиссеры",
-			"WRITERS": "Сценаристы",
-			"STARS": "Актеры",
-			"COMPANIES": "Компании",
-			"COUNTRIES": "Страны",
-			"LANGUAGES": "Языки",
+			"DIRECTORS": "Режисери",
+			"WRITERS": "Сценаристи",
+			"STARS": "Актори",
+			"COMPANIES": "Компанії",
+			"COUNTRIES": "Країни",
+			"LANGUAGES": "Мови",
 			"RATINGS": "Рейтинги",
 			"CONTENT_RATING": "Контент",
 			"IMDB_RATING": "IMDB",
-			"LENGTH": "Продолжительность"
+			"LENGTH": "Тривалість"
 		}
 	},
 	"ECONOMY_ACTIONS": {
