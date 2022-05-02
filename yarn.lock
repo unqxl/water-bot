@@ -2696,10 +2696,10 @@ negotiator@0.6.3, negotiator@^0.6.3:
   resolved "https://registry.yarnpkg.com/negotiator/-/negotiator-0.6.3.tgz#58e323a72fedc0d6f9cd4d31fe49f51479590ccd"
   integrity sha512-+EUsqGPLsM+j/zdChZjsnX51g4XrHFOIXwfnCVPGlQk/k5giakcKsuxCObBRu6DSm9opw/O6slWbJdghQM4bBg==
 
-nekos.life@^2.0.9:
-  version "2.0.9"
-  resolved "https://registry.yarnpkg.com/nekos.life/-/nekos.life-2.0.9.tgz#5c214fdb7897c58beed6e22895d1a39ffc648e7d"
-  integrity sha512-O6dT0P9Oji4q0H8Que0GULlTtJCSa1u59evR2LUyrm+c1YjfVP69wkB3ZkjwLDHI2Tqq0sTJ6NOHQ1qn0ZlLUw==
+nekos.life@^3.0.0:
+  version "3.0.0"
+  resolved "https://registry.yarnpkg.com/nekos.life/-/nekos.life-3.0.0.tgz#91d944daad8dcbdff493cf430537639fa963b60e"
+  integrity sha512-7LbvSqLtfK4XRA91nJaGOWthrNADmG7Vx9d54TC77Hx5qFvRCssFUaHraI6bZGjVENBCUaF7CreisoFX+8mnKQ==
 
 node-abi@^3.3.0:
   version "3.8.0"
