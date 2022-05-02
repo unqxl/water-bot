@@ -10,7 +10,7 @@
 		"NOT_ENOUGH_MONEY": "You don't have enough money to %s!",
 		"TIME_ERROR": "You've already received your reward!\nTry again in %s (%s)",
 		"USER_IS_BOT": "This user is a bot!",
-		"DATA_NOT_FOUND": "%s data not found!"
+		"DATA_NOT_FOUND": "Data from %s is not found!"
 	},
 	"EVENTS": {},
 	"PERMISSIONS": {
@@ -144,10 +144,32 @@
 			"CONTENT_RATING": "Content Rating",
 			"IMDB_RATING": "IMDB Rating",
 			"LENGTH": "Length"
+		},
+		"OSU": {
+			"STATISTICS": "Statistics",
+			"GRADES": "Grades",
+			"OTHER_USERNAMES": "Other Usernames",
+			"LEVEL": "Level",
+			"ACCURACY": "Accuracy",
+			"PP": "PP",
+			"RANKED_SCORE": "Ranked Score",
+			"PLAYCOUNT": "Playcount",
+			"RANK": "World Rank",
+			"COUNTRY_RANK": "Country Rank",
+			"COUNTRY": "Country",
+			"LAST_VISIT": "Last Visit",
+			"SSH": "SSH",
+			"SS": "SS",
+			"SH": "SH",
+			"S": "S",
+			"A": "A"
 		}
 	},
 	"ECONOMY_ACTIONS": {
 		"DEPOSIT": "deposit in bank",
 		"WITHDRAW": "withdraw frow the bank"
+	},
+	"OTHER": {
+		"NONE": "None"
 	}
 }

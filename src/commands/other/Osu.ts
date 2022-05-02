@@ -3,8 +3,10 @@ import {
 	ChatInputCommandInteraction,
 	EmbedBuilder,
 } from "discord.js";
-import { SubCommand } from "../../types/Command/SubCommand";
 import { bold, time } from "@discordjs/builders";
+import { LanguageService } from "../../services/Language";
+import { GuildService } from "../../services/Guild";
+import { SubCommand } from "../../types/Command/SubCommand";
 import Bot from "../../classes/Bot";
 
 type OsuModes = "osu" | "fruits" | "mania" | "taiko";
@@ -52,15 +54,10 @@ export default class osuCommand extends SubCommand {
 
 	async run(
 		command: ChatInputCommandInteraction<"cached">,
-		lang: typeof import("@locales/English").default
+		lang: LanguageService
 	) {
-		const locale =
-			(await this.client.database.getSetting(
-				command.guildId,
-				"locale"
-			)) == "en-US"
-				? "en"
-				: "ru";
+		const service = new GuildService();
+		const locale = await service.getSetting(command.guildId, "locale");
 
 		const username = command.options.getString("username", true);
 		const mode = command.options.getString("mode") as OsuModes;
@@ -69,8 +66,8 @@ export default class osuCommand extends SubCommand {
 		if (data["error"] && data["error"] === null) {
 			const author = this.client.functions.author(command.member);
 			const color = this.client.functions.color("Red");
+			const text = await lang.get("ERRORS:DATA_NOT_FOUND", "osu!api");
 
-			const text = lang.ERRORS.NOT_FOUND("osu!users API");
 			const embed = new EmbedBuilder();
 			embed.setColor(color);
 			embed.setAuthor(author);
@@ -106,38 +103,38 @@ export default class osuCommand extends SubCommand {
 							style.charAt(0).toUpperCase() + style.slice(1)
 					)
 					.join(", ")
-			: lang.GLOBAL.NONE;
+			: await lang.get("OTHER:NONE");
 
 		const color = this.client.functions.color("Blurple");
-		const pack = lang.OTHER.OSU;
+		const { OSU } = await (await lang.all()).OTHER_COMMANDS;
 
 		const last_visit = new Date(data.last_visit);
 		const lvf = last_visit.toLocaleString(locale);
 		const lt = time(last_visit, "R");
 
 		const res = [
-			`› ${bold(pack.FIELDS.STATISTICS)}:`,
-			`» ${bold(pack.LEVEL)}: ${bold(current.toLocaleString("be"))}`,
-			`» ${bold(pack.ACCURACY)}: ${bold(hit_accuracy.toFixed(2))}`,
-			`» ${bold(pack.PP)}: ${bold(pp.toLocaleString("be"))}`,
-			`» ${bold(pack.RANKED_SCORE)}: ${bold(rs.toLocaleString("be"))}`,
-			`» ${bold(pack.PLAYCOUNT)}: ${bold(pc.toLocaleString("be"))}`,
-			`» ${bold(pack.MAX_COMBO)}: ${bold(pc.toLocaleString("be"))}`,
-			`» ${bold(pack.PLAYSTYLE)}: ${bold(playstyle)}`,
-			`» ${bold(pack.RANK)}: ${bold(gr.toLocaleString("be"))}`,
-			`» ${bold(pack.COUNTRY_RANK)}: ${bold(cr.toLocaleString("be"))}`,
-			`» ${bold(pack.COUNTRY)}: ${bold(country.name)}`,
-			`» ${bold(pack.LAST_VISIT)}: ${bold(lvf + ` (${lt})`)}`,
+			`› ${bold(OSU.STATISTICS)}:`,
+			`» ${bold(OSU.LEVEL)}: ${bold(current.toLocaleString("be"))}`,
+			`» ${bold(OSU.ACCURACY)}: ${bold(hit_accuracy.toFixed(2))}`,
+			`» ${bold(OSU.PP)}: ${bold(pp.toLocaleString("be"))}`,
+			`» ${bold(OSU.RANKED_SCORE)}: ${bold(rs.toLocaleString("be"))}`,
+			`» ${bold(OSU.PLAYCOUNT)}: ${bold(pc.toLocaleString("be"))}`,
+			`» ${bold(OSU.MAX_COMBO)}: ${bold(pc.toLocaleString("be"))}`,
+			`» ${bold(OSU.PLAYSTYLE)}: ${bold(playstyle)}`,
+			`» ${bold(OSU.RANK)}: ${bold(gr.toLocaleString("be"))}`,
+			`» ${bold(OSU.COUNTRY_RANK)}: ${bold(cr.toLocaleString("be"))}`,
+			`» ${bold(OSU.COUNTRY)}: ${bold(country.name)}`,
+			`» ${bold(OSU.LAST_VISIT)}: ${bold(lvf + ` (${lt})`)}`,
 			"",
-			`› ${bold(pack.FIELDS.GRADES)}:`,
-			`» ${bold(pack.GRADES.SSH)}: ${bold(ssh.toLocaleString("be"))}`,
-			`» ${bold(pack.GRADES.SS)}: ${bold(ss.toLocaleString("be"))}`,
-			`» ${bold(pack.GRADES.SH)}: ${bold(sh.toLocaleString("be"))}`,
-			`» ${bold(pack.GRADES.S)}: ${bold(s.toLocaleString("be"))}`,
-			`» ${bold(pack.GRADES.A)}: ${bold(a.toLocaleString("be"))}`,
+			`› ${bold(OSU.GRADES)}:`,
+			`» ${bold(OSU.SSH)}: ${bold(ssh.toLocaleString("be"))}`,
+			`» ${bold(OSU.SS)}: ${bold(ss.toLocaleString("be"))}`,
+			`» ${bold(OSU.SH)}: ${bold(sh.toLocaleString("be"))}`,
+			`» ${bold(OSU.S)}: ${bold(s.toLocaleString("be"))}`,
+			`» ${bold(OSU.A)}: ${bold(a.toLocaleString("be"))}`,
 			"",
-			`› ${bold(pack.FIELDS.OTHER_USERNAMES)}:`,
-			bold(previous_usernames.join(", ")),
+			`› ${bold(OSU.OTHER_USERNAMES)}:`,
+			`${bold(previous_usernames.join(", "))}`,
 		].join("\n");
 
 		const embed = new EmbedBuilder();

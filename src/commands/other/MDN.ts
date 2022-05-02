@@ -4,6 +4,7 @@ import {
 	EmbedBuilder,
 	Util,
 } from "discord.js";
+import { LanguageService } from "../../services/Language";
 import { SubCommand } from "../../types/Command/SubCommand";
 import { request } from "undici";
 import { bold } from "@discordjs/builders";
@@ -28,7 +29,7 @@ export default class MDNCommand extends SubCommand {
 
 	async run(
 		command: ChatInputCommandInteraction<"cached">,
-		lang: typeof import("@locales/English").default
+		lang: LanguageService
 	) {
 		const url = "https://mdn.gideonbot.com/embed?q=";
 		const query = encodeURIComponent(
@@ -39,8 +40,8 @@ export default class MDNCommand extends SubCommand {
 		if (data.code && data.code === 404) {
 			const author = this.client.functions.author(command.member);
 			const color = this.client.functions.color("Red");
+			const text = await lang.get("ERRORS:DATA_NOT_FOUND", "MDN");
 
-			const text = lang.ERRORS.NOT_FOUND("MDN");
 			const embed = new EmbedBuilder();
 			embed.setColor(color);
 			embed.setAuthor(author);

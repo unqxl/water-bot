@@ -139,12 +139,40 @@ export interface LocaleTemplate {
 			IMDB_RATING: string;
 			LENGTH: string;
 		};
+
+		OSU: {
+			STATISTICS: string;
+			GRADES: string;
+			OTHER_USERNAMES: string;
+
+			LEVEL: string;
+			ACCURACY: string;
+			PP: string;
+			RANKED_SCORE: string;
+			PLAYCOUNT: string;
+			MAX_COMBO: string;
+			PLAYSTYLE: string;
+			RANK: string;
+			COUNTRY_RANK: string;
+			COUNTRY: string;
+			LAST_VISIT: string;
+
+			SSH: string;
+			SS: string;
+			SH: string;
+			S: string;
+			A: string;
+		};
 	};
 
 	// Other
 	ECONOMY_ACTIONS: {
 		DEPOSIT: string;
 		WITHDROW: string;
+	};
+
+	OTHER: {
+		NONE: string;
 	};
 }
 
