@@ -9,7 +9,7 @@
 		"MUSIC_IS_RESUMED": "Пісня вже програється!",
 		"NOT_ENOUGH_MONEY": "У вас недостатньо грошей для %s!",
 		"USER_IS_BOT": "Цей користувач є ботом!",
-		"DATA_NOT_FOUND": "Информация %s не найдена!"
+		"DATA_NOT_FOUND": "Інформація %s не знайдена!"
 	},
 	"EVENTS": {},
 	"PERMISSIONS": {
@@ -107,10 +107,10 @@
 	},
 	"OTHER_COMMANDS": {
 		"BOTINFO": {
-			"BOT_GUILDS": "Серверов",
-			"BOT_USERS": "Пользователей",
-			"BOT_CHANNELS": "Каналов",
-			"BOT_PING": "Пинг",
+			"BOT_GUILDS": "Серверів",
+			"BOT_USERS": "Користувачів",
+			"BOT_CHANNELS": "Каналів",
+			"BOT_PING": "Пінг",
 			"BOT_COMMANDS": "Команд",
 			"BOT_VERSION": "Версия",
 			"BOT_CREATED": "Создан",
