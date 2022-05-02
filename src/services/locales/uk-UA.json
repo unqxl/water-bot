@@ -9,7 +9,7 @@
 		"MUSIC_IS_RESUMED": "Пісня вже програється!",
 		"NOT_ENOUGH_MONEY": "У вас недостатньо грошей для %s!",
 		"USER_IS_BOT": "Цей користувач є ботом!",
-		"DATA_NOT_FOUND": "Інформація %s не знайдена!"
+		"DATA_NOT_FOUND": "Информация из %s не найдена!"
 	},
 	"EVENTS": {},
 	"PERMISSIONS": {
@@ -137,10 +137,32 @@
 			"CONTENT_RATING": "Контент",
 			"IMDB_RATING": "IMDB",
 			"LENGTH": "Тривалість"
+		},
+		"OSU": {
+			"STATISTICS": "Статистика",
+			"GRADES": "Ранги",
+			"OTHER_USERNAMES": "Другие Никнеймы",
+			"LEVEL": "Уровень",
+			"ACCURACY": "Аккуратность",
+			"PP": "PP",
+			"RANKED_SCORE": "Счёт",
+			"PLAYCOUNT": "Кол-во игр",
+			"RANK": "Ранг в мире",
+			"COUNTRY_RANK": "Ранг по стране",
+			"COUNTRY": "Страна",
+			"LAST_VISIT": "Последний визит",
+			"SSH": "SSH",
+			"SS": "SS",
+			"SH": "SH",
+			"S": "S",
+			"A": "A"
 		}
 	},
 	"ECONOMY_ACTIONS": {
 		"DEPOSIT": "депозит в банк",
 		"WITHDRAW": "виведення з банку"
+	},
+	"OTHER": {
+		"NONE": "Не указано"
 	}
 }
