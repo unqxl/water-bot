@@ -163,6 +163,26 @@
 			"SH": "SH",
 			"S": "S",
 			"A": "A"
+		},
+		"SERVERINFO": {
+			"INFORMATION": "Information",
+			"PRESENCES": "Presences",
+			"MEMBERS": "Members",
+			"CHANNELS": "Channels",
+			"ONLINE": "Online",
+			"IDLE": "Idle",
+			"DND": "DND",
+			"HUMANS": "Humans",
+			"BOTS": "Bots",
+			"TEXT": "Text Channels",
+			"VOICE": "Voice Channels",
+			"CATEGORIES": "Categories",
+			"NEWS": "News Channels",
+			"STAGE": "Stage Channels",
+			"GUILD_ID": "Guild ID",
+			"OWNER": "Owner",
+			"MEMBER_COUNT": "Member Count",
+			"CREATED_AT": "Created At"
 		}
 	},
 	"ECONOMY_ACTIONS": {

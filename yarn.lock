@@ -1079,10 +1079,10 @@ core-util-is@~1.0.0:
   resolved "https://registry.yarnpkg.com/core-util-is/-/core-util-is-1.0.3.tgz#a6042d3634c2b27e9328f837b965fac83808db85"
   integrity "sha1-pgQtNjTCsn6TKPg3uWX6yDgI24U= sha512-ZQBvi1DcpJ4GDqanjucZ2Hj3wEO5pZDS89BWbkcrvdxksJorwUDDZamX9ldFkp9aw2lmBDLgkObEA4DWNJ9FYQ=="
 
-cron@^1.8.3:
-  version "1.8.3"
-  resolved "https://registry.yarnpkg.com/cron/-/cron-1.8.3.tgz#2a61d7b15848716885834ec56ac072f4b9744ebd"
-  integrity sha512-JYR/QZFklJCIPndBLfd/2nU1nSlCMrUdtQ2mGLXSVM/qqqEK7DOrFR0gsEiyeqs0PdWrs0ve1ggH4V7XksDwXg==
+cron@^2.0.0:
+  version "2.0.0"
+  resolved "https://registry.yarnpkg.com/cron/-/cron-2.0.0.tgz#15c6bf37c1cebf6da1d7a688b9ba1c68338bfe6b"
+  integrity sha512-RPeRunBCFr/WEo7WLp8Jnm45F/ziGJiHVvVQEBSDTSGu6uHW49b2FOP2O14DcXlGJRLhwE7TIoDzHHK4KmlL6g==
   dependencies:
     luxon "^1.23.x"
 
@@ -1306,10 +1306,10 @@ discord.js@^13.1.0, discord.js@^13.6.0:
     node-fetch "^2.6.1"
     ws "^8.4.0"
 
-discord.js@^14.0.0-dev.1651147765-679dcda:
-  version "14.0.0-dev.1651147765-679dcda"
-  resolved "https://registry.yarnpkg.com/discord.js/-/discord.js-14.0.0-dev.1651147765-679dcda.tgz#4b9da52e0e431165f077f7b0924aebe50cbdfd58"
-  integrity sha512-hsD9/oS9nqMNO2JluSxeVQhFiQUpOZeX+Sr5L3Xa8Lth5P16dgWwm29hpPfWBzumU0QJcWKXhv1NtyJ7kXyAug==
+discord.js@^14.0.0-dev.1651493371-4ba0f56:
+  version "14.0.0-dev.1651493371-4ba0f56"
+  resolved "https://registry.yarnpkg.com/discord.js/-/discord.js-14.0.0-dev.1651493371-4ba0f56.tgz#008f585e6e52c383ab03bee9d7882a43d89a8cbd"
+  integrity sha512-BTrhiEdZ5tKKQqzsx3nDalRE5fM7X4XQu8WOJEX9ELNgvdBZ6YUBE+Yp1H0cDX3OyvKuqK8ELtjJo+O0GhG09Q==
   dependencies:
     "@discordjs/builders" "^0.14.0-dev"
     "@discordjs/collection" "^0.7.0-dev"
@@ -2574,10 +2574,10 @@ negotiator@0.6.3, negotiator@^0.6.3:
   resolved "https://registry.yarnpkg.com/negotiator/-/negotiator-0.6.3.tgz#58e323a72fedc0d6f9cd4d31fe49f51479590ccd"
   integrity "sha1-WOMjpy/twNb5zU0x/kn1FHlZDM0= sha512-+EUsqGPLsM+j/zdChZjsnX51g4XrHFOIXwfnCVPGlQk/k5giakcKsuxCObBRu6DSm9opw/O6slWbJdghQM4bBg=="
 
-nekos.life@^2.0.9:
-  version "2.0.9"
-  resolved "https://registry.yarnpkg.com/nekos.life/-/nekos.life-2.0.9.tgz#5c214fdb7897c58beed6e22895d1a39ffc648e7d"
-  integrity "sha1-XCFP23iXxYvu1uIoldGjn/xkjn0= sha512-O6dT0P9Oji4q0H8Que0GULlTtJCSa1u59evR2LUyrm+c1YjfVP69wkB3ZkjwLDHI2Tqq0sTJ6NOHQ1qn0ZlLUw=="
+nekos.life@^3.0.0:
+  version "3.0.0"
+  resolved "https://registry.yarnpkg.com/nekos.life/-/nekos.life-3.0.0.tgz#91d944daad8dcbdff493cf430537639fa963b60e"
+  integrity sha512-7LbvSqLtfK4XRA91nJaGOWthrNADmG7Vx9d54TC77Hx5qFvRCssFUaHraI6bZGjVENBCUaF7CreisoFX+8mnKQ==
 
 node-abi@^3.3.0:
   version "3.15.0"
@@ -3820,10 +3820,10 @@ typescript@^4.2.3, typescript@^4.6.3:
   resolved "https://registry.yarnpkg.com/typescript/-/typescript-4.6.3.tgz#eefeafa6afdd31d725584c67a0eaba80f6fc6c6c"
   integrity "sha1-7v6vpq/dMdclWExnoOq6gPb8bGw= sha512-yNIatDa5iaofVozS/uQJEl3JRWLKKGJKh6Yaiv0GLGSuhpFJe7P3SbHZ8/yjAHRQwKRoA6YZqlfjXWmVzoVSMw=="
 
-undici@5.1.0:
-  version "5.1.0"
-  resolved "https://registry.yarnpkg.com/undici/-/undici-5.1.0.tgz#923833e5b56912848ddc5c87dad3fc8c4d05127b"
-  integrity sha512-S+Vy6GGLHmW0uNLyCOpma6qCEoX6Pw/Mga34UFeqNaMnfDMgeJhPdHwb9FDPC/gWnNhLxhE9Lis6yBDHtcJCqw==
+undici@5.1.1:
+  version "5.1.1"
+  resolved "https://registry.yarnpkg.com/undici/-/undici-5.1.1.tgz#356427b0d1f032ca4cf85537b1e1694a52090438"
+  integrity sha512-CmK9JzLSMGx+2msOao8LhkKn3J7eKo2M50v0KZQ2XbiHcGqLS1HiIj01ceIm3jbUYlspw/FTSb6nMdSNyvVyaQ==
 
 undici@^4.16.0:
   version "4.16.0"

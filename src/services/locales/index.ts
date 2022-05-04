@@ -163,6 +163,36 @@ export interface LocaleTemplate {
 			S: string;
 			A: string;
 		};
+
+		SERVERINFO: {
+			// Field Names
+			INFORMATION: string;
+			PRESENCES: string;
+			MEMBERS: string;
+			CHANNELS: string;
+
+			// Presences
+			ONLINE: string;
+			IDLE: string;
+			DND: string;
+
+			// Members Types
+			HUMANS: string;
+			BOTS: string;
+
+			// Channel Types
+			TEXT: string;
+			VOICE: string;
+			CATEGORIES: string;
+			NEWS: string;
+			STAGE: string;
+
+			// Other
+			GUILD_ID: string;
+			OWNER: string;
+			MEMBER_COUNT: string;
+			CREATED_AT: string;
+		};
 	};
 
 	// Other
