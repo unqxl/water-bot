@@ -39,7 +39,7 @@
 		"imdb-api": "^4.4.1",
 		"module-alias": "^2.2.2",
 		"mysql": "^2.18.1",
-		"nekos.life": "^2.0.9",
+		"nekos.life": "^3.0.0",
 		"osu-api-extended": "^2.1.5",
 		"random": "^3.0.6",
 		"reflect-metadata": "^0.1.13",
