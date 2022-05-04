@@ -156,6 +156,26 @@
 			"SH": "SH",
 			"S": "S",
 			"A": "A"
+		},
+		"SERVERINFO": {
+			"INFORMATION": "Информация",
+			"PRESENCES": "Статусы",
+			"MEMBERS": "Участники",
+			"CHANNELS": "Каналы",
+			"ONLINE": "Онлайн",
+			"IDLE": "Отошли",
+			"DND": "Не беспокоить",
+			"HUMANS": "Люди",
+			"BOTS": "Боты",
+			"TEXT": "Текст. Каналы",
+			"VOICE": "Голос. Каналы",
+			"CATEGORIES": "Категории",
+			"NEWS": "Новостные Каналы",
+			"STAGE": "Трибун",
+			"GUILD_ID": "ID Сервера",
+			"OWNER": "Владелец",
+			"MEMBER_COUNT": "Участников",
+			"CREATED_AT": "Дата создания"
 		}
 	},
 	"ECONOMY_ACTIONS": {
