@@ -2696,10 +2696,10 @@ negotiator@0.6.3, negotiator@^0.6.3:
   resolved "https://registry.yarnpkg.com/negotiator/-/negotiator-0.6.3.tgz#58e323a72fedc0d6f9cd4d31fe49f51479590ccd"
   integrity sha512-+EUsqGPLsM+j/zdChZjsnX51g4XrHFOIXwfnCVPGlQk/k5giakcKsuxCObBRu6DSm9opw/O6slWbJdghQM4bBg==
 
-nekos.life@^2.0.9:
-  version "2.0.9"
-  resolved "https://registry.yarnpkg.com/nekos.life/-/nekos.life-2.0.9.tgz#5c214fdb7897c58beed6e22895d1a39ffc648e7d"
-  integrity sha512-O6dT0P9Oji4q0H8Que0GULlTtJCSa1u59evR2LUyrm+c1YjfVP69wkB3ZkjwLDHI2Tqq0sTJ6NOHQ1qn0ZlLUw==
+nekos.life@^3.0.0:
+  version "3.0.0"
+  resolved "https://registry.yarnpkg.com/nekos.life/-/nekos.life-3.0.0.tgz#91d944daad8dcbdff493cf430537639fa963b60e"
+  integrity sha512-7LbvSqLtfK4XRA91nJaGOWthrNADmG7Vx9d54TC77Hx5qFvRCssFUaHraI6bZGjVENBCUaF7CreisoFX+8mnKQ==
 
 node-abi@^3.3.0:
   version "3.8.0"
@@ -2797,10 +2797,10 @@ npm-bundled@^1.1.1, npm-bundled@^1.1.2:
   dependencies:
     npm-normalize-package-bin "^1.0.1"
 
-npm-check-updates@^12.5.10:
-  version "12.5.10"
-  resolved "https://registry.yarnpkg.com/npm-check-updates/-/npm-check-updates-12.5.10.tgz#779d201c17c4c0e690cc4fb7eceeed1d00f3f878"
-  integrity sha512-GKBmgC6ZDZwshsOSuse+JYDFVQcaKj9NWNWXW9oWX0TdrKJx26/iR6d4t6LG+iNm5jX+voBoGcEIaGF8CRzWpw==
+npm-check-updates@^12.5.11:
+  version "12.5.11"
+  resolved "https://registry.yarnpkg.com/npm-check-updates/-/npm-check-updates-12.5.11.tgz#c594902b21af8c251a5ebf12686143b0d2f06356"
+  integrity sha512-uS3yYYK/F1VvZlJRymuCkq+MY2R7v/WlORo5WPUTYx+1OwkqeDMC/CEEGfCN7ATwT2M+JxVVKk9Gq/TGiZjJOw==
   dependencies:
     chalk "^4.1.2"
     cint "^8.2.1"
@@ -3984,10 +3984,10 @@ undici@^4.14.1:
   resolved "https://registry.yarnpkg.com/undici/-/undici-4.16.0.tgz#469bb87b3b918818d3d7843d91a1d08da357d5ff"
   integrity sha512-tkZSECUYi+/T1i4u+4+lwZmQgLXd4BLGlrc7KZPcLIW7Jpq99+Xpc30ONv7nS6F5UNOxp/HBZSSL9MafUrvJbw==
 
-undici@^5.0.0:
-  version "5.0.0"
-  resolved "https://registry.yarnpkg.com/undici/-/undici-5.0.0.tgz#3c1e08c7f0df90c485d5d8dbb0517e11e34f2090"
-  integrity sha512-VhUpiZ3No1DOPPQVQnsDZyfcbTTcHdcgWej1PdFnSvOeJmOVDgiOHkunJmBLfmjt4CqgPQddPVjSWW0dsTs5Yg==
+undici@^5.0.0, undici@^5.1.1:
+  version "5.1.1"
+  resolved "https://registry.yarnpkg.com/undici/-/undici-5.1.1.tgz#356427b0d1f032ca4cf85537b1e1694a52090438"
+  integrity sha512-CmK9JzLSMGx+2msOao8LhkKn3J7eKo2M50v0KZQ2XbiHcGqLS1HiIj01ceIm3jbUYlspw/FTSb6nMdSNyvVyaQ==
 
 unique-filename@^1.1.1:
   version "1.1.1"
