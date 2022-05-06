@@ -2,37 +2,45 @@ import { GuildConfiguration } from "../typeorm/entities/GuildConfiguration";
 import { GuildConfig } from "../types/types";
 import { Repository } from "typeorm";
 import Bot from "./Bot";
+import { getRepository } from "../services/Repository";
 
 export default class DBManager {
 	public client: Bot;
 
-	private guildConfigRepository: Repository<GuildConfiguration>;
+	private guildConfigRepository: Promise<Repository<GuildConfiguration>>;
 
 	constructor(client: Bot) {
 		this.client = client;
-		this.guildConfigRepository =
-			this.client.datasource.getRepository(GuildConfiguration);
+		this.guildConfigRepository = getRepository();
 	}
 
 	async getGuild(guild_id: string): Promise<GuildConfiguration> {
-		const config = await this.guildConfigRepository.findOne({
+		const config = await (
+			await this.guildConfigRepository
+		).findOne({
 			where: { guild_id },
 		});
 		if (!config) return await this.createGuild(guild_id);
 
-		return await this.guildConfigRepository.findOne({
+		return await (
+			await this.guildConfigRepository
+		).findOne({
 			where: { guild_id },
 		});
 	}
 
 	async createGuild(guild_id: string): Promise<GuildConfiguration> {
-		const config = await this.guildConfigRepository.findOne({
+		const config = await (
+			await this.guildConfigRepository
+		).findOne({
 			where: { guild_id },
 		});
 		if (config) return config;
 
-		const newConfig = await this.guildConfigRepository.create({ guild_id });
-		this.guildConfigRepository.save(newConfig);
+		const newConfig = await (
+			await this.guildConfigRepository
+		).create({ guild_id });
+		(await this.guildConfigRepository).save(newConfig);
 
 		this.client.configs.set(guild_id, newConfig);
 		this.client.custom_commands.set(guild_id, []);
@@ -46,12 +54,14 @@ export default class DBManager {
 	}
 
 	async deleteGuild(guild_id: string): Promise<boolean> {
-		const config = await this.guildConfigRepository.findOne({
+		const config = await (
+			await this.guildConfigRepository
+		).findOne({
 			where: { guild_id },
 		});
 		if (!config) return false;
 
-		this.guildConfigRepository.delete({ guild_id });
+		(await this.guildConfigRepository).delete({ guild_id });
 		this.client.configs.delete(guild_id);
 		this.client.custom_commands.delete(guild_id);
 		this.client.configurations.delete(guild_id);
@@ -63,7 +73,9 @@ export default class DBManager {
 		guild_id: string,
 		key: K
 	): Promise<GuildConfiguration[K]> {
-		let config = await this.guildConfigRepository.findOne({
+		let config = await (
+			await this.guildConfigRepository
+		).findOne({
 			where: { guild_id },
 		});
 		if (!config) config = await this.createGuild(guild_id);
@@ -72,7 +84,9 @@ export default class DBManager {
 	}
 
 	async getSettings(guild_id: string): Promise<GuildConfiguration> {
-		let config = await this.guildConfigRepository.findOne({
+		let config = await (
+			await this.guildConfigRepository
+		).findOne({
 			where: { guild_id },
 		});
 		if (!config) config = await this.createGuild(guild_id);
@@ -85,14 +99,16 @@ export default class DBManager {
 		key: K,
 		value: GuildConfiguration[K]
 	): Promise<boolean> {
-		let config = await this.guildConfigRepository.findOne({
+		let config = await (
+			await this.guildConfigRepository
+		).findOne({
 			where: { guild_id },
 		});
 		if (!config) config = await this.createGuild(guild_id);
 
 		config[key] = value;
 
-		const newConfig = await this.guildConfigRepository.save(config);
+		const newConfig = await (await this.guildConfigRepository).save(config);
 		this.client.configs.set(guild_id, newConfig);
 
 		return true;

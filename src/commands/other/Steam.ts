@@ -3,6 +3,8 @@ import {
 	ChatInputCommandInteraction,
 	EmbedBuilder,
 } from "discord.js";
+import { LanguageService } from "../../services/Language";
+import { GuildService } from "../../services/Guild";
 import { SubCommand } from "../../types/Command/SubCommand";
 import { bold } from "@discordjs/builders";
 import TurndownService from "turndown";
@@ -27,17 +29,20 @@ export default class SteamCommand extends SubCommand {
 
 	async run(
 		command: ChatInputCommandInteraction<"cached">,
-		lang: typeof import("@locales/English").default
+		lang: LanguageService
 	) {
 		command.deferReply();
 
-		const locale =
-			(await this.client.database.getSetting(
-				command.guildId,
-				"locale"
-			)) == "en-US"
+		const service = new GuildService();
+		var locale = await service.getSetting(command.guildId, "locale");
+		locale =
+			locale === "en-US"
 				? "en"
-				: "ru";
+				: locale === "ru-RU"
+				? "ru"
+				: locale === "uk-UA"
+				? "uk"
+				: locale;
 
 		const query = command.options.getString("game", true);
 		const { success, data } = await this.client.apis.steam.getAppInfo(
@@ -46,9 +51,9 @@ export default class SteamCommand extends SubCommand {
 		);
 
 		if (!success) {
-			const text = lang.ERRORS.NOT_FOUND("Steam API");
 			const author = this.client.functions.author(command.member);
 			const color = this.client.functions.color("Red");
+			const text = await lang.get("ERRORS:DATA_NOT_FOUND", "Steam API");
 
 			const embed = new EmbedBuilder();
 			embed.setColor(color);
@@ -61,7 +66,11 @@ export default class SteamCommand extends SubCommand {
 			});
 		}
 
-		const pack = lang.OTHER.STEAM;
+		const {
+			OTHER_COMMANDS: { STEAM },
+			OTHER,
+		} = await lang.all();
+
 		const author = this.client.functions.author(command.member);
 		const color = this.client.functions.color("Blurple");
 		const app_url = this.client.apis.steam.getStoreAppLink(
@@ -69,29 +78,23 @@ export default class SteamCommand extends SubCommand {
 		);
 
 		const support_windows =
-			data.platforms.windows === true
-				? bold(lang.GLOBAL.YES)
-				: bold(lang.GLOBAL.NO);
+			data.platforms.windows === true ? bold(OTHER.YES) : bold(OTHER.NO);
 
 		const support_mac =
-			data.platforms.mac === true
-				? bold(lang.GLOBAL.YES)
-				: bold(lang.GLOBAL.NO);
+			data.platforms.mac === true ? bold(OTHER.YES) : bold(OTHER.NO);
 
 		const support_linux =
-			data.platforms.linux === true
-				? bold(lang.GLOBAL.YES)
-				: bold(lang.GLOBAL.NO);
+			data.platforms.linux === true ? bold(OTHER.YES) : bold(OTHER.NO);
 
 		const coming_soon =
 			data.release_date.coming_soon === true
-				? bold(lang.GLOBAL.YES)
-				: bold(lang.GLOBAL.NO);
+				? bold(OTHER.YES)
+				: bold(OTHER.NO);
 
 		const notes =
 			typeof data.content_descriptors.notes === "string"
 				? bold(data.content_descriptors.notes)
-				: bold(lang.GLOBAL.NONE);
+				: bold(OTHER.NONE);
 
 		const turndown = new TurndownService();
 		turndown.rules.add("img", {
@@ -109,42 +112,42 @@ export default class SteamCommand extends SubCommand {
 
 		const about = turndown.turndown(data.about_the_game);
 		const res = [
-			`› ${bold(pack.FIELDS.ABOUT)}:`,
+			`› ${bold(STEAM.ABOUT)}:`,
 			`${about}`,
 			"",
-			`› ${bold(pack.FIELDS.LANGUAGES)}:`,
+			`› ${bold(STEAM.LANGUAGES)}:`,
 			`${bold(turndown.turndown(data.supported_languages))}`,
 			"",
-			`› ${bold(pack.FIELDS.PLATFORMS)}:`,
+			`› ${bold(STEAM.PLATFORMS)}:`,
 			`${bold(data.developers.join(", "))}`,
 			"",
-			`› ${bold(pack.FIELDS.PLATFORMS)}:`,
-			`» ${bold(pack.PLATFORMS.WINDOWS)}: ${support_windows}`,
-			`» ${bold(pack.PLATFORMS.MACOS)}: ${support_mac}`,
-			`» ${bold(pack.PLATFORMS.LINUX)}: ${support_linux}`,
+			`› ${bold(STEAM.PLATFORMS)}:`,
+			`» ${bold(STEAM.WINDOWS)}: ${support_windows}`,
+			`» ${bold(STEAM.MAC)}: ${support_mac}`,
+			`» ${bold(STEAM.LINUX)}: ${support_linux}`,
 			"",
-			`› ${bold(pack.FIELDS.CATEGORIES)}:`,
+			`› ${bold(STEAM.CATEGORIES)}:`,
 			`${bold(data.categories.map((c) => c.description).join(", "))}`,
 			"",
-			`› ${bold(pack.FIELDS.GENRES)}:`,
+			`› ${bold(STEAM.GENRES)}:`,
 			`${bold(data.genres.map((c) => c.description).join(", "))}`,
 			"",
-			`› ${bold(pack.FIELDS.RECOMENDATIONS)}:`,
+			`› ${bold(STEAM.RECOMMENDATIONS)}:`,
 			`${bold(data.recommendations.total.toLocaleString(locale))}`,
 			"",
-			`› ${bold(pack.FIELDS.RELEASE_DATE)}:`,
-			`» ${bold(pack.COMING_SOON)}: ${coming_soon}`,
-			`» ${bold(pack.DATE)}: ${bold(data.release_date.date)}`,
+			`› ${bold(STEAM.RELEASE_DATE)}:`,
+			`» ${bold(STEAM.COMING_SOON)}: ${coming_soon}`,
+			`» ${bold(STEAM.DATE)}: ${bold(data.release_date.date)}`,
 			"",
-			`› ${bold(pack.FIELDS.PRICE)}:`,
-			`» ${bold(pack.PRICE)}: ${bold(
+			`› ${bold(STEAM.PRICE)}:`,
+			`» ${bold(STEAM.PRICE)}: ${bold(
 				data.price_overview.final_formatted
 			)}`,
-			`» ${bold(pack.DISCOUNT)}: ${bold(
+			`» ${bold(STEAM.DISCOUNT)}: ${bold(
 				data.price_overview.discount_percent.toString() + "%"
 			)}`,
 			"",
-			`› ${bold(pack.FIELDS.NOTES)}:`,
+			`› ${bold(STEAM.NOTES)}:`,
 			`${notes}`,
 		].join("\n");
 

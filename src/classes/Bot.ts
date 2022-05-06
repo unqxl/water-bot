@@ -55,9 +55,7 @@ import API from "./API";
 
 export = class Bot extends Client {
 	//? [Collections]
-	public commands: Collection<string, Command> = new Collection();
-	public slashCommands: Collection<string, SlashCommand | SubCommand> =
-		new Collection();
+	public commands: Collection<string, SlashCommand | SubCommand> = new Collection();
 	public aliases: Collection<string, string> = new Collection();
 	public events: Collection<string, Event> = new Collection();
 	public _configs: Collection<string, GuildConfiguration> = new Collection();
@@ -243,7 +241,6 @@ export = class Bot extends Client {
 		await distubeEvents(this);
 		await logs(this);
 		await this.handlers.loadEvents();
-		await this.handlers.loadCommands();
 		await this.functions.updateToken();
 
 		new TopGG(this);

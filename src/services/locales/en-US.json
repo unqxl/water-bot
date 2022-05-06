@@ -183,6 +183,47 @@
 			"OWNER": "Owner",
 			"MEMBER_COUNT": "Member Count",
 			"CREATED_AT": "Created At"
+		},
+		"STEAM": {
+			"ABOUT": "About the Game",
+			"LANGUAGES": "Supported Languages",
+			"PLATFORMS": "Supported Platforms",
+			"CATEGORIES": "Categories",
+			"GENRES": "Genres",
+			"RECOMMENDATIONS": "Recommendations",
+			"RELEASE_DATE": "Release Date",
+			"FIELD_PRICE": "Game Price",
+			"NOTES": "Notes",
+			"WINDOWS": "Windows",
+			"MAC": "Mac",
+			"LINUX": "Linux",
+			"COMING_SOON": "Coming Soon",
+			"DATE": "Date",
+			"PRICE": "Price",
+			"DISCOUNT": "Discount"
+		},
+		"USERINFO": {
+			"MAIN": "Main",
+			"OTHER": "Other",
+			"ONLINE": "Online",
+			"IDLE": "Idle",
+			"DND": "DND",
+			"OFFLINE": "Offline",
+			"WEB": "Web",
+			"MOBILE": "Mobile",
+			"DESKTOP": "Desktop",
+			"USERNAME": "Username",
+			"TAG": "Tag",
+			"AVATAR": "Avatar",
+			"ONLINE_USING": "Online Using",
+			"PRESENCE": "Presence",
+			"PLAYING": "Playing",
+			"NOT_PLAYING": "Not Playing",
+			"REG_DATE": "Registered At",
+			"JOIN_DATE": "Joined At",
+			"BOT": "Bot",
+			"IN_VOICE": "In Voice",
+			"BOOSTING": "Boosting"
 		}
 	},
 	"ECONOMY_ACTIONS": {
@@ -190,6 +231,9 @@
 		"WITHDRAW": "withdraw frow the bank"
 	},
 	"OTHER": {
-		"NONE": "None"
+		"NONE": "None",
+		"NOTHING": "Nothing",
+		"YES": "Yes",
+		"NO": "No"
 	}
 }

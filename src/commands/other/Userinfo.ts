@@ -2,9 +2,10 @@ import {
 	ApplicationCommandOptionType,
 	ChatInputCommandInteraction,
 	EmbedBuilder,
-	type PresenceStatus,
 } from "discord.js";
 import { bold, hyperlink, time } from "@discordjs/builders";
+import { LanguageService } from "../../services/Language";
+import { GuildService } from "../../services/Guild";
 import { SubCommand } from "../../types/Command/SubCommand";
 import Bot from "../../classes/Bot";
 
@@ -15,6 +16,7 @@ import relativeTime from "dayjs/plugin/relativeTime";
 dayjs.extend(relativeTime);
 import("dayjs/locale/en");
 import("dayjs/locale/ru");
+import("dayjs/locale/uk");
 
 export default class UserInfoCommand extends SubCommand {
 	constructor(client: Bot) {
@@ -35,35 +37,39 @@ export default class UserInfoCommand extends SubCommand {
 
 	async run(
 		command: ChatInputCommandInteraction<"cached">,
-		lang: typeof import("@locales/English").default
+		lang: LanguageService
 	) {
-		const locale =
-			(await this.client.database.getSetting(
-				command.guildId,
-				"locale"
-			)) == "en-US"
-				? "en"
-				: "ru";
-		locale === "en" ? dayjs.locale("en") : dayjs.locale("ru");
+		const service = new GuildService();
+		const locale = await service.getSetting(command.guildId, "locale");
 
-		const { CLIENT_STATUSES, OTHER, FIELDS, TEXTS } = lang.OTHER.USER_INFO;
-		const { YES, NO, STATUSES } = lang.GLOBAL;
+		locale === "en-US"
+			? dayjs.locale("en")
+			: locale === "ru-RU"
+			? dayjs.locale("ru")
+			: dayjs.locale("uk");
+
+		const {
+			OTHER_COMMANDS: { USERINFO },
+			OTHER,
+		} = await lang.all();
+
 		const member = command.options.getMember("member") || command.member;
-
 		const gif = member.displayAvatarURL({ extension: "gif", size: 2048 });
 		const png = member.displayAvatarURL({ extension: "png", size: 2048 });
 		const jpg = member.displayAvatarURL({ extension: "jpg", size: 2048 });
-		const avatars = `${hyperlink("GIF", gif)} | ${hyperlink(
-			"PNG",
-			png
-		)} | ${hyperlink("JPG", jpg)}`;
+		const avatars = [
+			hyperlink("GIF", gif),
+			hyperlink("PNG", png),
+			hyperlink("JPG", jpg),
+		].join(" | ");
 
-		const reg_date_unix = Math.ceil(member.user.createdTimestamp / 1000);
-		const reg_date = `${time(reg_date_unix)} (${time(reg_date_unix, "R")})`;
+		const reg_date = `${time(member.user.createdAt)} (${time(
+			member.user.createdAt,
+			"R"
+		)})`;
 
-		const join_date_unix = Math.ceil(member.joinedTimestamp / 1000);
-		const join_date = `${time(join_date_unix)} (${time(
-			join_date_unix,
+		const join_date = `${time(member.joinedAt)} (${time(
+			member.joinedAt,
 			"R"
 		)})`;
 
@@ -77,23 +83,23 @@ export default class UserInfoCommand extends SubCommand {
 
 			status: () => {
 				if (!member.presence || !member.presence?.status) {
-					return `⚫ ${STATUSES.OFFLINE}`;
+					return `⚫ ${USERINFO.OFFLINE}`;
 				} else if (member.presence.status === "online") {
-					return `🟢 ${STATUSES.ONLINE}`;
+					return `🟢 ${USERINFO.ONLINE}`;
 				} else if (member.presence.status === "idle") {
-					return `🟡 ${STATUSES.IDLE}`;
+					return `🟡 ${USERINFO.IDLE}`;
 				} else if (member.presence.status === "dnd") {
-					return `🔴 ${STATUSES.DND}`;
+					return `🔴 ${USERINFO.DND}`;
 				} else if (member.presence.status === "offline") {
-					return `⚫ ${STATUSES.OFFLINE}`;
+					return `⚫ ${USERINFO.OFFLINE}`;
 				} else if (member.presence.status === "invisible") {
-					return `⚫ ${STATUSES.OFFLINE}`;
+					return `⚫ ${USERINFO.OFFLINE}`;
 				}
 			},
 
 			game: () => {
 				if (!member.presence) {
-					return OTHER.NOT_PLAYING;
+					return USERINFO.NOT_PLAYING;
 				}
 
 				if (
@@ -108,7 +114,7 @@ export default class UserInfoCommand extends SubCommand {
 
 					return activities;
 				} else {
-					return OTHER.NOT_PLAYING;
+					return USERINFO.NOT_PLAYING;
 				}
 			},
 
@@ -118,16 +124,16 @@ export default class UserInfoCommand extends SubCommand {
 				var platforms = [];
 				const { web, mobile, desktop } = member.presence.clientStatus;
 
-				if (web) platforms.push(CLIENT_STATUSES.WEB);
-				if (mobile) platforms.push(CLIENT_STATUSES.MOBILE);
-				if (desktop) platforms.push(CLIENT_STATUSES.DESKTOP);
+				if (web) platforms.push(USERINFO.WEB);
+				if (mobile) platforms.push(USERINFO.MOBILE);
+				if (desktop) platforms.push(USERINFO.DESKTOP);
 
 				return platforms.join(", ");
 			},
 
-			boosting: member.premiumSince ? YES : NO,
-			in_voice: member.voice.channel ? YES : NO,
-			is_bot: member.user.bot ? YES : NO,
+			boosting: member.premiumSince ? OTHER.YES : OTHER.NO,
+			in_voice: member.voice.channel ? OTHER.YES : OTHER.NO,
+			is_bot: member.user.bot ? OTHER.YES : OTHER.NO,
 		};
 
 		const author = this.client.functions.author(member);
@@ -138,22 +144,22 @@ export default class UserInfoCommand extends SubCommand {
 		const status = user_info.status();
 
 		const res = [
-			`› ${bold(FIELDS.MAIN)}:`,
-			`» ${bold(TEXTS.MAIN.USERNAME)}: ${bold(user_info.name)}`,
-			`» ${bold(TEXTS.MAIN.TAG)}: ${bold(user_info.tag)}`,
-			`» ${bold(TEXTS.MAIN.AVATAR)}: ${bold(user_info.avatars)}`,
+			`› ${bold(USERINFO.MAIN)}:`,
+			`» ${bold(USERINFO.USERNAME)}: ${bold(user_info.name)}`,
+			`» ${bold(USERINFO.TAG)}: ${bold(user_info.tag)}`,
+			`» ${bold(USERINFO.AVATAR)}: ${bold(user_info.avatars)}`,
 			"",
-			`› ${bold(FIELDS.OTHER)}:`,
-			`» ${bold(TEXTS.OTHER.ONLINE_USING)}: ${bold(online_with)}`,
-			`» ${bold(TEXTS.OTHER.PRESENCE)}: ${bold(status)}`,
-			`» ${bold(TEXTS.OTHER.PLAYING)}: ${bold(playing)}`,
+			`› ${bold(USERINFO.OTHER)}:`,
+			`» ${bold(USERINFO.ONLINE_USING)}: ${bold(online_with)}`,
+			`» ${bold(USERINFO.PRESENCE)}: ${bold(status)}`,
+			`» ${bold(USERINFO.PLAYING)}: ${bold(playing)}`,
 			"",
-			`» ${bold(TEXTS.OTHER.REG_DATE)}: ${bold(user_info.reg_date)}`,
-			`» ${bold(TEXTS.OTHER.JOIN_DATE)}: ${bold(user_info.join_date)}`,
+			`» ${bold(USERINFO.REG_DATE)}: ${bold(user_info.reg_date)}`,
+			`» ${bold(USERINFO.JOIN_DATE)}: ${bold(user_info.join_date)}`,
 			"",
-			`» ${bold(TEXTS.OTHER.BOT)}: ${bold(user_info.is_bot)}`,
-			`» ${bold(TEXTS.OTHER.IN_VOICE)}: ${bold(user_info.in_voice)}`,
-			`» ${bold(TEXTS.OTHER.BOOSTING)}: ${bold(user_info.boosting)}`,
+			`» ${bold(USERINFO.BOT)}: ${bold(user_info.is_bot)}`,
+			`» ${bold(USERINFO.IN_VOICE)}: ${bold(user_info.in_voice)}`,
+			`» ${bold(USERINFO.BOOSTING)}: ${bold(user_info.boosting)}`,
 		].join("\n");
 
 		const embed = new EmbedBuilder();

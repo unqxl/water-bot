@@ -25,9 +25,7 @@ export default class InteractionCreateEvent extends Event {
 			.fetch(interaction.commandId)
 			.catch(() => null);
 
-		const command = client.slashCommands.get(
-			this.getCommandName(interaction)
-		);
+		const command = client.commands.get(this.getCommandName(interaction));
 		if (!command) return;
 
 		const botPerms = command.options.botPermissions ?? [];

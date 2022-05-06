@@ -17,10 +17,9 @@ import {
 } from "discord.js";
 import { SlashCommand } from "../types/Command/SlashCommand";
 import { SubCommand } from "../types/Command/SubCommand";
-import { Command } from "../types/Command/Command";
 import { resolve } from "path";
 
-type Structures = Command | SlashCommand | SubCommand;
+type Structures = SlashCommand | SubCommand;
 
 export = class Handlers {
 	public client: Bot;
@@ -55,7 +54,7 @@ export = class Handlers {
 	}
 
 	async loadCommands() {
-		const files = glob_cmds.sync("./slash-commands/**/*.{js,ts}");
+		const files = glob_cmds.sync("./commands/**/*.{js,ts}");
 		const subCommands: Record<string, SubCommand[]> = {};
 		const commandGroups: Record<string, [string, SubCommand[]]> = {};
 
@@ -100,7 +99,7 @@ export = class Handlers {
 				await this.createSlashCommand(data);
 			}
 
-			this.client.slashCommands.set(commandName, command);
+			this.client.commands.set(commandName, command);
 		}
 
 		for (const topLevelName in subCommands) {
@@ -175,8 +174,8 @@ export = class Handlers {
 	}
 
 	getType(item: Structures) {
-		if (item instanceof Command) {
-			return "COMMAND";
+		if (item instanceof SlashCommand) {
+			return "SLASH_COMMAND";
 		}
 	}
 };

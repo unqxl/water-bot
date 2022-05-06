@@ -193,6 +193,59 @@ export interface LocaleTemplate {
 			MEMBER_COUNT: string;
 			CREATED_AT: string;
 		};
+
+		STEAM: {
+			// Fields
+			ABOUT: string;
+			LANGUAGES: string;
+			PLATFORMS: string;
+			CATEGORIES: string;
+			GENRES: string;
+			RECOMMENDATIONS: string;
+			RELEASE_DATE: string;
+			FIELD_PRICE: string;
+			NOTES: string;
+
+			// Platforms
+			WINDOWS: string;
+			MAC: string;
+			LINUX: string;
+
+			// Other
+			COMING_SOON: string;
+			DATE: string;
+			PRICE: string;
+			DISCOUNT: string;
+		};
+
+		USERINFO: {
+			// Fields
+			MAIN: string;
+			OTHER: string;
+
+			// Statuses
+			ONLINE: string;
+			IDLE: string;
+			DND: string;
+			OFFLINE: string;
+			WEB: string;
+			MOBILE: string;
+			DESKTOP: string;
+
+			// Other
+			USERNAME: string;
+			TAG: string;
+			AVATAR: string;
+			ONLINE_USING: string;
+			PRESENCE: string;
+			PLAYING: string;
+			NOT_PLAYING: string;
+			REG_DATE: string;
+			JOIN_DATE: string;
+			BOT: string;
+			IN_VOICE: string;
+			BOOSTING: string;
+		};
 	};
 
 	// Other
@@ -203,6 +256,9 @@ export interface LocaleTemplate {
 
 	OTHER: {
 		NONE: string;
+		NOTHING: string;
+		YES: string;
+		NO: string;
 	};
 }
 

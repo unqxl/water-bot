@@ -13,6 +13,7 @@ export default class ReadyEvent extends Event {
 		if (!client.application.owner) await client.application.fetch();
 
 		await client.web.start();
+		await client.handlers.loadCommands();
 		await checkUp(client);
 
 		console.log(`${client.user.username} logged in!`);

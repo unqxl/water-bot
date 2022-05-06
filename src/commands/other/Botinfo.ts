@@ -45,7 +45,7 @@ export default class BotInfoCommand extends SubCommand {
 			USERS: sp(this.client.users.cache.size),
 			CHANNELS: sp(this.client.channels.cache.size),
 			PING: `${this.client.ws.ping}ms`,
-			COMMANDS: sp(this.client.slashCommands.size),
+			COMMANDS: sp(this.client.commands.size),
 			VERSION: this.client.version,
 			CREATED: time(createdTimestamp, "R"),
 			STARTED: time(readyTimestamp, "R"),
