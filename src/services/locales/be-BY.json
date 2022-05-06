@@ -163,7 +163,7 @@
 			"MEMBERS": "Участники",
 			"CHANNELS": "Каналы",
 			"ONLINE": "Онлайн",
-			"IDLE": "Отошли",
+			"IDLE": "Нет на месте",
 			"DND": "Не беспокоить",
 			"HUMANS": "Люди",
 			"BOTS": "Боты",
@@ -176,6 +176,47 @@
 			"OWNER": "Владелец",
 			"MEMBER_COUNT": "Участников",
 			"CREATED_AT": "Дата создания"
+		},
+		"STEAM": {
+			"ABOUT": "Об игре",
+			"LANGUAGES": "Поддерживаемые языки",
+			"PLATFORMS": "Поддерживаемые платформы",
+			"CATEGORIES": "Категории",
+			"GENRES": "Жанры",
+			"RECOMMENDATIONS": "Рекомендации",
+			"RELEASE_DATE": "Дата выхода",
+			"FIELD_PRICE": "Стоимость игры",
+			"NOTES": "Примечания",
+			"WINDOWS": "Windows",
+			"MAC": "Mac",
+			"LINUX": "Linux",
+			"COMING_SOON": "Скоро выйдет",
+			"DATE": "Дата",
+			"PRICE": "Цена",
+			"DISCOUNT": "Скидка"
+		},
+		"USERINFO": {
+			"MAIN": "Главное",
+			"OTHER": "Другое",
+			"ONLINE": "Онлайн",
+			"IDLE": "Нет на месте",
+			"DND": "Не беспокоить",
+			"OFFLINE": "Офлайн",
+			"WEB": "Браузер",
+			"MOBILE": "Телефон",
+			"DESKTOP": "ПК",
+			"USERNAME": "Имя пользователя",
+			"TAG": "Тег",
+			"AVATAR": "Аватар",
+			"ONLINE_USING": "Онлайн через",
+			"PRESENCE": "Статус",
+			"PLAYING": "Играет в",
+			"NOT_PLAYING": "Не играет",
+			"REG_DATE": "Дата регистрации",
+			"JOIN_DATE": "Дата вступления",
+			"BOT": "Бот",
+			"IN_VOICE": "В голос. канале",
+			"BOOSTING": "Бустит"
 		}
 	},
 	"ECONOMY_ACTIONS": {
@@ -183,6 +224,9 @@
 		"WITHDRAW": "вывода из банка"
 	},
 	"OTHER": {
-		"NONE": "Не указано"
+		"NONE": "Не указано",
+		"NOTHING": "Ничего",
+		"YES": "Да",
+		"NO": "Нет"
 	}
 }
