@@ -1,5 +1,3 @@
-import "reflect-metadata";
-
 import {
 	Client,
 	Collection,
@@ -8,9 +6,7 @@ import {
 	ActivityType,
 	Util,
 } from "discord.js";
-import { EnmapGiveaways } from "./EnmapGiveaways";
 import { Moderation } from "discord-moderation";
-import { Leveling } from "./Leveling";
 import { Client as dagpiClient } from "dagpijs";
 import { DiscordTogether } from "discord-together";
 import { Client as IMDBClient } from "imdb-api";
@@ -21,17 +17,12 @@ import DisTube from "distube";
 import logs from "discord-logs";
 
 // Other
-import distubeEvents from "../events/distubeEvents";
-import TwitchSystem from "../modules/TwitchSystem";
-import ClanSystem from "../modules/ClanSystem";
 import NekoClient from "nekos.life";
 import Functions from "./Functions";
-import DBManager from "./DBManager";
-import DJSystem from "../modules/DJSystem";
 import Handlers from "./Handlers";
 import Logger from "./Logger";
 import TopGG from "../modules/TopGG";
-import config from "../config";
+import config from "../cfg";
 
 // Distube Plugins
 import { YtDlpPlugin } from "@distube/yt-dlp";
@@ -39,26 +30,20 @@ import SpotifyPlugin from "@distube/spotify";
 import SoundCloudPlugin from "@distube/soundcloud";
 
 // Interfaces and Structures
-import { CustomCommand, GuildConfig } from "../types/types";
 import { SlashCommand } from "../types/Command/SlashCommand";
-import { ClansGuild } from "../interfaces/Clans";
 import { SubCommand } from "../types/Command/SubCommand";
-import { Command } from "../types/Command/Command";
+import { GuildData } from "../interfaces/Guild";
 import Event from "../types/Event/Event";
-
-// MySQL
-import { GuildConfiguration } from "../typeorm/entities/GuildConfiguration";
-import { getRepository } from "../services/Repository";
 
 // WebSocket
 import API from "./API";
 
 export = class Bot extends Client {
 	//? [Collections]
-	public commands: Collection<string, SlashCommand | SubCommand> = new Collection();
+	public commands: Collection<string, SlashCommand | SubCommand> =
+		new Collection();
 	public aliases: Collection<string, string> = new Collection();
 	public events: Collection<string, Event> = new Collection();
-	public _configs: Collection<string, GuildConfiguration> = new Collection();
 
 	//? [Other]
 	public owners: string[] = ["852921856800718908"];
@@ -67,13 +52,7 @@ export = class Bot extends Client {
 	public version: string = "2.3.0-dev";
 
 	//? [Storages]
-	public custom_commands: Enmap<string, CustomCommand[]> = new Enmap({
-		name: "custom_commands",
-		dataDir: "./db",
-		wal: false,
-	}); //? Custom Commands Storage
-
-	public configurations: Enmap<string, GuildConfig> = new Enmap({
+	public configurations: Enmap<string, GuildData> = new Enmap({
 		name: "configurations",
 		dataDir: "./db",
 		wal: false,
@@ -84,18 +63,6 @@ export = class Bot extends Client {
 		dataDir: "./db",
 		wal: false,
 	}); //? Leveling Storage
-
-	public giveawaysDB = new Enmap({
-		name: "giveaways",
-		dataDir: "./db",
-		wal: false,
-	}); //? Giveaways Storage
-
-	public clansDB: Enmap<string, ClansGuild> = new Enmap({
-		name: "clans",
-		dataDir: "./db",
-		wal: false,
-	}); //? Clans Storage
 
 	//? [APIs]
 	public dagpi: dagpiClient = new dagpiClient(this.config.keys.dagpi_key);
@@ -112,12 +79,7 @@ export = class Bot extends Client {
 	//? [Systems]
 	public apis: API = new API(this.config);
 	public web: WebServer = new WebServer({ port: 80 });
-	public clans: ClanSystem = new ClanSystem(this);
-	public DJSystem: DJSystem = new DJSystem(this);
-	public levels: Leveling = new Leveling(this);
 	public logger: Logger = new Logger();
-	public twitchSystem: TwitchSystem = new TwitchSystem(this);
-	public database: DBManager = null;
 
 	//? [Modules]
 	// @ts-expect-error ignore
@@ -168,23 +130,6 @@ export = class Bot extends Client {
 		},
 	});
 
-	public giveaways: EnmapGiveaways = new EnmapGiveaways(this, {
-		endedGiveawaysLifetime: 60000 * 60 * 24,
-
-		default: {
-			botsCanWin: false,
-			embedColor: Util.resolveColor("Blurple"),
-			embedColorEnd: Util.resolveColor("Green"),
-			reaction: "🎉",
-
-			lastChance: {
-				enabled: true,
-				embedColor: Util.resolveColor("Yellow"),
-				content: "Last Chance to Enter!",
-			},
-		},
-	});
-
 	constructor() {
 		super({
 			partials: [
@@ -225,20 +170,6 @@ export = class Bot extends Client {
 	async start() {
 		if (!this.application?.owner) await this.application?.fetch();
 
-		//? [MySQL Setup - Start]
-		const configRepo = await getRepository();
-		const guildConfigs = await configRepo.find();
-		const configMappings = new Collection<string, GuildConfiguration>();
-
-		for (const config of guildConfigs) {
-			configMappings.set(config.guild_id, config);
-		}
-
-		this.configs = configMappings;
-		this.database = new DBManager(this);
-		//? [MySQL Setup - End]
-
-		await distubeEvents(this);
 		await logs(this);
 		await this.handlers.loadEvents();
 		await this.functions.updateToken();
@@ -252,13 +183,5 @@ export = class Bot extends Client {
 
 	async wait(ms: number) {
 		return new Promise((res) => setTimeout(res, ms));
-	}
-
-	get configs(): Collection<string, GuildConfiguration> {
-		return this._configs;
-	}
-
-	set configs(guildConfigs: Collection<string, GuildConfiguration>) {
-		this._configs = guildConfigs;
 	}
 };

@@ -27,7 +27,7 @@ export default class BotInfoCommand extends SubCommand {
 		command: ChatInputCommandInteraction<"cached">,
 		lang: LanguageService
 	) {
-		const service = new GuildService();
+		const service = new GuildService(this.client);
 		const locale = await service.getSetting(command.guildId, "locale");
 
 		locale === "en-US"

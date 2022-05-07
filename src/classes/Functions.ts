@@ -93,23 +93,6 @@ export = class Functions {
 		return Number.parseFloat(String(n)).toLocaleString("be-BE");
 	}
 
-	async trimArray(
-		// eslint-disable-next-line @typescript-eslint/no-explicit-any
-		arr: any[],
-		length = 10,
-		lang: typeof import("@locales/English").default
-	) {
-		if (arr.length > length) {
-			const len = (arr.length - length).toString();
-			const more = lang.FUNCTIONS.TRIMARRAY(len);
-
-			arr = arr.slice(0, length);
-			arr.push(more);
-		}
-
-		return arr;
-	}
-
 	formatBytes(bytes) {
 		if (bytes === 0) return "0 Bytes";
 
@@ -143,19 +126,6 @@ export = class Functions {
 				years: diff,
 			};
 		}
-	}
-
-	async getLanguageFile(
-		guild_id: string
-	): Promise<typeof import("../locales/English").default> {
-		const language = await this.client.database.getSetting(
-			guild_id,
-			"locale"
-		);
-
-		return import(
-			`../locales/${language === "en-US" ? "English" : "Russian"}`
-		).then((f) => f.default);
 	}
 
 	sp(num: string | number) {

@@ -15,11 +15,7 @@
 		"skipDefaultLibCheck": true,
 		"declaration": false,
 		"resolveJsonModule": true,
-
-		"baseUrl": "./src",
-		"paths": {
-			"@locales/*": ["locales/*"]
-		}
+		"baseUrl": "./src"
 	},
 
 	"include": ["src"],

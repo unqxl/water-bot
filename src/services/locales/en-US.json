@@ -226,6 +226,16 @@
 			"BOOSTING": "Boosting"
 		}
 	},
+	"SETTINGS_COMMANDS": {
+		"CONFIG": {
+			"AUTO_ROLE": "Auto Role",
+			"MUTE_ROLE": "Mute Role",
+			"TWITCH_CHANNEL": "Twitch Channel",
+			"MEMBERS_CHANNEL": "Members Channel",
+			"LOG_CHANNEL": "Log Channel",
+			"PREFIX": "Prefix"
+		}
+	},
 	"ECONOMY_ACTIONS": {
 		"DEPOSIT": "deposit in bank",
 		"WITHDRAW": "withdraw frow the bank"

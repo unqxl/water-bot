@@ -33,9 +33,9 @@ export default class SteamCommand extends SubCommand {
 	) {
 		command.deferReply();
 
-		const service = new GuildService();
-		var locale = await service.getSetting(command.guildId, "locale");
-		locale =
+		const service = new GuildService(this.client);
+		const locale = await service.getSetting(command.guildId, "locale");
+		var l =
 			locale === "en-US"
 				? "en"
 				: locale === "ru-RU"

@@ -47,26 +47,6 @@ export default class RepeatCommand extends SubCommand {
 	): Promise<ValidateReturn> {
 		const color = this.client.functions.color("Red");
 		const author = this.client.functions.author(command.member);
-		const { djRoles } = this.client.configurations.get(command.guild.id);
-		if (djRoles.length) {
-			const { status, message } = await this.client.DJSystem.check(
-				command
-			);
-			if (!status) {
-				const embed = new EmbedBuilder();
-				embed.setColor(color);
-				embed.setAuthor(author);
-				embed.setDescription(`❌ | ${bold(message)}`);
-				embed.setTimestamp();
-
-				return {
-					ok: false,
-					error: {
-						embeds: [embed],
-					},
-				};
-			}
-		}
 
 		const voiceCheck = this.client.functions.voiceCheck(
 			command.guild.me,

@@ -1,38 +1,48 @@
-import { GuildConfiguration } from "../typeorm/entities/GuildConfiguration";
-import { getRepository } from "./Repository";
-import { Repository } from "typeorm";
+import { GuildData } from "../interfaces/Guild";
+import Bot from "../classes/Bot";
 
 export class GuildService {
-	public repository: Promise<Repository<GuildConfiguration>>;
+	public client: Bot;
 
-	constructor() {
-		this.init();
+	constructor(client: Bot) {
+		this.client = client;
 	}
 
-	async init() {
-		this.repository = getRepository();
-	}
+	create(id: string): GuildData {
+		var data = this.client.configurations.get(id);
+		if (data) return data;
 
-	async getSettings(id: string): Promise<GuildConfiguration> {
-		const data = await (
-			await this.repository
-		).findOneBy({
-			guild_id: id,
+		this.client.configurations.set(id, {
+			id: id,
+			locale: "en-US",
+			auto_role: null,
+			mute_role: null,
+			members_channel: null,
+			twitch_channel: null,
+			log_channel: null,
+			clans: [],
+			commands: [],
+			streamers: [],
 		});
 
+		return this.client.configurations.get(id);
+	}
+
+	delete(id: string): boolean {
+		var data = this.client.configurations.get(id);
+		if (!data) return false;
+
+		this.client.configurations.delete(id);
+		return true;
+	}
+
+	getSettings(id: string): GuildData {
+		const data = this.create(id);
 		return data;
 	}
 
-	async getSetting<K extends keyof GuildConfiguration>(
-		id: string,
-		key: K
-	): Promise<GuildConfiguration[K]> {
-		const data = await (
-			await this.repository
-		).findOneBy({
-			guild_id: id,
-		});
-
+	getSetting<K extends keyof GuildData>(id: string, key: K): GuildData[K] {
+		const data = this.create(id);
 		return data[key];
 	}
 }

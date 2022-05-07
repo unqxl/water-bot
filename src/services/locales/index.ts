@@ -248,6 +248,17 @@ export interface LocaleTemplate {
 		};
 	};
 
+	SETTINGS_COMMANDS: {
+		CONFIG: {
+			AUTO_ROLE: string;
+			MUTE_ROLE: string;
+			TWITCH_CHANNEL: string;
+			MEMBERS_CHANNEL: string;
+			LOG_CHANNEL: string;
+			PREFIX: string;
+		};
+	};
+
 	// Other
 	ECONOMY_ACTIONS: {
 		DEPOSIT: string;

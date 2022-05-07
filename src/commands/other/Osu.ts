@@ -56,7 +56,7 @@ export default class osuCommand extends SubCommand {
 		command: ChatInputCommandInteraction<"cached">,
 		lang: LanguageService
 	) {
-		const service = new GuildService();
+		const service = new GuildService(this.client);
 		const locale = await service.getSetting(command.guildId, "locale");
 
 		const username = command.options.getString("username", true);

@@ -3,6 +3,7 @@ import { bold } from "@discordjs/builders";
 import { Job } from "../../plugins/Job";
 import Bot from "../../classes/Bot";
 import Event from "../../types/Event/Event";
+import { GuildService } from "../../services/Guild";
 
 export default class ReadyEvent extends Event {
 	constructor() {
@@ -25,7 +26,6 @@ export default class ReadyEvent extends Event {
 			async () => {
 				for (const guild of client.guilds.cache.values()) {
 					await birthdayCheck(client, guild);
-					await client.twitchSystem.check(guild);
 				}
 			},
 			null,
@@ -38,6 +38,8 @@ export default class ReadyEvent extends Event {
 }
 
 async function checkUp(client: Bot) {
+	const service = new GuildService(client);
+
 	const guildIDS = [];
 	for (const id of client.guilds.cache.keys()) {
 		guildIDS.push(id);
@@ -46,15 +48,17 @@ async function checkUp(client: Bot) {
 	for (const guildID of guildIDS) {
 		const guild = client.guilds.cache.get(guildID);
 
-		if (!guild) await client.database.deleteGuild(guildID);
-		else await client.database.getGuild(guild.id);
+		if (!guild) service.delete(guildID);
+		else await service.getSettings(guild.id);
 	}
 
 	return true;
 }
 
 async function birthdayCheck(client: Bot, guild: Guild) {
-	const settings = await client.database.getSettings(guild.id);
+	const service = new GuildService(client);
+
+	const settings = service.getSettings(guild.id);
 	if (!settings.log_channel) return;
 
 	const birthdayCheck = client.functions.checkGuildBirthday(guild);
@@ -63,29 +67,31 @@ async function birthdayCheck(client: Bot, guild: Guild) {
 	const channel = guild.channels.cache.get(settings.log_channel);
 	if (!channel) return;
 
-	const lang_file = await client.functions.getLanguageFile(guild.id);
+	// TODO: Add birthday handler
 
-	const [years, year] = [
-		lang_file.EVENTS.GUILD_BIRTHDAY.YEARS,
-		lang_file.EVENTS.GUILD_BIRTHDAY.YEAR,
-	];
+	// const lang_file = await client.functions.getLanguageFile(guild.id);
 
-	const description = lang_file.EVENTS.GUILD_BIRTHDAY.TEXT(
-		Util.escapeMarkdown(guild.name),
-		client.functions.sp(birthdayCheck.years),
-		birthdayCheck.years > 1 ? years : year
-	);
+	// const [years, year] = [
+	// 	lang_file.EVENTS.GUILD_BIRTHDAY.YEARS,
+	// 	lang_file.EVENTS.GUILD_BIRTHDAY.YEAR,
+	// ];
 
-	const embed = new EmbedBuilder()
-		.setColor(Util.resolveColor("Blurple"))
-		.setAuthor({
-			name: guild.name,
-			iconURL: guild.iconURL(),
-		})
-		.setDescription(bold(description))
-		.setTimestamp();
+	// const description = lang_file.EVENTS.GUILD_BIRTHDAY.TEXT(
+	// 	Util.escapeMarkdown(guild.name),
+	// 	client.functions.sp(birthdayCheck.years),
+	// 	birthdayCheck.years > 1 ? years : year
+	// );
 
-	return (channel as TextChannel).send({
-		embeds: [embed.toJSON()],
-	});
+	// const embed = new EmbedBuilder()
+	// 	.setColor(Util.resolveColor("Blurple"))
+	// 	.setAuthor({
+	// 		name: guild.name,
+	// 		iconURL: guild.iconURL(),
+	// 	})
+	// 	.setDescription(bold(description))
+	// 	.setTimestamp();
+
+	// return (channel as TextChannel).send({
+	// 	embeds: [embed.toJSON()],
+	// });
 }

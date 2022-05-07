@@ -1,5 +1,6 @@
 import { ChatInputCommandInteraction, EmbedBuilder, time } from "discord.js";
 import { LanguageService } from "../../services/Language";
+import { GuildService } from "../../services/Guild";
 import { SubCommand } from "../../types/Command/SubCommand";
 import { bold } from "@discordjs/builders";
 import Bot from "../../classes/Bot";
@@ -23,10 +24,8 @@ export default class WeeklyCommand extends SubCommand {
 		);
 
 		if ("status" in weekly) {
-			const locale = await this.client.database.getSetting(
-				command.guildId,
-				"locale"
-			);
+			const service = new GuildService(this.client);
+			const locale = service.getSetting(command.guildId, "locale");
 
 			const collectAt = new Date(weekly.data);
 			const collectAtFormat = time(collectAt, "R");

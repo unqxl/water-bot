@@ -32,7 +32,7 @@ export default class COVIDCommand extends SubCommand {
 		command: ChatInputCommandInteraction<"cached">,
 		lang: LanguageService
 	) {
-		const service = new GuildService();
+		const service = new GuildService(this.client);
 		const locale = await service.getSetting(command.guildId, "locale");
 
 		const query = command.options.getString("country", false);

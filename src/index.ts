@@ -1,7 +1,6 @@
 console.clear();
 
 import "dotenv/config";
-import "module-alias/register";
 import Bot from "./classes/Bot";
 import P from "bluebird";
 

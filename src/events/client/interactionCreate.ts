@@ -18,7 +18,7 @@ export default class InteractionCreateEvent extends Event {
 		if (!interaction.inGuild()) return;
 		if (!interaction.isChatInputCommand()) return;
 
-		const lang = new LanguageService(interaction.guildId);
+		const lang = new LanguageService(client, interaction.guildId);
 		const { PERMISSIONS } = await lang.all();
 
 		await client.application?.commands

@@ -1,55 +1,37 @@
+import { GuildMember } from "discord.js";
+
 export interface GuildData {
-	prefix: string;
-	language: string;
+	id: string;
+	locale: SupportedLocales;
 
-	membersChannel: string;
-	logChannel: string;
-	levelsChannel: string;
+	//? [Roles]
+	auto_role: string;
+	mute_role: string;
 
-	autoRole: string;
-	muteRole: string;
+	//? [Channels]
+	members_channel: string;
+	twitch_channel: string;
+	log_channel: string;
 
-	antilink: string;
-	antispam: string;
-	antiinvite: string;
-
-	djRoles: DJRoles[];
-	immunityUsers: ImmunityUsers[];
-
-	welcomeText: LanguageReturns;
-	byeText: LanguageReturns;
-
-	twitchEnabled: string;
-	twitchChannelID: string;
-	twitchStreamers: StreamerData[];
+	//? [Other]
+	clans: GuildClan[];
+	commands: GuildCustomCommand[];
+	streamers: GuildTwitchStreamer[];
 }
 
-interface LanguageReturns {
-	en: string;
-	ru: string;
-}
+export type SupportedLocales = "en-US" | "ru-RU" | "uk-UA";
 
-interface ImmunityUsers {
-	userID: string;
-}
-
-interface DJRoles {
-	roleID: string;
-}
-
-export interface StreamerData {
+export interface GuildCustomCommand {
 	name: string;
-	latestStream: string;
+	response: string;
 }
 
-export interface Events {
-	status?: boolean;
+export interface GuildClan {
 	name: string;
+	members: string[];
 }
 
-export interface UserLeveling {
-	userID: string;
-	guildID: string;
-	xp: number;
-	level: number;
+export interface GuildTwitchStreamer {
+	name: string;
+	last_stream: string;
 }

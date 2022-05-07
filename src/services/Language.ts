@@ -1,5 +1,6 @@
 import { LocaleTemplate } from "./locales/index";
 import { GuildService } from "./Guild";
+import Bot from "../classes/Bot";
 
 type TwoDotPrefix<T extends string> = T extends "" ? "" : `:${T}`;
 // prettier-ignore
@@ -14,12 +15,14 @@ type SearchFormat<T> = (
 	: never;
 
 export class LanguageService {
-	public GuildService: GuildService;
+	public client: Bot;
+	public service: GuildService;
 	public guild_id: string;
 
-	constructor(guild_id: string) {
+	constructor(client: Bot, guild_id: string) {
+		this.client = client;
 		this.guild_id = guild_id;
-		this.GuildService = new GuildService();
+		this.service = new GuildService(this.client);
 	}
 
 	async get(
@@ -27,10 +30,7 @@ export class LanguageService {
 		...args: string[]
 	): Promise<null | string> {
 		const [category, sub, prop] = key.split(":");
-		const locale = await this.GuildService.getSetting(
-			this.guild_id,
-			"locale"
-		);
+		const locale = await this.service.getSetting(this.guild_id, "locale");
 
 		const LocaleFile = (await import(`./locales/${locale}`).then(
 			(module) => module.default
@@ -57,10 +57,7 @@ export class LanguageService {
 	}
 
 	async all(): Promise<LocaleTemplate> {
-		const locale = await this.GuildService.getSetting(
-			this.guild_id,
-			"locale"
-		);
+		const locale = await this.service.getSetting(this.guild_id, "locale");
 
 		const LocaleFile = (await import(`./locales/${locale}`).then(
 			(module) => module.default
