@@ -219,6 +219,16 @@
 			"BOOSTING": "Бустит"
 		}
 	},
+	"SETTINGS_COMMANDS": {
+		"CONFIG": {
+			"AUTO_ROLE": "Авто-Роль",
+			"MUTE_ROLE": "Мут-Роль",
+			"TWITCH_CHANNEL": "Канал Twitch Уведомлений",
+			"MEMBERS_CHANNEL": "Канал Уведомлений об Участниках",
+			"LOG_CHANNEL": "Канал Логов",
+			"PREFIX": "Префикс"
+		}
+	},
 	"ECONOMY_ACTIONS": {
 		"DEPOSIT": "депозита в банк",
 		"WITHDRAW": "вывода из банка"
