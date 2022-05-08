@@ -235,7 +235,9 @@
 			"LOG_CHANNEL": "Log Channel",
 			"PREFIX": "Prefix"
 		},
-		"EDIT_TEXT": "%s is changed to %s!"
+		"RESET_PROMPT": "There's %s in the database. Are you want to reset it?",
+		"EDIT_TEXT": "%s is changed to %s!",
+		"RESET_TEXT": "%s has been resetted!"
 	},
 	"ECONOMY_ACTIONS": {
 		"DEPOSIT": "deposit in bank",

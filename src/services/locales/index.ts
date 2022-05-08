@@ -258,7 +258,9 @@ export interface LocaleTemplate {
 			PREFIX: string;
 		};
 
+		RESET_PROMPT: string;
 		EDIT_TEXT: string;
+		RESET_TEXT: string;
 	};
 
 	// Other

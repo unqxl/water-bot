@@ -4,9 +4,11 @@ import {
 	SelectMenuComponentOptionData,
 	ActionRowBuilder,
 	ComponentType,
-	roleMention,
+	channelMention,
 	EmbedBuilder,
 	bold,
+	ChannelType,
+	PermissionFlagsBits,
 	ButtonBuilder,
 	ButtonStyle,
 } from "discord.js";
@@ -15,13 +17,13 @@ import { GuildService } from "../../../services/Guild";
 import { SubCommand } from "../../../types/Command/SubCommand";
 import Bot from "../../../classes/Bot";
 
-export default class MuteRoleCommand extends SubCommand {
+export default class MembersChannelCommand extends SubCommand {
 	constructor(client: Bot) {
 		super(client, {
 			groupName: "setup",
 			commandName: "settings",
-			name: "muterole",
-			description: "Configuring Mute Role!",
+			name: "memberschannel",
+			description: "Configuring Members Channel!",
 			memberPermissions: ["ManageGuild"],
 			options: [],
 		});
@@ -37,10 +39,10 @@ export default class MuteRoleCommand extends SubCommand {
 			OTHER,
 		} = await lang.all();
 
-		if (service.getSetting(command.guildId, "mute_role")) {
+		if (service.getSetting(command.guildId, "members_channel")) {
 			const text = await lang.get(
 				"SETTINGS_COMMANDS:RESET_PROMPT",
-				CONFIG.MUTE_ROLE
+				CONFIG.MEMBERS_CHANNEL
 			);
 
 			const color = this.client.functions.color("Blurple");
@@ -83,11 +85,11 @@ export default class MuteRoleCommand extends SubCommand {
 				if (!interaction.isButton()) return;
 
 				if (interaction.customId === "confirm") {
-					service.set(command.guildId, "mute_role", null);
+					service.set(command.guildId, "members_channel", null);
 
 					const text = await lang.get(
 						"SETTINGS_COMMANDS:RESET_TEXT",
-						CONFIG.MUTE_ROLE
+						CONFIG.MEMBERS_CHANNEL
 					);
 
 					const embed = new EmbedBuilder();
@@ -107,18 +109,23 @@ export default class MuteRoleCommand extends SubCommand {
 		}
 
 		const options: SelectMenuComponentOptionData[] = [];
-		for (const role of command.guild.roles.cache.values()) {
-			if (role.id === command.guild.roles.everyone.id) continue;
-			if (role.tags.botId) continue;
+		for (const channel of command.guild.channels.cache.values()) {
+			if (channel.type !== ChannelType.GuildText) continue;
+			if (
+				channel
+					.permissionsFor(command.guild.me)
+					.has(PermissionFlagsBits.SendMessages)
+			)
+				continue;
 
 			options.push({
-				label: role.name,
-				value: role.id,
+				label: channel.name,
+				value: channel.id,
 			});
 		}
 
 		const menu = new SelectMenuBuilder();
-		menu.setCustomId("muterole_menu");
+		menu.setCustomId("memberschannel_menu");
 		menu.setMinValues(1);
 		menu.setMaxValues(1);
 		menu.setOptions(options);
@@ -144,12 +151,16 @@ export default class MuteRoleCommand extends SubCommand {
 
 			if (!interaction.isSelectMenu()) return;
 
-			service.set(command.guildId, "mute_role", interaction.values[0]);
+			service.set(
+				command.guildId,
+				"members_channel",
+				interaction.values[0]
+			);
 
-			const mention = roleMention(interaction.values[0]);
+			const mention = channelMention(interaction.values[0]);
 			const text = await lang.get(
 				"SETTINGS_COMMANDS:EDIT_TEXT",
-				CONFIG.MUTE_ROLE,
+				CONFIG.LOG_CHANNEL,
 				mention
 			);
 

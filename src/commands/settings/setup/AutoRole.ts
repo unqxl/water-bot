@@ -7,6 +7,8 @@ import {
 	roleMention,
 	EmbedBuilder,
 	bold,
+	ButtonBuilder,
+	ButtonStyle,
 } from "discord.js";
 import { LanguageService } from "../../../services/Language";
 import { GuildService } from "../../../services/Guild";
@@ -29,7 +31,80 @@ export default class AutoRoleCommand extends SubCommand {
 		command: ChatInputCommandInteraction<"cached">,
 		lang: LanguageService
 	) {
-		const { CONFIG } = await (await lang.all()).SETTINGS_COMMANDS;
+		const service = new GuildService(this.client);
+		const {
+			SETTINGS_COMMANDS: { CONFIG },
+			OTHER,
+		} = await lang.all();
+
+		if (service.getSetting(command.guildId, "auto_role")) {
+			const text = await lang.get(
+				"SETTINGS_COMMANDS:RESET_PROMPT",
+				CONFIG.AUTO_ROLE
+			);
+
+			const color = this.client.functions.color("Blurple");
+			const author = this.client.functions.author(command.member);
+			const embed = new EmbedBuilder();
+			embed.setColor(color);
+			embed.setAuthor(author);
+			embed.setDescription(`⚠ | ${bold(text)}`);
+			embed.setTimestamp();
+
+			const confirm = new ButtonBuilder();
+			confirm.setCustomId("confirm");
+			confirm.setStyle(ButtonStyle.Success);
+			confirm.setLabel(OTHER.YES);
+			confirm.setEmoji("✅");
+
+			const cancel = new ButtonBuilder();
+			cancel.setCustomId("cancel");
+			cancel.setStyle(ButtonStyle.Danger);
+			cancel.setLabel(OTHER.NO);
+			cancel.setEmoji("❌");
+
+			const row = new ActionRowBuilder<ButtonBuilder>();
+			row.addComponents([confirm, cancel]);
+
+			command.reply({
+				embeds: [embed],
+				components: [row],
+			});
+
+			const message = await command.fetchReply();
+			const collector = message.createMessageComponentCollector({
+				filter: (msg) => msg.user.id === command.user.id,
+				componentType: ComponentType.Button,
+				time: 60000,
+				max: 1,
+			});
+
+			collector.on("collect", async (interaction) => {
+				if (!interaction.isButton()) return;
+
+				if (interaction.customId === "confirm") {
+					service.set(command.guildId, "auto_role", null);
+
+					const text = await lang.get(
+						"SETTINGS_COMMANDS:RESET_TEXT",
+						CONFIG.AUTO_ROLE
+					);
+
+					const embed = new EmbedBuilder();
+					embed.setColor(color);
+					embed.setAuthor(author);
+					embed.setDescription(`✅ | ${bold(text)}`);
+					embed.setTimestamp();
+
+					command.editReply({
+						embeds: [embed],
+						components: [],
+					});
+				} else if (interaction.customId === "cancel") {
+					message.delete();
+				}
+			});
+		}
 
 		const options: SelectMenuComponentOptionData[] = [];
 		for (const role of command.guild.roles.cache.values()) {
@@ -64,7 +139,6 @@ export default class AutoRoleCommand extends SubCommand {
 		});
 
 		collector.on("collect", async (interaction) => {
-			const service = new GuildService(this.client);
 			const color = this.client.functions.color("Blurple");
 			const author = this.client.functions.author(command.member);
 
