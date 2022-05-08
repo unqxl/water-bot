@@ -23,14 +23,30 @@ export default class ConfigCommand extends SubCommand {
 		const { CONFIG } = await (await lang.all()).SETTINGS_COMMANDS;
 		const { NONE } = await (await lang.all()).OTHER;
 
-		const roles = [
-			guild.auto_role
-				? command.guild.roles.cache.get(guild.auto_role).toString()
-				: NONE,
-			guild.mute_role
-				? command.guild.roles.cache.get(guild.mute_role).toString()
-				: NONE,
-		];
+		const autoroles = [];
+		if (guild.auto_role) {
+			if (Array.isArray(guild.auto_role)) {
+				for (const role of guild.auto_role) {
+					const r = command.guild.roles.cache.get(role);
+					if (r) {
+						autoroles.push(r.toString());
+					}
+				}
+			}
+
+			if (typeof guild.auto_role === "string") {
+				const r = command.guild.roles.cache.get(guild.auto_role);
+				if (r) {
+					autoroles.push(r.toString());
+				}
+			}
+		} else {
+			autoroles.push(NONE);
+		}
+
+		const muterole = guild.mute_role
+			? command.guild.roles.cache.get(guild.mute_role).toString()
+			: NONE;
 
 		const channels = [
 			guild.members_channel
@@ -47,8 +63,8 @@ export default class ConfigCommand extends SubCommand {
 		];
 
 		const res = [
-			`› ${bold(CONFIG.AUTO_ROLE)}: ${bold(roles[0])}`,
-			`› ${bold(CONFIG.MUTE_ROLE)}: ${bold(roles[1])}`,
+			`› ${bold(CONFIG.AUTO_ROLE)}: ${bold(autoroles.join(", "))}`,
+			`› ${bold(CONFIG.MUTE_ROLE)}: ${bold(muterole)}`,
 			"",
 			`› ${bold(CONFIG.MEMBERS_CHANNEL)}: ${bold(channels[0])}`,
 			`› ${bold(CONFIG.TWITCH_CHANNEL)}: ${bold(channels[1])}`,

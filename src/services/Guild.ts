@@ -45,4 +45,16 @@ export class GuildService {
 		const data = this.create(id);
 		return data[key];
 	}
+
+	set<K extends keyof GuildData>(
+		id: string,
+		key: K,
+		value: GuildData[K]
+	): GuildData {
+		const data = this.create(id);
+		data[key] = value;
+
+		this.client.configurations.set(id, data);
+		return data;
+	}
 }

@@ -107,7 +107,7 @@ export = class Handlers {
 			const data: ApplicationCommandData = {
 				type: ApplicationCommandType.ChatInput,
 				name: topLevelName,
-				description: `${topLevelName} Commands...`,
+				description: `"${topLevelName}" Commands...`,
 				// @ts-expect-error ignore
 				options: cmds.map((v) => v.options),
 			};
@@ -115,16 +115,14 @@ export = class Handlers {
 			await this.createSlashCommand(data);
 		}
 
-		// eslint-disable-next-line @typescript-eslint/no-explicit-any
 		const groupCache: any[] = [];
-
 		for (const groupName in commandGroups) {
 			const [topLevelName, cmds] = commandGroups[groupName];
 
 			const groupData = {
 				type: ApplicationCommandOptionType.SubcommandGroup,
 				name: groupName,
-				description: `${groupName} Sub Commands...`,
+				description: `"${groupName}" Sub Commands...`,
 				options: cmds.map((v) => v.options),
 			};
 
@@ -133,7 +131,7 @@ export = class Handlers {
 			const data: ApplicationCommandData = {
 				type: ApplicationCommandType.ChatInput,
 				name: topLevelName,
-				description: `${topLevelName} Commands...`,
+				description: `"${topLevelName}" Commands`,
 				options: [
 					...groupCache,
 					...subCommands[topLevelName].map((v) => v.options),
@@ -176,6 +174,8 @@ export = class Handlers {
 	getType(item: Structures) {
 		if (item instanceof SlashCommand) {
 			return "SLASH_COMMAND";
+		} else if (item instanceof SubCommand) {
+			return "SUB_COMMAND";
 		}
 	}
 };

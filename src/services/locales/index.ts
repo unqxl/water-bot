@@ -257,6 +257,8 @@ export interface LocaleTemplate {
 			LOG_CHANNEL: string;
 			PREFIX: string;
 		};
+
+		EDIT_TEXT: string;
 	};
 
 	// Other

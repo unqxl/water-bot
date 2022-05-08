@@ -5,7 +5,7 @@ export interface GuildData {
 	locale: SupportedLocales;
 
 	//? [Roles]
-	auto_role: string;
+	auto_role: string | string[];
 	mute_role: string;
 
 	//? [Channels]

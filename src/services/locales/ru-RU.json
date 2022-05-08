@@ -227,7 +227,8 @@
 			"MEMBERS_CHANNEL": "Канал Уведомлений об Участниках",
 			"LOG_CHANNEL": "Канал Логов",
 			"PREFIX": "Префикс"
-		}
+		},
+		"EDIT_TEXT": "%s изменено на %s!"
 	},
 	"ECONOMY_ACTIONS": {
 		"DEPOSIT": "депозита в банк",

@@ -234,7 +234,8 @@
 			"MEMBERS_CHANNEL": "Members Channel",
 			"LOG_CHANNEL": "Log Channel",
 			"PREFIX": "Prefix"
-		}
+		},
+		"EDIT_TEXT": "%s is changed to %s!"
 	},
 	"ECONOMY_ACTIONS": {
 		"DEPOSIT": "deposit in bank",
