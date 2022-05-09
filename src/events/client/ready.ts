@@ -1,4 +1,4 @@
-import { Guild, EmbedBuilder, TextChannel, Util } from "discord.js";
+import { Guild } from "discord.js";
 import { bold } from "@discordjs/builders";
 import { Job } from "../../plugins/Job";
 import Bot from "../../classes/Bot";
@@ -12,6 +12,7 @@ export default class ReadyEvent extends Event {
 
 	async run(client: Bot) {
 		if (!client.application.owner) await client.application.fetch();
+		client.application.commands.set([]);
 
 		await client.web.start();
 		await client.handlers.loadCommands();
@@ -21,12 +22,10 @@ export default class ReadyEvent extends Event {
 
 		const job = new Job(
 			client,
-			"Birthday Check",
+			"Twitch Token Update",
 			"0 10 0 * * *",
 			async () => {
-				for (const guild of client.guilds.cache.values()) {
-					await birthdayCheck(client, guild);
-				}
+				await client.functions.updateToken();
 			},
 			null,
 			true,
@@ -53,45 +52,4 @@ async function checkUp(client: Bot) {
 	}
 
 	return true;
-}
-
-async function birthdayCheck(client: Bot, guild: Guild) {
-	const service = new GuildService(client);
-
-	const settings = service.getSettings(guild.id);
-	if (!settings.log_channel) return;
-
-	const birthdayCheck = client.functions.checkGuildBirthday(guild);
-	if (!birthdayCheck.status) return;
-
-	const channel = guild.channels.cache.get(settings.log_channel);
-	if (!channel) return;
-
-	// TODO: Add birthday handler
-
-	// const lang_file = await client.functions.getLanguageFile(guild.id);
-
-	// const [years, year] = [
-	// 	lang_file.EVENTS.GUILD_BIRTHDAY.YEARS,
-	// 	lang_file.EVENTS.GUILD_BIRTHDAY.YEAR,
-	// ];
-
-	// const description = lang_file.EVENTS.GUILD_BIRTHDAY.TEXT(
-	// 	Util.escapeMarkdown(guild.name),
-	// 	client.functions.sp(birthdayCheck.years),
-	// 	birthdayCheck.years > 1 ? years : year
-	// );
-
-	// const embed = new EmbedBuilder()
-	// 	.setColor(Util.resolveColor("Blurple"))
-	// 	.setAuthor({
-	// 		name: guild.name,
-	// 		iconURL: guild.iconURL(),
-	// 	})
-	// 	.setDescription(bold(description))
-	// 	.setTimestamp();
-
-	// return (channel as TextChannel).send({
-	// 	embeds: [embed.toJSON()],
-	// });
 }

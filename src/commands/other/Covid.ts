@@ -5,7 +5,7 @@ import {
 } from "discord.js";
 import { LanguageService } from "../../services/Language";
 import { GuildService } from "../../services/Guild";
-import { Covid as COVIDData } from "../../interfaces/Covid";
+import { Covid as COVIDData } from "../../types/Covid";
 import { SubCommand } from "../../types/Command/SubCommand";
 import { request } from "undici";
 import { bold } from "@discordjs/builders";

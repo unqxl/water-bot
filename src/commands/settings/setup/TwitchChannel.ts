@@ -22,7 +22,7 @@ export default class TwitchChannelCommand extends SubCommand {
 		super(client, {
 			groupName: "setup",
 			commandName: "settings",
-			name: "twichchannel",
+			name: "twitchchannel",
 			description: "Configuring Twitch Notifications Channel!",
 			memberPermissions: ["ManageGuild"],
 			options: [],

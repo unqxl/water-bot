@@ -23,6 +23,8 @@ export interface LocaleTemplate {
 		// Other Errors
 		USER_IS_BOT: string;
 		DATA_NOT_FOUND: string;
+		NOT_IN_LIST: string;
+		ALREADY_IN_LIST: string;
 	};
 	EVENTS: {};
 	PERMISSIONS: Record<PermissionsString, string>;
@@ -256,10 +258,15 @@ export interface LocaleTemplate {
 			MEMBERS_CHANNEL: string;
 			LOG_CHANNEL: string;
 			PREFIX: string;
+			TWITCH_SYSTEM: string;
 		};
 
 		RESET_PROMPT: string;
 		EDIT_TEXT: string;
+		ENABLE_TEXT: string;
+		DISABLE_TEXT: string;
+		ADD_TEXT: string;
+		REMOVE_TEXT: string;
 		RESET_TEXT: string;
 	};
 
@@ -274,6 +281,13 @@ export interface LocaleTemplate {
 		NOTHING: string;
 		YES: string;
 		NO: string;
+	};
+
+	// Systems
+	TWITCH_SYSTEM: {
+		STREAM_STARTED: string;
+		STREAM_TITLE: string;
+		VIEWERS: string;
 	};
 }
 

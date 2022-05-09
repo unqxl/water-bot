@@ -10,7 +10,9 @@
 		"NOT_ENOUGH_MONEY": "You don't have enough money to %s!",
 		"TIME_ERROR": "You've already received your reward!\nTry again in %s (%s)",
 		"USER_IS_BOT": "This user is a bot!",
-		"DATA_NOT_FOUND": "Data from %s is not found!"
+		"DATA_NOT_FOUND": "Data from %s is not found!",
+		"NOT_IN_LIST": "\"%s\" is not in the list!",
+		"ALREADY_IN_LIST": "\"%s\" is already in the list!"
 	},
 	"EVENTS": {},
 	"PERMISSIONS": {
@@ -233,11 +235,16 @@
 			"TWITCH_CHANNEL": "Twitch Channel",
 			"MEMBERS_CHANNEL": "Members Channel",
 			"LOG_CHANNEL": "Log Channel",
-			"PREFIX": "Prefix"
+			"PREFIX": "Prefix",
+			"TWITCH_SYSTEM": "Twitch Notification System"
 		},
 		"RESET_PROMPT": "There's %s in the database. Are you want to reset it?",
 		"EDIT_TEXT": "%s is changed to %s!",
-		"RESET_TEXT": "%s has been resetted!"
+		"ENABLE_TEXT": "%s is enabled!",
+		"DISABLE_TEXT": "%s is disabled!",
+		"ADD_TEXT": "\"%s\" is added into %s!",
+		"REMOVE_TEXT": "\"%s\" is removed from %s!",
+		"RESET_TEXT": "%s is resetted!"
 	},
 	"ECONOMY_ACTIONS": {
 		"DEPOSIT": "deposit in bank",
@@ -248,5 +255,10 @@
 		"NOTHING": "Nothing",
 		"YES": "Yes",
 		"NO": "No"
+	},
+	"TWITCH_SYSTEM": {
+		"STREAM_STARTED": "%s is now streaming on Twitch!",
+		"STREAM_TITLE": "Stream Title",
+		"VIEWERS": "Viewers"
 	}
 }

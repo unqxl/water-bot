@@ -14,6 +14,7 @@ export interface GuildData {
 	log_channel: string;
 
 	//? [Other]
+	twitch_system: boolean;
 	clans: GuildClan[];
 	commands: GuildCustomCommand[];
 	streamers: GuildTwitchStreamer[];

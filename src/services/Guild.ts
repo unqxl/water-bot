@@ -1,4 +1,4 @@
-import { GuildData } from "../interfaces/Guild";
+import { GuildData } from "../types/Guild";
 import Bot from "../classes/Bot";
 
 export class GuildService {
@@ -20,6 +20,7 @@ export class GuildService {
 			members_channel: null,
 			twitch_channel: null,
 			log_channel: null,
+			twitch_system: false,
 			clans: [],
 			commands: [],
 			streamers: [],
