@@ -9,7 +9,9 @@
 		"MUSIC_IS_RESUMED": "Пісня вже програється!",
 		"NOT_ENOUGH_MONEY": "У вас недостатньо грошей для %s!",
 		"USER_IS_BOT": "Цей користувач є ботом!",
-		"DATA_NOT_FOUND": "Інформація з %s не знайдена!"
+		"DATA_NOT_FOUND": "Інформація з %s не знайдена!",
+		"NOT_IN_LIST": "\"%s\" не находится в списке!",
+		"ALREADY_IN_LIST": "\"%s\" уже находится в списке!"
 	},
 	"EVENTS": {},
 	"PERMISSIONS": {
@@ -226,10 +228,15 @@
 			"TWITCH_CHANNEL": "Канал Twitch Уведомлений",
 			"MEMBERS_CHANNEL": "Канал Уведомлений об Участниках",
 			"LOG_CHANNEL": "Канал Логов",
-			"PREFIX": "Префикс"
+			"PREFIX": "Префикс",
+			"TWITCH_SYSTEM": "Система Twitch Уведомлений"
 		},
 		"RESET_PROMPT": "%s уже стоит в базе данных. Вы хотите сбросить это?",
 		"EDIT_TEXT": "%s изменено на %s!",
+		"ENABLE_TEXT": "%s включена!",
+		"DISABLE_TEXT": "%s выключена!",
+		"ADD_TEXT": "\"%s\" добавлено в %s!",
+		"REMOVE_TEXT": "\"%s\" удалено из %s!",
 		"RESET_TEXT": "%s был(а) сброшен(а)!"
 	},
 	"ECONOMY_ACTIONS": {
@@ -241,5 +248,10 @@
 		"NOTHING": "Ничего",
 		"YES": "Да",
 		"NO": "Нет"
+	},
+	"TWITCH_SYSTEM": {
+		"STREAM_STARTED": "%s запустил трансляцию на Twitch!",
+		"STREAM_TITLE": "Название трансляции",
+		"VIEWERS": "Зрителей"
 	}
 }
