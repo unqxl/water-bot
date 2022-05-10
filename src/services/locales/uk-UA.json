@@ -159,6 +159,23 @@
 			"S": "S",
 			"A": "A"
 		},
+		"OSU_BEATMAP": {
+			"ARTIST": "Артист",
+			"CREATOR": "Автор",
+			"STATUS": "Статус",
+			"TITLE": "Название",
+			"SUBMITTED_AT": "Дата подачи",
+			"LAST_UPDATED": "Последнее обновление",
+			"TAGS": "Теги",
+			"DIFFICULTIES": "Сложности",
+			"MODE": "Режим",
+			"STARS": "Сложность (звёзд)",
+			"DIFF_NAME": "Название сложности",
+			"BPM": "BPM",
+			"URL": "Ссылка",
+			"AR": "AR",
+			"CS": "CS"
+		},
 		"SERVERINFO": {
 			"INFORMATION": "Інформація",
 			"PRESENCES": "Статуси",
