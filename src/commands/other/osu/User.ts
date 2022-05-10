@@ -4,18 +4,19 @@ import {
 	EmbedBuilder,
 } from "discord.js";
 import { bold, time } from "@discordjs/builders";
-import { LanguageService } from "../../services/Language";
-import { GuildService } from "../../services/Guild";
-import { SubCommand } from "../../types/Command/SubCommand";
-import Bot from "../../classes/Bot";
+import { LanguageService } from "../../../services/Language";
+import { GuildService } from "../../../services/Guild";
+import { SubCommand } from "../../../types/Command/SubCommand";
+import Bot from "../../../classes/Bot";
 
 type OsuModes = "osu" | "fruits" | "mania" | "taiko";
 
-export default class osuCommand extends SubCommand {
+export default class UserCommand extends SubCommand {
 	constructor(client: Bot) {
 		super(client, {
+			groupName: "osu",
 			commandName: "other",
-			name: "osu",
+			name: "user",
 			description: "Shows profile statistics of osu!user",
 			options: [
 				{

@@ -42,7 +42,7 @@
 		"glob": "^8.0.1",
 		"imdb-api": "^4.4.1",
 		"nekos.life": "^3.0.0",
-		"osu-api-extended": "^2.1.5",
+		"osu-api-extended": "^2.5.2",
 		"random": "^3.0.6",
 		"sourcebin": "^4.3.5",
 		"string-similarity": "^4.0.4",

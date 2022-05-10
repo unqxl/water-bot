@@ -1,9 +1,8 @@
-import { Guild } from "discord.js";
-import { bold } from "@discordjs/builders";
-import { Job } from "../../plugins/Job";
-import Bot from "../../classes/Bot";
-import Event from "../../types/Event/Event";
 import { GuildService } from "../../services/Guild";
+import { Job } from "../../plugins/Job";
+import Event from "../../types/Event/Event";
+import Bot from "../../classes/Bot";
+import { ApplicationCommandOptionType } from "discord.js";
 
 export default class ReadyEvent extends Event {
 	constructor() {
@@ -12,11 +11,53 @@ export default class ReadyEvent extends Event {
 
 	async run(client: Bot) {
 		if (!client.application.owner) await client.application.fetch();
-		client.application.commands.set([]);
+
+		console.log("# Deleting Slash Commands");
+		for (const command of client.application.commands.cache.values()) {
+			command.delete();
+		}
+		console.log("# Finished\n");
 
 		await client.web.start();
 		await client.handlers.loadCommands();
 		await checkUp(client);
+
+		console.log("\n# Checking Slash Commands");
+		for (const command of client.application.commands.cache.values()) {
+			for (var option of command.options.values()) {
+				var name = "";
+
+				if (
+					option.type === ApplicationCommandOptionType.SubcommandGroup
+				) {
+					for (const subcommand of option.options.values()) {
+						name = `${command.name}-${option.name}-${subcommand.name}`;
+
+						const data = this.client.commands.get(name);
+						if (!data) {
+							option.options = option.options.filter(
+								(x) => x.name !== subcommand.name
+							);
+
+							command.edit(command);
+						}
+					}
+				}
+				if (option.type === ApplicationCommandOptionType.Subcommand) {
+					name = `${command.name}-${option.name}`;
+
+					const data = this.client.commands.get(name);
+					if (!data) {
+						option.options = option.options.filter(
+							(x) => x.name !== option.name
+						);
+
+						command.edit(command);
+					}
+				}
+			}
+		}
+		console.log("# Finished\n");
 
 		console.log(`${client.user.username} logged in!`);
 

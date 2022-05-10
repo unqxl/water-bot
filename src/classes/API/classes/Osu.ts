@@ -12,16 +12,33 @@ export = class OsuAPI {
 		this.client_id = client_id;
 		this.client_secret = client_secret;
 		this.api = v2;
-
-		auth.login(this.client_id, this.client_secret);
 	}
 
 	async getUserData(
 		name: string | number,
 		mode?: OsuModes
 	): Promise<OsuUserData> {
-		const userData = await this.api.user.get(name, mode ?? "osu");
+		await auth.login(this.client_id, this.client_secret);
+
+		const userData = await this.api.user.details(
+			name,
+			mode ?? "osu",
+			"username"
+		);
+
 		// @ts-expect-error ignore
 		return userData;
+	}
+
+	async getBeatmapList(name: string, mode: OsuModes) {
+		await auth.login(this.client_id, this.client_secret);
+
+		const data = await this.api.beatmap.search({
+			query: name,
+			mode: mode,
+			nfsw: false,
+		});
+
+		return data.beatmapsets;
 	}
 };
