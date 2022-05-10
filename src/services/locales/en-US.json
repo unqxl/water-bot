@@ -166,6 +166,23 @@
 			"S": "S",
 			"A": "A"
 		},
+		"OSU_BEATMAP": {
+			"ARTIST": "Artist",
+			"CREATOR": "Creator",
+			"STATUS": "Status",
+			"TITLE": "Title",
+			"SUBMITTED_AT": "Submitted At",
+			"LAST_UPDATED": "Last Updated",
+			"TAGS": "Tags",
+			"DIFFICULTIES": "Difficulties",
+			"MODE": "Mode",
+			"STARS": "Stars",
+			"DIFF_NAME": "Difficulty",
+			"BPM": "BPM",
+			"URL": "URL",
+			"AR": "AR",
+			"CS": "CS"
+		},
 		"SERVERINFO": {
 			"INFORMATION": "Information",
 			"PRESENCES": "Presences",

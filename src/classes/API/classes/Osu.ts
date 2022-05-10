@@ -30,6 +30,18 @@ export = class OsuAPI {
 		return userData;
 	}
 
+	async getBeatmapData(id: string, mode: OsuModes) {
+		await auth.login(this.client_id, this.client_secret);
+
+		const data = await this.api.beatmap.search({
+			query: id,
+			nfsw: false,
+			mode: mode,
+		});
+
+		return data.beatmapsets[0];
+	}
+
 	async getBeatmapList(name: string, mode: OsuModes) {
 		await auth.login(this.client_id, this.client_secret);
 

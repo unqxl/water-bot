@@ -166,6 +166,26 @@ export interface LocaleTemplate {
 			A: string;
 		};
 
+		OSU_BEATMAP: {
+			ARTIST: string;
+			CREATOR: string;
+			STATUS: string;
+			TITLE: string;
+			SUBMITTED_AT: string;
+			LAST_UPDATED: string;
+			TAGS: string;
+			DIFFICULTIES: string;
+
+			// Field Values
+			MODE: string;
+			STARS: string;
+			DIFF_NAME: string;
+			BPM: string;
+			URL: string;
+			AR: string;
+			CS: string;
+		};
+
 		SERVERINFO: {
 			// Field Names
 			INFORMATION: string;
