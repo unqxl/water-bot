@@ -10,8 +10,8 @@
 		"NOT_ENOUGH_MONEY": "У вас недостатньо грошей для %s!",
 		"USER_IS_BOT": "Цей користувач є ботом!",
 		"DATA_NOT_FOUND": "Інформація з %s не знайдена!",
-		"NOT_IN_LIST": "\"%s\" не находится в списке!",
-		"ALREADY_IN_LIST": "\"%s\" уже находится в списке!"
+		"NOT_IN_LIST": "\"%s\" не знаходиться у списку!",
+		"ALREADY_IN_LIST": "\"%s\" вже знаходиться у списку!"
 	},
 	"EVENTS": {},
 	"PERMISSIONS": {
@@ -163,16 +163,16 @@
 			"ARTIST": "Артист",
 			"CREATOR": "Автор",
 			"STATUS": "Статус",
-			"TITLE": "Название",
-			"SUBMITTED_AT": "Дата подачи",
-			"LAST_UPDATED": "Последнее обновление",
+			"TITLE": "Назва",
+			"SUBMITTED_AT": "Дата подачі",
+			"LAST_UPDATED": "Останнє оновлення",
 			"TAGS": "Теги",
-			"DIFFICULTIES": "Сложности",
+			"DIFFICULTIES": "Складності",
 			"MODE": "Режим",
-			"STARS": "Сложность (звёзд)",
-			"DIFF_NAME": "Название сложности",
+			"STARS": "Складність (зірок)",
+			"DIFF_NAME": "Назва складності",
 			"BPM": "BPM",
-			"URL": "Ссылка",
+			"URL": "Посилання",
 			"AR": "AR",
 			"CS": "CS"
 		},
@@ -224,51 +224,51 @@
 			"WEB": "Браузер",
 			"MOBILE": "Телефон",
 			"DESKTOP": "ПК",
-			"USERNAME": "Имя пользователя",
+			"USERNAME": "Ім'я користувача",
 			"TAG": "Тег",
 			"AVATAR": "Аватар",
-			"ONLINE_USING": "Онлайн через",
+			"ONLINE_USING": "Онлайн через",
 			"PRESENCE": "Статус",
-			"PLAYING": "Играет в",
-			"NOT_PLAYING": "Не играет",
-			"REG_DATE": "Дата регистрации",
-			"JOIN_DATE": "Дата вступления",
+			"PLAYING": "Грає в",
+			"NOT_PLAYING": "Не грає",
+			"REG_DATE": "Дата реєстрації",
+			"JOIN_DATE": "Дата приєднання",
 			"BOT": "Бот",
-			"IN_VOICE": "В голос. канале",
-			"BOOSTING": "Бустит"
+			"IN_VOICE": "В голос. каналі",
+			"BOOSTING": "Бустить"
 		}
 	},
 	"SETTINGS_COMMANDS": {
 		"CONFIG": {
 			"AUTO_ROLE": "Авто-Роль",
 			"MUTE_ROLE": "Мут-Роль",
-			"TWITCH_CHANNEL": "Канал Twitch Уведомлений",
-			"MEMBERS_CHANNEL": "Канал Уведомлений об Участниках",
-			"LOG_CHANNEL": "Канал Логов",
-			"PREFIX": "Префикс",
-			"TWITCH_SYSTEM": "Система Twitch Уведомлений"
+			"TWITCH_CHANNEL": "Канал Twitch Повідомлень",
+			"MEMBERS_CHANNEL": "Канал Повідомлень про Учасників",
+			"LOG_CHANNEL": "Канал логів",
+			"PREFIX": "Префікс",
+			"TWITCH_SYSTEM": "Система Twitch Повідомлень"
 		},
-		"RESET_PROMPT": "%s уже стоит в базе данных. Вы хотите сбросить это?",
-		"EDIT_TEXT": "%s изменено на %s!",
-		"ENABLE_TEXT": "%s включена!",
-		"DISABLE_TEXT": "%s выключена!",
-		"ADD_TEXT": "\"%s\" добавлено в %s!",
-		"REMOVE_TEXT": "\"%s\" удалено из %s!",
-		"RESET_TEXT": "%s был(а) сброшен(а)!"
+		"RESET_PROMPT": "%s вже стоїть у базі даних. Ви хотіли б скинути це?",
+		"EDIT_TEXT": "%s змінено на %s!",
+		"ENABLE_TEXT": "%s увімкнена!",
+		"DISABLE_TEXT": "%s вимкнена!",
+		"ADD_TEXT": "\"%s\" додано в %s!",
+		"REMOVE_TEXT": "\"%s\" видалено з %s!",
+		"RESET_TEXT": "%s був(була) скинутий(скинута)!"
 	},
 	"ECONOMY_ACTIONS": {
 		"DEPOSIT": "депозит в банк",
 		"WITHDRAW": "виведення з банку"
 	},
 	"OTHER": {
-		"NONE": "Не указано",
-		"NOTHING": "Ничего",
-		"YES": "Да",
-		"NO": "Нет"
+		"NONE": "Не вказано",
+		"NOTHING": "Нічого",
+		"YES": "Так",
+		"NO": "Ні"
 	},
 	"TWITCH_SYSTEM": {
-		"STREAM_STARTED": "%s запустил трансляцию на Twitch!",
-		"STREAM_TITLE": "Название трансляции",
-		"VIEWERS": "Зрителей"
+		"STREAM_STARTED": "%s запустив трансляцію на Twitch!",
+		"STREAM_TITLE": "Назва трансляції",
+		"VIEWERS": "Глядачів"
 	}
 }
