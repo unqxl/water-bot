@@ -113,7 +113,7 @@ export default class MembersChannelCommand extends SubCommand {
 			if (channel.type !== ChannelType.GuildText) continue;
 			if (
 				channel
-					.permissionsFor(command.guild.me)
+					.permissionsFor(command.guild.members.me)
 					.has(PermissionFlagsBits.SendMessages)
 			)
 				continue;

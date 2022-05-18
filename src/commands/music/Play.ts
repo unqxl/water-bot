@@ -36,7 +36,7 @@ export default class PlayCommand extends SubCommand {
 		const author = this.client.functions.author(command.member);
 
 		const voiceCheck = this.client.functions.voiceCheck(
-			command.guild.me,
+			command.guild.members.me,
 			command.member as GuildMember
 		);
 		if (!voiceCheck) {

@@ -7,8 +7,8 @@ import {
 	TextChannel,
 } from "discord.js";
 import { LanguageService } from "../services/Language";
-import Bot from "../classes/Bot";
 import { GuildService } from "../services/Guild";
+import Bot from "../classes/Bot";
 
 interface StreamData {
 	guild_id: string;

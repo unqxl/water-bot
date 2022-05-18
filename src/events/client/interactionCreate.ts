@@ -32,7 +32,8 @@ export default class InteractionCreateEvent extends Event {
 		const userPerms = command.options.memberPermissions ?? [];
 
 		if (botPerms.length) {
-			const missing = interaction.guild.me.permissions.missing(botPerms);
+			const missing =
+				interaction.guild.members.me.permissions.missing(botPerms);
 			if (missing.length) {
 				const perms = missing
 					.map((perm) => PERMISSIONS[perm])
@@ -40,7 +41,7 @@ export default class InteractionCreateEvent extends Event {
 
 				const color = this.client.functions.color("Red");
 				const author = this.client.functions.author(
-					interaction.guild.me
+					interaction.guild.members.me
 				);
 
 				const text = await lang.get(

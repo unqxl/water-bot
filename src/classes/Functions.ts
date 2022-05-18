@@ -64,13 +64,6 @@ export = class Functions {
 		return this.client.owners.includes(target.id);
 	}
 
-	checkBotMention(message: Message): boolean {
-		return message.mentions.has(message.guild.me, {
-			ignoreEveryone: true,
-			ignoreRoles: true,
-		});
-	}
-
 	async updateToken(): Promise<boolean> {
 		const id = this.client.config.twitch.client_id;
 		const secret = this.client.config.twitch.client_secret;
