@@ -2779,10 +2779,10 @@ open@^8.4.0:
     is-docker "^2.1.1"
     is-wsl "^2.2.0"
 
-osu-api-extended@^2.5.5:
-  version "2.5.5"
-  resolved "https://registry.yarnpkg.com/osu-api-extended/-/osu-api-extended-2.5.5.tgz#bfb47219c6e26706260d6ddde206511840ec34b3"
-  integrity sha512-avOHCPELHLfKkOYWs+weBQzkCjJ6hjHg16gA7sOx5B3xpbPt+D61FKHJS3umFUdwnEhZ9IbWonIzRqPEgrFq/g==
+osu-api-extended@^2.5.6:
+  version "2.5.6"
+  resolved "https://registry.yarnpkg.com/osu-api-extended/-/osu-api-extended-2.5.6.tgz#325af2679c48b2196aee5bbc2bd1d33b6522f63d"
+  integrity sha512-GuflbrOfq6U4ewS4iAVP4VVPnf/Q6AruYqzUEYltMa8kShqucg/XFooPXqebmfmF5ksovEzM7xRgcIwLdcfwzQ==
   dependencies:
     lzma-native "^8.0.1"
     node-osr "^1.2.1"
