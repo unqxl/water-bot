@@ -142,14 +142,14 @@
     mkdirp "^1.0.4"
     petitio "^1.4.0"
 
-"@distube/ytdl-core@^4.9.4":
-  version "4.9.4"
-  resolved "https://registry.yarnpkg.com/@distube/ytdl-core/-/ytdl-core-4.9.4.tgz#390e1d8c01b6c78df0fbe9ed9de9692337dd78f2"
-  integrity sha512-9ca8fh5jGhLnMRgpyS68YFhtJ891Y41R1hqxG1IEuUrUYmTVA+hVbTHKRgSqNYsGis2fRNFaHeYd9hchPWrbnQ==
+"@distube/ytdl-core@^4.11.3":
+  version "4.11.3"
+  resolved "https://registry.yarnpkg.com/@distube/ytdl-core/-/ytdl-core-4.11.3.tgz#2e7f4dbe903dabfa6965a4f36f7c63679daf73f5"
+  integrity sha512-vgLdpGjVQQH7Y5PCpoUa2GuALwrAsMvrU/dxd/KI/YmkVBH0qm/nG9d3tOQvydKF/PLBk26jY+rOjFm6mqzJkg==
   dependencies:
-    m3u8stream "^0.8.4"
-    miniget "^4.0.0"
-    sax "^1.1.3"
+    m3u8stream "^0.8.6"
+    miniget "^4.2.2"
+    sax "^1.2.4"
 
 "@distube/ytpl@^1.1.1":
   version "1.1.1"
@@ -1373,16 +1373,17 @@ discord.js@^14.0.0-dev.1647259751.2297c2b:
     undici "^4.14.1"
     ws "^8.5.0"
 
-distube@^4.0.0-dev.2:
-  version "4.0.0-dev.2"
-  resolved "https://registry.yarnpkg.com/distube/-/distube-4.0.0-dev.2.tgz#7f38837762c5a62a252053c8b62316936da26c19"
-  integrity sha512-GMkSujvT4YETJf5xqnpkNhMXFFN1nfst8cWJUSYQDG1CM2M0JP3ZRE9SmpYAlrciGy+RleuiGeCWuBYHMgC81A==
+distube@^4.0.0-dev.4:
+  version "4.0.0-dev.4"
+  resolved "https://registry.yarnpkg.com/distube/-/distube-4.0.0-dev.4.tgz#cf23d838bcdaf475ad26998b3b4f3a649ef1e1ba"
+  integrity sha512-CLj/d3+KJMGeqtiNVDvGtJ4qLAnmQMZEN3j5qPmnstHxGUrWtL7KbfisCNc3ezCRNMQOiOl0BOxCJ7oXU97TiA==
   dependencies:
-    "@distube/ytdl-core" "^4.9.4"
+    "@distube/ytdl-core" "^4.11.3"
     "@distube/ytpl" "^1.1.1"
     "@distube/ytsr" "^1.1.5"
     prism-media "https://codeload.github.com/distubejs/prism-media/tar.gz/main#workaround.tar.gz"
     tiny-typed-emitter "^2.1.0"
+    tslib "^2.4.0"
 
 dot-prop@^5.2.0:
   version "5.3.0"
@@ -2393,7 +2394,7 @@ lzma@^2.3.2:
   resolved "https://registry.yarnpkg.com/lzma/-/lzma-2.3.2.tgz#3783b24858b9c0e747a0df3cbf1fb5fcaa92c441"
   integrity sha1-N4OySFi5wOdHoN88vx+1/KqSxEE=
 
-m3u8stream@^0.8.4:
+m3u8stream@^0.8.6:
   version "0.8.6"
   resolved "https://registry.yarnpkg.com/m3u8stream/-/m3u8stream-0.8.6.tgz#0d6de4ce8ee69731734e6b616e7b05dd9d9a55b1"
   integrity sha512-LZj8kIVf9KCphiHmH7sbFQTVe4tOemb202fWwvJwR9W5ENW/1hxJN6ksAWGhQgSBSa3jyWhnjKU1Fw1GaOdbyA==
@@ -2527,7 +2528,7 @@ mimic-response@^3.1.0:
   resolved "https://registry.yarnpkg.com/mimic-response/-/mimic-response-3.1.0.tgz#2d1d59af9c1b129815accc2c46a022a5ce1fa3c9"
   integrity sha512-z0yWI+4FDrrweS8Zmt4Ej5HdJmky15+L2e6Wgn3+iK5fWzb6T3fhNFq2+MeTRb064c6Wr4N/wv0DzQTjNzHNGQ==
 
-miniget@^4.0.0, miniget@^4.2.1, miniget@^4.2.2:
+miniget@^4.2.1, miniget@^4.2.2:
   version "4.2.2"
   resolved "https://registry.yarnpkg.com/miniget/-/miniget-4.2.2.tgz#db20320f265efdc4c1826a0be431d56753074475"
   integrity sha512-a7voNL1N5lDMxvTMExOkg+Fq89jM2vY8pAi9ZEWzZtfNmdfP6RXkvUtFnCAXoCv2T9k1v/fUJVaAEuepGcvLYA==
@@ -3442,7 +3443,7 @@ safe-buffer@5.2.1, safe-buffer@^5.0.1, safe-buffer@^5.1.0, safe-buffer@~5.2.0:
   resolved "https://registry.yarnpkg.com/safer-buffer/-/safer-buffer-2.1.2.tgz#44fa161b0187b9549dd84bb91802f9bd8385cd6a"
   integrity sha512-YZo3K82SD7Riyi0E1EQPojLz7kpepnSQI9IyPbHHg1XXXevb5dJI7tpyN2ADxGcQbHG7vcyRHk0cbwqcQriUtg==
 
-sax@>=0.6.0, sax@^1.1.3, sax@^1.2.4:
+sax@>=0.6.0, sax@^1.2.4:
   version "1.2.4"
   resolved "https://registry.yarnpkg.com/sax/-/sax-1.2.4.tgz#2816234e2378bddc4e5354fab5caa895df7100d9"
   integrity sha512-NqVDv9TpANUjFm0N8uM5GxL36UgKi9/atZw+x7YFnQ8ckwFGKrl4xX4yWtrey3UJm5nP1kUbnYgLopqWNSRhWw==
@@ -3911,10 +3912,10 @@ ts-mixer@^6.0.0:
   resolved "https://registry.yarnpkg.com/ts-mixer/-/ts-mixer-6.0.0.tgz#4e631d3a36e3fa9521b973b132e8353bc7267f9f"
   integrity sha512-nXIb1fvdY5CBSrDIblLn73NW0qRDk5yJ0Sk1qPBF560OdJfQp9jhl+0tzcY09OZ9U+6GpeoI9RjwoIKFIoB9MQ==
 
-tslib@^2.3.1:
-  version "2.3.1"
-  resolved "https://registry.yarnpkg.com/tslib/-/tslib-2.3.1.tgz#e8a335add5ceae51aa261d32a490158ef042ef01"
-  integrity sha512-77EbyPPpMz+FRFRuAFlWMtmgUWGe9UOG2Z25NqCwiIjRhOf5iKGuzSe5P2w1laq+FkRy4p+PCuVkJSGkzTEKVw==
+tslib@^2.3.1, tslib@^2.4.0:
+  version "2.4.0"
+  resolved "https://registry.yarnpkg.com/tslib/-/tslib-2.4.0.tgz#7cecaa7f073ce680a05847aa77be941098f36dc3"
+  integrity sha512-d6xOpEDfsi2CZVlPQzGeux8XMwLT9hssAsaPYExaQMuYskwb+x1x7J371tWlbBdWHroy99KnVB6qIkUbs5X3UQ==
 
 tunnel-agent@^0.6.0:
   version "0.6.0"
