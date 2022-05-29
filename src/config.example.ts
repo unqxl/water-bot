@@ -16,12 +16,6 @@ export = {
 		database: "MYSQL-DATABASE",
 	},
 
-	topgg: {
-		votesChannelID: "CHANNEL-ID",
-		token: "NO-TOKEN",
-		webhook_auth: "NO-TOKEN",
-	},
-
 	languages: ["ru-RU", "en-EN", "ru", "en"],
 
 	keys: {
@@ -29,7 +23,6 @@ export = {
 		steam_key: "NO-TOKEN",
 		osu_client_id: 0,
 		osu_client_secret: "NO-TOKEN",
-		dagpi_key: "NO-TOKEN",
 		imdb_key: "NO-TOKEN",
 	},
 

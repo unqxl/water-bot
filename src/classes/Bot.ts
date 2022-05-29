@@ -7,8 +7,6 @@ import {
 	Util,
 } from "discord.js";
 import { Moderation } from "discord-moderation";
-import { Client as dagpiClient } from "dagpijs";
-import { DiscordTogether } from "discord-together";
 import { Client as IMDBClient } from "imdb-api";
 import { Economy } from "@badboy-discord/discordjs-economy";
 import Enmap from "enmap";
@@ -85,13 +83,10 @@ export = class Bot extends Client {
 			wal: false,
 		});
 
-		this.dagpi = new dagpiClient(this.config.keys.dagpi_key);
 		this.nekos = new NekoClient();
 		this.imdb = new IMDBClient({
 			apiKey: this.config.keys.imdb_key,
 		});
-		// @ts-expect-error ignore
-		this.together = new DiscordTogether(this);
 
 		this.handlers = new Handlers(this);
 		this.functions = new Functions(this);
@@ -175,10 +170,8 @@ declare module "discord.js" {
 		configurations: Enmap<string, GuildData>; //? Guild Configurations
 
 		//? APIs
-		dagpi: dagpiClient;
 		nekos: NekoClient;
 		imdb: IMDBClient;
-		together: DiscordTogether<{}>;
 
 		//? Systems
 		handlers: Handlers;
