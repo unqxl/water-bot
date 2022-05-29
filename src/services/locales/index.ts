@@ -6,6 +6,7 @@ export interface LocaleTemplate {
 		// Permissions Errors
 		BOT_MISSING_PERMISSIONS: string;
 		USER_MISSING_PERMISSIONS: string;
+		NO_ACCESS: string;
 
 		// Voice Errors
 		JOIN_VOICE: string;
@@ -127,6 +128,14 @@ export interface LocaleTemplate {
 			POPULATION: string;
 			CRITICAL: string;
 			LAST_UPDATE: string;
+		};
+
+		HELP: {
+			ECONOMY_DESCRIPTION: string;
+			MUSIC_DESCRIPTION: string;
+			OTHER_DESCRIPTION: string;
+			OWNER_DESCRIPTION: string;
+			SETTINGS_DESCRIPTION: string;
 		};
 
 		IMDB: {
@@ -267,6 +276,12 @@ export interface LocaleTemplate {
 			BOT: string;
 			IN_VOICE: string;
 			BOOSTING: string;
+		};
+	};
+
+	OWNER_COMMANDS: {
+		RELOAD: {
+			COMMAND_RELOADED: string;
 		};
 	};
 

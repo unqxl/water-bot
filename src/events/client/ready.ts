@@ -18,7 +18,6 @@ export default class ReadyEvent extends Event {
 		}
 		console.log("# Finished\n");
 
-		await client.web.start();
 		await client.handlers.loadCommands();
 		await checkUp(client);
 

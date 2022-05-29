@@ -3,6 +3,11 @@ import {
 	ChatInputCommandInteraction,
 	EmbedBuilder,
 	codeBlock,
+	ModalBuilder,
+	ActionRowBuilder,
+	TextInputBuilder,
+	TextInputStyle,
+	bold,
 } from "discord.js";
 import { LanguageService } from "../../services/Language";
 import { ValidateReturn } from "../../types/Command/BaseSlashCommand";
@@ -16,12 +21,6 @@ export default class EvalCommand extends SubCommand {
 			name: "eval",
 			description: "Executes code",
 			options: [
-				{
-					type: ApplicationCommandOptionType.String,
-					name: "code",
-					description: "Code to execute",
-					required: true,
-				},
 				{
 					type: ApplicationCommandOptionType.Boolean,
 					name: "ephemeral",
@@ -37,10 +36,20 @@ export default class EvalCommand extends SubCommand {
 		lang: LanguageService
 	): Promise<ValidateReturn> {
 		if (!this.client.owners.includes(interaction.user.id)) {
+			const color = this.client.functions.color("Red");
+			const author = this.client.functions.author(interaction.member);
+
+			const text = await lang.get("ERRORS:NO_ACCESS");
+			const embed = new EmbedBuilder();
+			embed.setColor(color);
+			embed.setAuthor(author);
+			embed.setDescription(`⛔ | ${bold(text)}`);
+			embed.setTimestamp();
+
 			return {
 				ok: false,
 				error: {
-					content: "⛔",
+					embeds: [embed],
 				},
 			};
 		}
@@ -55,34 +64,57 @@ export default class EvalCommand extends SubCommand {
 		lang: LanguageService
 	) {
 		const ephemeral = command.options.getBoolean("ephemeral");
-		const code = command.options.getString("code");
 
-		let evaluated;
-		try {
-			evaluated = await eval(code);
-		} catch (error) {
-			evaluated = error.message;
-		}
+		const row = new ActionRowBuilder<TextInputBuilder>();
+		row.addComponents([
+			new TextInputBuilder()
+				.setCustomId("code")
+				.setLabel("Code to Execute")
+				.setMinLength(0)
+				.setMaxLength(4000)
+				.setStyle(TextInputStyle.Paragraph)
+				.setRequired(true),
+		]);
 
-		if (typeof evaluated !== "string") {
-			evaluated = JSON.stringify(evaluated);
-		} else {
-			evaluated = evaluated.replace(/\n/g, "\n\t");
-			evaluated = evaluated.replace(this.client.toJSON, "❌");
-		}
+		const modal = new ModalBuilder();
+		modal.setTitle("Eval Command | Code");
+		modal.setCustomId("eval_code");
+		modal.addComponents([row]);
 
-		const color = this.client.functions.color("Blurple");
-		const author = this.client.functions.author(command.member);
+		await command.showModal(modal);
 
-		const embed = new EmbedBuilder();
-		embed.setColor(color);
-		embed.setAuthor(author);
-		embed.setDescription(codeBlock("js", evaluated));
-		embed.setTimestamp();
+		this.client.on("interactionCreate", async (interaction) => {
+			if (!interaction.isModalSubmit()) return;
 
-		return command.reply({
-			ephemeral,
-			embeds: [embed],
+			const code = interaction.fields.getTextInputValue("code");
+
+			let evaluated;
+			try {
+				evaluated = await eval(code);
+			} catch (error) {
+				evaluated = error.message;
+			}
+
+			if (typeof evaluated !== "string") {
+				evaluated = JSON.stringify(evaluated);
+			} else {
+				evaluated = evaluated.replace(/\n/g, "\n\t");
+				evaluated = evaluated.replace(this.client.toJSON, "❌");
+			}
+
+			const color = this.client.functions.color("Blurple");
+			const author = this.client.functions.author(command.member);
+
+			const embed = new EmbedBuilder();
+			embed.setColor(color);
+			embed.setAuthor(author);
+			embed.setDescription(codeBlock("js", evaluated));
+			embed.setTimestamp();
+
+			interaction.reply({
+				embeds: [embed],
+			});
+			return;
 		});
 	}
 }

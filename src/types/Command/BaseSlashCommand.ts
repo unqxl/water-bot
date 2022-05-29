@@ -2,7 +2,6 @@ import {
 	ApplicationCommandOption,
 	ApplicationCommandOptionData,
 	ChatInputCommandInteraction,
-	CommandInteractionOptionResolver,
 	InteractionReplyOptions,
 	PermissionsString,
 } from "discord.js";

@@ -11,7 +11,6 @@ import { Client as dagpiClient } from "dagpijs";
 import { DiscordTogether } from "discord-together";
 import { Client as IMDBClient } from "imdb-api";
 import { Economy } from "@badboy-discord/discordjs-economy";
-import WebServer from "./Server";
 import Enmap from "enmap";
 import DisTube from "distube";
 import logs from "discord-logs";
@@ -21,7 +20,6 @@ import NekoClient from "nekos.life";
 import Functions from "./Functions";
 import Handlers from "./Handlers";
 import Logger from "./Logger";
-import TopGG from "../modules/TopGG";
 import config from "../cfg";
 
 // Distube Plugins
@@ -39,97 +37,6 @@ import Event from "../types/Event/Event";
 import API from "./API";
 
 export = class Bot extends Client {
-	//? [Collections]
-	public commands: Collection<string, SlashCommand | SubCommand> =
-		new Collection();
-	public aliases: Collection<string, string> = new Collection();
-	public events: Collection<string, Event> = new Collection();
-
-	//? [Other]
-	public owners: string[] = ["852921856800718908"];
-	public config: typeof config = config;
-	public twitchKey: string;
-	public version: string = "2.3.0-dev";
-
-	//? [Storages]
-	public configurations: Enmap<string, GuildData> = new Enmap({
-		name: "configurations",
-		dataDir: "./db",
-		wal: false,
-	}); //? Configurations Storage
-
-	public leveling = new Enmap({
-		name: "leveling",
-		dataDir: "./db",
-		wal: false,
-	}); //? Leveling Storage
-
-	//? [APIs]
-	public dagpi: dagpiClient = new dagpiClient(this.config.keys.dagpi_key);
-	public nekos: NekoClient = new NekoClient();
-	public imdb: IMDBClient = new IMDBClient({
-		apiKey: this.config.keys.imdb_key,
-	});
-	// @ts-expect-error ignore
-	public together: DiscordTogether = new DiscordTogether(this);
-
-	public handlers: Handlers = new Handlers(this);
-	public functions: Functions = new Functions(this);
-
-	//? [Systems]
-	public apis: API = new API(this.config);
-	public web: WebServer = new WebServer({ port: 80 });
-	public logger: Logger = new Logger();
-
-	//? [Modules]
-	// @ts-expect-error ignore
-	public moderation: Moderation = new Moderation(this, {
-		dbPath: "./db/",
-		locale: "en-US",
-
-		systems: {
-			ghostPing: true,
-			antiInvite: true,
-			antiJoin: true,
-			antiLink: true,
-			antiSpam: true,
-			autoRole: false,
-		},
-	});
-
-	public economy: Economy = new Economy({
-		DBName: "economy",
-		DBPath: "./db/",
-		rewards: {
-			daily: 150,
-			weekly: 1050,
-			work: [100, 150],
-		},
-	});
-
-	public music: DisTube = new DisTube(this, {
-		leaveOnEmpty: true,
-		leaveOnFinish: true,
-		leaveOnStop: true,
-
-		emitNewSongOnly: true,
-		emitAddSongWhenCreatingQueue: false,
-		emptyCooldown: 5,
-
-		plugins: [
-			new SpotifyPlugin(),
-			new SoundCloudPlugin(),
-			new YtDlpPlugin(),
-		],
-
-		ytdlOptions: {
-			highWaterMark: 1024 * 1024 * 64,
-			quality: "highestaudio",
-			liveBuffer: 60000,
-			dlChunkSize: 1024 * 1024 * 64,
-		},
-	});
-
 	constructor() {
 		super({
 			partials: [
@@ -163,6 +70,75 @@ export = class Bot extends Client {
 			},
 		});
 
+		this.commands = new Collection();
+		this.aliases = new Collection();
+		this.events = new Collection();
+
+		this.owners = ["852921856800718908"];
+		this.config = config;
+		this.twitchKey = null;
+		this.version = "2.3.0-dev";
+
+		this.configurations = new Enmap({
+			name: "configurations",
+			dataDir: "./db",
+			wal: false,
+		});
+
+		this.dagpi = new dagpiClient(this.config.keys.dagpi_key);
+		this.nekos = new NekoClient();
+		this.imdb = new IMDBClient({
+			apiKey: this.config.keys.imdb_key,
+		});
+		// @ts-expect-error ignore
+		this.together = new DiscordTogether(this);
+
+		this.handlers = new Handlers(this);
+		this.functions = new Functions(this);
+		this.apis = new API(this.config);
+		this.logger = new Logger();
+
+		// @ts-expect-error ignore
+		this.moderation = new Moderation(this, {
+			dbPath: "./db/",
+			locale: "en-US",
+
+			systems: {
+				ghostPing: true,
+				antiInvite: true,
+				antiJoin: true,
+				antiLink: true,
+				antiSpam: true,
+				autoRole: false,
+			},
+		});
+
+		this.economy = new Economy({
+			DBName: "economy",
+			DBPath: "./db/",
+			rewards: {
+				daily: 150,
+				weekly: 1050,
+				work: [100, 150],
+			},
+		});
+
+		this.music = new DisTube(this, {
+			leaveOnEmpty: true,
+			leaveOnFinish: true,
+			leaveOnStop: true,
+
+			emitNewSongOnly: true,
+			emitAddSongWhenCreatingQueue: false,
+			emptyCooldown: 5,
+
+			plugins: [
+				new SpotifyPlugin(),
+				new SoundCloudPlugin(),
+				new YtDlpPlugin(),
+			],
+		});
+
 		this.music.setMaxListeners(Infinity);
 		this.setMaxListeners(Infinity);
 	}
@@ -171,8 +147,6 @@ export = class Bot extends Client {
 		await logs(this);
 		await this.handlers.loadEvents();
 		await this.functions.updateToken();
-
-		new TopGG(this);
 
 		this.config.bot.test
 			? this.login(this.config.bot.testToken)
@@ -183,3 +157,38 @@ export = class Bot extends Client {
 		return new Promise((res) => setTimeout(res, ms));
 	}
 };
+
+declare module "discord.js" {
+	interface Client {
+		//? Collections
+		commands: Collection<string, SlashCommand | SubCommand>;
+		aliases: Collection<string, string>;
+		events: Collection<string, Event>;
+
+		//? Other
+		owners: string[];
+		config: typeof config;
+		twitchKey: string;
+		version: string;
+
+		//? Storages
+		configurations: Enmap<string, GuildData>; //? Guild Configurations
+
+		//? APIs
+		dagpi: dagpiClient;
+		nekos: NekoClient;
+		imdb: IMDBClient;
+		together: DiscordTogether<{}>;
+
+		//? Systems
+		handlers: Handlers;
+		functions: Functions;
+		apis: API;
+		logger: Logger;
+
+		//? Modules
+		moderation: Moderation;
+		economy: Economy;
+		music: DisTube;
+	}
+}

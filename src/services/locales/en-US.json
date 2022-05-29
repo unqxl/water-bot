@@ -2,6 +2,7 @@
 	"ERRORS": {
 		"BOT_MISSING_PERMISSIONS": "Oh, it looks like I don't have some permissions to run this command: %s",
 		"USER_MISSING_PERMISSIONS": "Oh, it looks like you don't have some rights to run this command: %s",
+		"NO_ACCESS": "Oh, it looks like you have no access to this command!",
 		"JOIN_VOICE": "To use this command, you need to log into the voice channel!",
 		"JOIN_BOT_VOICE": "To use this command, you need to log into the voice channel where the bot is located!",
 		"QUEUE_IS_EMPTY": "The song's music queue is empty now!",
@@ -135,6 +136,13 @@
 			"CRITICAL": "Critical",
 			"LAST_UPDATE": "Last Update"
 		},
+		"HELP": {
+			"ECONOMY_DESCRIPTION": "Commands that allow you to create an economy system on the server.",
+			"MUSIC_DESCRIPTION": "Commands that allow you to play and manage music on the server.",
+			"OTHER_DESCRIPTION": "Commands that contain some information about the user/server.",
+			"OWNER_DESCRIPTION": "Commands that are intended only for the bot owner.",
+			"SETTINGS_DESCRIPTION": "Commands that allow you to manage the server configuration."
+		},
 		"IMDB": {
 			"DIRECTORS": "Directors",
 			"WRITERS": "Writers",
@@ -243,6 +251,11 @@
 			"BOT": "Bot",
 			"IN_VOICE": "In Voice",
 			"BOOSTING": "Boosting"
+		}
+	},
+	"OWNER_COMMANDS": {
+		"RELOAD": {
+			"COMMAND_RELOADED": "The command \"%s\" has been reloaded!"
 		}
 	},
 	"SETTINGS_COMMANDS": {
