@@ -7,15 +7,15 @@
   resolved "https://registry.yarnpkg.com/@anishshobith/deeptype/-/deeptype-1.1.0.tgz#38c8e634a563904753aedefdf0082a0b4f1b76a4"
   integrity sha512-C/NfCUQMydPrpVGVmcYjMxr4aIJ/tTps/voDSuDM3Zf0B5K5M0Kw4e9AeUppd55eH0j7DFHzc2eKsidz3qarRg==
 
-"@badboy-discord/discordjs-economy@^1.2.1":
-  version "1.2.1"
-  resolved "https://registry.yarnpkg.com/@badboy-discord/discordjs-economy/-/discordjs-economy-1.2.1.tgz#e2a6df7076b56a7e28d7e2dd621721bdfade5c6b"
-  integrity sha512-VxZMVOFEzrrWeMCzsudjJ7+UhE43gsna3D7Op1eKKfKSvae2eTyNzNFf7I40jn0CMxhjYMchE9OsXZ6yALGlRg==
+"@badboy-discord/discordjs-economy@^1.2.2":
+  version "1.2.2"
+  resolved "https://registry.yarnpkg.com/@badboy-discord/discordjs-economy/-/discordjs-economy-1.2.2.tgz#3392cbf4e42eaf23ef60f462fb8e6acc8e86283e"
+  integrity sha512-GDjwFKC/DrUNnOKQGmT5BldnU11sIWBoAQj9Ywi52e19YiagHBQ+nw6cFOaRp4vUP3DnYnFsxm5Nx2xhTvXRow==
   dependencies:
     colors "^1.4.0"
     enmap "^5.9.0"
-    typescript "^4.6.4"
-    undici "^5.1.1"
+    typescript "^4.7.2"
+    undici "^5.3.0"
 
 "@canvacord/assets@^2.0.5":
   version "2.1.0"
@@ -3922,17 +3922,17 @@ typeorm@^0.3.6:
     xml2js "^0.4.23"
     yargs "^17.3.1"
 
-typescript@^4.2.3, typescript@^4.6.3, typescript@^4.6.4:
-  version "4.6.4"
-  resolved "https://registry.yarnpkg.com/typescript/-/typescript-4.6.4.tgz#caa78bbc3a59e6a5c510d35703f6a09877ce45e9"
-  integrity sha512-9ia/jWHIEbo49HfjrLGfKbZSuWo9iTMwXO+Ca3pRsSpbsMbc7/IU8NKdCZVRRBafVPGnoJeFL76ZOAA84I9fEg==
+typescript@^4.2.3, typescript@^4.6.3, typescript@^4.7.2:
+  version "4.7.2"
+  resolved "https://registry.yarnpkg.com/typescript/-/typescript-4.7.2.tgz#1f9aa2ceb9af87cca227813b4310fff0b51593c4"
+  integrity sha512-Mamb1iX2FDUpcTRzltPxgWMKy3fhg0TN378ylbktPGPK/99KbDtMQ4W1hwgsbPAsG3a0xKa1vmw4VKZQbkvz5A==
 
 undici@^4.14.1:
   version "4.16.0"
   resolved "https://registry.yarnpkg.com/undici/-/undici-4.16.0.tgz#469bb87b3b918818d3d7843d91a1d08da357d5ff"
   integrity sha512-tkZSECUYi+/T1i4u+4+lwZmQgLXd4BLGlrc7KZPcLIW7Jpq99+Xpc30ONv7nS6F5UNOxp/HBZSSL9MafUrvJbw==
 
-undici@^5.1.1, undici@^5.4.0:
+undici@^5.3.0, undici@^5.4.0:
   version "5.4.0"
   resolved "https://registry.yarnpkg.com/undici/-/undici-5.4.0.tgz#c474fae02743d4788b96118d46008a24195024d2"
   integrity sha512-A1SRXysDg7J+mVP46jF+9cKANw0kptqSFZ8tGyL+HBiv0K1spjxPX8Z4EGu+Eu6pjClJUBdnUPlxrOafR668/g==
