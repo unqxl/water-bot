@@ -932,10 +932,10 @@ camelcase@^6.2.0:
   resolved "https://registry.yarnpkg.com/camelcase/-/camelcase-6.3.0.tgz#5685b95eb209ac9c0c177467778c9c84df58ba9a"
   integrity sha512-Gmy6FhYlCY7uOElZUSbxo2UCDH8owEk996gkbrpsgGtrJLM3J7jGxl9Ic7Qwwj4ivOE5AWZWRMecDdF7hqGjFA==
 
-canvacord@^5.2.3:
-  version "5.2.3"
-  resolved "https://registry.yarnpkg.com/canvacord/-/canvacord-5.2.3.tgz#efad0375022f05097b81bfee863bbbaa82ee0b5b"
-  integrity sha512-aYxGA7tVQi3NCa7Qxg2b9u+wAeek2xE5q+nJjiReZofeUx0d1Xq731UerKf+iVIPBrCAcjbv/yflJL0qVwPuMQ==
+canvacord@^5.3.0:
+  version "5.3.0"
+  resolved "https://registry.yarnpkg.com/canvacord/-/canvacord-5.3.0.tgz#a4af3dd5f45168ddca525efc52fc3b0954b457da"
+  integrity sha512-1ZVj6lgNxLfZrK7T/aNUNBr79ptLlrnm9iUnP4DLPrA4HCfj6mEZdr8F2LEqbJf+jjsE63JXnNL91oLWJ9TrXA==
   dependencies:
     "@canvacord/assets" "^2.0.5"
     "@canvacord/emoji-parser" "^1.0.1"
@@ -2954,10 +2954,10 @@ open@^8.4.0:
     is-docker "^2.1.1"
     is-wsl "^2.2.0"
 
-osu-api-extended@^2.5.4:
-  version "2.5.4"
-  resolved "https://registry.yarnpkg.com/osu-api-extended/-/osu-api-extended-2.5.4.tgz#f39879459e3ca7844f3194864ece0d789379a685"
-  integrity sha512-UqYheKU4ALGh28GOBKhkgjrgU/bYZFuVDtmqchEfh1oMuHkLHNkMy3eMNcnlIuuektHZxO0eHDifcQ6hk3gBmA==
+osu-api-extended@^2.5.6:
+  version "2.5.6"
+  resolved "https://registry.yarnpkg.com/osu-api-extended/-/osu-api-extended-2.5.6.tgz#325af2679c48b2196aee5bbc2bd1d33b6522f63d"
+  integrity sha512-GuflbrOfq6U4ewS4iAVP4VVPnf/Q6AruYqzUEYltMa8kShqucg/XFooPXqebmfmF5ksovEzM7xRgcIwLdcfwzQ==
   dependencies:
     lzma-native "^8.0.1"
     node-osr "^1.2.1"
@@ -3540,10 +3540,10 @@ smart-buffer@^4.2.0:
   resolved "https://registry.yarnpkg.com/smart-buffer/-/smart-buffer-4.2.0.tgz#6e1d71fa4f18c05f7d0ff216dd16a481d0e8d9ae"
   integrity sha512-94hK0Hh8rPqQl2xXc3HsaBoOXKV20MToPkcXvwbISWLEs+64sBq5kFgn2kJDHb1Pry9yrP0dxrCI9RRci7RXKg==
 
-socket.io-client@^4.5.0:
-  version "4.5.0"
-  resolved "https://registry.yarnpkg.com/socket.io-client/-/socket.io-client-4.5.0.tgz#3858b6183bab31c5c4eaf3efd0fa50840ebb4504"
-  integrity sha512-HW61c1G7OrYGxaI79WRn17+b03iBCdvhBj4iqyXHBoL5M8w2MSO/vChsjA93knG4GYEai1/vbXWJna9dzxXtSg==
+socket.io-client@^4.5.1:
+  version "4.5.1"
+  resolved "https://registry.yarnpkg.com/socket.io-client/-/socket.io-client-4.5.1.tgz#cab8da71976a300d3090414e28c2203a47884d84"
+  integrity sha512-e6nLVgiRYatS+AHXnOnGi4ocOpubvOUCGhyWw8v+/FxW8saHkinG6Dfhi9TU0Kt/8mwJIAASxvw6eujQmjdZVA==
   dependencies:
     "@socket.io/component-emitter" "~3.1.0"
     debug "~4.3.2"
