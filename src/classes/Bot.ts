@@ -4,7 +4,6 @@ import {
 	GatewayIntentBits,
 	Partials,
 	ActivityType,
-	Util,
 } from "discord.js";
 import { Moderation } from "discord-moderation";
 import { Client as IMDBClient } from "imdb-api";

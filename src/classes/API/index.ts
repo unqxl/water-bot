@@ -1,4 +1,4 @@
-import configExample from "../../config.example";
+import configExample from "../../cfg.example";
 import IMDBAPI from "./classes/IMDB";
 import OsuAPI from "./classes/osu";
 import SteamAPI from "./classes/Steam";

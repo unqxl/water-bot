@@ -37,19 +37,17 @@ Water - one of the best Discord Bots in terms of functionality.</strong>
 1. <strong>[Weather API](https://openweathermap.org/api)</strong>
 2. <strong>[Steam API](https://steamcommunity.com/dev/apikey)</strong>
 3. <strong>[osu!api](https://osu.ppy.sh/p/api)</strong>
-4. <strong>[dagpi](https://dagpi.xyz/)</strong>
-5. <strong>[Twitch API](https://dev.twitch.tv/console)</strong>
-6. <strong>[IMDB API](https://imdb-api.com)</strong>
+4. <strong>[Twitch API](https://dev.twitch.tv/console)</strong>
+5. <strong>[IMDB API](https://imdb-api.com)</strong>
 
 ## Installation
 
 1. <strong>Clone this repo: `git clone https://github.com/bad-boy-discord/water-bot`</strong>
 2. <strong>Install all dependencies: `npm install`</strong>
-3. <strong>Change all keys/tokens in `src/config.ts`</strong>
-4. <strong>Run `npm run build` to convert TS code into JS</strong> <br />
-   4.1: <strong>Run `npm run start:ts` to run TS code using ts-node</strong>
-5. <strong>Run the bot: `npm run start`</strong> <br />
-   5.1: <strong>Run `npm run start:ts` to run TS code using ts-node</strong>
+3. <strong>Rename `src/cfg.example.ts` with `src/cfg.ts`</strong>
+4. <strong>Change all keys/tokens in `src/config.ts`</strong>
+5. <strong>Run `npm run start:dev` to run TS code using ts-node</strong> <br>
+   5.1: <strong>You can also run the bot with `npm run start` command</strong>
 
 # License
 
