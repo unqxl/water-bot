@@ -1301,10 +1301,10 @@ discord-api-types@^0.29.0:
   resolved "https://registry.yarnpkg.com/discord-api-types/-/discord-api-types-0.29.0.tgz#8346352b623ddd8d8eed386b6eb758e2d82d6005"
   integrity sha512-Ekq1ICNpOTVajXKZguNFrsDeTmam+ZeA38txsNLZnANdXUjU6QBPIZLUQTC6MzigFGb0Tt8vk4xLnXmzv0shNg==
 
-discord-api-types@^0.33.2:
-  version "0.33.2"
-  resolved "https://registry.yarnpkg.com/discord-api-types/-/discord-api-types-0.33.2.tgz#272134c125700807998445cf2033a4dd1a5dfbb2"
-  integrity sha512-ZiYvIUAOQnN98+TRaXH8HZdaCofNZDoUad4piVE1lfjlM1E3LRaRIyZOs4eWcWU/gI0P8oTTXyXCjfqKzV7YDw==
+discord-api-types@^0.33.5:
+  version "0.33.5"
+  resolved "https://registry.yarnpkg.com/discord-api-types/-/discord-api-types-0.33.5.tgz#6548b70520f7b944c60984dca4ab58654d664a12"
+  integrity sha512-dvO5M52v7m7Dy96+XUnzXNsQ/0npsYpU6dL205kAtEDueswoz3aU3bh1UMoK4cQmcGtB1YRyLKqp+DXi05lzFg==
 
 discord-giveaways@bad-boy-discord/discord-giveaways#develop:
   version "5.1.1"
