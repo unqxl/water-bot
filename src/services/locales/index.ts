@@ -26,11 +26,25 @@ export interface LocaleTemplate {
 		DATA_NOT_FOUND: string;
 		NOT_IN_LIST: string;
 		ALREADY_IN_LIST: string;
+
+		// Moderation Errors
+		CANNOT_MODERATE_YOURSELF: string;
+		CANNOT_MODERATE_BOT: string;
 	};
 	EVENTS: {};
 	PERMISSIONS: Record<PermissionsString, string>;
 
 	// Commands
+	MODERATION_COMMANDS: {
+		BAN: {
+			TEXT: string;
+		};
+
+		KICK: {
+			TEXT: string;
+		};
+	};
+
 	MUSIC_COMMANDS: {
 		NOWPLAYING: {
 			TITLE: string;

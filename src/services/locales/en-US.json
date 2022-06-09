@@ -13,7 +13,9 @@
 		"USER_IS_BOT": "This user is a bot!",
 		"DATA_NOT_FOUND": "Data from %s is not found!",
 		"NOT_IN_LIST": "\"%s\" is not in the list!",
-		"ALREADY_IN_LIST": "\"%s\" is already in the list!"
+		"ALREADY_IN_LIST": "\"%s\" is already in the list!",
+		"CANNOT_MODERATE_YOURSELF": "You cannot kick or ban or timeout yourself!",
+		"CANNOT_MODERATE_BOT": "You cannot kick or ban or timeout me!"
 	},
 	"EVENTS": {},
 	"PERMISSIONS": {
@@ -58,6 +60,14 @@
 		"ViewAuditLog": "View Audit Log",
 		"ViewChannel": "View Channel",
 		"ViewGuildInsights": "View Guild Insights"
+	},
+	"MODERATION_COMMANDS": {
+		"BAN": {
+			"TEXT": "You successfully banned %s for \"%s\"!"
+		},
+		"KICK": {
+			"TEXT": "You successfully kicked %s for \"%s\"!"
+		}
 	},
 	"MUSIC_COMMANDS": {
 		"NOWPLAYING": {
