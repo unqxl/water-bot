@@ -138,6 +138,7 @@
 		},
 		"HELP": {
 			"ECONOMY_DESCRIPTION": "Commands that allow you to create an economy system on the server.",
+			"MODERATION_DESCRIPTION": "Commands that allow you to moderate server.",
 			"MUSIC_DESCRIPTION": "Commands that allow you to play and manage music on the server.",
 			"OTHER_DESCRIPTION": "Commands that contain some information about the user/server.",
 			"OWNER_DESCRIPTION": "Commands that are intended only for the bot owner.",

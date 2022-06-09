@@ -132,6 +132,7 @@ export interface LocaleTemplate {
 
 		HELP: {
 			ECONOMY_DESCRIPTION: string;
+			MODERATION_DESCRIPTION: string;
 			MUSIC_DESCRIPTION: string;
 			OTHER_DESCRIPTION: string;
 			OWNER_DESCRIPTION: string;

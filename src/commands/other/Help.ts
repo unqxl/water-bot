@@ -18,6 +18,7 @@ export default class HelpCommand extends SubCommand {
 	) {
 		const {
 			ECONOMY_DESCRIPTION,
+			MODERATION_DESCRIPTION,
 			MUSIC_DESCRIPTION,
 			OTHER_DESCRIPTION,
 			OWNER_DESCRIPTION,
@@ -28,6 +29,7 @@ export default class HelpCommand extends SubCommand {
 
 		const text = [
 			`**/economy** - ${bold(ECONOMY_DESCRIPTION)}`,
+			`**/moderation** - ${bold(MODERATION_DESCRIPTION)}`,
 			`**/music** - ${bold(MUSIC_DESCRIPTION)}`,
 			`**/other** - ${bold(OTHER_DESCRIPTION)}`,
 			`**/owner** - ${bold(OWNER_DESCRIPTION)}`,
