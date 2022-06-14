@@ -50,7 +50,7 @@
 		"topgg-autoposter": "^2.0.1",
 		"twemoji-parser": "^14.0.0",
 		"typeorm": "^0.3.6",
-		"undici": "^5.4.0"
+		"undici": "^5.5.1"
 	},
 	"devDependencies": {
 		"@types/bluebird": "^3.5.36",
