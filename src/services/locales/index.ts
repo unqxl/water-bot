@@ -43,6 +43,10 @@ export interface LocaleTemplate {
 		KICK: {
 			TEXT: string;
 		};
+
+		TIMEOUT: {
+			TEXT: string;
+		};
 	};
 
 	MUSIC_COMMANDS: {

@@ -63,10 +63,13 @@
 	},
 	"MODERATION_COMMANDS": {
 		"BAN": {
-			"TEXT": "You successfully banned %s for \"%s\"!"
+			"TEXT": "You have successfully banned %s for \"%s\"!"
 		},
 		"KICK": {
-			"TEXT": "You successfully kicked %s for \"%s\"!"
+			"TEXT": "You have successfully kicked %s for \"%s\"!"
+		},
+		"TIMEOUT": {
+			"TEXT": "You have successfully granted a timeout to %s because of \"%s\" on %s!"
 		}
 	},
 	"MUSIC_COMMANDS": {
