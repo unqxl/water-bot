@@ -25,7 +25,7 @@
 		"chalk": "4.1.2",
 		"cron": "^2.0.0",
 		"dagpijs": "^2.1.1",
-		"dayjs": "^1.11.2",
+		"dayjs": "^1.11.3",
 		"discord-api-types": "^0.34.0",
 		"discord-giveaways": "bad-boy-discord/discord-giveaways#develop",
 		"discord-logs": "bad-boy-discord/discord-logs",
