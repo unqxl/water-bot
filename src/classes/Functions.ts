@@ -1,21 +1,16 @@
 import {
 	ColorResolvable,
-	DiscordAPIError,
 	Guild,
-	HTTPError,
 	EmbedBuilder,
-	MessageOptions,
-	Snowflake,
-	TextChannel,
 	User,
-	Util,
 	GuildMember,
 	EmbedAuthorData,
+	resolveColor,
 } from "discord.js";
-import { bold, codeBlock } from "@discordjs/builders";
 import { APIEmbed } from "discord-api-types/v9";
 import { Message } from "discord.js";
 import { request } from "undici";
+import { bold } from "@discordjs/builders";
 import Bot from "./Bot";
 
 export = class Functions {
@@ -48,7 +43,7 @@ export = class Functions {
 
 		if (showTimestamp === true) embed.setTimestamp();
 
-		embed.setColor(Util.resolveColor(color));
+		embed.setColor(resolveColor(color));
 		embed.setDescription(
 			typeof emoji === "string" ? `${emoji} | ${bold(text)}` : bold(text)
 		);
@@ -86,17 +81,6 @@ export = class Functions {
 		return Number.parseFloat(String(n)).toLocaleString("be-BE");
 	}
 
-	formatBytes(bytes) {
-		if (bytes === 0) return "0 Bytes";
-
-		const sizes = ["Bytes", "KB", "MB", "GB", "TB", "PB", "EB", "ZB", "YB"];
-		const i = Math.floor(Math.log(bytes) / Math.log(1024));
-
-		return `${parseFloat((bytes / Math.pow(1024, i)).toFixed(2))} ${
-			sizes[i]
-		}`;
-	}
-
 	checkGuildBirthday(guild: Guild): Birthday {
 		const createDate = guild.createdTimestamp;
 		const date = new Date(createDate);
@@ -123,130 +107,6 @@ export = class Functions {
 
 	sp(num: string | number) {
 		return Number(num).toLocaleString("be");
-	}
-
-	async promptMessage(
-		message: Message,
-		data: MessageOptions,
-		time = 15000
-	): Promise<string | boolean> {
-		const msg = await message.channel.send(data);
-		const filter = (m: Message) => m.author.id === message.author.id;
-		const collector = await msg.channel.awaitMessages({
-			filter,
-			max: 1,
-			time,
-		});
-
-		const collected = collector.first();
-		if (!collected) {
-			msg.delete();
-			return false;
-		} else {
-			return collected.content;
-		}
-	}
-
-	async sendLog(err: unknown, type: WarningTypes) {
-		const error = err as DiscordAPIError | HTTPError | Error;
-
-		try {
-			if (error?.message.includes("Missing Access")) return;
-			if (error?.message.includes("Missing Permissions")) return;
-			if (error?.message.includes("Unknown Message")) return;
-			if (error?.message.includes("Members didn't arrive in time."))
-				return;
-
-			const channelID = this.client.config.bot.logsChannelID as
-				| Snowflake
-				| undefined;
-			if (!channelID) return;
-
-			const channel = (this.client.channels.cache.get(channelID) ||
-				(await this.client.channels.fetch(channelID))) as TextChannel;
-			if (!channel) return;
-
-			const message = {
-				author: this.client.user,
-			};
-
-			const code = "code" in error ? error.code : "N/A";
-			const httpStatus =
-				"httpStatus" in error ? error["httpStatus"] : "N/A";
-			const requestData =
-				"requestData" in error ? error["requestData"] : { json: {} };
-			const name = error.name || "N/A";
-
-			let stack = error.stack || error;
-			let jsonString: string | undefined = "";
-
-			try {
-				jsonString = JSON.stringify(requestData.json, null, 2);
-			} catch (error) {
-				jsonString = "";
-			}
-
-			if (jsonString.length >= 2048) {
-				jsonString = jsonString
-					? `${jsonString?.substring(0, 2045)}...`
-					: "";
-			}
-
-			if (typeof stack === "string" && stack.length >= 2048) {
-				console.warn(stack);
-				stack =
-					"Произошла ошибка, но она большая для того, чтобы отправить её сюда.\nПроверьте консоль";
-			}
-
-			const embed = this.buildEmbed(
-				message,
-				type === "error" ? "Red" : "Orange",
-				"...",
-				false,
-				false,
-				false,
-				false
-			);
-
-			embed.data.setDescription(codeBlock(stack as string));
-			embed.data.addFields([
-				{
-					name: "Name",
-					value: name,
-					inline: true,
-				},
-				{
-					name: "Code",
-					value: code.toString(),
-					inline: true,
-				},
-				{
-					name: "HTTP Status",
-					value: httpStatus.toString(),
-					inline: true,
-				},
-				{
-					name: "Timestamp",
-					value: new Date().toLocaleString("ru"),
-					inline: true,
-				},
-				{
-					name: "Request Data",
-					value: codeBlock("json", jsonString.substring(0, 2045)),
-					inline: false,
-				},
-			]);
-
-			channel.send({
-				embeds: [embed.data.toJSON()],
-			});
-		} catch (e) {
-			console.warn({
-				error,
-			});
-
-			console.warn(e);
-		}
 	}
 
 	declOfNum(n: number, text_forms: string[]) {
@@ -276,7 +136,7 @@ export = class Functions {
 	}
 
 	color(color: ColorResolvable): number {
-		return Util.resolveColor(color);
+		return resolveColor(color);
 	}
 
 	voiceCheck(

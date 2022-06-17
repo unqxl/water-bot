@@ -1,6 +1,6 @@
 import { GuildService } from "../../services/Guild";
 import { Guild } from "discord.js";
-import Event from "../../types/Event/Event";
+import Event from "../../types/Event";
 import Bot from "../../classes/Bot";
 
 export default class GuildCreateEvent extends Event {

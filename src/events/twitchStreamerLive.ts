@@ -22,10 +22,10 @@ interface StreamData {
 }
 
 export = async (client: Bot, data: StreamData) => {
-	const language = new LanguageService(client, data.guild_id);
-	const service = new GuildService(client);
-	const TWITCH = await (await language.all()).TWITCH_SYSTEM;
-	const text = await language.get(
+	const language_service = new LanguageService(client, data.guild_id);
+	const guild_service = new GuildService(client);
+	const TWITCH = await (await language_service.all()).TWITCH_SYSTEM;
+	const text = await language_service.get(
 		"TWITCH_SYSTEM:STREAM_STARTED",
 		data.streamer
 	);
@@ -61,9 +61,12 @@ export = async (client: Bot, data: StreamData) => {
 	row.addComponents([button]);
 
 	const guild = client.guilds.cache.get(data.guild_id);
-	const channel_id = service.getSetting(data.guild_id, "twitch_channel");
-	const channel = guild.channels.cache.get(channel_id) as TextChannel;
+	const channel_id = guild_service.getSetting(
+		data.guild_id,
+		"twitch_channel"
+	);
 
+	const channel = guild.channels.cache.get(channel_id) as TextChannel;
 	channel.send({
 		embeds: [embed],
 		components: [row],

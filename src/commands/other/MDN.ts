@@ -2,7 +2,7 @@ import {
 	ApplicationCommandOptionType,
 	ChatInputCommandInteraction,
 	EmbedBuilder,
-	Util,
+	resolveColor,
 } from "discord.js";
 import { LanguageService } from "../../services/Language";
 import { SubCommand } from "../../types/Command/SubCommand";
@@ -54,7 +54,7 @@ export default class MDNCommand extends SubCommand {
 			});
 		}
 
-		data.color = Util.resolveColor(data.color);
+		data.color = resolveColor(data.color);
 		const embed = new EmbedBuilder(data);
 
 		return command.reply({

@@ -1,5 +1,3 @@
-import { GuildMember } from "discord.js";
-
 export interface GuildData {
 	id: string;
 	locale: SupportedLocales;

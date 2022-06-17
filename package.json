@@ -26,7 +26,7 @@
 		"discord-api-types": "^0.34.0",
 		"discord-logs": "bad-boy-discord/discord-logs",
 		"discord-moderation": "^2.2.11",
-		"discord.js": "^14.0.0-dev.1655165434-b4e28a8",
+		"discord.js": "^14.0.0-dev.1655381041-4df491c",
 		"distube": "^4.0.0-dev.5",
 		"dotenv": "^16.0.1",
 		"enmap": "^5.9.0",
@@ -52,7 +52,7 @@
 		"bufferutil": "^4.0.6",
 		"gitmoji-cli": "^5.0.1",
 		"libsodium-wrappers": "^0.7.10",
-		"npm-check-updates": "^13.1.5",
+		"npm-check-updates": "^14.0.1",
 		"rimraf": "^3.0.2",
 		"utf-8-validate": "^5.0.9"
 	},

@@ -28,7 +28,7 @@ import SoundCloudPlugin from "@distube/soundcloud";
 import { SlashCommand } from "../types/Command/SlashCommand";
 import { SubCommand } from "../types/Command/SubCommand";
 import { GuildData } from "../types/Guild";
-import Event from "../types/Event/Event";
+import Event from "../types/Event";
 
 // WebSocket
 import API from "./API";

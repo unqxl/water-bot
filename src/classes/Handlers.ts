@@ -1,4 +1,4 @@
-import Event from "../types/Event/Event";
+import Event from "../types/Event";
 import Bot from "./Bot";
 import path from "path";
 

@@ -1,6 +1,6 @@
 import { GuildService } from "../../services/Guild";
 import { Job } from "../../plugins/Job";
-import Event from "../../types/Event/Event";
+import Event from "../../types/Event";
 import Bot from "../../classes/Bot";
 import { ApplicationCommandOptionType } from "discord.js";
 

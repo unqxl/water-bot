@@ -5,7 +5,7 @@ import {
 	ComponentType,
 	EmbedBuilder,
 	GuildMember,
-	Util,
+	escapeMarkdown,
 } from "discord.js";
 import { LanguageService } from "../../services/Language";
 import { ValidateReturn } from "../../types/Command/BaseSlashCommand";
@@ -100,7 +100,7 @@ export default class QueueCommand extends SubCommand {
 		var description = queue.songs
 			.map((v) => v)
 			.map(({ name, user, formattedDuration }, i) => {
-				const Name = Util.escapeMarkdown(name);
+				const Name = escapeMarkdown(name);
 				const requestedBy = user.toString();
 				const index = bold((i + 1).toString());
 				const right_part = `[${formattedDuration} | ${requestedBy}]`;
@@ -172,7 +172,7 @@ export default class QueueCommand extends SubCommand {
 					description = queue.songs
 						.map((v) => v)
 						.map(({ name, user, formattedDuration }, i) => {
-							const Name = Util.escapeMarkdown(name);
+							const Name = escapeMarkdown(name);
 							const requestedBy = user.toString();
 							const index = bold((i + 1).toString());
 							const right_part = `[${formattedDuration} | ${requestedBy}]`;
@@ -223,7 +223,7 @@ export default class QueueCommand extends SubCommand {
 					description = queue.songs
 						.map((v) => v)
 						.map(({ name, user, formattedDuration }, i) => {
-							const Name = Util.escapeMarkdown(name);
+							const Name = escapeMarkdown(name);
 							const requestedBy = user.toString();
 							const index = bold((i + 1).toString());
 							const right_part = `[${formattedDuration} | ${requestedBy}]`;

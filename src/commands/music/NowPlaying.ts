@@ -1,8 +1,8 @@
 import {
 	ChatInputCommandInteraction,
 	EmbedBuilder,
+	escapeMarkdown,
 	GuildMember,
-	Util,
 } from "discord.js";
 import { bold, hyperlink } from "@discordjs/builders";
 import { LanguageService } from "../../services/Language";
@@ -90,7 +90,7 @@ export default class NowPlayingCommand extends SubCommand {
 	) {
 		const queue = this.client.music.getQueue(command.guild);
 		const song = queue.songs[0];
-		const name = Util.escapeMarkdown(song.name);
+		const name = escapeMarkdown(song.name);
 		const { NOWPLAYING } = await (await lang.all()).MUSIC_COMMANDS;
 
 		const text = [

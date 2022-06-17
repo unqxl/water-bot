@@ -6,7 +6,7 @@ import {
 } from "discord.js";
 import { LanguageService } from "../../services/Language";
 import { bold } from "@discordjs/builders";
-import Event from "../../types/Event/Event";
+import Event from "../../types/Event";
 import Bot from "../../classes/Bot";
 
 export default class InteractionCreateEvent extends Event {
