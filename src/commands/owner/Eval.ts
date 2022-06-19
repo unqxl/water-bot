@@ -9,6 +9,7 @@ import {
 	TextInputStyle,
 	bold,
 	ModalSubmitInteraction,
+	InteractionType,
 } from "discord.js";
 import { LanguageService } from "../../services/Language";
 import { ValidateReturn } from "../../types/Command/BaseSlashCommand";
@@ -84,13 +85,10 @@ export default class EvalCommand extends SubCommand {
 
 		await command.showModal(modal);
 
-		//! Bug in v14, I think...
 		this.client.on("interactionCreate", async (interaction) => {
-			if ((!interaction as any) instanceof ModalSubmitInteraction) return;
+			if (interaction.type !== InteractionType.ModalSubmit) return;
 
-			const code = (
-				interaction as ModalSubmitInteraction
-			).fields.getTextInputValue("code");
+			const code = interaction.fields.getTextInputValue("code");
 
 			let evaluated;
 			try {
