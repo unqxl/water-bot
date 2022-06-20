@@ -9,11 +9,9 @@ export = {
 		github_link: "https://github.com/user/repo",
 	},
 
-	mysql: {
-		host: "MYSQL-IP",
-		username: "MYSQL-USERNAME",
-		password: "MYSQL-PASSWORD",
-		database: "MYSQL-DATABASE",
+	sentry: {
+		enabled: false,
+		dsn: "NO-DSN",
 	},
 
 	languages: ["ru-RU", "en-EN", "ru", "en"],

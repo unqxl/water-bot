@@ -22,14 +22,6 @@ export default class EvalCommand extends SubCommand {
 			commandName: "owner",
 			name: "eval",
 			description: "Executes code",
-			options: [
-				{
-					type: ApplicationCommandOptionType.Boolean,
-					name: "ephemeral",
-					description: "Show message to all or not",
-					required: false,
-				},
-			],
 		});
 	}
 
@@ -65,8 +57,6 @@ export default class EvalCommand extends SubCommand {
 		command: ChatInputCommandInteraction<"cached">,
 		lang: LanguageService
 	) {
-		const ephemeral = command.options.getBoolean("ephemeral");
-
 		const row = new ActionRowBuilder<TextInputBuilder>();
 		row.addComponents([
 			new TextInputBuilder()
@@ -80,7 +70,7 @@ export default class EvalCommand extends SubCommand {
 
 		const modal = new ModalBuilder();
 		modal.setTitle("Eval Command | Code");
-		modal.setCustomId("eval_code");
+		modal.setCustomId("eval_code_submission");
 		modal.addComponents([row]);
 
 		await command.showModal(modal);
@@ -113,9 +103,10 @@ export default class EvalCommand extends SubCommand {
 			embed.setDescription(codeBlock("js", evaluated));
 			embed.setTimestamp();
 
-			(interaction as ModalSubmitInteraction).reply({
+			interaction.reply({
 				embeds: [embed],
 			});
+
 			return;
 		});
 	}

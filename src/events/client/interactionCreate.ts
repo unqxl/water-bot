@@ -3,9 +3,11 @@ import {
 	EmbedBuilder,
 	GuildMember,
 	Interaction,
+	InteractionType,
+	ModalSubmitInteraction,
 } from "discord.js";
 import { LanguageService } from "../../services/Language";
-import { bold } from "@discordjs/builders";
+import { bold, codeBlock } from "@discordjs/builders";
 import Event from "../../types/Event";
 import Bot from "../../classes/Bot";
 
@@ -15,6 +17,12 @@ export default class InteractionCreateEvent extends Event {
 	}
 
 	async run(client: Bot, interaction: Interaction) {
+		if (interaction.type === InteractionType.ModalSubmit) {
+			return await this.handleModalSubmit(
+				interaction as ModalSubmitInteraction
+			);
+		}
+
 		if (!interaction.inGuild()) return;
 		if (!interaction.isChatInputCommand()) return;
 
@@ -120,5 +128,45 @@ export default class InteractionCreateEvent extends Event {
 		}
 
 		return command;
+	}
+
+	async handleModalSubmit(interaction: ModalSubmitInteraction) {
+		switch (interaction.customId) {
+			case "eval_code_submission": {
+				const code = interaction.fields.getTextInputValue("code");
+
+				let evaluated;
+				try {
+					evaluated = await eval(code);
+				} catch (error) {
+					evaluated = error.message;
+				}
+
+				if (typeof evaluated !== "string") {
+					evaluated = JSON.stringify(evaluated);
+				} else {
+					evaluated = evaluated.replace(/\n/g, "\n\t");
+					evaluated = evaluated.replace(this.client.toJSON, "❌");
+				}
+
+				const color = this.client.functions.color("Blurple");
+				const author = this.client.functions.author(
+					interaction.member as GuildMember
+				);
+
+				const embed = new EmbedBuilder();
+				embed.setColor(color);
+				embed.setAuthor(author);
+				embed.setDescription(codeBlock("js", evaluated));
+				embed.setTimestamp();
+
+				interaction.reply({
+					content: undefined,
+					embeds: [embed],
+				});
+
+				return;
+			}
+		}
 	}
 }
