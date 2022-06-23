@@ -2271,10 +2271,10 @@ keyv@^4.0.0:
   dependencies:
     json-buffer "3.0.1"
 
-kleur@^3.0.3:
-  version "3.0.3"
-  resolved "https://registry.yarnpkg.com/kleur/-/kleur-3.0.3.tgz#a79c9ecc86ee1ce3fa6206d1216c501f147fc07e"
-  integrity sha512-eTIzlVOSUR+JxdDFepEYcBMtZ9Qqdef+rnzWdRZuMbOywu5tO2w2N7rqjoANZ5k9vywhL6Br1VRjUIgTQx4E8w==
+kleur@^4.0.1:
+  version "4.1.4"
+  resolved "https://registry.yarnpkg.com/kleur/-/kleur-4.1.4.tgz#8c202987d7e577766d039a8cd461934c01cda04d"
+  integrity sha512-8QADVssbrFjivHWQU7KkMgptGTl6WAcSdlbBPY4uNF+mWr6DGcKrvY2w4FQJoXch7+fKMjj0dRrL75vk3k23OA==
 
 ky-universal@^0.8.2:
   version "0.8.2"
@@ -2787,10 +2787,10 @@ npm-bundled@^1.1.1, npm-bundled@^1.1.2:
   dependencies:
     npm-normalize-package-bin "^1.0.1"
 
-npm-check-updates@^14.0.1:
-  version "14.0.1"
-  resolved "https://registry.yarnpkg.com/npm-check-updates/-/npm-check-updates-14.0.1.tgz#73b5f5248d58e4fec51827cf1ded0d9083981b12"
-  integrity sha512-CjHKxcJur/OiVc2GKBagUrzDsXL8JJC71rNVv2mC7eNA6w/ebe3POx9x46ay4p3woSxJOa7hYWNn1UwL7jgHug==
+npm-check-updates@^14.1.0:
+  version "14.1.0"
+  resolved "https://registry.yarnpkg.com/npm-check-updates/-/npm-check-updates-14.1.0.tgz#aa40a7e5779aab406a6f3061389ff8f6e22b7fe2"
+  integrity sha512-5431XW0MsrSfBv2mHoRBjq/mb2eiNKUAXBGxe63OBo+TZAMtKI+/2zx23b9E2A3AlLQEPQk/e4sz7EoHGOoFKA==
   dependencies:
     chalk "^4.1.2"
     cint "^8.2.1"
@@ -2810,7 +2810,7 @@ npm-check-updates@^14.0.1:
     pacote "^13.6.0"
     parse-github-url "^1.0.2"
     progress "^2.0.3"
-    prompts "^2.4.2"
+    prompts "git+https://github.com/raineorshine/prompts.git#ncu"
     rc-config-loader "^4.1.0"
     remote-git-tags "^3.0.0"
     rimraf "^3.0.2"
@@ -3166,12 +3166,12 @@ promise-retry@^2.0.1:
     err-code "^2.0.2"
     retry "^0.12.0"
 
-prompts@^2.4.2:
+"prompts@git+https://github.com/raineorshine/prompts.git#ncu":
   version "2.4.2"
-  resolved "https://registry.yarnpkg.com/prompts/-/prompts-2.4.2.tgz#7b57e73b3a48029ad10ebd44f74b01722a4cb069"
-  integrity sha512-NxNv/kLguCA7p3jE8oL2aEBsrJWgAakBpgmgK6lpPWV+WuOmY6r2/zbAVnP+T8bQlA0nzHXSJSJW0Hq7ylaD2Q==
+  uid "79225ff95ff06c4e1e9f4862114a5bbae6690251"
+  resolved "git+https://github.com/raineorshine/prompts.git#79225ff95ff06c4e1e9f4862114a5bbae6690251"
   dependencies:
-    kleur "^3.0.3"
+    kleur "^4.0.1"
     sisteransi "^1.0.5"
 
 proxy-addr@~2.0.7:
