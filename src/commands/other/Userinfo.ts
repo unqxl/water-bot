@@ -2,6 +2,7 @@ import {
 	ApplicationCommandOptionType,
 	ChatInputCommandInteraction,
 	EmbedBuilder,
+	UserFlagsString,
 } from "discord.js";
 import { bold, hyperlink, time } from "@discordjs/builders";
 import { LanguageService } from "../../services/Language";
@@ -32,6 +33,11 @@ export default class UserInfoCommand extends SubCommand {
 					required: false,
 				},
 			],
+
+			experimentMode: {
+				status: true,
+				id: 1,
+			},
 		});
 	}
 
@@ -39,6 +45,31 @@ export default class UserInfoCommand extends SubCommand {
 		command: ChatInputCommandInteraction<"cached">,
 		lang: LanguageService
 	) {
+		// TODO
+		const member = command.options.getMember("member");
+		const badges: Record<UserFlagsString, string> = {
+			BotHTTPInteractions: "Bot HTTP Interactions",
+			BugHunterLevel1: "Bug Hunter Level 1",
+			BugHunterLevel2: "Bug Hunter Level 2",
+			CertifiedModerator: "Certified Moderator",
+			Hypesquad: "HypeSquad",
+			HypeSquadOnlineHouse1: "HypeSquad Online House 1",
+			HypeSquadOnlineHouse2: "HypeSquad Online House 2",
+			HypeSquadOnlineHouse3: "HypeSquad Online House 3",
+			Partner: "Partner",
+			PremiumEarlySupporter: "Premium Early Supporter",
+			Spammer: "Spammer",
+			Staff: "Staff",
+			TeamPseudoUser: "Team Pseudo User",
+			VerifiedBot: "Verified Bot",
+			VerifiedDeveloper: "Verified Developer",
+		};
+
+		command.reply({
+			content: "123",
+		});
+
+		/*
 		const service = new GuildService(this.client);
 		const locale = await service.getSetting(command.guildId, "locale");
 
@@ -172,5 +203,6 @@ export default class UserInfoCommand extends SubCommand {
 		return command.reply({
 			embeds: [embed],
 		});
+		*/
 	}
 }

@@ -18,6 +18,7 @@ import Functions from "./Functions";
 import Handlers from "./Handlers";
 import Logger from "./Logger";
 import config from "../cfg";
+import API from "./API";
 
 // Distube Plugins
 import { YtDlpPlugin } from "@distube/yt-dlp";
@@ -25,13 +26,11 @@ import SpotifyPlugin from "@distube/spotify";
 import SoundCloudPlugin from "@distube/soundcloud";
 
 // Interfaces and Structures
+import { ExperimentOptions } from "../types/types";
 import { SlashCommand } from "../types/Command/SlashCommand";
 import { SubCommand } from "../types/Command/SubCommand";
 import { GuildData } from "../types/Guild";
 import Event from "../types/Event";
-
-// WebSocket
-import API from "./API";
 
 export = class Bot extends Client {
 	constructor() {
@@ -78,6 +77,12 @@ export = class Bot extends Client {
 
 		this.configurations = new Enmap({
 			name: "configurations",
+			dataDir: "./db",
+			wal: false,
+		});
+
+		this.experiments = new Enmap({
+			name: "experiments",
 			dataDir: "./db",
 			wal: false,
 		});
@@ -167,6 +172,7 @@ declare module "discord.js" {
 
 		//? Storages
 		configurations: Enmap<string, GuildData>; //? Guild Configurations
+		experiments: Enmap<string, ExperimentOptions[]>; //? Guild's Experminents
 
 		//? APIs
 		nekos: NekoClient;

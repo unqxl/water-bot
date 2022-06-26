@@ -24,29 +24,32 @@ const reasons_to_ignore = [
 	"Interaction has already been acknowledged.",
 	"Headers Timeout Error",
 ];
+
 process.on("unhandledRejection", (error: Error) => {
 	if (reasons_to_ignore.includes(error.message)) return;
+	else {
+		if ("DEVELOPMENT" in process.env) {
+			return console.log(error);
+		}
 
-	if ("DEVELOPMENT" in process.env) {
-		return console.log(error);
-	}
-
-	if (sentryEnabled) {
-		return Sentry.captureException(error);
+		if (sentryEnabled) {
+			return Sentry.captureException(error);
+		}
 	}
 });
 
 process.on("uncaughtExceptionMonitor", (error) => {
 	if (reasons_to_ignore.includes(error.message)) return;
+	else {
+		if ("DEVELOPMENT" in process.env) {
+			console.log(error);
 
-	if ("DEVELOPMENT" in process.env) {
-		console.log(error);
+			if (sentryEnabled) {
+				Sentry.captureException(error);
+			}
 
-		if (sentryEnabled) {
-			Sentry.captureException(error);
+			return;
 		}
-
-		return;
 	}
 });
 

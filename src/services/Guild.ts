@@ -26,6 +26,8 @@ export class GuildService {
 			streamers: [],
 		});
 
+		this.client.experiments.set(id, []);
+
 		return this.client.configurations.get(id);
 	}
 
@@ -34,6 +36,8 @@ export class GuildService {
 		if (!data) return false;
 
 		this.client.configurations.delete(id);
+		this.client.experiments.delete(id);
+
 		return true;
 	}
 

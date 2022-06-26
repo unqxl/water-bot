@@ -26,6 +26,10 @@ export interface LocaleTemplate {
 		DATA_NOT_FOUND: string;
 		NOT_IN_LIST: string;
 		ALREADY_IN_LIST: string;
+		ALREADY_HAS_EXPERIMENT: string;
+		EXPERIMENT_NOT_FOUND: string;
+		NO_GUILD: string;
+		IN_EXPERIMENT_MODE: string;
 
 		// Moderation Errors
 		CANNOT_MODERATE_YOURSELF: string;
@@ -301,6 +305,11 @@ export interface LocaleTemplate {
 	OWNER_COMMANDS: {
 		RELOAD: {
 			COMMAND_RELOADED: string;
+		};
+
+		EXPERIMENTS: {
+			GRANTED: string;
+			REVOKED: string;
 		};
 	};
 

@@ -14,6 +14,10 @@
 		"DATA_NOT_FOUND": "Data from %s is not found!",
 		"NOT_IN_LIST": "\"%s\" is not in the list!",
 		"ALREADY_IN_LIST": "\"%s\" is already in the list!",
+		"ALREADY_HAS_EXPERIMENT": "Guild \"%s\" already has an experiment \"%s\"!",
+		"EXPERIMENT_NOT_FOUND": "Experiment \"%s\" isn't been granted for guild \"%s\"!",
+		"NO_GUILD": "No guild with ID \"%s\" found!",
+		"IN_EXPERIMENT_MODE": "Command \"%s\" is not available because it is in experiment mode and this server has not been granted this experiment!",
 		"CANNOT_MODERATE_YOURSELF": "You cannot kick or ban or timeout yourself!",
 		"CANNOT_MODERATE_BOT": "You cannot kick or ban or timeout me!"
 	},
@@ -270,6 +274,10 @@
 	"OWNER_COMMANDS": {
 		"RELOAD": {
 			"COMMAND_RELOADED": "The command \"%s\" has been reloaded!"
+		},
+		"EXPERIMENTS": {
+			"GRANTED": "You have granted the experiment \"%s\" to the guild \"%s\"!",
+			"REVOKED": "You have revoked the experiment \"%s\" for the guild \"%s\"!"
 		}
 	},
 	"SETTINGS_COMMANDS": {

@@ -14,6 +14,13 @@ export interface BaseSlashCommandOptions {
 	memberPermissions?: PermissionsString[];
 	botPermissions?: PermissionsString[];
 	options?: (ApplicationCommandOption | ApplicationCommandOptionData)[];
+
+	experimentMode?: ExperimentMode;
+}
+
+interface ExperimentMode {
+	status: boolean;
+	id: number;
 }
 
 export type ValidateReturn = {

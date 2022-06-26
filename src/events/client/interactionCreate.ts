@@ -8,6 +8,7 @@ import {
 } from "discord.js";
 import { LanguageService } from "../../services/Language";
 import { bold, codeBlock } from "@discordjs/builders";
+import Experiment from "../../classes/Experiment";
 import Event from "../../types/Event";
 import Bot from "../../classes/Bot";
 
@@ -18,9 +19,8 @@ export default class InteractionCreateEvent extends Event {
 
 	async run(client: Bot, interaction: Interaction) {
 		if (interaction.type === InteractionType.ModalSubmit) {
-			return await this.handleModalSubmit(
-				interaction as ModalSubmitInteraction
-			);
+			await this.handleModalSubmit(interaction as ModalSubmitInteraction);
+			return;
 		}
 
 		if (!interaction.inGuild()) return;
@@ -36,78 +36,183 @@ export default class InteractionCreateEvent extends Event {
 		const command = client.commands.get(this.getCommandName(interaction));
 		if (!command) return;
 
-		const botPerms = command.options.botPermissions ?? [];
-		const userPerms = command.options.memberPermissions ?? [];
+		if (
+			command.options.experimentMode &&
+			command.options.experimentMode.status === true
+		) {
+			const system = new Experiment();
+			const result = system.check(
+				interaction.guild.id,
+				command.options.experimentMode.id
+			);
 
-		if (botPerms.length) {
-			const missing =
-				interaction.guild.members.me.permissions.missing(botPerms);
-			if (missing.length) {
-				const perms = missing
-					.map((perm) => PERMISSIONS[perm])
-					.join("\n");
-
-				const color = this.client.functions.color("Red");
-				const author = this.client.functions.author(
-					interaction.guild.members.me
-				);
-
-				const text = await lang.get(
-					"ERRORS:BOT_MISSING_PERMISSIONS",
-					perms
-				);
-
-				const embed = new EmbedBuilder();
-				embed.setColor(color);
-				embed.setAuthor(author);
-				embed.setDescription(`❌ | ${bold(text)}`);
-				embed.setTimestamp();
-
-				return interaction.reply({
-					ephemeral: true,
-					embeds: [embed],
-				});
-			}
-		}
-
-		if (userPerms.length) {
-			const missing = (
-				interaction.member as GuildMember
-			).permissions.missing(userPerms);
-			if (missing.length) {
-				const perms = missing
-					.map((perm) => PERMISSIONS[perm])
-					.join(", ");
-
+			if (!result) {
 				const color = this.client.functions.color("Red");
 				const author = this.client.functions.author(
 					interaction.member as GuildMember
 				);
 
 				const text = await lang.get(
-					"ERRORS:USER_MISSING_PERMISSIONS",
-					perms
+					"ERRORS:IN_EXPERIMENT_MODE",
+					command.name
 				);
-
 				const embed = new EmbedBuilder();
 				embed.setColor(color);
 				embed.setAuthor(author);
-				embed.setDescription(`❌ | ${bold(text)}`);
+				embed.setDescription(`❌ | ${text}`);
 				embed.setTimestamp();
 
 				return interaction.reply({
-					ephemeral: true,
 					embeds: [embed],
 				});
 			}
-		}
 
-		if (command.validate) {
-			const { ok, error } = await command.validate(interaction, lang);
-			if (!ok) return interaction.reply(error);
-		}
+			const botPerms = command.options.botPermissions ?? [];
+			const userPerms = command.options.memberPermissions ?? [];
 
-		return await command.run(interaction, lang);
+			if (botPerms.length) {
+				const missing =
+					interaction.guild.members.me.permissions.missing(botPerms);
+				if (missing.length) {
+					const perms = missing
+						.map((perm) => PERMISSIONS[perm])
+						.join("\n");
+
+					const color = this.client.functions.color("Red");
+					const author = this.client.functions.author(
+						interaction.guild.members.me
+					);
+
+					const text = await lang.get(
+						"ERRORS:BOT_MISSING_PERMISSIONS",
+						perms
+					);
+
+					const embed = new EmbedBuilder();
+					embed.setColor(color);
+					embed.setAuthor(author);
+					embed.setDescription(`❌ | ${bold(text)}`);
+					embed.setTimestamp();
+
+					return interaction.reply({
+						ephemeral: true,
+						embeds: [embed],
+					});
+				}
+			}
+
+			if (userPerms.length) {
+				const missing = (
+					interaction.member as GuildMember
+				).permissions.missing(userPerms);
+				if (missing.length) {
+					const perms = missing
+						.map((perm) => PERMISSIONS[perm])
+						.join(", ");
+
+					const color = this.client.functions.color("Red");
+					const author = this.client.functions.author(
+						interaction.member as GuildMember
+					);
+
+					const text = await lang.get(
+						"ERRORS:USER_MISSING_PERMISSIONS",
+						perms
+					);
+
+					const embed = new EmbedBuilder();
+					embed.setColor(color);
+					embed.setAuthor(author);
+					embed.setDescription(`❌ | ${bold(text)}`);
+					embed.setTimestamp();
+
+					return interaction.reply({
+						ephemeral: true,
+						embeds: [embed],
+					});
+				}
+			}
+
+			if (command.validate) {
+				const { ok, error } = await command.validate(interaction, lang);
+				if (!ok) return interaction.reply(error);
+			}
+
+			return await command.run(interaction, lang);
+		} else {
+			const botPerms = command.options.botPermissions ?? [];
+			const userPerms = command.options.memberPermissions ?? [];
+
+			if (botPerms.length) {
+				const missing =
+					interaction.guild.members.me.permissions.missing(botPerms);
+				if (missing.length) {
+					const perms = missing
+						.map((perm) => PERMISSIONS[perm])
+						.join("\n");
+
+					const color = this.client.functions.color("Red");
+					const author = this.client.functions.author(
+						interaction.guild.members.me
+					);
+
+					const text = await lang.get(
+						"ERRORS:BOT_MISSING_PERMISSIONS",
+						perms
+					);
+
+					const embed = new EmbedBuilder();
+					embed.setColor(color);
+					embed.setAuthor(author);
+					embed.setDescription(`❌ | ${bold(text)}`);
+					embed.setTimestamp();
+
+					return interaction.reply({
+						ephemeral: true,
+						embeds: [embed],
+					});
+				}
+			}
+
+			if (userPerms.length) {
+				const missing = (
+					interaction.member as GuildMember
+				).permissions.missing(userPerms);
+				if (missing.length) {
+					const perms = missing
+						.map((perm) => PERMISSIONS[perm])
+						.join(", ");
+
+					const color = this.client.functions.color("Red");
+					const author = this.client.functions.author(
+						interaction.member as GuildMember
+					);
+
+					const text = await lang.get(
+						"ERRORS:USER_MISSING_PERMISSIONS",
+						perms
+					);
+
+					const embed = new EmbedBuilder();
+					embed.setColor(color);
+					embed.setAuthor(author);
+					embed.setDescription(`❌ | ${bold(text)}`);
+					embed.setTimestamp();
+
+					return interaction.reply({
+						ephemeral: true,
+						embeds: [embed],
+					});
+				}
+			}
+
+			if (command.validate) {
+				const { ok, error } = await command.validate(interaction, lang);
+				if (!ok) return interaction.reply(error);
+			}
+
+			return await command.run(interaction, lang);
+		}
 	}
 
 	getCommandName(interaction: ChatInputCommandInteraction) {
@@ -160,7 +265,7 @@ export default class InteractionCreateEvent extends Event {
 				embed.setDescription(codeBlock("js", evaluated));
 				embed.setTimestamp();
 
-				interaction.reply({
+				await interaction.reply({
 					content: undefined,
 					embeds: [embed],
 				});
