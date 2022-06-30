@@ -11,7 +11,6 @@ import {
 } from "discord.js";
 import { bold, hyperlink, time } from "@discordjs/builders";
 import { LanguageService } from "../../services/Language";
-import { GuildService } from "../../services/Guild";
 import { SubCommand } from "../../types/Command/SubCommand";
 import Bot from "../../classes/Bot";
 
