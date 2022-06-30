@@ -1,7 +1,12 @@
 import {
+	ActionRowBuilder,
 	ApplicationCommandOptionType,
+	ButtonBuilder,
+	ButtonStyle,
 	ChatInputCommandInteraction,
+	ComponentType,
 	EmbedBuilder,
+	GuildMember,
 	UserFlagsString,
 } from "discord.js";
 import { bold, hyperlink, time } from "@discordjs/builders";
@@ -33,11 +38,6 @@ export default class UserInfoCommand extends SubCommand {
 					required: false,
 				},
 			],
-
-			experimentMode: {
-				status: true,
-				id: 1,
-			},
 		});
 	}
 
@@ -45,164 +45,215 @@ export default class UserInfoCommand extends SubCommand {
 		command: ChatInputCommandInteraction<"cached">,
 		lang: LanguageService
 	) {
-		// TODO
-		const member = command.options.getMember("member");
-		const badges: Record<UserFlagsString, string> = {
-			BotHTTPInteractions: "Bot HTTP Interactions",
-			BugHunterLevel1: "Bug Hunter Level 1",
-			BugHunterLevel2: "Bug Hunter Level 2",
-			CertifiedModerator: "Certified Moderator",
-			Hypesquad: "HypeSquad",
-			HypeSquadOnlineHouse1: "HypeSquad Online House 1",
-			HypeSquadOnlineHouse2: "HypeSquad Online House 2",
-			HypeSquadOnlineHouse3: "HypeSquad Online House 3",
-			Partner: "Partner",
-			PremiumEarlySupporter: "Premium Early Supporter",
-			Spammer: "Spammer",
-			Staff: "Staff",
-			TeamPseudoUser: "Team Pseudo User",
-			VerifiedBot: "Verified Bot",
-			VerifiedDeveloper: "Verified Developer",
-		};
-
-		command.reply({
-			content: "123",
-		});
-
-		/*
-		const service = new GuildService(this.client);
-		const locale = await service.getSetting(command.guildId, "locale");
-
-		locale === "en-US"
-			? dayjs.locale("en")
-			: locale === "ru-RU"
-			? dayjs.locale("ru")
-			: dayjs.locale("uk");
-
-		const {
-			OTHER_COMMANDS: { USERINFO },
-			OTHER,
-		} = await lang.all();
+		const { NONE } = (await lang.all()).OTHER;
+		const { USERINFO } = (await lang.all()).OTHER_COMMANDS;
 
 		const member = command.options.getMember("member") || command.member;
+
+		const status = await this.getStatus(member);
+		const banners = await this.getBanner(member);
+		const avatars = await this.getAvatars(member);
+		const times = await this.getTimes(member);
+		const badges = await this.getBadges(member);
+
+		const InformationButton = new ButtonBuilder();
+		InformationButton.setCustomId("user_information");
+		InformationButton.setStyle(ButtonStyle.Primary);
+		InformationButton.setEmoji("1️⃣");
+		InformationButton.setLabel(USERINFO.INFORMATION_BTN);
+
+		const BadgesButton = new ButtonBuilder();
+		BadgesButton.setCustomId("user_badges");
+		BadgesButton.setStyle(ButtonStyle.Secondary);
+		BadgesButton.setEmoji("2️⃣");
+		BadgesButton.setLabel(USERINFO.BADGES_BTN);
+
+		const ButtonsRow = new ActionRowBuilder<ButtonBuilder>();
+		ButtonsRow.addComponents(InformationButton, BadgesButton);
+
+		const color = this.client.functions.color("Blurple");
+		const author = this.client.functions.author(member);
+
+		const InformationEmbed = new EmbedBuilder();
+		InformationEmbed.setColor(color);
+		InformationEmbed.setAuthor(author);
+		InformationEmbed.setTitle(
+			await lang.get(
+				"OTHER_COMMANDS:USERINFO:INFORMATION_TITLE",
+				member.user.tag
+			)
+		);
+		InformationEmbed.setDescription(
+			[
+				`› ${bold(USERINFO.ID)}: ${bold(member.id)}`,
+				`› ${bold(USERINFO.USERNAME)}: ${bold(member.user.username)}`,
+				`› ${bold(USERINFO.DISCRIMINATOR)}: ${bold(
+					member.user.discriminator
+				)}`,
+				`› ${bold(USERINFO.AVATARS)}: ${bold(avatars.join(" | "))}`,
+				`› ${bold(USERINFO.BANNERS)}: ${bold(
+					banners ? banners.join(" | ") : NONE
+				)}`,
+				`› ${bold(USERINFO.STATUS)}: ${bold(status)}`,
+				`› ${bold(USERINFO.CREATED_AT)}: ${bold(times[0])}`,
+				`› ${bold(USERINFO.JOINED_AT)}: ${bold(times[1])}`,
+				`› ${bold(USERINFO.ROLES)}: ${bold(
+					member.roles.cache.size.toString()
+				)}`,
+			].join("\n")
+		);
+		InformationEmbed.setTimestamp();
+
+		const BadgesEmbed = new EmbedBuilder();
+		BadgesEmbed.setColor(color);
+		BadgesEmbed.setAuthor(author);
+		BadgesEmbed.setTitle(
+			await lang.get(
+				"OTHER_COMMANDS:USERINFO:BADGES_TITLE",
+				member.user.tag
+			)
+		);
+		BadgesEmbed.setDescription(bold(badges));
+		BadgesEmbed.setTimestamp();
+
+		await command.reply({
+			embeds: [InformationEmbed],
+			components: [ButtonsRow],
+		});
+
+		const msg = await command.fetchReply();
+		const collector = await msg.createMessageComponentCollector({
+			filter: (btn) => btn.user.id === command.user.id,
+			time: 120000,
+			componentType: ComponentType.Button,
+		});
+
+		collector.on("collect", async (collected) => {
+			if (!collected.isButton()) return;
+
+			switch (collected.customId) {
+				case "user_information": {
+					await collected.update({
+						embeds: [InformationEmbed],
+						components: [ButtonsRow],
+					});
+
+					break;
+				}
+
+				case "user_badges": {
+					await collected.update({
+						embeds: [BadgesEmbed],
+						components: [ButtonsRow],
+					});
+
+					break;
+				}
+			}
+		});
+
+		collector.on("end", async (collected, reason) => {
+			if (reason === "time") {
+				await msg.edit({
+					embeds: [InformationEmbed],
+					components: [ButtonsRow],
+				});
+			}
+		});
+	}
+
+	async getTimes(member: GuildMember) {
+		const created_at = member.user.createdAt;
+		const joined_at = member.joinedAt;
+
+		const createdAt = time(created_at);
+		const createdAtR = time(created_at, "R");
+
+		const joinedAt = time(joined_at);
+		const joinedAtR = time(joined_at, "R");
+
+		return [`${createdAtR} (${createdAt})`, `${joinedAtR} (${joinedAt})`];
+	}
+
+	async getStatus(member: GuildMember) {
+		const lang = new LanguageService(this.client, member.guild.id);
+		const { SERVERINFO } = (await lang.all()).OTHER_COMMANDS;
+
+		const status = {
+			online: `🟢 ${SERVERINFO.ONLINE}`,
+			idle: `🟡 ${SERVERINFO.IDLE}`,
+			dnd: `🔴 ${SERVERINFO.DND}`,
+			offline: `⚫ ${SERVERINFO.OFFLINE}`,
+		};
+
+		return status[member.presence.status];
+	}
+
+	async getBadges(member: GuildMember) {
+		const lang = new LanguageService(this.client, member.guild.id);
+		const { BADGES } = await lang.all();
+
+		const badges: Record<UserFlagsString, string> = {
+			BotHTTPInteractions: null,
+			BugHunterLevel1: "<:BugHunterLevel1:991920192563195904>",
+			BugHunterLevel2: "<:BugHunterLevel2:991920193548853249>",
+			CertifiedModerator: "<:CertifiedModerator:991920797876748348>",
+			Hypesquad: null,
+			HypeSquadOnlineHouse1:
+				"<:HypeSquadOnlineHouse1:991920195398545458>",
+			HypeSquadOnlineHouse2:
+				"<:HypeSquadOnlineHouse2:991920196652630069>",
+			HypeSquadOnlineHouse3:
+				"<:HypeSquadOnlineHouse3:991920198552657930>",
+			Partner: "<:Partner:991920200184246372>",
+			PremiumEarlySupporter:
+				"<:PremiumEarlySupporter:991920187433570335>",
+			Spammer: null,
+			Staff: "<:Staff:991920189216141403>",
+			TeamPseudoUser: null,
+			VerifiedBot: null,
+			VerifiedDeveloper: "<:VerifiedDeveloper:991920191044861952>",
+		};
+
+		var flags = "";
+		for (const [key, value] of Object.entries(badges)) {
+			if (key === "Hypesquad") continue;
+
+			if (member.user.flags.has(key as UserFlagsString)) {
+				if (value) flags += value;
+				flags += ` ${BADGES[key]} - ✅\n`;
+			} else {
+				if (value) flags += value;
+				flags += ` ${BADGES[key]} - ❌\n`;
+			}
+		}
+
+		return flags;
+	}
+
+	getAvatars(member: GuildMember) {
 		const gif = member.displayAvatarURL({ extension: "gif", size: 2048 });
 		const png = member.displayAvatarURL({ extension: "png", size: 2048 });
 		const jpg = member.displayAvatarURL({ extension: "jpg", size: 2048 });
-		const avatars = [
+
+		return [
 			hyperlink("GIF", gif),
 			hyperlink("PNG", png),
 			hyperlink("JPG", jpg),
-		].join(" | ");
+		];
+	}
 
-		const reg_date = `${time(member.user.createdAt)} (${time(
-			member.user.createdAt,
-			"R"
-		)})`;
+	getBanner(member: GuildMember) {
+		if (!member.user.banner) return null;
 
-		const join_date = `${time(member.joinedAt)} (${time(
-			member.joinedAt,
-			"R"
-		)})`;
+		const gif = member.user.bannerURL({ extension: "gif", size: 2048 });
+		const png = member.user.bannerURL({ extension: "png", size: 2048 });
+		const jpg = member.user.bannerURL({ extension: "jpg", size: 2048 });
 
-		const user_info = {
-			name: member.displayName,
-			tag: member.user.tag,
-			avatars: avatars,
-
-			reg_date: reg_date,
-			join_date: join_date,
-
-			status: () => {
-				if (!member.presence || !member.presence?.status) {
-					return `⚫ ${USERINFO.OFFLINE}`;
-				} else if (member.presence.status === "online") {
-					return `🟢 ${USERINFO.ONLINE}`;
-				} else if (member.presence.status === "idle") {
-					return `🟡 ${USERINFO.IDLE}`;
-				} else if (member.presence.status === "dnd") {
-					return `🔴 ${USERINFO.DND}`;
-				} else if (member.presence.status === "offline") {
-					return `⚫ ${USERINFO.OFFLINE}`;
-				} else if (member.presence.status === "invisible") {
-					return `⚫ ${USERINFO.OFFLINE}`;
-				}
-			},
-
-			game: () => {
-				if (!member.presence) {
-					return USERINFO.NOT_PLAYING;
-				}
-
-				if (
-					["online", "dnd", "idle"].includes(
-						member.presence.status
-					) &&
-					member.presence.activities
-				) {
-					const activities = member.presence.activities
-						.map((activity) => activity.name)
-						.join(", ");
-
-					return activities;
-				} else {
-					return USERINFO.NOT_PLAYING;
-				}
-			},
-
-			online_with: () => {
-				if (!member.presence.clientStatus) return OTHER.NOTHING;
-
-				var platforms = [];
-				const { web, mobile, desktop } = member.presence.clientStatus;
-
-				if (web) platforms.push(USERINFO.WEB);
-				if (mobile) platforms.push(USERINFO.MOBILE);
-				if (desktop) platforms.push(USERINFO.DESKTOP);
-
-				return platforms.join(", ");
-			},
-
-			boosting: member.premiumSince ? OTHER.YES : OTHER.NO,
-			in_voice: member.voice.channel ? OTHER.YES : OTHER.NO,
-			is_bot: member.user.bot ? OTHER.YES : OTHER.NO,
-		};
-
-		const author = this.client.functions.author(member);
-		const color = this.client.functions.color("Blurple");
-
-		const online_with = user_info.online_with();
-		const playing = user_info.game();
-		const status = user_info.status();
-
-		const res = [
-			`› ${bold(USERINFO.MAIN)}:`,
-			`» ${bold(USERINFO.USERNAME)}: ${bold(user_info.name)}`,
-			`» ${bold(USERINFO.TAG)}: ${bold(user_info.tag)}`,
-			`» ${bold(USERINFO.AVATAR)}: ${bold(user_info.avatars)}`,
-			"",
-			`› ${bold(USERINFO.OTHER)}:`,
-			`» ${bold(USERINFO.ONLINE_USING)}: ${bold(online_with)}`,
-			`» ${bold(USERINFO.PRESENCE)}: ${bold(status)}`,
-			`» ${bold(USERINFO.PLAYING)}: ${bold(playing)}`,
-			"",
-			`» ${bold(USERINFO.REG_DATE)}: ${bold(user_info.reg_date)}`,
-			`» ${bold(USERINFO.JOIN_DATE)}: ${bold(user_info.join_date)}`,
-			"",
-			`» ${bold(USERINFO.BOT)}: ${bold(user_info.is_bot)}`,
-			`» ${bold(USERINFO.IN_VOICE)}: ${bold(user_info.in_voice)}`,
-			`» ${bold(USERINFO.BOOSTING)}: ${bold(user_info.boosting)}`,
-		].join("\n");
-
-		const embed = new EmbedBuilder();
-		embed.setColor(color);
-		embed.setAuthor(author);
-		embed.setDescription(res);
-		embed.setThumbnail(member.displayAvatarURL());
-		embed.setTimestamp();
-
-		return command.reply({
-			embeds: [embed],
-		});
-		*/
+		return [
+			hyperlink("GIF", gif),
+			hyperlink("PNG", png),
+			hyperlink("JPG", jpg),
+		];
 	}
 }

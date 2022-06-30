@@ -3,5 +3,6 @@
 	"typescript.preferences.importModuleSpecifier": "relative",
 	"editor.defaultFormatter": "esbenp.prettier-vscode",
 	"editor.formatOnSave": true,
-	"window.title": "${activeEditorShort} | Water Discord"
+	"window.title": "${activeEditorShort} | Water Discord",
+	"editor.tabSize": 2
 }

@@ -229,6 +229,7 @@ export interface LocaleTemplate {
 			ONLINE: string;
 			IDLE: string;
 			DND: string;
+			OFFLINE: string;
 
 			// Members Types
 			HUMANS: string;
@@ -273,32 +274,23 @@ export interface LocaleTemplate {
 		};
 
 		USERINFO: {
+			// Buttons and their Titles
+			INFORMATION_TITLE: string;
+			INFORMATION_BTN: string;
+
+			BADGES_TITLE: string;
+			BADGES_BTN: string;
+
 			// Fields
-			MAIN: string;
-			OTHER: string;
-
-			// Statuses
-			ONLINE: string;
-			IDLE: string;
-			DND: string;
-			OFFLINE: string;
-			WEB: string;
-			MOBILE: string;
-			DESKTOP: string;
-
-			// Other
+			ID: string;
 			USERNAME: string;
-			TAG: string;
-			AVATAR: string;
-			ONLINE_USING: string;
-			PRESENCE: string;
-			PLAYING: string;
-			NOT_PLAYING: string;
-			REG_DATE: string;
-			JOIN_DATE: string;
-			BOT: string;
-			IN_VOICE: string;
-			BOOSTING: string;
+			DISCRIMINATOR: string;
+			AVATARS: string;
+			BANNERS: string;
+			STATUS: string;
+			CREATED_AT: string;
+			JOINED_AT: string;
+			ROLES: string;
 		};
 	};
 
@@ -344,6 +336,24 @@ export interface LocaleTemplate {
 		NOTHING: string;
 		YES: string;
 		NO: string;
+	};
+
+	BADGES: {
+		BotHTTPInteraction: string;
+		BugHunterLevel1: string;
+		BugHunterLevel2: string;
+		CertifiedModerator: string;
+		Hypesquad: string;
+		HypeSquadOnlineHouse1: string;
+		HypeSquadOnlineHouse2: string;
+		HypeSquadOnlineHouse3: string;
+		Partner: string;
+		PremiumEarlySupporter: string;
+		Spammer: string;
+		Staff: string;
+		TeamPseudoUser: string;
+		VerifiedBot: string;
+		VerifiedDeveloper: string;
 	};
 
 	// Systems
