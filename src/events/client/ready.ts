@@ -89,6 +89,8 @@ async function checkUp(client: Bot) {
 
 		if (!guild) service.delete(guildID);
 		else await service.getSettings(guild.id);
+
+		service.checkAndMigrate(guildID);
 	}
 
 	return true;

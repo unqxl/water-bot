@@ -13,7 +13,10 @@ export interface GuildData {
 
 	//? [Other]
 	twitch_system: boolean;
-	clans: GuildClan[];
+	texts: {
+		[key: string]: string;
+	};
+
 	commands: GuildCustomCommand[];
 	streamers: GuildTwitchStreamer[];
 }
@@ -23,11 +26,6 @@ export type SupportedLocales = "en-US" | "ru-RU" | "uk-UA";
 export interface GuildCustomCommand {
 	name: string;
 	response: string;
-}
-
-export interface GuildClan {
-	name: string;
-	members: string[];
 }
 
 export interface GuildTwitchStreamer {

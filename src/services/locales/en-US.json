@@ -283,6 +283,12 @@
 			"PREFIX": "Prefix",
 			"TWITCH_SYSTEM": "Twitch Notification System"
 		},
+		"TEXT_CHANGES": {
+			"WELCOME_LABEL": "Welcome Text Change Modal",
+			"WELCOME_CHANGED": "Welcome Text has been successfully changed!",
+			"BYE_LABEL": "Bye Text Change Modal",
+			"BYE_CHANGED": "Bye Text has been successfully changed!"
+		},
 		"RESET_PROMPT": "There's %s in the database. Are you want to reset it?",
 		"EDIT_TEXT": "%s is changed to %s!",
 		"ENABLE_TEXT": "%s is enabled!",

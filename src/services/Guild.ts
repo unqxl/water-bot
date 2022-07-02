@@ -3,9 +3,27 @@ import Bot from "../classes/Bot";
 
 export class GuildService {
 	public client: Bot;
+	public defaultValue: GuildData;
 
 	constructor(client: Bot) {
 		this.client = client;
+		this.defaultValue = {
+			id: null,
+			locale: "en-US",
+			auto_role: null,
+			mute_role: null,
+			members_channel: null,
+			twitch_channel: null,
+			log_channel: null,
+			twitch_system: false,
+			texts: {
+				welcome:
+					"%s is joined this server!\nThere's %s members in this server now!\nEnjoy your stay!",
+				bye: "%s left this server!\nThere's %s members in this server now!",
+			},
+			commands: [],
+			streamers: [],
+		};
 	}
 
 	create(id: string): GuildData {
@@ -21,7 +39,11 @@ export class GuildService {
 			twitch_channel: null,
 			log_channel: null,
 			twitch_system: false,
-			clans: [],
+			texts: {
+				welcome:
+					"%s is joined this server!\nThere's %s members in this server now!\nEnjoy your stay!",
+				bye: "%s left this server!\nThere's %s members in this server now!",
+			},
 			commands: [],
 			streamers: [],
 		});
@@ -61,5 +83,23 @@ export class GuildService {
 
 		this.client.configurations.set(id, data);
 		return data;
+	}
+
+	checkAndMigrate(id: string): boolean {
+		const data = this.client.configurations.get(id);
+		if (!data) {
+			this.create(id);
+			return;
+		}
+
+		for (const key in this.defaultValue) {
+			if (!data.hasOwnProperty(key)) {
+				data[key] = this.defaultValue[key];
+			}
+		}
+
+		this.client.configurations.set(id, data);
+
+		return true;
 	}
 }

@@ -35,7 +35,9 @@ export interface LocaleTemplate {
 		CANNOT_MODERATE_YOURSELF: string;
 		CANNOT_MODERATE_BOT: string;
 	};
+
 	EVENTS: {};
+
 	PERMISSIONS: Record<PermissionsString, string>;
 
 	// Commands
@@ -314,6 +316,13 @@ export interface LocaleTemplate {
 			LOG_CHANNEL: string;
 			PREFIX: string;
 			TWITCH_SYSTEM: string;
+		};
+
+		TEXT_CHANGES: {
+			WELCOME_LABEL: string;
+			WELCOME_CHANGED: string;
+			BYE_LABEL: string;
+			BYE_CHANGED: string;
 		};
 
 		RESET_PROMPT: string;

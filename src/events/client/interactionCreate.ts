@@ -11,6 +11,7 @@ import { bold, codeBlock } from "@discordjs/builders";
 import Experiment from "../../classes/Experiment";
 import Event from "../../types/Event";
 import Bot from "../../classes/Bot";
+import { GuildService } from "../../services/Guild";
 
 export default class InteractionCreateEvent extends Event {
 	constructor() {
@@ -271,6 +272,90 @@ export default class InteractionCreateEvent extends Event {
 				});
 
 				return;
+			}
+
+			case "welcome_text_handle": {
+				const service = new GuildService(this.client);
+				const lang = new LanguageService(
+					this.client,
+					interaction.guildId
+				);
+
+				const setting = await service.getSetting(
+					interaction.guildId,
+					"texts"
+				);
+
+				const input =
+					interaction.fields.getTextInputValue("welcome_text_input");
+
+				const edited = {
+					welcome: input,
+					...setting,
+				};
+
+				await service.set(interaction.guildId, "texts", edited);
+				const text = await lang.get(
+					"SETTINGS_COMMANDS:TEXT_CHANGES:WELCOME_CHANGED"
+				);
+
+				const color = this.client.functions.color("Blurple");
+				const author = this.client.functions.author(
+					interaction.member as GuildMember
+				);
+
+				const embed = new EmbedBuilder();
+				embed.setColor(color);
+				embed.setAuthor(author);
+				embed.setDescription(`✅ | ${bold(text)}`);
+				embed.setTimestamp();
+
+				return await interaction.reply({
+					content: undefined,
+					embeds: [embed],
+				});
+			}
+
+			case "bye_text_handle": {
+				const service = new GuildService(this.client);
+				const lang = new LanguageService(
+					this.client,
+					interaction.guildId
+				);
+
+				const setting = await service.getSetting(
+					interaction.guildId,
+					"texts"
+				);
+
+				const input =
+					interaction.fields.getTextInputValue("bye_text_input");
+
+				const edited = {
+					...setting,
+					bye: input,
+				};
+
+				await service.set(interaction.guildId, "texts", edited);
+				const text = await lang.get(
+					"SETTINGS_COMMANDS:TEXT_CHANGES:BYE_CHANGED"
+				);
+
+				const color = this.client.functions.color("Blurple");
+				const author = this.client.functions.author(
+					interaction.member as GuildMember
+				);
+
+				const embed = new EmbedBuilder();
+				embed.setColor(color);
+				embed.setAuthor(author);
+				embed.setDescription(`✅ | ${bold(text)}`);
+				embed.setTimestamp();
+
+				return await interaction.reply({
+					content: undefined,
+					embeds: [embed],
+				});
 			}
 		}
 	}

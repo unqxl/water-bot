@@ -27,7 +27,7 @@ export class LanguageService {
 
 	async get(
 		key: SearchFormat<LocaleTemplate>,
-		...args: string[]
+		...args: any
 	): Promise<null | string> {
 		const [category, sub, prop] = key.split(":");
 		const locale = await this.service.getSetting(this.guild_id, "locale");
