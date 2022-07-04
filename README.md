@@ -1,3 +1,7 @@
+[![Stand With Ukraine](https://raw.githubusercontent.com/vshymanskyy/StandWithUkraine/main/banner2-direct.svg)](https://help.unicef.org/ukraine-emergency/)
+
+<hr>
+
 # Water (WIP) - Discord Bot
 <strong>Welcome! <br />
 Water - one of the best Discord Bots in terms of functionality.</strong>
