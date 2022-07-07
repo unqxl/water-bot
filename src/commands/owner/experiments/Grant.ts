@@ -17,19 +17,30 @@ export default class GrantCommand extends SubCommand {
 		super(client, {
 			groupName: "experiments",
 			commandName: "owner",
+
 			name: "grant",
-			description: "Grant an experiment to a guild.",
+			description: "Grant an experiment to a server.",
+			descriptionLocalizations: {
+				ru: "Даёт эксперимент серверу.",
+			},
+
 			options: [
 				{
 					type: ApplicationCommandOptionType.String,
 					name: "id",
 					description: "Guild ID to grant the experiment to.",
+					descriptionLocalizations: {
+						ru: "ID сервера, которому даётся эксперимент.",
+					},
 					required: true,
 				},
 				{
 					type: ApplicationCommandOptionType.Number,
 					name: "experiment",
 					description: "Experiment ID to grant.",
+					descriptionLocalizations: {
+						ru: "ID Эксперимента для выдачи.",
+					},
 					required: true,
 				},
 			],

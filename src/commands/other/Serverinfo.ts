@@ -13,8 +13,12 @@ export default class ServerInfoCommand extends SubCommand {
 	constructor(client: Bot) {
 		super(client, {
 			commandName: "other",
+
 			name: "serverinfo",
-			description: "Displays Server Information!",
+			description: "Displays Server statistics.",
+			descriptionLocalizations: {
+				ru: "Отображает статистику сервера.",
+			},
 		});
 	}
 

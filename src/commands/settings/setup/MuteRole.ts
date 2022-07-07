@@ -20,8 +20,13 @@ export default class MuteRoleCommand extends SubCommand {
 		super(client, {
 			groupName: "setup",
 			commandName: "settings",
+
 			name: "muterole",
-			description: "Configuring Mute Role!",
+			description: "Configuring Mute Role.",
+			descriptionLocalizations: {
+				ru: "Настройка роли для мута.",
+			},
+
 			memberPermissions: ["ManageGuild"],
 			options: [],
 		});

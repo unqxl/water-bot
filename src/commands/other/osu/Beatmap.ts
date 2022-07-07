@@ -39,19 +39,30 @@ export default class BeatmapCommand extends SubCommand {
 		super(client, {
 			groupName: "osu",
 			commandName: "other",
+
 			name: "beatmap",
 			description: "Shows osu!map statistics",
+			descriptionLocalizations: {
+				ru: "Показывает статистику о карте в osu!",
+			},
+
 			options: [
 				{
 					type: ApplicationCommandOptionType.String,
 					name: "map",
 					description: "Beatmap Title",
+					descriptionLocalizations: {
+						ru: "Название карты",
+					},
 					required: true,
 				},
 				{
 					type: ApplicationCommandOptionType.String,
 					name: "mode",
 					description: "osu!mode",
+					descriptionLocalizations: {
+						ru: "Режим osu!",
+					},
 					required: false,
 					choices: [
 						{

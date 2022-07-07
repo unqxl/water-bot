@@ -6,14 +6,15 @@ import {
 	ActivityType,
 } from "discord.js";
 import { Moderation } from "discord-moderation";
-import { Client as IMDBClient } from "imdb-api";
 import { Economy } from "@badboy-discord/discordjs-economy";
 import Enmap from "enmap";
 import DisTube from "distube";
 import logs from "discord-logs";
 
+// APIs
+import { Client as IMDBClient } from "imdb-api";
+
 // Other
-import NekoClient from "nekos.life";
 import Functions from "./Functions";
 import Handlers from "./Handlers";
 import Logger from "./Logger";
@@ -87,7 +88,6 @@ export = class Bot extends Client {
 			wal: false,
 		});
 
-		this.nekos = new NekoClient();
 		this.imdb = new IMDBClient({
 			apiKey: this.config.keys.imdb_key,
 		});
@@ -175,7 +175,6 @@ declare module "discord.js" {
 		experiments: Enmap<string, ExperimentOptions[]>; //? Guild's Experminents
 
 		//? APIs
-		nekos: NekoClient;
 		imdb: IMDBClient;
 
 		//? Systems

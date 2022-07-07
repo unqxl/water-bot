@@ -9,8 +9,13 @@ export default class TwitchDisableCommand extends SubCommand {
 		super(client, {
 			groupName: "twitch",
 			commandName: "settings",
+
 			name: "disable",
-			description: "Disables Twitch Notification System!",
+			description: "Disables Twitch Notification System.",
+			descriptionLocalizations: {
+				ru: "Выключает систему Twitch Уведомлений.",
+			},
+
 			memberPermissions: ["ManageGuild"],
 			options: [],
 		});

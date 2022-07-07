@@ -8,8 +8,12 @@ export default class ConfigCommand extends SubCommand {
 	constructor(client: Bot) {
 		super(client, {
 			commandName: "settings",
+
 			name: "config",
-			description: "Displays Current Guild Settings",
+			description: "Displays Current Guild Configuration.",
+			descriptionLocalizations: {
+				ru: "Показывает конфигурацию сервера.",
+			},
 		});
 	}
 

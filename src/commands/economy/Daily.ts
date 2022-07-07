@@ -9,8 +9,12 @@ export default class DailyCommand extends SubCommand {
 	constructor(client: Bot) {
 		super(client, {
 			commandName: "economy",
+
 			name: "daily",
-			description: "Adds Daily Amount to Your Balance!",
+			description: "Gives daily reward.",
+			descriptionLocalizations: {
+				ru: "Выдаёт ежедневную награду.",
+			},
 		});
 	}
 

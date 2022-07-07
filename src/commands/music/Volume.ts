@@ -14,13 +14,21 @@ export default class VolumeCommand extends SubCommand {
 	constructor(client: Bot) {
 		super(client, {
 			commandName: "music",
+
 			name: "volume",
-			description: "Displays/Changes Music Volume!",
+			description: "Displays/Changes music volume.",
+			descriptionLocalizations: {
+				ru: "Отображает/Изменяет громкость музыки.",
+			},
+
 			options: [
 				{
 					type: ApplicationCommandOptionType.Number,
 					name: "volume",
-					description: "New Music Volume",
+					description: "New music volume.",
+					descriptionLocalizations: {
+						ru: "Новая громкость музыки.",
+					},
 					required: false,
 				},
 			],

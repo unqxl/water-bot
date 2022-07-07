@@ -27,13 +27,21 @@ export default class UserInfoCommand extends SubCommand {
 	constructor(client: Bot) {
 		super(client, {
 			commandName: "other",
+
 			name: "userinfo",
-			description: "Displays Discord User Information!",
+			description: "Displays Discord User Information.",
+			descriptionLocalizations: {
+				ru: "Показывает информацию о пользователе Discord.",
+			},
+
 			options: [
 				{
 					type: ApplicationCommandOptionType.User,
 					name: "member",
-					description: "Member to information display",
+					description: "User to display information about.",
+					descriptionLocalizations: {
+						ru: "Пользователь, для отображения информации.",
+					},
 					required: false,
 				},
 			],

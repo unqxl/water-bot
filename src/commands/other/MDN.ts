@@ -14,13 +14,21 @@ export default class MDNCommand extends SubCommand {
 	constructor(client: Bot) {
 		super(client, {
 			commandName: "other",
+
 			name: "mdn",
-			description: "Shows information about something from MDN!",
+			description: "Shows information about something from MDN.",
+			descriptionLocalizations: {
+				ru: "Пропускает текущую песню.",
+			},
+
 			options: [
 				{
 					type: ApplicationCommandOptionType.String,
 					name: "query",
-					description: "Query to search from MDN",
+					description: "Query to search in MDN.",
+					descriptionLocalizations: {
+						ru: "Поисковый запрос в MDN.",
+					},
 					required: true,
 				},
 			],

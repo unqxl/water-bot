@@ -17,8 +17,12 @@ export default class QueueCommand extends SubCommand {
 	constructor(client: Bot) {
 		super(client, {
 			commandName: "music",
+
 			name: "queue",
-			description: "Displays Current Music Queue!",
+			description: "Displays current music queue.",
+			descriptionLocalizations: {
+				ru: "Отображает текущую очередь музыки.",
+			},
 		});
 	}
 

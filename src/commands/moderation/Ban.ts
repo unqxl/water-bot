@@ -11,10 +11,16 @@ export default class BanCommand extends SubCommand {
 	constructor(client: Bot) {
 		super(client, {
 			commandName: "moderation",
+
 			name: "ban",
-			description: "Bans a member of the server.",
+			description: "Bans a member from the server.",
+			descriptionLocalizations: {
+				ru: "Банит участника сервера.",
+			},
+
 			memberPermissions: ["BanMembers"],
 			botPermissions: ["BanMembers"],
+
 			options: [
 				{
 					type: ApplicationCommandOptionType.User,

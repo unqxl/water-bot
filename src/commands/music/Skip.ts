@@ -13,8 +13,12 @@ export default class SkipCommand extends SubCommand {
 	constructor(client: Bot) {
 		super(client, {
 			commandName: "music",
+
 			name: "skip",
-			description: "Skips Current Song!",
+			description: "Skips current song.",
+			descriptionLocalizations: {
+				ru: "Пропускает текущую песню.",
+			},
 		});
 	}
 

@@ -19,7 +19,9 @@
 		"NO_GUILD": "No guild with ID \"%s\" found!",
 		"IN_EXPERIMENT_MODE": "Command \"%s\" is not available because it is in experiment mode and this server has not been granted this experiment!",
 		"CANNOT_MODERATE_YOURSELF": "You cannot kick or ban or timeout yourself!",
-		"CANNOT_MODERATE_BOT": "You cannot kick or ban or timeout me!"
+		"CANNOT_MODERATE_BOT": "You cannot kick or ban or timeout me!",
+		"PLAYER_NOT_FOUND": "Player \"%s\" is not found in Statistics!",
+		"PLAYER_ERROR": "The player either hasn't played game or their profile is private!"
 	},
 	"EVENTS": {},
 	"PERMISSIONS": {
@@ -132,6 +134,18 @@
 			"TEXT": "You have received `%s` coins from work!"
 		}
 	},
+	"GAMES_COMMANDS": {
+		"VALORANT": {
+			"MATCHES": "Matches",
+			"REGION": "Region",
+			"LEVEL": "Level",
+			"RANK": "Rank",
+			"ELO": "ELO",
+			"PLACEMENT": "Placement",
+			"WINS": "Wins",
+			"PLAYED": "Played"
+		}
+	},
 	"OTHER_COMMANDS": {
 		"BOTINFO": {
 			"BOT_GUILDS": "Servers",
@@ -155,6 +169,7 @@
 		},
 		"HELP": {
 			"ECONOMY_DESCRIPTION": "Commands that allow you to create an economy system on the server.",
+			"GAMES_DESCRIPTION": "Commands that can show you your stats from games.",
 			"MODERATION_DESCRIPTION": "Commands that allow you to moderate server.",
 			"MUSIC_DESCRIPTION": "Commands that allow you to play and manage music on the server.",
 			"OTHER_DESCRIPTION": "Commands that contain some information about the user/server.",

@@ -25,13 +25,21 @@ export default class IMDBCommand extends SubCommand {
 	constructor(client: Bot) {
 		super(client, {
 			commandName: "other",
+
 			name: "imdb",
-			description: "Shows information about the film!",
+			description: "Shows information about the film.",
+			descriptionLocalizations: {
+				ru: "Показывает информацию о фильме.",
+			},
+
 			options: [
 				{
 					type: ApplicationCommandOptionType.String,
 					name: "film",
-					description: "Film to search",
+					description: "Film to search.",
+					descriptionLocalizations: {
+						ru: "Фильм для поиска.",
+					},
 					required: true,
 				},
 			],

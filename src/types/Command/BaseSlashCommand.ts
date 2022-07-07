@@ -3,6 +3,7 @@ import {
 	ApplicationCommandOptionData,
 	ChatInputCommandInteraction,
 	InteractionReplyOptions,
+	LocalizationMap,
 	PermissionsString,
 } from "discord.js";
 import { LanguageService } from "../../services/Language";
@@ -11,9 +12,12 @@ import Bot from "../../classes/Bot";
 export interface BaseSlashCommandOptions {
 	name: string;
 	description: string;
+	descriptionLocalizations?: LocalizationMap;
+
+	options?: (ApplicationCommandOption | ApplicationCommandOptionData)[];
+
 	memberPermissions?: PermissionsString[];
 	botPermissions?: PermissionsString[];
-	options?: (ApplicationCommandOption | ApplicationCommandOptionData)[];
 
 	experimentMode?: ExperimentMode;
 }

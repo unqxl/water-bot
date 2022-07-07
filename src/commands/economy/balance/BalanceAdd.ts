@@ -14,20 +14,32 @@ export default class BalanceSubtractCommand extends SubCommand {
 		super(client, {
 			groupName: "balance",
 			commandName: "economy",
+
 			name: "subtract",
-			description: "Removes Balance from Target!",
+			description: "Removes balance from Member.",
+			descriptionLocalizations: {
+				ru: "Убирает баланс у участника.",
+			},
+
 			memberPermissions: ["Administrator"],
+
 			options: [
 				{
 					type: ApplicationCommandOptionType.User,
-					name: "target",
-					description: "User to Subtract",
+					name: "member",
+					description: "User to Subtract Balance from.",
+					descriptionLocalizations: {
+						ru: "Пользователь, у которого удалится баланс.",
+					},
 					required: true,
 				},
 				{
 					type: ApplicationCommandOptionType.Number,
 					name: "amount",
-					description: "Amount to Subtract",
+					description: "Amount to Subtract.",
+					descriptionLocalizations: {
+						ru: "Сумма, которую нужно удалить.",
+					},
 					required: true,
 				},
 			],
@@ -38,8 +50,8 @@ export default class BalanceSubtractCommand extends SubCommand {
 		command: ChatInputCommandInteraction<"cached">,
 		lang: LanguageService
 	): Promise<ValidateReturn> {
-		const target = command.options.getMember("target");
-		if (target.user.bot) {
+		const member = command.options.getMember("member");
+		if (member.user.bot) {
 			const color = this.client.functions.color("Red");
 			const author = this.client.functions.author(command.member);
 			const text = await lang.get("ERRORS:USER_IS_BOT");
@@ -69,12 +81,12 @@ export default class BalanceSubtractCommand extends SubCommand {
 	) {
 		const sp = (num: string | number) => this.client.functions.sp(num);
 
-		const target = command.options.getMember("target");
+		const member = command.options.getMember("member");
 		const amount = command.options.getNumber("amount");
 
 		this.client.economy.balance.subtract(
 			command.guildId,
-			target.id,
+			member.id,
 			amount
 		);
 
@@ -83,7 +95,7 @@ export default class BalanceSubtractCommand extends SubCommand {
 		const text = await lang.get(
 			"ECONOMY_COMMANDS:BALANCE_ADD:TEXT",
 			sp(amount),
-			target.user.toString()
+			member.toString()
 		);
 
 		const embed = new EmbedBuilder();

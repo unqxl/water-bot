@@ -22,8 +22,13 @@ export default class LogChannelCommand extends SubCommand {
 		super(client, {
 			groupName: "setup",
 			commandName: "settings",
+
 			name: "logchannel",
-			description: "Configuring Log Channel!",
+			description: "Configuring Log Channel.",
+			descriptionLocalizations: {
+				ru: "Настройка канала логов.",
+			},
+
 			memberPermissions: ["ManageGuild"],
 			options: [],
 		});

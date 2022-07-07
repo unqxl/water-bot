@@ -12,10 +12,16 @@ export default class TimeoutCommand extends SubCommand {
 	constructor(client: Bot) {
 		super(client, {
 			commandName: "moderation",
+
 			name: "timeout",
 			description: "Timeouts a member from the server.",
+			descriptionLocalizations: {
+				ru: "Отправляет участника сервера в тайм-аут.",
+			},
+
 			memberPermissions: ["ModerateMembers"],
 			botPermissions: ["ModerateMembers"],
+
 			options: [
 				{
 					type: ApplicationCommandOptionType.User,

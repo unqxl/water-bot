@@ -14,14 +14,22 @@ export default class StreamerRemoveCommand extends SubCommand {
 		super(client, {
 			groupName: "twitch",
 			commandName: "settings",
+
 			name: "streamer-remove",
-			description: "Removes Streamer from Twitch Notification List!",
+			description: "Removes Streamer from Twitch Notification List.",
+			descriptionLocalizations: {
+				ru: "Удаляет Стримера из списка Twitch Уведомлений.",
+			},
+
 			memberPermissions: ["ManageGuild"],
 			options: [
 				{
 					type: ApplicationCommandOptionType.String,
 					name: "streamer",
-					description: "Streamer Login",
+					description: "Streamer Login.",
+					descriptionLocalizations: {
+						ru: "Логин Стримера.",
+					},
 					required: true,
 				},
 			],

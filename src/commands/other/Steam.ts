@@ -14,13 +14,21 @@ export default class SteamCommand extends SubCommand {
 	constructor(client: Bot) {
 		super(client, {
 			commandName: "other",
+
 			name: "steam",
-			description: "Displays Steam Game Information!",
+			description: "Displays Steam game information.",
+			descriptionLocalizations: {
+				ru: "Показывает информацию об игре Steam.",
+			},
+
 			options: [
 				{
 					type: ApplicationCommandOptionType.String,
 					name: "game",
-					description: "Steam Game Name",
+					description: "Steam game name.",
+					descriptionLocalizations: {
+						ru: "Название игры в Steam.",
+					},
 					required: true,
 				},
 			],

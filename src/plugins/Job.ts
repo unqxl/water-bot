@@ -27,6 +27,6 @@ export class Job extends CronJob {
 			unrefTimeout
 		);
 
-		client.logger.log(`Job with name "${name}" started!`, "CRON");
+		client.logger.log(`Job with name "${name}" started!`);
 	}
 }

@@ -9,8 +9,12 @@ export default class WeeklyCommand extends SubCommand {
 	constructor(client: Bot) {
 		super(client, {
 			commandName: "economy",
+
 			name: "weekly",
-			description: "Adds Weekly Amount to Your Balance!",
+			description: "Gives weekly reward.",
+			descriptionLocalizations: {
+				ru: "Выдаёт еженедельную награду.",
+			},
 		});
 	}
 

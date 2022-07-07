@@ -20,8 +20,12 @@ export default class EvalCommand extends SubCommand {
 	constructor(client: Bot) {
 		super(client, {
 			commandName: "owner",
+
 			name: "eval",
-			description: "Executes code",
+			description: "Executes code.",
+			descriptionLocalizations: {
+				ru: "Выполняет код.",
+			},
 		});
 	}
 

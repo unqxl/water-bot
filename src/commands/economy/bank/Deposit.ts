@@ -14,13 +14,21 @@ export default class DepositCommand extends SubCommand {
 		super(client, {
 			groupName: "bank",
 			commandName: "economy",
+
 			name: "deposit",
-			description: "Deposites Coins into your Bank!",
+			description: "Deposits money into the bank.",
+			descriptionLocalizations: {
+				ru: "Пополняет ваш банковский счет.",
+			},
+
 			options: [
 				{
 					type: ApplicationCommandOptionType.Number,
 					name: "amount",
-					description: "Deposit Amount",
+					description: "The amount of money to deposit.",
+					descriptionLocalizations: {
+						ru: "Сумма для пополнения.",
+					},
 					required: true,
 				},
 			],
@@ -89,7 +97,7 @@ export default class DepositCommand extends SubCommand {
 			"ECONOMY_COMMANDS:BANK_DEPOSIT:TEXT",
 			sp(amount)
 		);
-		
+
 		const embed = new EmbedBuilder();
 		embed.setColor(color);
 		embed.setAuthor(author);

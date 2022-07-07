@@ -14,14 +14,22 @@ export default class StreamerAddCommand extends SubCommand {
 		super(client, {
 			groupName: "twitch",
 			commandName: "settings",
+
 			name: "streamer-add",
-			description: "Adds Streamer into Twitch Notification List!",
+			description: "Adds Streamer into Twitch Notification List.",
+			descriptionLocalizations: {
+				ru: "Добавляет Стримера в список Twitch Уведомлений.",
+			},
+
 			memberPermissions: ["ManageGuild"],
 			options: [
 				{
 					type: ApplicationCommandOptionType.String,
 					name: "streamer",
-					description: "Streamer Login",
+					description: "Streamer Login.",
+					descriptionLocalizations: {
+						ru: "Логин Стримера.",
+					},
 					required: true,
 				},
 			],

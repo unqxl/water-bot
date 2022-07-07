@@ -14,8 +14,13 @@ export default class NowPlayingCommand extends SubCommand {
 	constructor(client: Bot) {
 		super(client, {
 			commandName: "music",
+
 			name: "nowplaying",
-			description: "Displays Information of Current Playing Music!",
+			description:
+				"Displays information about the currently playing song.",
+			descriptionLocalizations: {
+				ru: "Отображает информацию о текущей проигрываемой песне.",
+			},
 		});
 	}
 

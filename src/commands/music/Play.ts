@@ -15,13 +15,21 @@ export default class PlayCommand extends SubCommand {
 	constructor(client: Bot) {
 		super(client, {
 			commandName: "music",
+
 			name: "play",
-			description: "Plays Song from YT/Spotify!",
+			description: "Plays Song from YouTube/Spotify.",
+			descriptionLocalizations: {
+				ru: "Проигрывает песню из YouTube/Spotify.",
+			},
+
 			options: [
 				{
 					type: ApplicationCommandOptionType.String,
 					name: "song",
-					description: "Song Name or URL",
+					description: "Song name or URL.",
+					descriptionLocalizations: {
+						ru: "Название или ссылка на песню.",
+					},
 					required: true,
 				},
 			],

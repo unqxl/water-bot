@@ -11,10 +11,16 @@ export default class KickCommand extends SubCommand {
 	constructor(client: Bot) {
 		super(client, {
 			commandName: "moderation",
+
 			name: "kick",
 			description: "Kicks a member from the server.",
+			descriptionLocalizations: {
+				ru: "Выгоняет участника сервера.",
+			},
+
 			memberPermissions: ["KickMembers"],
 			botPermissions: ["KickMembers"],
+
 			options: [
 				{
 					type: ApplicationCommandOptionType.User,

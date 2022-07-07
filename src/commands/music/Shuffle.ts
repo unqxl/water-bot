@@ -13,8 +13,12 @@ export default class ShuffleCommand extends SubCommand {
 	constructor(client: Bot) {
 		super(client, {
 			commandName: "music",
+
 			name: "shuffle",
-			description: "Shuffles Music Queue!",
+			description: "Shuffles music queue!",
+			descriptionLocalizations: {
+				ru: "Перемешивает очередь музыки!",
+			},
 		});
 	}
 

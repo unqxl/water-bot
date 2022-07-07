@@ -14,19 +14,30 @@ export default class ReloadCommand extends SubCommand {
 	constructor(client: Bot) {
 		super(client, {
 			commandName: "owner",
+
 			name: "reload",
-			description: "Reloads Command",
+			description: "Reloads Command.",
+			descriptionLocalizations: {
+				ru: "Перезагружает команду.",
+			},
+
 			options: [
 				{
 					type: ApplicationCommandOptionType.String,
 					name: "category",
-					description: "Command Category",
+					description: "Category of command.",
+					descriptionLocalizations: {
+						ru: "Категория команды.",
+					},
 					required: true,
 				},
 				{
 					type: ApplicationCommandOptionType.String,
 					name: "name",
-					description: "Command Name",
+					description: "Name of command.",
+					descriptionLocalizations: {
+						ru: "Название команды.",
+					},
 					required: true,
 				},
 			],
@@ -68,8 +79,8 @@ export default class ReloadCommand extends SubCommand {
 		const category = command.options.getString("category");
 		const name = command.options.getString("name");
 		const patterns = [
-			`../${category}/${name.charAt(0).toUpperCase()}${name.slice(1)}.ts`,
-			`../${category}/${name.charAt(0).toUpperCase()}${name.slice(1)}.js`,
+			`../${category}/${name.charAt(0).toUpperCase() + name.slice(1)}.ts`,
+			`../${category}/${name.charAt(0).toUpperCase() + name.slice(1)}.js`,
 		];
 
 		for (const pattern of patterns) {
@@ -78,7 +89,6 @@ export default class ReloadCommand extends SubCommand {
 
 			for (const cmd_name of this.client.commands.keys()) {
 				if (!cmd_name.includes(name)) continue;
-
 				this.client.commands.delete(cmd_name);
 			}
 

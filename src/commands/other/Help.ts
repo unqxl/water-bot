@@ -7,8 +7,12 @@ export default class HelpCommand extends SubCommand {
 	constructor(client: Bot) {
 		super(client, {
 			commandName: "other",
+
 			name: "help",
 			description: "Displays Bot Command Categories.",
+			descriptionLocalizations: {
+				ru: "Отображает категории команд бота.",
+			},
 		});
 	}
 
@@ -18,6 +22,7 @@ export default class HelpCommand extends SubCommand {
 	) {
 		const {
 			ECONOMY_DESCRIPTION,
+			GAMES_DESCRIPTION,
 			MODERATION_DESCRIPTION,
 			MUSIC_DESCRIPTION,
 			OTHER_DESCRIPTION,
@@ -29,6 +34,7 @@ export default class HelpCommand extends SubCommand {
 
 		const text = [
 			`**/economy** - ${bold(ECONOMY_DESCRIPTION)}`,
+			`**/games** - ${bold(GAMES_DESCRIPTION)}`,
 			`**/moderation** - ${bold(MODERATION_DESCRIPTION)}`,
 			`**/music** - ${bold(MUSIC_DESCRIPTION)}`,
 			`**/other** - ${bold(OTHER_DESCRIPTION)}`,

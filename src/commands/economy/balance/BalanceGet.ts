@@ -9,8 +9,12 @@ export default class BalanceCommand extends SubCommand {
 		super(client, {
 			groupName: "balance",
 			commandName: "economy",
+
 			name: "get",
-			description: "Returns Your Balance!",
+			description: "Returns your balance.",
+			descriptionLocalizations: {
+				ru: "Возвращает ваш баланс.",
+			},
 		});
 	}
 

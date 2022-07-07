@@ -14,20 +14,32 @@ export default class BalanceAddCommand extends SubCommand {
 		super(client, {
 			groupName: "balance",
 			commandName: "economy",
+
 			name: "add",
-			description: "Gives Balance to Target!",
+			description: "Gives Balance to Member.",
+			descriptionLocalizations: {
+				ru: "Выдаёт баланс у участника.",
+			},
+
 			memberPermissions: ["Administrator"],
+
 			options: [
 				{
 					type: ApplicationCommandOptionType.User,
-					name: "target",
-					description: "User to Give",
+					name: "member",
+					description: "User to Give Balance to.",
+					descriptionLocalizations: {
+						ru: "Пользователь, которому будет выдан баланс.",
+					},
 					required: true,
 				},
 				{
 					type: ApplicationCommandOptionType.Number,
 					name: "amount",
-					description: "Amount to Give",
+					description: "Amount to Give.",
+					descriptionLocalizations: {
+						ru: "Сумма, которую нужно выдать.",
+					},
 					required: true,
 				},
 			],
@@ -38,8 +50,8 @@ export default class BalanceAddCommand extends SubCommand {
 		command: ChatInputCommandInteraction<"cached">,
 		lang: LanguageService
 	): Promise<ValidateReturn> {
-		const target = command.options.getMember("target");
-		if (target.user.bot) {
+		const member = command.options.getMember("member");
+		if (member.user.bot) {
 			const color = this.client.functions.color("Red");
 			const author = this.client.functions.author(command.member);
 			const text = await lang.get("ERRORS:USER_IS_BOT");
@@ -69,17 +81,17 @@ export default class BalanceAddCommand extends SubCommand {
 	) {
 		const sp = (num: string | number) => this.client.functions.sp(num);
 
-		const target = command.options.getMember("target");
+		const member = command.options.getMember("member");
 		const amount = command.options.getNumber("amount");
 
-		this.client.economy.balance.add(command.guildId, target.id, amount);
+		this.client.economy.balance.add(command.guildId, member.id, amount);
 
 		const color = this.client.functions.color("Blurple");
 		const author = this.client.functions.author(command.member);
 		const text = await lang.get(
 			"ECONOMY_COMMANDS:BALANCE_SUBT:TEXT",
 			sp(amount),
-			target.user.toString()
+			member.toString()
 		);
 
 		const embed = new EmbedBuilder();

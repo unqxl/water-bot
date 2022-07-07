@@ -14,13 +14,21 @@ export default class DepositCommand extends SubCommand {
 		super(client, {
 			groupName: "bank",
 			commandName: "economy",
+
 			name: "withdraw",
-			description: "Withdraws Coins from your Bank!",
+			description: "Withdraws money from the bank.",
+			descriptionLocalizations: {
+				ru: "Выводит деньги из банка.",
+			},
+
 			options: [
 				{
 					type: ApplicationCommandOptionType.Number,
 					name: "amount",
-					description: "Withdraw Amount",
+					description: "Withdraw Amount.",
+					descriptionLocalizations: {
+						ru: "Сумма для вывода.",
+					},
 					required: true,
 				},
 			],

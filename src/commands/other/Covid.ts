@@ -15,13 +15,21 @@ export default class COVIDCommand extends SubCommand {
 	constructor(client: Bot) {
 		super(client, {
 			commandName: "other",
+
 			name: "covid",
 			description: "Displays COVID-19 Statistics in World/Country.",
+			descriptionLocalizations: {
+				ru: "Отображает статистику COVID-19 в мире/стране.",
+			},
+
 			options: [
 				{
 					type: ApplicationCommandOptionType.String,
 					name: "country",
-					description: "Country",
+					description: "Country.",
+					descriptionLocalizations: {
+						ru: "Страна.",
+					},
 					required: false,
 				},
 			],

@@ -22,8 +22,14 @@ export default class MembersChannelCommand extends SubCommand {
 		super(client, {
 			groupName: "setup",
 			commandName: "settings",
+
 			name: "memberschannel",
-			description: "Configuring Members Channel!",
+			description:
+				"Configuring Members Channel (when member joins/leaves server).",
+			descriptionLocalizations: {
+				ru: "Настройка канала пользователей (когда пользователь присоединяется/выходит из сервера).",
+			},
+
 			memberPermissions: ["ManageGuild"],
 			options: [],
 		});

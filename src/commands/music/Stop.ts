@@ -13,8 +13,12 @@ export default class StopCommand extends SubCommand {
 	constructor(client: Bot) {
 		super(client, {
 			commandName: "music",
+
 			name: "stop",
-			description: "Removes Current Server Music Queue!",
+			description: "Removes current server music queue!",
+			descriptionLocalizations: {
+				ru: "Удаляет текущую очередь музыки на сервере!",
+			},
 		});
 	}
 

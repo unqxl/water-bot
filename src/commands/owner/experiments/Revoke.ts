@@ -16,19 +16,30 @@ export default class RevokeCommand extends SubCommand {
 		super(client, {
 			groupName: "experiments",
 			commandName: "owner",
+
 			name: "revoke",
-			description: "Revokes an experiment from a guild.",
+			description: "Disables a experiment for a guild.",
+			descriptionLocalizations: {
+				ru: "Отключает эксперимент для сервера.",
+			},
+
 			options: [
 				{
 					type: ApplicationCommandOptionType.String,
 					name: "id",
 					description: "Guild ID to revoke the experiment from.",
+					descriptionLocalizations: {
+						ru: "ID сервера для отключения эксперимента.",
+					},
 					required: true,
 				},
 				{
 					type: ApplicationCommandOptionType.Number,
 					name: "experiment",
 					description: "Experiment ID to revoke.",
+					descriptionLocalizations: {
+						ru: "ID Эксперимента для отключения.",
+					},
 					required: true,
 				},
 			],

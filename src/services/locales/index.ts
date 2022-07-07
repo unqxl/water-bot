@@ -34,6 +34,10 @@ export interface LocaleTemplate {
 		// Moderation Errors
 		CANNOT_MODERATE_YOURSELF: string;
 		CANNOT_MODERATE_BOT: string;
+
+		// Games Errors
+		PLAYER_NOT_FOUND: string;
+		PROFILE_ERROR: string;
 	};
 
 	EVENTS: {};
@@ -130,6 +134,20 @@ export interface LocaleTemplate {
 		};
 	};
 
+	// Games Commands
+	GAMES_COMMANDS: {
+		VALORANT: {
+			MATCHES: string;
+			REGION: string;
+			LEVEL: string;
+			RANK: string;
+			ELO: string;
+			PLACEMENT: string;
+			WINS: string;
+			PLAYED: string;
+		};
+	};
+
 	// Other Commands
 	OTHER_COMMANDS: {
 		BOTINFO: {
@@ -156,6 +174,7 @@ export interface LocaleTemplate {
 
 		HELP: {
 			ECONOMY_DESCRIPTION: string;
+			GAMES_DESCRIPTION: string;
 			MODERATION_DESCRIPTION: string;
 			MUSIC_DESCRIPTION: string;
 			OTHER_DESCRIPTION: string;

@@ -15,8 +15,13 @@ export default class ByeTextCommand extends SubCommand {
 		super(client, {
 			groupName: "setup",
 			commandName: "settings",
+
 			name: "bye",
-			description: "Configuring Bye Text!",
+			description: "Configuring Bye Text (when member leaves server).",
+			descriptionLocalizations: {
+				ru: "Настройка текст прощания (когда участник покидает сервер).",
+			},
+
 			memberPermissions: ["ManageGuild"],
 		});
 	}

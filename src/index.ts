@@ -1,4 +1,5 @@
 console.clear();
+
 import "dotenv/config";
 import P from "bluebird";
 process.setMaxListeners(Infinity);
@@ -23,6 +24,7 @@ if (sentryEnabled) {
 const reasons_to_ignore = [
 	"Interaction has already been acknowledged.",
 	"Headers Timeout Error",
+	"buffer.Blob is an experimental feature. This feature could change at any time",
 ];
 
 process.on("unhandledRejection", (error: Error) => {
@@ -42,13 +44,11 @@ process.on("uncaughtExceptionMonitor", (error) => {
 	if (reasons_to_ignore.includes(error.message)) return;
 	else {
 		if ("DEVELOPMENT" in process.env) {
-			console.log(error);
+			return console.log(error);
+		}
 
-			if (sentryEnabled) {
-				Sentry.captureException(error);
-			}
-
-			return;
+		if (sentryEnabled) {
+			return Sentry.captureException(error);
 		}
 	}
 });

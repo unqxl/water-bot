@@ -20,8 +20,13 @@ export default class AutoRoleCommand extends SubCommand {
 		super(client, {
 			groupName: "setup",
 			commandName: "settings",
+
 			name: "autorole",
-			description: "Configuring Auto Role System!",
+			description: "Configuring Auto Role System.",
+			descriptionLocalizations: {
+				ru: "Настройка системы автоматической роли.",
+			},
+
 			memberPermissions: ["ManageGuild"],
 			options: [],
 		});

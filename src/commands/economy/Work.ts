@@ -9,8 +9,12 @@ export default class WorkCommand extends SubCommand {
 	constructor(client: Bot) {
 		super(client, {
 			commandName: "economy",
+
 			name: "work",
-			description: "Adds Work Amount to Your Balance!",
+			description: "Gives work reward.",
+			descriptionLocalizations: {
+				ru: "Выдаёт награду за работу.",
+			},
 		});
 	}
 

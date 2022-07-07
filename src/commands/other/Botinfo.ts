@@ -18,8 +18,12 @@ export default class BotInfoCommand extends SubCommand {
 	constructor(client: Bot) {
 		super(client, {
 			commandName: "other",
+
 			name: "botinfo",
-			description: "Displays Current Bot Statistics",
+			description: "Displays current bot statistics.",
+			descriptionLocalizations: {
+				ru: "Отображает текущую статистику бота.",
+			},
 		});
 	}
 

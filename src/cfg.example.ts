@@ -22,6 +22,7 @@ export = {
 		osu_client_id: 0,
 		osu_client_secret: "NO-TOKEN",
 		imdb_key: "NO-TOKEN",
+		tracker_key: "NO-TOKEN",
 	},
 
 	twitch: {

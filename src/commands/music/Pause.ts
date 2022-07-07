@@ -13,8 +13,12 @@ export default class PauseCommand extends SubCommand {
 	constructor(client: Bot) {
 		super(client, {
 			commandName: "music",
+
 			name: "pause",
-			description: "Pauses Current Song!",
+			description: "Pauses the current song.",
+			descriptionLocalizations: {
+				ru: "Приостанавливает воспроизведение музыки.",
+			},
 		});
 	}
 

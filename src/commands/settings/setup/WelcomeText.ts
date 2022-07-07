@@ -15,8 +15,13 @@ export default class WelcomeTextCommand extends SubCommand {
 		super(client, {
 			groupName: "setup",
 			commandName: "settings",
+
 			name: "welcome",
-			description: "Configuring Welcome Text!",
+			description: "Configuring Welcome Text (when member joins server).",
+			descriptionLocalizations: {
+				ru: "Настройка текст приветствия (когда участник присоединяется к серверу).",
+			},
+
 			memberPermissions: ["ManageGuild"],
 		});
 	}

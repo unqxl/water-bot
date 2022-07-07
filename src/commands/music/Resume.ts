@@ -13,8 +13,12 @@ export default class ResumeCommand extends SubCommand {
 	constructor(client: Bot) {
 		super(client, {
 			commandName: "music",
+
 			name: "resume",
-			description: "Resumes Current Song!",
+			description: "Resumes current song.",
+			descriptionLocalizations: {
+				ru: "Продолжает воспроизведение текущей песни.",
+			},
 		});
 	}
 

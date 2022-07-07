@@ -16,19 +16,30 @@ export default class UserCommand extends SubCommand {
 		super(client, {
 			groupName: "osu",
 			commandName: "other",
+
 			name: "user",
 			description: "Shows profile statistics of osu!user",
+			descriptionLocalizations: {
+				ru: "Показывает статистику профиля пользователя в osu!",
+			},
+
 			options: [
 				{
 					type: ApplicationCommandOptionType.String,
 					name: "username",
-					description: "osu!profile username",
+					description: "osu! profile username.",
+					descriptionLocalizations: {
+						ru: "Имя профиля в osu!",
+					},
 					required: true,
 				},
 				{
 					type: ApplicationCommandOptionType.String,
 					name: "mode",
 					description: "osu!mode",
+					descriptionLocalizations: {
+						ru: "Режим в osu!",
+					},
 					required: false,
 					choices: [
 						{

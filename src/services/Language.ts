@@ -30,7 +30,8 @@ export class LanguageService {
 		...args: any
 	): Promise<null | string> {
 		const [category, sub, prop] = key.split(":");
-		const locale = await this.service.getSetting(this.guild_id, "locale");
+		const locale =
+			(await this.service.getSetting(this.guild_id, "locale")) || "en-US";
 
 		const LocaleFile = (await import(`./locales/${locale}`).then(
 			(module) => module.default
@@ -47,7 +48,7 @@ export class LanguageService {
 
 		const regex = /%s/g;
 		const toChange = value.match(regex);
-		if (!toChange.length) return value;
+		if (!toChange) return value;
 
 		for (let i = 0; i < toChange.length; i++) {
 			value = value.replace(toChange[i], args[i]);

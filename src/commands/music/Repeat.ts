@@ -14,25 +14,46 @@ export default class RepeatCommand extends SubCommand {
 	constructor(client: Bot) {
 		super(client, {
 			commandName: "music",
+
 			name: "repeat",
-			description: "Enables/Changes Repeat Mode!",
+			description: "Enables/Changes Repeat Mode.",
+			descriptionLocalizations: {
+				ru: "Включает/Изменяет режим повтора.",
+			},
+
 			options: [
 				{
 					type: ApplicationCommandOptionType.Number,
 					name: "mode",
-					description: "Repeat Mode",
+					description: "Repeat Mode.",
+					descriptionLocalizations: {
+						ru: "Режим повтора.",
+					},
 					required: true,
+
 					choices: [
 						{
 							name: "off",
+							nameLocalizations: {
+								"en-US": "Disable",
+								ru: "Отключить",
+							},
 							value: 0,
 						},
 						{
 							name: "song",
+							nameLocalizations: {
+								"en-US": "Song",
+								ru: "Песня",
+							},
 							value: 1,
 						},
 						{
 							name: "queue",
+							nameLocalizations: {
+								"en-US": "Queue",
+								ru: "Очередь",
+							},
 							value: 2,
 						},
 					],

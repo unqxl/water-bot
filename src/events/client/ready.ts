@@ -12,16 +12,17 @@ export default class ReadyEvent extends Event {
 	async run(client: Bot) {
 		if (!client.application.owner) await client.application.fetch();
 
-		console.log("# Deleting Slash Commands");
+		client.logger.log("Deleting slash commands...");
 		for (const command of client.application.commands.cache.values()) {
 			command.delete();
 		}
-		console.log("# Finished\n");
+		client.logger.log("Finished. \n");
 
 		await client.handlers.loadCommands();
 		await checkUp(client);
 
-		console.log("\n# Checking Slash Commands");
+		client.logger.log("Started to checking created slash commmands...");
+		var count = 0;
 		for (const command of client.application.commands.cache.values()) {
 			for (var option of command.options.values()) {
 				var name = "";
@@ -38,6 +39,7 @@ export default class ReadyEvent extends Event {
 								(x) => x.name !== subcommand.name
 							);
 
+							count += 1;
 							command.edit(command);
 						}
 					}
@@ -51,16 +53,16 @@ export default class ReadyEvent extends Event {
 							(x) => x.name !== option.name
 						);
 
+						count += 1;
 						command.edit(command);
 					}
 				}
 			}
 		}
-		console.log("# Finished\n");
+		client.logger.log(`Finished, edited ${count} commands. \n`);
 
-		console.log(`${client.user.username} logged in!`);
-
-		const job = new Job(
+		client.logger.log(`${client.user.tag} is ready!`);
+		new Job(
 			client,
 			"Twitch Token Update",
 			"0 10 0 * * *",
@@ -70,9 +72,7 @@ export default class ReadyEvent extends Event {
 			null,
 			true,
 			"Europe/Moscow"
-		);
-
-		job.start();
+		).start();
 	}
 }
 

@@ -9,8 +9,13 @@ export default class TwitchEnableCommand extends SubCommand {
 		super(client, {
 			groupName: "twitch",
 			commandName: "settings",
+
 			name: "enable",
-			description: "Enables Twitch Notification System!",
+			description: "Enables Twitch Notification System.",
+			descriptionLocalizations: {
+				ru: "Включает систему Twitch Уведомлений.",
+			},
+
 			memberPermissions: ["ManageGuild"],
 			options: [],
 		});
