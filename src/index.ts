@@ -7,11 +7,20 @@ P.Promise.config({
 	longStackTraces: true,
 });
 
+import { Client } from "discord-rpc";
 import * as Sentry from "@sentry/node";
 import * as Tracing from "@sentry/tracing";
 import Bot from "./classes/Bot";
 const client = new Bot();
 client.start();
+
+const rpc = new Client({
+	transport: "ipc",
+});
+
+rpc.login({
+	clientId: "959749615236812832",
+});
 
 const sentryEnabled = client.config.sentry.enabled;
 if (sentryEnabled) {
@@ -61,6 +70,30 @@ process.on("warning", (warning) => {
 	if (sentryEnabled) {
 		return Sentry.captureException(warning);
 	}
+});
+
+rpc.on("ready", () => {
+	client.once("ready", () => {
+		// Every hour
+		setInterval(() => {
+			rpc.setActivity({
+				details: `Helping ${client.guilds.cache.size} servers...`,
+				state: "Music, Economy, and more!",
+				instance: false,
+				largeImageKey: "logo",
+				buttons: [
+					{
+						label: "Source Code",
+						url: client.config.bot.github_link,
+					},
+					{
+						label: "Support Server",
+						url: client.config.bot.support_server,
+					},
+				],
+			});
+		}, 3600000);
+	});
 });
 
 export = client;

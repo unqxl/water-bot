@@ -5,8 +5,8 @@ import {
 	Partials,
 	ActivityType,
 } from "discord.js";
-import { Moderation } from "discord-moderation";
-import { Economy } from "@badboy-discord/discordjs-economy";
+import { Moderation } from "@djs-modules/moderation";
+import { Economy } from "@djs-modules/economy";
 import Enmap from "enmap";
 import DisTube from "distube";
 import logs from "discord-logs";
@@ -56,15 +56,15 @@ export = class Bot extends Client {
 				GatewayIntentBits.MessageContent,
 			],
 
-			presence: {
-				status: "idle",
-				activities: [
-					{
-						type: ActivityType.Listening,
-						name: "music 🎶",
-					},
-				],
-			},
+			// presence: {
+			// 	status: "idle",
+			// 	activities: [
+			// 		{
+			// 			type: ActivityType.Listening,
+			// 			name: "music 🎶",
+			// 		},
+			// 	],
+			// },
 		});
 
 		this.commands = new Collection();

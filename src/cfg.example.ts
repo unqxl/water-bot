@@ -7,6 +7,7 @@ export = {
 		test: true,
 		migrate_to_slash: false,
 		github_link: "https://github.com/user/repo",
+		support_server: "https://discord.gg/code",
 	},
 
 	sentry: {

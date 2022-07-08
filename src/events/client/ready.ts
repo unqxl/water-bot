@@ -1,8 +1,8 @@
+import { ApplicationCommandOptionType } from "discord.js";
 import { GuildService } from "../../services/Guild";
 import { Job } from "../../plugins/Job";
 import Event from "../../types/Event";
 import Bot from "../../classes/Bot";
-import { ApplicationCommandOptionType } from "discord.js";
 
 export default class ReadyEvent extends Event {
 	constructor() {
@@ -62,6 +62,7 @@ export default class ReadyEvent extends Event {
 		client.logger.log(`Finished, edited ${count} commands. \n`);
 
 		client.logger.log(`${client.user.tag} is ready!`);
+
 		new Job(
 			client,
 			"Twitch Token Update",
