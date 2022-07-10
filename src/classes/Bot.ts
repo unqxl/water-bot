@@ -56,15 +56,15 @@ export = class Bot extends Client {
 				GatewayIntentBits.MessageContent,
 			],
 
-			// presence: {
-			// 	status: "idle",
-			// 	activities: [
-			// 		{
-			// 			type: ActivityType.Listening,
-			// 			name: "music 🎶",
-			// 		},
-			// 	],
-			// },
+			presence: {
+				status: "idle",
+				activities: [
+					{
+						type: ActivityType.Listening,
+						name: "music 🎶",
+					},
+				],
+			},
 		});
 
 		this.commands = new Collection();
