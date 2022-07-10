@@ -329,7 +329,8 @@
 		"Staff": "Сотрудник Discord",
 		"TeamPseudoUser": "Team Pseudo User",
 		"VerifiedBot": "Подтверждённый бот",
-		"VerifiedDeveloper": "Верифицированный разработчик бота"
+		"VerifiedDeveloper": "Верифицированный разработчик бота",
+		"Quarantined": "На карантине"
 	},
 	"TWITCH_SYSTEM": {
 		"STREAM_STARTED": "%s запустил трансляцию на Twitch!",

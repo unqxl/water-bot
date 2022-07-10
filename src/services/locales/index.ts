@@ -382,6 +382,7 @@ export interface LocaleTemplate {
 		TeamPseudoUser: string;
 		VerifiedBot: string;
 		VerifiedDeveloper: string;
+		Quarantined: string;
 	};
 
 	// Systems

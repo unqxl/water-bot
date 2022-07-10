@@ -220,6 +220,7 @@ export default class UserInfoCommand extends SubCommand {
 			TeamPseudoUser: null,
 			VerifiedBot: null,
 			VerifiedDeveloper: "<:VerifiedDeveloper:991920191044861952>",
+			Quarantined: null,
 		};
 
 		var flags = "";

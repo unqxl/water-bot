@@ -12,6 +12,10 @@ export default class ReadyEvent extends Event {
 	async run(client: Bot) {
 		if (!client.application.owner) await client.application.fetch();
 
+		if (client.config.bot.test) {
+			client.logger.warn(`Bot is running in test mode!\n`);
+		}
+
 		client.logger.log("Deleting slash commands...");
 		for (const command of client.application.commands.cache.values()) {
 			command.delete();

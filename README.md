@@ -1,3 +1,9 @@
+[![Stand With Ukraine](https://raw.githubusercontent.com/vshymanskyy/StandWithUkraine/main/banner2-direct.svg)](https://help.unicef.org/ukraine-emergency/)
+
+<strong>[📢 Обращение к гражданам России](https://github.com/vshymanskyy/StandWithUkraine/blob/main/docs/ToRussianPeople.md)</strong>
+
+<hr>
+
 # Localization
 
 <strong>

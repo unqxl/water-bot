@@ -2,10 +2,7 @@ export = {
 	bot: {
 		defaultPrefix: "!",
 		token: "NO-TOKEN",
-		testToken: "NO-TOKEN",
-		logsChannelID: "CHANNEL-ID",
 		test: true,
-		migrate_to_slash: false,
 		github_link: "https://github.com/user/repo",
 		support_server: "https://discord.gg/code",
 	},
@@ -15,10 +12,9 @@ export = {
 		dsn: "NO-DSN",
 	},
 
-	languages: ["ru-RU", "en-EN", "ru", "en"],
+	languages: ["ru-RU", "en-EN"],
 
 	keys: {
-		weather_api: "NO-TOKEN",
 		steam_key: "NO-TOKEN",
 		osu_client_id: 0,
 		osu_client_secret: "NO-TOKEN",

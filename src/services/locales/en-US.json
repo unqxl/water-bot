@@ -337,7 +337,8 @@
 		"Staff": "Staff",
 		"TeamPseudoUser": "Team Pseudo User",
 		"VerifiedBot": "Verified Bot",
-		"VerifiedDeveloper": "Verified Developer"
+		"VerifiedDeveloper": "Verified Developer",
+		"Quarantined": "Quarantined"
 	},
 	"TWITCH_SYSTEM": {
 		"STREAM_STARTED": "%s is now streaming on Twitch!",

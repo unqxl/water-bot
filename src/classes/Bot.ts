@@ -23,7 +23,6 @@ import API from "./API";
 
 // Distube Plugins
 import { YtDlpPlugin } from "@distube/yt-dlp";
-import SpotifyPlugin from "@distube/spotify";
 import SoundCloudPlugin from "@distube/soundcloud";
 
 // Interfaces and Structures
@@ -131,11 +130,7 @@ export = class Bot extends Client {
 			emitAddSongWhenCreatingQueue: false,
 			emptyCooldown: 5,
 
-			plugins: [
-				new SpotifyPlugin(),
-				new SoundCloudPlugin(),
-				new YtDlpPlugin(),
-			],
+			plugins: [new SoundCloudPlugin(), new YtDlpPlugin()],
 		});
 
 		this.music.setMaxListeners(Infinity);
@@ -144,12 +139,11 @@ export = class Bot extends Client {
 
 	async start() {
 		await logs(this);
+
 		await this.handlers.loadEvents();
 		await this.functions.updateToken();
 
-		this.config.bot.test
-			? this.login(this.config.bot.testToken)
-			: this.login(this.config.bot.token);
+		this.login(this.config.bot.token);
 	}
 
 	async wait(ms: number) {
