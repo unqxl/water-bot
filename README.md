@@ -9,6 +9,8 @@
 <strong>
 🇷🇺: Если вы заинтересованы в помощи с переводом бота на Украинский язык, то вы можете перейти по ссылке и начать помощь с переводом.
 
+🇺🇸: If you are interested in helping with translation of the bot to Ukrainian language, you can go to the link and start helping with translation.
+
 🇺🇦: Якщо ви зацікавлені в допомозі з перекладом бота на українську мову, то ви можете перейти за посиланням і почати допомогу з перекладом.
 
 [Click here to help with translation](https://crowdin.com/project/water-discord-bot)
@@ -19,7 +21,8 @@
 <strong>Welcome! <br />
 Water - one of the best Discord Bots in terms of functionality.</strong>
 
-<strong>This bot includes a lot of useful functions, many of which I think can help you when setting up the server, here are a few of them:
+<strong>
+This bot includes a lot of useful functions, many of which I think can help you when setting up the server, here are a few of them:
 
 1. Server events - The Bot will notify in a specially designated channel (which you will set yourself) for many events on the server (role assignment /removal, server boost, etc.)
 2. Moderation - The Bot is able to moderate your server, can issue a warning / mute to the user (mute can be eternal and temporary, with 3 warnings the user is kicked out of the server, with 6 bans)
@@ -49,16 +52,8 @@ Water - one of the best Discord Bots in terms of functionality.</strong>
 ## Installation
 
 1. <strong>Clone this repo: `git clone https://github.com/bad-boy-discord/water-bot`</strong>
-2. <strong>Install all dependencies: `npm install`</strong>
-3. <strong>Rename `src/cfg.example.ts` with `src/cfg.ts`</strong>
-4. <strong>Change all keys/tokens in `src/config.ts`</strong>
-5. <strong>Run `npm run start:dev` to run TS code using ts-node</strong> <br>
-   5.1: <strong>You can also run the bot with `npm run start` command</strong>
+2. <strong>Install all dependencies: `yarn install`</strong>
 
 # License
 
 <strong>This repository uses the [Apache License](https://github.com/bad-boy-discord/water-bot/blob/master/LICENSE)!</strong>
-
-<a href="https://top.gg/bot/891819280318996501">
-  <img src="https://top.gg/api/widget/891819280318996501.svg">
-</a>
