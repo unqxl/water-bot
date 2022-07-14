@@ -26,7 +26,7 @@
 		"cron": "^2.0.0",
 		"dagpijs": "^2.1.1",
 		"dayjs": "^1.11.3",
-		"discord-api-types": "^0.35.0",
+		"discord-api-types": "^0.36.2",
 		"discord-giveaways": "bad-boy-discord/discord-giveaways#develop",
 		"discord-logs": "bad-boy-discord/discord-logs",
 		"discord-moderation": "^2.2.11",
