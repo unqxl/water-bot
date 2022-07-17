@@ -117,7 +117,7 @@ export default class TwitchChannelCommand extends SubCommand {
 		for (const channel of command.guild.channels.cache.values()) {
 			if (channel.type !== ChannelType.GuildText) continue;
 			if (
-				channel
+				!channel
 					.permissionsFor(command.guild.members.me)
 					.has(PermissionFlagsBits.SendMessages)
 			)
@@ -157,11 +157,7 @@ export default class TwitchChannelCommand extends SubCommand {
 
 			if (!interaction.isSelectMenu()) return;
 
-			service.set(
-				command.guildId,
-				"twitch_channel",
-				interaction.values[0]
-			);
+			service.set(command.guildId, "twitch_channel", interaction.values[0]);
 
 			const mention = channelMention(interaction.values[0]);
 			const text = await lang.get(

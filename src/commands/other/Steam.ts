@@ -39,6 +39,19 @@ export default class SteamCommand extends SubCommand {
 		command: ChatInputCommandInteraction<"cached">,
 		lang: LanguageService
 	) {
+		if (this.client.config.keys.steam_key === null) {
+			const color = this.client.functions.color("Red");
+			const author = this.client.functions.author(command.member);
+
+			const embed = new EmbedBuilder();
+			embed.setColor(color);
+			embed.setAuthor(author);
+			embed.setDescription(`❌ | ${bold("IMDB Key is not set.")}`);
+			embed.setTimestamp();
+
+			return command.reply({ embeds: [embed] });
+		}
+
 		command.deferReply();
 
 		const service = new GuildService(this.client);
@@ -81,9 +94,7 @@ export default class SteamCommand extends SubCommand {
 
 		const author = this.client.functions.author(command.member);
 		const color = this.client.functions.color("Blurple");
-		const app_url = this.client.apis.steam.getStoreAppLink(
-			data.steam_appid
-		);
+		const app_url = this.client.apis.steam.getStoreAppLink(data.steam_appid);
 
 		const support_windows =
 			data.platforms.windows === true ? bold(OTHER.YES) : bold(OTHER.NO);
@@ -95,9 +106,7 @@ export default class SteamCommand extends SubCommand {
 			data.platforms.linux === true ? bold(OTHER.YES) : bold(OTHER.NO);
 
 		const coming_soon =
-			data.release_date.coming_soon === true
-				? bold(OTHER.YES)
-				: bold(OTHER.NO);
+			data.release_date.coming_soon === true ? bold(OTHER.YES) : bold(OTHER.NO);
 
 		const notes =
 			typeof data.content_descriptors.notes === "string"
@@ -148,9 +157,7 @@ export default class SteamCommand extends SubCommand {
 			`» ${bold(STEAM.DATE)}: ${bold(data.release_date.date)}`,
 			"",
 			`› ${bold(STEAM.PRICE)}:`,
-			`» ${bold(STEAM.PRICE)}: ${bold(
-				data.price_overview.final_formatted
-			)}`,
+			`» ${bold(STEAM.PRICE)}: ${bold(data.price_overview.final_formatted)}`,
 			`» ${bold(STEAM.DISCOUNT)}: ${bold(
 				data.price_overview.discount_percent.toString() + "%"
 			)}`,

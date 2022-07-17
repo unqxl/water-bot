@@ -91,8 +91,21 @@ export default class BeatmapCommand extends SubCommand {
 		command: ChatInputCommandInteraction<"cached">,
 		lang: LanguageService
 	) {
-		const service = new GuildService(this.client);
-		const locale = await service.getSetting(command.guildId, "locale");
+		if (
+			this.client.config.keys.osu_client_id === null &&
+			this.client.config.keys.osu_client_secret === null
+		) {
+			const color = this.client.functions.color("Red");
+			const author = this.client.functions.author(command.member);
+
+			const embed = new EmbedBuilder();
+			embed.setColor(color);
+			embed.setAuthor(author);
+			embed.setDescription(`❌ | ${bold("osu!credentials are not set!")}`);
+			embed.setTimestamp();
+
+			return command.reply({ embeds: [embed] });
+		}
 
 		const map = command.options.getString("map", true);
 		const mode = command.options.getString("mode") as OsuModes;
@@ -134,10 +147,7 @@ export default class BeatmapCommand extends SubCommand {
 			if (!collected.isSelectMenu()) return;
 
 			const selected = collected.values[0];
-			const beatmap = await this.client.apis.osu.getBeatmapData(
-				selected,
-				mode
-			);
+			const beatmap = await this.client.apis.osu.getBeatmapData(selected, mode);
 
 			const { OSU_BEATMAP } = await (await lang.all()).OTHER_COMMANDS;
 			const data = {
@@ -183,12 +193,8 @@ export default class BeatmapCommand extends SubCommand {
 					`› ${bold(OSU_BEATMAP.CREATOR)}: ${bold(data.creator)}`,
 					`› ${bold(OSU_BEATMAP.STATUS)}: ${bold(data.status)}`,
 					`› ${bold(OSU_BEATMAP.URL)}: ${bold(data.url)}`,
-					`› ${bold(OSU_BEATMAP.SUBMITTED_AT)}: ${bold(
-						data.submit_date
-					)}`,
-					`› ${bold(OSU_BEATMAP.LAST_UPDATED)}: ${bold(
-						data.last_updated
-					)}`,
+					`› ${bold(OSU_BEATMAP.SUBMITTED_AT)}: ${bold(data.submit_date)}`,
+					`› ${bold(OSU_BEATMAP.LAST_UPDATED)}: ${bold(data.last_updated)}`,
 				].join("\n")
 			);
 
@@ -205,17 +211,11 @@ export default class BeatmapCommand extends SubCommand {
 					{
 						name: `${bold(`${title} - ${mode}`)}`,
 						value: [
-							`› ${bold(OSU_BEATMAP.BPM)}: ${bold(
-								bpm.toString()
-							)}`,
+							`› ${bold(OSU_BEATMAP.BPM)}: ${bold(bpm.toString())}`,
 							`› ${bold(OSU_BEATMAP.AR)}: ${bold(ar.toString())}`,
 							`› ${bold(OSU_BEATMAP.CS)}: ${bold(cs.toString())}`,
-							`› ${bold(OSU_BEATMAP.STARS)}: ${bold(
-								stars.toString()
-							)}`,
-							`› ${bold(OSU_BEATMAP.URL)}: ${bold(
-								hyperlink("Click", url)
-							)}`,
+							`› ${bold(OSU_BEATMAP.STARS)}: ${bold(stars.toString())}`,
+							`› ${bold(OSU_BEATMAP.URL)}: ${bold(hyperlink("Click", url))}`,
 						].join("\n"),
 						inline: true,
 					},

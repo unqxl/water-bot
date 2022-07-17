@@ -54,15 +54,13 @@ export default class ConfigCommand extends SubCommand {
 
 		const channels = [
 			guild.members_channel
-				? command.guild.roles.cache
-						.get(guild.members_channel)
-						.toString()
+				? command.guild.roles.cache.get(guild.members_channel).toString()
 				: NONE,
 			guild.twitch_channel
-				? command.guild.roles.cache.get(guild.twitch_channel).toString()
+				? command.guild.channels.cache.get(guild.twitch_channel).toString()
 				: NONE,
 			guild.log_channel
-				? command.guild.roles.cache.get(guild.log_channel).toString()
+				? command.guild.channels.cache.get(guild.log_channel).toString()
 				: NONE,
 		];
 

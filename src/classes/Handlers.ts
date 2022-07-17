@@ -41,13 +41,11 @@ export = class Handlers {
 			if (file.includes("twitchStreamerLive")) continue;
 
 			const EventFile = await import(`../${file}`);
-
 			const File: Event = new EventFile.default();
 
 			this.client.events.set(File.getName(), File);
-			(File.getEmitter() || this.client).on(
-				File.getName(),
-				async (...args) => File.run(this.client, ...args)
+			(File.getEmitter() || this.client).on(File.getName(), async (...args) =>
+				File.run(this.client, ...args)
 			);
 		}
 	}
@@ -74,10 +72,7 @@ export = class Handlers {
 				if (groupName) {
 					const prev = commandGroups[groupName]?.[1] ?? [];
 
-					commandGroups[groupName] = [
-						topLevelName,
-						[...prev, command],
-					];
+					commandGroups[groupName] = [topLevelName, [...prev, command]];
 					commandName = `${topLevelName}-${groupName}-${command.name}`;
 				} else if (topLevelName) {
 					const prevSubCommands = subCommands[topLevelName] ?? [];
@@ -90,8 +85,7 @@ export = class Handlers {
 				const data: ApplicationCommandData = {
 					type: ApplicationCommandType.ChatInput,
 					name: command.name,
-					description:
-						command.options.description ?? "No description...",
+					description: command.options.description ?? "No description...",
 					options: command.options.options ?? [],
 				};
 
@@ -147,8 +141,8 @@ export = class Handlers {
 
 	async resolveFile<T>(file: string, client: Bot): Promise<T | null> {
 		const resolvedPath = resolve(file);
-		const File = await (await import(resolvedPath)).default;
 
+		const File = await (await import(resolvedPath)).default;
 		if (!File?.constructor) return null;
 
 		return new File(client) as T;

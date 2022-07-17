@@ -117,7 +117,7 @@ export default class LogChannelCommand extends SubCommand {
 		for (const channel of command.guild.channels.cache.values()) {
 			if (channel.type !== ChannelType.GuildText) continue;
 			if (
-				channel
+				!channel
 					.permissionsFor(command.guild.members.me)
 					.has(PermissionFlagsBits.SendMessages)
 			)

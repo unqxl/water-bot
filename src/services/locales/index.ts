@@ -340,8 +340,15 @@ export interface LocaleTemplate {
 		TEXT_CHANGES: {
 			WELCOME_LABEL: string;
 			WELCOME_CHANGED: string;
-			BYE_LABEL: string;
-			BYE_CHANGED: string;
+
+			GOODBYE_LABEL: string;
+			GOODBYE_CHANGED: string;
+
+			BOOST_LABEL: string;
+			BOOST_CHANGED: string;
+
+			UNBOOST_LABEL: string;
+			UNBOOST_CHANGED: string;
 		};
 
 		RESET_PROMPT: string;

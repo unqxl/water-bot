@@ -18,8 +18,11 @@ export class GuildService {
 			twitch_system: false,
 			texts: {
 				welcome:
-					"%s is joined this server!\nThere's %s members in this server now!\nEnjoy your stay!",
-				bye: "%s left this server!\nThere's %s members in this server now!",
+					"%s (%s1) is joined this server!\nThere's %s2 members in this server now!\nEnjoy your stay!",
+				goodbye:
+					"%s (%s1) left this server!\nThere's %s2 members in this server now!",
+				boost:
+					"%s (%s1) just boosted this server!\nThere's %s2 boosters in this server now!",
 			},
 			commands: [],
 			streamers: [],
@@ -41,8 +44,13 @@ export class GuildService {
 			twitch_system: false,
 			texts: {
 				welcome:
-					"%s is joined this server!\nThere's %s members in this server now!\nEnjoy your stay!",
-				bye: "%s left this server!\nThere's %s members in this server now!",
+					"%s (%s1) is joined this server!\nThere's %s2 members in this server now!\nEnjoy your stay!",
+				goodbye:
+					"%s (%s1) left this server!\nThere's %s2 members in this server now!",
+				boost:
+					"%s (%s1) just boosted this server!\nThere's %s2 boosters in this server now!",
+				unboost:
+					"%s (%s1) unboosted this server!\nThere's %s2 boosters in this server now!",
 			},
 			commands: [],
 			streamers: [],

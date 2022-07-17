@@ -44,8 +44,18 @@ export default class CSGOCommand extends SubCommand {
 		command: ChatInputCommandInteraction<"cached">,
 		lang: LanguageService
 	) {
-		const player = command.options.getString("player");
+		if (this.client.config.keys.tracker_key === null) {
+			const color = this.client.functions.color("Red");
+			const author = this.client.functions.author(command.member);
 
+			const embed = new EmbedBuilder();
+			embed.setColor(color);
+			embed.setAuthor(author);
+			embed.setDescription(`❌ | ${bold("Tracker.GG Key is not set.")}`);
+			embed.setTimestamp();
+		}
+
+		const player = command.options.getString("player");
 		const response = (await (
 			await fetch(this.url(player), {
 				headers: {
@@ -95,9 +105,7 @@ export default class CSGOCommand extends SubCommand {
 		embed.setColor(color);
 		embed.setAuthor(author);
 		embed.setTitle(`${bold(player)}'s CS:GO Stats`);
-		embed.setURL(
-			this.profile_url(response.data.platformInfo.platformUserId)
-		);
+		embed.setURL(this.profile_url(response.data.platformInfo.platformUserId));
 
 		const restrictedKeys = [
 			"timePlayed",

@@ -1,6 +1,5 @@
 export = {
 	bot: {
-		defaultPrefix: "!",
 		token: "NO-TOKEN",
 		test: true,
 		github_link: "https://github.com/user/repo",
@@ -15,15 +14,15 @@ export = {
 	languages: ["ru-RU", "en-EN"],
 
 	keys: {
-		steam_key: "NO-TOKEN",
+		steam_key: null,
 		osu_client_id: 0,
-		osu_client_secret: "NO-TOKEN",
-		imdb_key: "NO-TOKEN",
-		tracker_key: "NO-TOKEN",
+		osu_client_secret: null,
+		imdb_key: null,
+		tracker_key: null,
 	},
 
 	twitch: {
-		client_id: "NO-TOKEN",
-		client_secret: "NO-TOKEN",
+		client_id: null,
+		client_secret: null,
 	},
 };

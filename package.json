@@ -3,32 +3,31 @@
 	"main": "dist/index.js",
 	"scripts": {
 		"build": "tsc -p tsconfig.json",
-		"config": "ts-node scripts/prepare.ts",
+		"build:test": "tsc -p tsconfig.json --noEmit",
 		"deploy": "git add . && gitmoji -c",
 		"deps": "ncu",
 		"start": "npm run build && cd dist && node index.js",
-		"start:dev": "cd src/ && ts-node index.ts",
-		"postinstall": "yarn run config"
+		"start:dev": "cd src/ && ts-node index.ts"
 	},
 	"dependencies": {
 		"@discordjs/opus": "^0.8.0",
-		"@discordjs/rest": "^0.5.0",
-		"@discordjs/voice": "^0.10.0",
+		"@discordjs/rest": "^1.0.0",
+		"@discordjs/voice": "^0.11.0",
 		"@distube/soundcloud": "^1.1.0",
-		"@distube/yt-dlp": "^1.0.2",
+		"@distube/yt-dlp": "^1.1.1",
 		"@djs-modules/economy": "^1.2.3",
-		"@djs-modules/moderation": "^2.3.1",
-		"@sentry/node": "^7.6.0",
-		"@sentry/tracing": "^7.6.0",
+		"@djs-modules/moderation": "^2.4.0",
+		"@sentry/node": "^7.7.0",
+		"@sentry/tracing": "^7.7.0",
 		"bluebird": "^3.7.2",
 		"chalk": "4.1.2",
-		"cron": "^2.0.0",
+		"cron": "^2.1.0",
 		"dayjs": "^1.11.3",
-		"discord-api-types": "^0.36.1",
+		"discord-api-types": "^0.36.2",
 		"discord-logs": "bad-boy-discord/discord-logs",
 		"discord-rpc": "^4.0.1",
-		"discord.js": "^14.0.0-dev.1657411900-f0b68d5",
-		"distube": "^4.0.0-dev.5",
+		"discord.js": "^14.0.1",
+		"distube": "^4.0.0-dev.6",
 		"dotenv": "^16.0.1",
 		"enmap": "^5.9.0",
 		"glob": "^8.0.3",
@@ -39,7 +38,7 @@
 		"tiny-typed-emitter": "^2.1.0",
 		"turndown": "^7.1.1",
 		"twemoji-parser": "^14.0.0",
-		"undici": "5.6.1"
+		"undici": "5.7.0"
 	},
 	"devDependencies": {
 		"@types/bluebird": "^3.5.36",
@@ -54,7 +53,7 @@
 		"bufferutil": "^4.0.6",
 		"gitmoji-cli": "^5.0.2",
 		"libsodium-wrappers": "^0.7.10",
-		"npm-check-updates": "^15.2.6",
+		"npm-check-updates": "^15.3.4",
 		"utf-8-validate": "^5.0.9"
 	},
 	"engines": {

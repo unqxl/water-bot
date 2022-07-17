@@ -59,8 +59,8 @@ export = class Bot extends Client {
 				status: "idle",
 				activities: [
 					{
-						type: ActivityType.Listening,
-						name: "music 🎶",
+						type: ActivityType.Watching,
+						name: "released :pog:",
 					},
 				],
 			},
@@ -73,7 +73,7 @@ export = class Bot extends Client {
 		this.owners = ["852921856800718908"];
 		this.config = config;
 		this.twitchKey = null;
-		this.version = "2.3.0-dev";
+		this.version = "2.3.0";
 
 		this.configurations = new Enmap({
 			name: "configurations",
@@ -96,12 +96,11 @@ export = class Bot extends Client {
 		this.apis = new API(this.config);
 		this.logger = new Logger();
 
-		// @ts-expect-error ignore
 		this.moderation = new Moderation(this, {
 			dbPath: "./db/",
 			locale: "en-US",
 
-			systems: {
+			defaultSystems: {
 				ghostPing: true,
 				antiInvite: true,
 				antiJoin: true,
@@ -130,7 +129,7 @@ export = class Bot extends Client {
 			emitAddSongWhenCreatingQueue: false,
 			emptyCooldown: 5,
 
-			plugins: [new SoundCloudPlugin(), new YtDlpPlugin()],
+			plugins: [new SoundCloudPlugin(), new YtDlpPlugin({ update: true })],
 		});
 
 		this.music.setMaxListeners(Infinity);

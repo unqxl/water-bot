@@ -53,10 +53,7 @@ export default class InteractionCreateEvent extends Event {
 					interaction.member as GuildMember
 				);
 
-				const text = await lang.get(
-					"ERRORS:IN_EXPERIMENT_MODE",
-					command.name
-				);
+				const text = await lang.get("ERRORS:IN_EXPERIMENT_MODE", command.name);
 				const embed = new EmbedBuilder();
 				embed.setColor(color);
 				embed.setAuthor(author);
@@ -75,19 +72,14 @@ export default class InteractionCreateEvent extends Event {
 				const missing =
 					interaction.guild.members.me.permissions.missing(botPerms);
 				if (missing.length) {
-					const perms = missing
-						.map((perm) => PERMISSIONS[perm])
-						.join("\n");
+					const perms = missing.map((perm) => PERMISSIONS[perm]).join("\n");
 
 					const color = this.client.functions.color("Red");
 					const author = this.client.functions.author(
 						interaction.guild.members.me
 					);
 
-					const text = await lang.get(
-						"ERRORS:BOT_MISSING_PERMISSIONS",
-						perms
-					);
+					const text = await lang.get("ERRORS:BOT_MISSING_PERMISSIONS", perms);
 
 					const embed = new EmbedBuilder();
 					embed.setColor(color);
@@ -103,23 +95,18 @@ export default class InteractionCreateEvent extends Event {
 			}
 
 			if (userPerms.length) {
-				const missing = (
-					interaction.member as GuildMember
-				).permissions.missing(userPerms);
+				const missing = (interaction.member as GuildMember).permissions.missing(
+					userPerms
+				);
 				if (missing.length) {
-					const perms = missing
-						.map((perm) => PERMISSIONS[perm])
-						.join(", ");
+					const perms = missing.map((perm) => PERMISSIONS[perm]).join(", ");
 
 					const color = this.client.functions.color("Red");
 					const author = this.client.functions.author(
 						interaction.member as GuildMember
 					);
 
-					const text = await lang.get(
-						"ERRORS:USER_MISSING_PERMISSIONS",
-						perms
-					);
+					const text = await lang.get("ERRORS:USER_MISSING_PERMISSIONS", perms);
 
 					const embed = new EmbedBuilder();
 					embed.setColor(color);
@@ -148,19 +135,14 @@ export default class InteractionCreateEvent extends Event {
 				const missing =
 					interaction.guild.members.me.permissions.missing(botPerms);
 				if (missing.length) {
-					const perms = missing
-						.map((perm) => PERMISSIONS[perm])
-						.join("\n");
+					const perms = missing.map((perm) => PERMISSIONS[perm]).join("\n");
 
 					const color = this.client.functions.color("Red");
 					const author = this.client.functions.author(
 						interaction.guild.members.me
 					);
 
-					const text = await lang.get(
-						"ERRORS:BOT_MISSING_PERMISSIONS",
-						perms
-					);
+					const text = await lang.get("ERRORS:BOT_MISSING_PERMISSIONS", perms);
 
 					const embed = new EmbedBuilder();
 					embed.setColor(color);
@@ -176,23 +158,18 @@ export default class InteractionCreateEvent extends Event {
 			}
 
 			if (userPerms.length) {
-				const missing = (
-					interaction.member as GuildMember
-				).permissions.missing(userPerms);
+				const missing = (interaction.member as GuildMember).permissions.missing(
+					userPerms
+				);
 				if (missing.length) {
-					const perms = missing
-						.map((perm) => PERMISSIONS[perm])
-						.join(", ");
+					const perms = missing.map((perm) => PERMISSIONS[perm]).join(", ");
 
 					const color = this.client.functions.color("Red");
 					const author = this.client.functions.author(
 						interaction.member as GuildMember
 					);
 
-					const text = await lang.get(
-						"ERRORS:USER_MISSING_PERMISSIONS",
-						perms
-					);
+					const text = await lang.get("ERRORS:USER_MISSING_PERMISSIONS", perms);
 
 					const embed = new EmbedBuilder();
 					embed.setColor(color);
@@ -276,15 +253,9 @@ export default class InteractionCreateEvent extends Event {
 
 			case "welcome_text_handle": {
 				const service = new GuildService(this.client);
-				const lang = new LanguageService(
-					this.client,
-					interaction.guildId
-				);
+				const lang = new LanguageService(this.client, interaction.guildId);
 
-				const setting = await service.getSetting(
-					interaction.guildId,
-					"texts"
-				);
+				const setting = await service.getSetting(interaction.guildId, "texts");
 
 				const input =
 					interaction.fields.getTextInputValue("welcome_text_input");
@@ -318,27 +289,91 @@ export default class InteractionCreateEvent extends Event {
 
 			case "bye_text_handle": {
 				const service = new GuildService(this.client);
-				const lang = new LanguageService(
-					this.client,
-					interaction.guildId
-				);
+				const lang = new LanguageService(this.client, interaction.guildId);
 
-				const setting = await service.getSetting(
-					interaction.guildId,
-					"texts"
-				);
+				const setting = await service.getSetting(interaction.guildId, "texts");
 
-				const input =
-					interaction.fields.getTextInputValue("bye_text_input");
+				const input = interaction.fields.getTextInputValue("bye_text_input");
 
 				const edited = {
 					...setting,
-					bye: input,
+					goodbye: input,
 				};
 
 				await service.set(interaction.guildId, "texts", edited);
 				const text = await lang.get(
-					"SETTINGS_COMMANDS:TEXT_CHANGES:BYE_CHANGED"
+					"SETTINGS_COMMANDS:TEXT_CHANGES:GOODBYE_CHANGED"
+				);
+
+				const color = this.client.functions.color("Blurple");
+				const author = this.client.functions.author(
+					interaction.member as GuildMember
+				);
+
+				const embed = new EmbedBuilder();
+				embed.setColor(color);
+				embed.setAuthor(author);
+				embed.setDescription(`✅ | ${bold(text)}`);
+				embed.setTimestamp();
+
+				return await interaction.reply({
+					content: undefined,
+					embeds: [embed],
+				});
+			}
+
+			case "boost_text_handle": {
+				const service = new GuildService(this.client);
+				const lang = new LanguageService(this.client, interaction.guildId);
+
+				const setting = await service.getSetting(interaction.guildId, "texts");
+
+				const input = interaction.fields.getTextInputValue("boost_text_input");
+
+				const edited = {
+					...setting,
+					boost: input,
+				};
+
+				await service.set(interaction.guildId, "texts", edited);
+				const text = await lang.get(
+					"SETTINGS_COMMANDS:TEXT_CHANGES:BOOST_CHANGED"
+				);
+
+				const color = this.client.functions.color("Blurple");
+				const author = this.client.functions.author(
+					interaction.member as GuildMember
+				);
+
+				const embed = new EmbedBuilder();
+				embed.setColor(color);
+				embed.setAuthor(author);
+				embed.setDescription(`✅ | ${bold(text)}`);
+				embed.setTimestamp();
+
+				return await interaction.reply({
+					content: undefined,
+					embeds: [embed],
+				});
+			}
+
+			case "unboost_text_handle": {
+				const service = new GuildService(this.client);
+				const lang = new LanguageService(this.client, interaction.guildId);
+
+				const setting = await service.getSetting(interaction.guildId, "texts");
+
+				const input =
+					interaction.fields.getTextInputValue("unboost_text_input");
+
+				const edited = {
+					...setting,
+					unboost: input,
+				};
+
+				await service.set(interaction.guildId, "texts", edited);
+				const text = await lang.get(
+					"SETTINGS_COMMANDS:TEXT_CHANGES:UNBOOST_CHANGED"
 				);
 
 				const color = this.client.functions.color("Blurple");

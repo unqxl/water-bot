@@ -22,6 +22,7 @@ export = class Experiment {
 	 */
 	get(guild: string, id: number): ExperimentOptions {
 		const experiments = this.database.get(guild);
+
 		const experiment = experiments.find((e) => e.id === id);
 		if (!experiment) return null;
 
@@ -33,8 +34,8 @@ export = class Experiment {
 	 */
 	check(guild: string, id: number): boolean {
 		const experiments = this.database.get(guild);
-		const experiment = experiments.find((e) => e.id === id);
 
+		const experiment = experiments.find((e) => e.id === id);
 		return !!experiment;
 	}
 
@@ -43,6 +44,7 @@ export = class Experiment {
 	 */
 	grant(guild: string, id: number): boolean {
 		const experiments = this.database.get(guild);
+
 		const experiment = experiments.find((e) => e.id === id);
 		if (experiment) return false;
 
@@ -62,6 +64,7 @@ export = class Experiment {
 	 */
 	revoke(guild: string, id: number): boolean {
 		const experiments = this.database.get(guild);
+
 		const experiment = experiments.find((e) => e.id === id);
 		if (!experiment) return false;
 

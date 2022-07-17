@@ -25,6 +25,12 @@ export default class GuildMemberRemoveEvent extends Event {
 
 			const color = client.functions.color("Blurple");
 			const author = client.functions.author(member);
+			const text = bold(
+				texts.goodbye
+					.replace("%s", member.toString())
+					.replace("%s1", member.user.tag)
+					.replace("%s2", member.guild.memberCount.toLocaleString("be"))
+			);
 
 			const embed = new EmbedBuilder();
 			embed.setColor(color);

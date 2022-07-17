@@ -1,6 +1,4 @@
-[![Stand With Ukraine](https://raw.githubusercontent.com/vshymanskyy/StandWithUkraine/main/banner2-direct.svg)](https://help.unicef.org/ukraine-emergency/)
-
-<strong>[📢 Обращение к гражданам России](https://github.com/vshymanskyy/StandWithUkraine/blob/main/docs/ToRussianPeople.md)</strong>
+[![Stand With Ukraine](https://raw.githubusercontent.com/vshymanskyy/StandWithUkraine/main/banner2-direct.svg)](https://vshymanskyy.github.io/StandWithUkraine)
 
 <hr>
 
@@ -16,24 +14,25 @@
 [Click here to help with translation](https://crowdin.com/project/water-discord-bot)
 </strong>
 
-# Water (WIP) - Discord Bot
+# Water - Discord Bot
 
-<strong>Welcome! <br />
-Water - one of the best Discord Bots in terms of functionality.</strong>
+<strong>Welcome! Water - one of the best Discord Bots in terms of functionality.</strong>
 
 <strong>
 This bot includes a lot of useful functions, many of which I think can help you when setting up the server, here are a few of them:
 
-1. Server events - The Bot will notify in a specially designated channel (which you will set yourself) for many events on the server (role assignment /removal, server boost, etc.)
-2. Moderation - The Bot is able to moderate your server, can issue a warning / mute to the user (mute can be eternal and temporary, with 3 warnings the user is kicked out of the server, with 6 bans)
-3. Music - The Bot can play music from platforms such as YouTube, SoundCloud, Spotify. And "Water" tries to play them in the best quality!
-4. Customization - If desired, you can practically configure the bot the way you want (at the moment, changing some things is not available, but there will be more customization in the future). For more information, read to the end!
-5. Twitch Notifications - A completely new system in "Water", this is a notification at the start of the broadcast on the Twitch streaming platform. The bot will check for the presence of a stream from the streamer every 30 seconds, if the broadcast is started, but the notification is not sent, the bot will send it to the channel pre-installed in the database!
+1. Moderation - Bot can perform standard moderation (kick/ban/timeout). The list of moderation commands will be added to over time.
+2. Music - The bot can play songs directly from YouTube. The bot always tries to play the songs in the best quality.
+3. Customization - The bot has quite good customization, which you can play around with.
+4. Twitch Notifications - A completely new system in the bot! This system checks Twitch streamers for the presence of a stream, and if there is one, it sends a notification to the preset channel.
+5. Convenience - The bot was made on Slash Commands, which are easy to use. If you want, you can use the command "/other help" to familiarize yourself with the categories of commands.
    </strong>
+
+<strong>If You have any questions, You can join our [Support Server](https://discord.gg/6RTZHJmzmu)</strong>
 
 # Getting Started
 
-<strong>WARNING: Before installing, please note that you are not allowed to use the code of this bot as the main one! In this case, assistance will not be provided!</strong>
+<strong>WARNING: I (the developer) am not going to help you with the configuration or further work of the bot, as this bot is not intended for use by strangers other than the author of the script.</strong>
 
 ## Requirements
 
@@ -43,17 +42,18 @@ This bot includes a lot of useful functions, many of which I think can help you 
 
 ## APIs
 
-1. <strong>[Weather API](https://openweathermap.org/api)</strong>
-2. <strong>[Steam API](https://steamcommunity.com/dev/apikey)</strong>
-3. <strong>[osu!api](https://osu.ppy.sh/p/api)</strong>
-4. <strong>[Twitch API](https://dev.twitch.tv/console)</strong>
-5. <strong>[IMDB API](https://imdb-api.com)</strong>
+1. <strong>[Steam API](https://steamcommunity.com/dev/apikey)</strong>
+2. <strong>[osu!api](https://osu.ppy.sh/p/api)</strong>
+3. <strong>[Twitch API](https://dev.twitch.tv/console)</strong>
+4. <strong>[IMDB API](https://imdb-api.com)</strong>
+5. <strong>[Tracker.GG](https://tracker.gg/developers/apps/create)</strong>
 
 ## Installation
 
-1. <strong>Clone this repo: `git clone https://github.com/bad-boy-discord/water-bot`</strong>
+1. <strong>Clone this repo: `git clone https://github.com/unqxl/water-bot`</strong>
 2. <strong>Install all dependencies: `yarn install`</strong>
+3. <strong>Rename the file "cfg.example.ts" from the "src" folder to "cfg.ts" and fill in all important values (bot token at least).</strong>
 
 # License
 
-<strong>This repository uses the [Apache License](https://github.com/bad-boy-discord/water-bot/blob/master/LICENSE)!</strong>
+<strong>This repository uses the [Apache License](https://github.com/unqxl/water-bot/blob/master/LICENSE)!</strong>

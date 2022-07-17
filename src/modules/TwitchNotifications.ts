@@ -1,7 +1,7 @@
 import { GuildService } from "../services/Guild";
 import { request } from "undici";
-import Bot from "../classes/Bot";
 import twitchStreamerLive from "../events/twitchStreamerLive";
+import Bot from "../classes/Bot";
 
 export = class TwitchNotifications {
 	public client: Bot;

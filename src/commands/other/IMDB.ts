@@ -50,6 +50,19 @@ export default class IMDBCommand extends SubCommand {
 		command: ChatInputCommandInteraction<"cached">,
 		lang: LanguageService
 	) {
+		if (this.client.config.keys.imdb_key === null) {
+			const color = this.client.functions.color("Red");
+			const author = this.client.functions.author(command.member);
+
+			const embed = new EmbedBuilder();
+			embed.setColor(color);
+			embed.setAuthor(author);
+			embed.setDescription(`❌ | ${bold("IMDB Key is not set.")}`);
+			embed.setTimestamp();
+
+			return command.reply({ embeds: [embed] });
+		}
+
 		const service = new GuildService(this.client);
 		const locale = await service.getSetting(command.guildId, "locale");
 		locale === "en-US"
@@ -66,11 +79,11 @@ export default class IMDBCommand extends SubCommand {
 			} else if (locale === "ru-RU") {
 				return dayjs
 					.duration(Number(data.runtimeMins), "minutes")
-					.format("DD [days], HH [hours], mm [minutes]");
+					.format("DD [дн.], HH [чс.], mm [мин.]");
 			} else if (locale === "uk-UA") {
 				return dayjs
 					.duration(Number(data.runtimeMins), "minutes")
-					.format("DD [days], HH [hours], mm [minutes]");
+					.format("DD [дн.], HH [години], mm [хв.]");
 			}
 		};
 

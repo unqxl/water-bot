@@ -22,6 +22,7 @@ export = class IMDBAPI {
 
 	async getFirstResult(name: string, l: string): Promise<IMDBSearchResult> {
 		const link = this.generateSearchLink(name, l);
+
 		const data: IMDBSearchData = await (await request(link)).body.json();
 		if (!data.results.length) return null;
 
@@ -31,6 +32,7 @@ export = class IMDBAPI {
 	async getData(name: string, l: string): Promise<IMDBFilmData> {
 		const { id } = await this.getFirstResult(name, l);
 		const link = this.generateInfoLink(id, l);
+		
 		const data: IMDBFilmData = await (await request(link)).body.json();
 		return data;
 	}
