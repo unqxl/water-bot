@@ -38,7 +38,9 @@ export = class Handlers {
 		const eventFiles: string[] = await glob(`./events/**/*.{js,ts}`);
 
 		for (const file of eventFiles) {
-			if (file.includes("twitchStreamerLive")) continue;
+			if (file.includes("twitchStreamerLive") || file.includes("musicEvents")) {
+				continue;
+			}
 
 			const EventFile = await import(`../${file}`);
 			const File: Event = new EventFile.default();

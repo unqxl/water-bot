@@ -24,6 +24,7 @@ import API from "./API";
 // Distube Plugins
 import { YtDlpPlugin } from "@distube/yt-dlp";
 import SoundCloudPlugin from "@distube/soundcloud";
+import musicEvents from "../events/musicEvents";
 
 // Interfaces and Structures
 import { ExperimentOptions } from "../types/types";
@@ -73,7 +74,7 @@ export = class Bot extends Client {
 		this.owners = ["852921856800718908"];
 		this.config = config;
 		this.twitchKey = null;
-		this.version = "2.3.0";
+		this.version = "2.3.1";
 
 		this.configurations = new Enmap({
 			name: "configurations",
@@ -96,6 +97,7 @@ export = class Bot extends Client {
 		this.apis = new API(this.config);
 		this.logger = new Logger();
 
+		// @ts-ignore
 		this.moderation = new Moderation(this, {
 			dbPath: "./db/",
 			locale: "en-US",
@@ -138,6 +140,7 @@ export = class Bot extends Client {
 
 	async start() {
 		await logs(this);
+		await musicEvents(this);
 
 		await this.handlers.loadEvents();
 		await this.functions.updateToken();

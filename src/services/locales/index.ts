@@ -40,7 +40,26 @@ export interface LocaleTemplate {
 		PROFILE_ERROR: string;
 	};
 
-	EVENTS: {};
+	EVENTS: {
+		// Music Events
+		PLAY_SONG: {
+			START: string;
+			TITLE: string;
+			URL: string;
+			VIEWS: string;
+			DURATION: string;
+			REQUESTEDBY: string;
+		};
+
+		ADD_SONG: {
+			PREPARE: string;
+			TITLE: string;
+			URL: string;
+			VIEWS: string;
+			DURATION: string;
+			REQUESTEDBY: string;
+		};
+	};
 
 	PERMISSIONS: Record<PermissionsString, string>;
 

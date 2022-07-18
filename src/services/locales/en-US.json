@@ -23,7 +23,24 @@
 		"PLAYER_NOT_FOUND": "Player \"%s\" is not found in Statistics!",
 		"PLAYER_ERROR": "The player either hasn't played game or their profile is private!"
 	},
-	"EVENTS": {},
+	"EVENTS": {
+		"PLAY_SONG": {
+			"START": "Starting to play the song!",
+			"TITLE": "Title",
+			"URL": "URL",
+			"VIEWS": "Views",
+			"DURATION": "Song Duration",
+			"REQUESTEDBY": "Requested By"
+		},
+		"ADD_SONG": {
+			"START": "Added song to the queue!",
+			"TITLE": "Title",
+			"URL": "URL",
+			"VIEWS": "Views",
+			"DURATION": "Song Duration",
+			"REQUESTEDBY": "Requested By"
+		}
+	},
 	"PERMISSIONS": {
 		"AddReactions": "Add Reactions",
 		"Administrator": "Administrator",
