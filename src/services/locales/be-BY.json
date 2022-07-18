@@ -1,0 +1,344 @@
+{
+	"ERRORS": {
+		"BOT_MISSING_PERMISSIONS": "Ой-ой, кажется, что у меня нет некоторых прав для запуска этой команды: %s",
+		"USER_MISSING_PERMISSIONS": "Ой-ой, кажется, что у вас нет некоторых прав для запуска этой команды: %s",
+		"NO_ACCESS": "Ой-ой, кажется, что у вас нет доступа к этой команде!",
+		"JOIN_VOICE": "Для использования этой команды, вам нужно зайти в голосовой канал!",
+		"JOIN_BOT_VOICE": "Для использования этой команды, вам необходимо войти в голосовой канал, где находится бот!",
+		"QUEUE_IS_EMPTY": "Музыкальная очередь песни сейчас пустая!",
+		"MUSIC_IS_PAUSED": "Песня уже стоит на паузе!",
+		"MUSIC_IS_RESUMED": "Песня уже проигрывается!",
+		"NOT_ENOUGH_MONEY": "У вас недостаточно денег для %s!",
+		"USER_IS_BOT": "Данный пользователь является ботом!",
+		"DATA_NOT_FOUND": "Информация из %s не найдена!",
+		"NOT_IN_LIST": "\"%s\" не находится в списке!",
+		"ALREADY_IN_LIST": "\"%s\" уже находится в списке!",
+		"ALREADY_HAS_EXPERIMENT": "Сервер \"%s\" уже имеет эксперимент \"%s\"!",
+		"EXPERIMENT_NOT_FOUND": "Эксперимент \"%s\" не был выдан серверу \"%s\"!",
+		"NO_GUILD": "Не найден сервер с ID \"%s\"!",
+		"IN_EXPERIMENT_MODE": "Команда \"%s\" недоступна, так как находится в режиме эксперимента, а этому серверу не был предоставлен этот эксперимент!",
+		"CANNOT_MODERATE_YOURSELF": "Вы не можете выгнать/забанить/замутить себя!",
+		"CANNOT_MODERATE_BOT": "Вы не можете выгнать/забанить/замутить меня!",
+		"PLAYER_NOT_FOUND": "Игрок \"%s\" не был найден в статистике!",
+		"PLAYER_ERROR": "Игрок \"%s\" или не запускал игру или его профиль скрыт!"
+	},
+	"EVENTS": {},
+	"PERMISSIONS": {
+		"AddReactions": "Добавлять реакции",
+		"Administrator": "Администратор",
+		"AttachFiles": "Прикреплять файлы",
+		"BanMembers": "Банить участников",
+		"ChangeNickname": "Изменять ник",
+		"Connect": "Подключаться",
+		"CreateInstantInvite": "Создавать приглашения",
+		"CreatePrivateThreads": "Создавать личные ветки",
+		"CreatePublicThreads": "Создавать публичные ветки",
+		"DeafenMembers": "Заглушать участников",
+		"EmbedLinks": "Встраивать ссылки",
+		"KickMembers": "Выгонять участников",
+		"ManageChannels": "Управлять каналами",
+		"ManageEmojisAndStickers": "Управлять смайлами и стикерами",
+		"ManageEvents": "Управлять событиями",
+		"ManageGuild": "Управлять сервером",
+		"ManageMessages": "Управлять сообщениями",
+		"ManageNicknames": "Управлять никами",
+		"ManageRoles": "Управлять ролями",
+		"ManageThreads": "Управлять ветками",
+		"ManageWebhooks": "Управлять вебхуками",
+		"MentionEveryone": "Упоминать всех",
+		"ModerateMembers": "Модерировать участников",
+		"MoveMembers": "Перемещать участников",
+		"MuteMembers": "Заглушать участников",
+		"PrioritySpeaker": "Приоритет",
+		"ReadMessageHistory": "Читать историю сообщений",
+		"RequestToSpeak": "Запрашивать разрешение говорить",
+		"SendMessages": "Отправлять сообщения",
+		"SendMessagesInThreads": "Отправлять сообщения в ветках",
+		"SendTTSMessages": "Отправлять сообщения текст-в-речь",
+		"Speak": "Говорить",
+		"Stream": "Стрим",
+		"UseApplicationCommands": "Использовать команды приложения",
+		"UseEmbeddedActivities": "Использовать встроенные активности",
+		"UseExternalEmojis": "Использовать внешние смайлы",
+		"UseExternalStickers": "Использовать внешние стикеры",
+		"UseVAD": "Использовать активность голоса",
+		"ViewAuditLog": "Просматривать лог аудита",
+		"ViewChannel": "Просматривать канал",
+		"ViewGuildInsights": "Просматривать инсайды сервера"
+	},
+	"MODERATION_COMMANDS": {
+		"BAN": {
+			"TEXT": "Вы успешно забанили пользователя %s по причине \"%s\"!"
+		},
+		"KICK": {
+			"TEXT": "Вы успешно кикнули пользователя %s по причине \"%s\"!"
+		},
+		"TIMEOUT": {
+			"TEXT": "Вы успешно выдали тайм-аут пользователю %s по причине \"%s\" на %s!"
+		}
+	},
+	"MUSIC_COMMANDS": {
+		"NOWPLAYING": {
+			"TITLE": "Сейчас играет - %s",
+			"NAME": "Название песни",
+			"DURATION": "Длина песни",
+			"REQUESTEDBY": "Запросил"
+		},
+		"PAUSE": {
+			"TEXT": "%s приостановил песню!"
+		},
+		"REPEAT": {
+			"QUEUE_MODE": "Очередь",
+			"SONG_MODE": "Песня",
+			"DISABLED": "Выключен",
+			"TEXT": "Режим повтора изменён на `%s` (%s)!"
+		},
+		"SHUFFLE": {
+			"TEXT": "%s перемешал очередь песен!"
+		},
+		"SKIP": {
+			"TEXT": "%s пропустил текущую песню!"
+		},
+		"STOP": {
+			"TEXT": "%s остановил очередь песен!"
+		},
+		"VOLUME": {
+			"CURRENT": "Текущая громкость - %s.",
+			"TEXT": "Громкость песни изменена на `%s` (%s)!"
+		}
+	},
+	"ECONOMY_COMMANDS": {
+		"BALANCE_ADD": {
+			"TEXT": "Вы добавили `%s` коинов на баланс %s!"
+		},
+		"BALANCE_SUBT": {
+			"TEXT": "Вы удалили `%s` коинов с баланса %s!"
+		},
+		"BALANCE_GET": {
+			"TEXT": "Ваш текущий баланс - `%s` коинов (`%s` в банке)!"
+		},
+		"DAILY": {
+			"TEXT": "Вы получили `%s` коинов с ежедневной награды!"
+		},
+		"WEEKLY": {
+			"TEXT": "Вы получили `%s` коинов с еженедельной награды!"
+		},
+		"WORK": {
+			"TEXT": "Вы заработали `%s` коинов на работе!"
+		}
+	},
+	"GAMES_COMMANDS": {
+		"VALORANT": {
+			"MATCHES": "Матчей",
+			"REGION": "Регион",
+			"LEVEL": "Уровень",
+			"RANK": "Ранг",
+			"ELO": "ELO",
+			"PLACEMENT": "Место",
+			"WINS": "Побед",
+			"PLAYED": "Сыграно"
+		}
+	},
+	"OTHER_COMMANDS": {
+		"BOTINFO": {
+			"BOT_GUILDS": "Серверов",
+			"BOT_USERS": "Пользователей",
+			"BOT_CHANNELS": "Каналов",
+			"BOT_PING": "Пинг",
+			"BOT_COMMANDS": "Команд",
+			"BOT_VERSION": "Версия",
+			"BOT_CREATED": "Создан",
+			"BOT_STARTED": "Запущен"
+		},
+		"COVID": {
+			"TOTAL": "Всего",
+			"TODAY": "Сегодня",
+			"CASES": "Случаев",
+			"RECOVERED": "Спасено",
+			"DEATHS": "Смертей",
+			"POPULATION": "Популяция",
+			"CRITICAL": "В критичном сост.",
+			"LAST_UPDATE": "Дата обновления"
+		},
+		"HELP": {
+			"ECONOMY_DESCRIPTION": "Команды, которые позволяют создать систему экономики на сервере.",
+			"GAMES_DESCRIPTION": "Команды, которые могут показать вам вашу статистику из игр.",
+			"MODERATION_DESCRIPTION": "Команды, которые позволяют вам модерировать сервер.",
+			"MUSIC_DESCRIPTION": "Команды, которые позволяют проигрывать и управлять музыкой на сервере.",
+			"OTHER_DESCRIPTION": "Команды, которые содержат некоторую информацию о пользователе/сервере.",
+			"OWNER_DESCRIPTION": "Команды, которые предназначены только для владельца бота.",
+			"SETTINGS_DESCRIPTION": "Команды, которые позволяют управлять конфигурацией сервера."
+		},
+		"IMDB": {
+			"DIRECTORS": "Режиссеры",
+			"WRITERS": "Сценаристы",
+			"STARS": "Актеры",
+			"COMPANIES": "Компании",
+			"COUNTRIES": "Страны",
+			"LANGUAGES": "Языки",
+			"RATINGS": "Рейтинги",
+			"CONTENT_RATING": "Контент",
+			"IMDB_RATING": "IMDB",
+			"LENGTH": "Продолжительность"
+		},
+		"OSU": {
+			"STATISTICS": "Статистика",
+			"GRADES": "Ранги",
+			"OTHER_USERNAMES": "Другие Никнеймы",
+			"LEVEL": "Уровень",
+			"ACCURACY": "Аккуратность",
+			"PP": "PP",
+			"RANKED_SCORE": "Счёт",
+			"PLAYCOUNT": "Кол-во игр",
+			"RANK": "Ранг в мире",
+			"COUNTRY_RANK": "Ранг по стране",
+			"COUNTRY": "Страна",
+			"LAST_VISIT": "Последний визит",
+			"SSH": "SSH",
+			"SS": "SS",
+			"SH": "SH",
+			"S": "S",
+			"A": "A"
+		},
+		"OSU_BEATMAP": {
+			"ARTIST": "Артист",
+			"CREATOR": "Автор",
+			"STATUS": "Статус",
+			"TITLE": "Название",
+			"SUBMITTED_AT": "Дата подачи",
+			"LAST_UPDATED": "Последнее обновление",
+			"TAGS": "Теги",
+			"DIFFICULTIES": "Сложности",
+			"MODE": "Режим",
+			"STARS": "Сложность (звёзд)",
+			"DIFF_NAME": "Название сложности",
+			"BPM": "BPM",
+			"URL": "Ссылка",
+			"AR": "AR",
+			"CS": "CS"
+		},
+		"SERVERINFO": {
+			"INFORMATION": "Информация",
+			"PRESENCES": "Статусы",
+			"MEMBERS": "Участники",
+			"CHANNELS": "Каналы",
+			"ONLINE": "Онлайн",
+			"IDLE": "Нет на месте",
+			"DND": "Не беспокоить",
+			"OFFLINE": "Не в сети",
+			"HUMANS": "Люди",
+			"BOTS": "Боты",
+			"TEXT": "Текст. Каналы",
+			"VOICE": "Голос. Каналы",
+			"CATEGORIES": "Категории",
+			"NEWS": "Новостные Каналы",
+			"STAGE": "Трибун",
+			"GUILD_ID": "ID Сервера",
+			"OWNER": "Владелец",
+			"MEMBER_COUNT": "Участников",
+			"CREATED_AT": "Дата создания"
+		},
+		"STEAM": {
+			"ABOUT": "Об игре",
+			"LANGUAGES": "Поддерживаемые языки",
+			"PLATFORMS": "Поддерживаемые платформы",
+			"CATEGORIES": "Категории",
+			"GENRES": "Жанры",
+			"RECOMMENDATIONS": "Рекомендации",
+			"RELEASE_DATE": "Дата выхода",
+			"FIELD_PRICE": "Стоимость игры",
+			"NOTES": "Примечания",
+			"WINDOWS": "Windows",
+			"MAC": "Mac",
+			"LINUX": "Linux",
+			"COMING_SOON": "Скоро выйдет",
+			"DATE": "Дата",
+			"PRICE": "Цена",
+			"DISCOUNT": "Скидка"
+		},
+		"USERINFO": {
+			"INFORMATION_TITLE": "Информация \"%s\"",
+			"INFORMATION_BTN": "Информация",
+			"BADGES_TITLE": "Значки \"%s\"",
+			"BADGES_BTN": "Значки",
+			"ID": "ID",
+			"USERNAME": "Никнейм",
+			"DISCRIMINATOR": "Дискриминатор",
+			"AVATARS": "Аватары",
+			"BANNERS": "Баннеры",
+			"STATUS": "Статус",
+			"CREATED_AT": "Дата создания",
+			"JOINED_AT": "Дата присоедиения",
+			"ROLES": "Ролей"
+		}
+	},
+	"OWNER_COMMANDS": {
+		"RELOAD": {
+			"COMMAND_RELOADED": "Команда \"%s\" была перезагружена!"
+		},
+		"EXPERIMENTS": {
+			"GRANTED": "Вы выдали эксперимент \"%s\" серверу \"%s\"!"
+		}
+	},
+	"SETTINGS_COMMANDS": {
+		"CONFIG": {
+			"AUTO_ROLE": "Авто-Роль",
+			"MUTE_ROLE": "Мут-Роль",
+			"TWITCH_CHANNEL": "Канал Twitch Уведомлений",
+			"MEMBERS_CHANNEL": "Канал Уведомлений об Участниках",
+			"LOG_CHANNEL": "Канал Логов",
+			"PREFIX": "Префикс",
+			"TWITCH_SYSTEM": "Система Twitch Уведомлений"
+		},
+		"TEXT_CHANGES": {
+			"WELCOME_LABEL": "Смена приветственного текста",
+			"WELCOME_CHANGED": "Приветственный текст был успешно изменён!",
+			"GOODBYE_LABEL": "Смена прощального текста",
+			"GOODBYE_CHANGED": "Прощальный текст был успешно изменён!",
+			"BOOST_LABEL": "Смена буст-текста",
+			"BOOST_CHANGED": "Буст-текст был успешно изменён!",
+			"UNBOOST_LABEL": "Смена текста при прекращения буста",
+			"UNBOOST_CHANGED": "Текст при прекращении буста был успешно изменён!"
+		},
+		"RESET_PROMPT": "%s уже стоит в базе данных. Вы хотите сбросить это?",
+		"EDIT_TEXT": "%s изменено на %s!",
+		"ENABLE_TEXT": "%s включена!",
+		"DISABLE_TEXT": "%s выключена!",
+		"ADD_TEXT": "\"%s\" добавлено в %s!",
+		"REMOVE_TEXT": "\"%s\" удалено из %s!",
+		"RESET_TEXT": "%s был(а) сброшен(а)!"
+	},
+	"ECONOMY_ACTIONS": {
+		"DEPOSIT": "депозита в банк",
+		"WITHDRAW": "вывода из банка"
+	},
+	"OTHER": {
+		"NONE": "Не указано",
+		"NOTHING": "Ничего",
+		"YES": "Да",
+		"NO": "Нет"
+	},
+	"BADGES": {
+		"BotHTTPInteractions": "Bot HTTP Interactions",
+		"BugHunterLevel1": "Ловец багов (Уровень 1)",
+		"BugHunterLevel2": "Ловец багов (Уровень 1)",
+		"CertifiedModerator": "Серцифицированный модератор",
+		"Hypesquad": "HypeSquad",
+		"HypeSquadOnlineHouse1": "HypeSquad Bravery",
+		"HypeSquadOnlineHouse2": "HypeSquad Brilliance",
+		"HypeSquadOnlineHouse3": "HypeSquad Balance",
+		"Partner": "Партнёр Discord",
+		"PremiumEarlySupporter": "Раннее поддержавший",
+		"Spammer": "Спамер",
+		"Staff": "Сотрудник Discord",
+		"TeamPseudoUser": "Team Pseudo User",
+		"VerifiedBot": "Подтверждённый бот",
+		"VerifiedDeveloper": "Верифицированный разработчик бота",
+		"Quarantined": "На карантине"
+	},
+	"TWITCH_SYSTEM": {
+		"STREAM_STARTED": "%s запустил трансляцию на Twitch!",
+		"STREAM_TITLE": "Название трансляции",
+		"VIEWERS": "Зрителей"
+	}
+}
