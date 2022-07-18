@@ -1,7 +1,17 @@
-import { Embed, Util } from "discord.js";
-import { Message } from "discord.js";
-import { Command } from "../../types/Command/Command";
-import { Categories } from "../../types/Command/BaseCommand";
+import {
+	ActionRowBuilder,
+	ApplicationCommandOptionType,
+	ButtonBuilder,
+	ButtonStyle,
+	ChatInputCommandInteraction,
+	ComponentType,
+	EmbedBuilder,
+	GuildMember,
+	UserFlagsString,
+} from "discord.js";
+import { bold, hyperlink, time } from "@discordjs/builders";
+import { LanguageService } from "../../services/Language";
+import { SubCommand } from "../../types/Command/SubCommand";
 import Bot from "../../classes/Bot";
 
 // DayJS
@@ -11,232 +21,247 @@ import relativeTime from "dayjs/plugin/relativeTime";
 dayjs.extend(relativeTime);
 import("dayjs/locale/en");
 import("dayjs/locale/ru");
+import("dayjs/locale/uk");
 
-export default class UserinfoCommand extends Command {
+export default class UserInfoCommand extends SubCommand {
 	constructor(client: Bot) {
 		super(client, {
-			name: "userinfo",
-			aliases: ["ui"],
+			commandName: "other",
 
-			description: {
-				en: "Displays User Information!",
-				ru: "Показывает Информацию Пользователя!",
+			name: "userinfo",
+			description: "Displays Discord User Information.",
+			descriptionLocalizations: {
+				ru: "Показывает информацию о пользователе Discord.",
 			},
 
-			usage: "<prefix>userinfo [member]",
-			category: Categories.OTHER,
+			options: [
+				{
+					type: ApplicationCommandOptionType.User,
+					name: "member",
+					description: "User to display information about.",
+					descriptionLocalizations: {
+						ru: "Пользователь, для отображения информации.",
+					},
+					required: false,
+				},
+			],
 		});
 	}
 
 	async run(
-		message: Message,
-		args: string[],
-		lang: typeof import("@locales/English").default
+		command: ChatInputCommandInteraction<"cached">,
+		lang: LanguageService
 	) {
-		const locale = await this.client.database.getSetting(
-			message.guild.id,
-			"locale"
+		const { NONE } = (await lang.all()).OTHER;
+		const { USERINFO } = (await lang.all()).OTHER_COMMANDS;
+
+		const member = command.options.getMember("member") || command.member;
+
+		const status = await this.getStatus(member);
+		const banners = await this.getBanner(member);
+		const avatars = await this.getAvatars(member);
+		const times = await this.getTimes(member);
+		const badges = await this.getBadges(member);
+
+		const InformationButton = new ButtonBuilder();
+		InformationButton.setCustomId("user_information");
+		InformationButton.setStyle(ButtonStyle.Primary);
+		InformationButton.setEmoji("1️⃣");
+		InformationButton.setLabel(USERINFO.INFORMATION_BTN);
+
+		const BadgesButton = new ButtonBuilder();
+		BadgesButton.setCustomId("user_badges");
+		BadgesButton.setStyle(ButtonStyle.Secondary);
+		BadgesButton.setEmoji("2️⃣");
+		BadgesButton.setLabel(USERINFO.BADGES_BTN);
+
+		const ButtonsRow = new ActionRowBuilder<ButtonBuilder>();
+		ButtonsRow.addComponents(InformationButton, BadgesButton);
+
+		const color = this.client.functions.color("Blurple");
+		const author = this.client.functions.author(member);
+
+		const InformationEmbed = new EmbedBuilder();
+		InformationEmbed.setColor(color);
+		InformationEmbed.setAuthor(author);
+		InformationEmbed.setTitle(
+			await lang.get(
+				"OTHER_COMMANDS:USERINFO:INFORMATION_TITLE",
+				member.user.tag
+			)
 		);
+		InformationEmbed.setDescription(
+			[
+				`› ${bold(USERINFO.ID)}: ${bold(member.id)}`,
+				`› ${bold(USERINFO.USERNAME)}: ${bold(member.user.username)}`,
+				`› ${bold(USERINFO.DISCRIMINATOR)}: ${bold(
+					member.user.discriminator
+				)}`,
+				`› ${bold(USERINFO.AVATARS)}: ${bold(avatars.join(" | "))}`,
+				`› ${bold(USERINFO.BANNERS)}: ${bold(
+					banners ? banners.join(" | ") : NONE
+				)}`,
+				`› ${bold(USERINFO.STATUS)}: ${bold(status)}`,
+				`› ${bold(USERINFO.CREATED_AT)}: ${bold(times[0])}`,
+				`› ${bold(USERINFO.JOINED_AT)}: ${bold(times[1])}`,
+				`› ${bold(USERINFO.ROLES)}: ${bold(
+					member.roles.cache.size.toString()
+				)}`,
+			].join("\n")
+		);
+		InformationEmbed.setTimestamp();
 
-		// Statuses
-		const [online, idle, dnd, offline] = [
-			lang.GLOBAL.STATUSES.ONLINE,
-			lang.GLOBAL.STATUSES.IDLE,
-			lang.GLOBAL.STATUSES.DND,
-			lang.GLOBAL.STATUSES.OFFLINE,
-		];
+		const BadgesEmbed = new EmbedBuilder();
+		BadgesEmbed.setColor(color);
+		BadgesEmbed.setAuthor(author);
+		BadgesEmbed.setTitle(
+			await lang.get(
+				"OTHER_COMMANDS:USERINFO:BADGES_TITLE",
+				member.user.tag
+			)
+		);
+		BadgesEmbed.setDescription(bold(badges));
+		BadgesEmbed.setTimestamp();
 
-		// Client Statuses
-		const [status_web, status_desktop, status_mobile] = [
-			lang.OTHER.USER_INFO.CLIENT_STATUSES.WEB,
-			lang.OTHER.USER_INFO.CLIENT_STATUSES.DESKTOP,
-			lang.OTHER.USER_INFO.CLIENT_STATUSES.MOBILE,
-		];
+		await command.reply({
+			embeds: [InformationEmbed],
+			components: [ButtonsRow],
+		});
 
-		// Other
-		const [notPlaying, Nothing] = [
-			lang.OTHER.USER_INFO.OTHER.NOT_PLAYING,
-			lang.OTHER.USER_INFO.OTHER.NOTHING,
-		];
+		const msg = await command.fetchReply();
+		const collector = await msg.createMessageComponentCollector({
+			filter: (btn) => btn.user.id === command.user.id,
+			time: 120000,
+			componentType: ComponentType.Button,
+		});
 
-		// Yes or No
-		const [yes, no] = [lang.GLOBAL.YES, lang.GLOBAL.NO];
+		collector.on("collect", async (collected) => {
+			if (!collected.isButton()) return;
 
-		// Field Names
-		const [main, other] = [
-			lang.OTHER.USER_INFO.FIELDS.MAIN,
-			lang.OTHER.USER_INFO.FIELDS.OTHER,
-		];
+			switch (collected.customId) {
+				case "user_information": {
+					await collected.update({
+						embeds: [InformationEmbed],
+						components: [ButtonsRow],
+					});
 
-		// Main Texts
-		const [username, tag, avatar] = [
-			lang.OTHER.USER_INFO.TEXTS.MAIN.USERNAME,
-			lang.OTHER.USER_INFO.TEXTS.MAIN.TAG,
-			lang.OTHER.USER_INFO.TEXTS.MAIN.AVATAR,
-		];
-
-		// Other Texts
-		const [
-			online_using,
-			presence,
-			playing,
-			reg_date,
-			join_date,
-			in_voice,
-			boosting,
-			bot,
-		] = [
-			lang.OTHER.USER_INFO.TEXTS.OTHER.ONLINE_USING,
-			lang.OTHER.USER_INFO.TEXTS.OTHER.PRESENCE,
-			lang.OTHER.USER_INFO.TEXTS.OTHER.PLAYING,
-			lang.OTHER.USER_INFO.TEXTS.OTHER.REG_DATE,
-			lang.OTHER.USER_INFO.TEXTS.OTHER.JOIN_DATE,
-			lang.OTHER.USER_INFO.TEXTS.OTHER.IN_VOICE,
-			lang.OTHER.USER_INFO.TEXTS.OTHER.BOOSTING,
-			lang.OTHER.USER_INFO.TEXTS.OTHER.BOT,
-		];
-
-		const member = message.mentions.members.first() || message.member;
-		const userInfo = {
-			name: member.user.username,
-			tag: member.user.tag,
-			avatar: member.user.displayAvatarURL(),
-			regDate: new Date(member.user.createdTimestamp).toLocaleString(
-				locale === "en-US" ? "en-US" : "ru-RU"
-			),
-			joinDate: new Date(member.joinedTimestamp).toLocaleString(
-				locale === "en-US" ? "en-US" : "ru-RU"
-			),
-
-			regTimeAgo: await timeSince(
-				this.client,
-				message,
-				member.user.createdTimestamp
-			),
-			joinTimeAgo: await timeSince(
-				this.client,
-				message,
-				member.joinedTimestamp
-			),
-
-			presence: () => {
-				if (!member.presence || !member.presence?.status)
-					return `⚫ ${offline}`;
-
-				if (member.presence.status === "online") return `🟢 ${online}`;
-				if (member.presence.status === "idle") return `🟡 ${idle}`;
-				if (member.presence.status === "dnd") return `🔴 ${dnd}`;
-				if (member.presence.status === "offline")
-					return `⚫ ${offline}`;
-				if (member.presence.status === "invisible")
-					return `⚫ ${offline}`;
-			},
-
-			presenceGame: () => {
-				if (!member.presence) return notPlaying;
-
-				if (
-					["online", "dnd", "idle"].includes(
-						member.presence.status
-					) &&
-					member.presence.activities.length
-				) {
-					return `${member.presence.activities
-						.join(", ")
-						.toString()}`;
-				} else {
-					return notPlaying;
+					break;
 				}
-			},
-			onlineUsing: () => {
-				if (!member.presence) return Nothing;
 
-				if (
-					member.presence.status === "invisible" ||
-					member.presence.status === "offline"
-				)
-					return Nothing;
-				else {
-					var content = "";
+				case "user_badges": {
+					await collected.update({
+						embeds: [BadgesEmbed],
+						components: [ButtonsRow],
+					});
 
-					const { web, mobile, desktop } =
-						member.presence.clientStatus;
-
-					if (web) content = status_web;
-					if (desktop) content = status_desktop;
-					if (mobile) content = status_mobile;
-
-					if (desktop && web)
-						content = `${status_desktop}, ${status_web}`;
-					if (desktop && mobile)
-						content = `${status_desktop}, ${status_mobile}`;
-					if (mobile && web)
-						content = `${status_mobile}, ${status_web}`;
-					if (mobile && web && desktop)
-						content = `${status_desktop}, ${status_web}, ${status_mobile}`;
-					if (web && mobile)
-						content = `${status_web}, ${status_mobile}`;
-
-					return content;
+					break;
 				}
-			},
-
-			boostCheck: member.premiumSince ? yes : no,
-			voiceCheck: member.voice.channel ? yes : no,
-			botCheck: member.user.bot ? yes : no,
-		};
-
-		const embed = new Embed()
-			.setColor(Util.resolveColor("Blurple"))
-			.setAuthor({
-				name: member.user.username,
-				iconURL: member.user.displayAvatarURL(),
-			});
-
-		embed.addFields(
-			{
-				name: `[1] ${main}:`,
-				value: [
-					`› **${username}**: **${userInfo.name}**`,
-					`› **${tag}**: **${userInfo.tag}**`,
-					`› **${avatar}**: **[Click](${userInfo.avatar})**`,
-				].join("\n"),
-			},
-			{
-				name: `[2] ${other}:`,
-				value: [
-					`› **${online_using}**: **${userInfo.onlineUsing()}**`,
-					`› **${presence}**: **${userInfo.presence()}**`,
-					`› **${playing}**: **${userInfo.presenceGame()}**`,
-					"",
-					`› **${reg_date}**: **${userInfo.regDate}** (**${userInfo.regTimeAgo}**)`,
-					`› **${join_date}**: **${userInfo.joinDate}** (**${userInfo.joinTimeAgo}**)`,
-					"",
-					`› **${in_voice}**: **${userInfo.voiceCheck}**`,
-					`› **${boosting}**: **${userInfo.boostCheck}**`,
-					`› **${bot}**: **${userInfo.botCheck}**`,
-				].join("\n"),
 			}
-		);
+		});
 
-		embed.setThumbnail(userInfo.avatar);
-
-		return message.channel.send({
-			embeds: [embed],
+		collector.on("end", async (collected, reason) => {
+			if (reason === "time") {
+				await msg.edit({
+					embeds: [InformationEmbed],
+					components: [ButtonsRow],
+				});
+			}
 		});
 	}
-}
 
-async function timeSince(
-	client: Bot,
-	message: Message,
-	date: number,
-	ws?: boolean
-) {
-	const locale = await client.database.getSetting(message.guild.id, "locale");
+	async getTimes(member: GuildMember) {
+		const created_at = member.user.createdAt;
+		const joined_at = member.joinedAt;
 
-	if (locale === "en-US") dayjs.locale("en");
-	else if (locale === "ru-RU") dayjs.locale("ru");
+		const createdAt = time(created_at);
+		const createdAtR = time(created_at, "R");
 
-	return dayjs(date).fromNow(ws);
+		const joinedAt = time(joined_at);
+		const joinedAtR = time(joined_at, "R");
+
+		return [`${createdAtR} (${createdAt})`, `${joinedAtR} (${joinedAt})`];
+	}
+
+	async getStatus(member: GuildMember) {
+		const lang = new LanguageService(this.client, member.guild.id);
+		const { SERVERINFO } = (await lang.all()).OTHER_COMMANDS;
+
+		const status = {
+			online: `🟢 ${SERVERINFO.ONLINE}`,
+			idle: `🟡 ${SERVERINFO.IDLE}`,
+			dnd: `🔴 ${SERVERINFO.DND}`,
+			offline: `⚫ ${SERVERINFO.OFFLINE}`,
+		};
+
+		return status[member.presence.status];
+	}
+
+	async getBadges(member: GuildMember) {
+		const lang = new LanguageService(this.client, member.guild.id);
+		const { BADGES } = await lang.all();
+
+		const badges: Record<UserFlagsString, string> = {
+			BotHTTPInteractions: null,
+			BugHunterLevel1: "<:BugHunterLevel1:991920192563195904>",
+			BugHunterLevel2: "<:BugHunterLevel2:991920193548853249>",
+			CertifiedModerator: "<:CertifiedModerator:991920797876748348>",
+			Hypesquad: null,
+			HypeSquadOnlineHouse1:
+				"<:HypeSquadOnlineHouse1:991920195398545458>",
+			HypeSquadOnlineHouse2:
+				"<:HypeSquadOnlineHouse2:991920196652630069>",
+			HypeSquadOnlineHouse3:
+				"<:HypeSquadOnlineHouse3:991920198552657930>",
+			Partner: "<:Partner:991920200184246372>",
+			PremiumEarlySupporter:
+				"<:PremiumEarlySupporter:991920187433570335>",
+			Spammer: null,
+			Staff: "<:Staff:991920189216141403>",
+			TeamPseudoUser: null,
+			VerifiedBot: null,
+			VerifiedDeveloper: "<:VerifiedDeveloper:991920191044861952>",
+			Quarantined: null,
+		};
+
+		var flags = "";
+		for (const [key, value] of Object.entries(badges)) {
+			if (key === "Hypesquad") continue;
+
+			if (member.user.flags.has(key as UserFlagsString)) {
+				if (value) flags += value;
+				flags += ` ${BADGES[key]} - ✅\n`;
+			} else {
+				if (value) flags += value;
+				flags += ` ${BADGES[key]} - ❌\n`;
+			}
+		}
+
+		return flags;
+	}
+
+	getAvatars(member: GuildMember) {
+		const gif = member.displayAvatarURL({ extension: "gif", size: 2048 });
+		const png = member.displayAvatarURL({ extension: "png", size: 2048 });
+		const jpg = member.displayAvatarURL({ extension: "jpg", size: 2048 });
+
+		return [
+			hyperlink("GIF", gif),
+			hyperlink("PNG", png),
+			hyperlink("JPG", jpg),
+		];
+	}
+
+	getBanner(member: GuildMember) {
+		if (!member.user.banner) return null;
+
+		const gif = member.user.bannerURL({ extension: "gif", size: 2048 });
+		const png = member.user.bannerURL({ extension: "png", size: 2048 });
+		const jpg = member.user.bannerURL({ extension: "jpg", size: 2048 });
+
+		return [
+			hyperlink("GIF", gif),
+			hyperlink("PNG", png),
+			hyperlink("JPG", jpg),
+		];
+	}
 }

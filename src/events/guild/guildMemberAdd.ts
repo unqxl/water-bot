@@ -1,6 +1,7 @@
-import Event from "../../types/Event/Event";
+import { bold, EmbedBuilder, GuildMember } from "discord.js";
+import { GuildService } from "../../services/Guild";
+import Event from "../../types/Event";
 import Bot from "../../classes/Bot";
-import { GuildMember, Embed, TextChannel, Util } from "discord.js";
 
 export default class GuildMemberAddEvent extends Event {
 	constructor() {
@@ -8,59 +9,44 @@ export default class GuildMemberAddEvent extends Event {
 	}
 
 	async run(client: Bot, member: GuildMember) {
-		await autoRole(client, member);
+		const service = new GuildService(client);
 
-		const settings = await client.database.getSettings(member.guild.id);
-		if (!settings.log_channel) return;
-
-		const members_channel = member.guild.channels.cache.get(
-			settings.members_channel
-		) as TextChannel;
-		if (!members_channel) return;
-
-		const lang_file = await client.functions.getLanguageFile(
-			member.guild.id
+		const texts = await service.getSetting(member.guild.id, "texts");
+		const auto_role = service.getSetting(member.guild.id, "auto_role");
+		const members_channel = service.getSetting(
+			member.guild.id,
+			"members_channel"
 		);
-		const title = lang_file.EVENTS.GUILD_EVENTS.MEMBER_ADD.TITLE;
-		const description =
-			lang_file.EVENTS.GUILD_EVENTS.MEMBER_ADD.DESCRIPTION(
-				member.toString()
+
+		if (auto_role) {
+			await member.roles.add(auto_role);
+		}
+
+		if (members_channel) {
+			const channel = member.guild.channels.cache.get(members_channel);
+			if (!channel) return;
+			if (!channel.isTextBased()) return;
+
+			const color = client.functions.color("Blurple");
+			const author = client.functions.author(member);
+			const text = bold(
+				texts.welcome
+					.replace("%s", member.toString())
+					.replace("%s1", member.user.tag)
+					.replace("%s2", member.guild.memberCount.toLocaleString("be"))
 			);
 
-		const happend_at = lang_file.EVENTS.HAPPEND_AT(
-			new Date().toLocaleString(settings.locale)
-		);
+			const embed = new EmbedBuilder();
+			embed.setColor(color);
+			embed.setAuthor(author);
+			embed.setDescription(text);
+			embed.setTimestamp();
 
-		const embed = new Embed()
-			.setColor(Util.resolveColor("Blurple"))
-			.setAuthor({
-				name: member.user.tag,
-				iconURL: member.user.displayAvatarURL(),
-			})
-			.setTitle(title)
-			.setDescription(description)
-			.setFooter({
-				text: happend_at,
+			return channel.send({
+				embeds: [embed],
 			});
+		}
 
-		return members_channel.send({
-			embeds: [embed],
-		});
+		return;
 	}
-}
-
-async function autoRole(client: Bot, member: GuildMember) {
-	const autoRoleID = await client.database.getSetting(
-		member.guild.id,
-		"auto_role"
-	);
-	if (!autoRoleID) return false;
-
-	const autoRole = member.guild.roles.cache.get(autoRoleID);
-	if (!autoRole) return false;
-
-	if (member.roles.cache.get(autoRole.id)) return false;
-	else await member.roles.add(autoRole);
-
-	return true;
 }

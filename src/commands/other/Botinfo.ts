@@ -1,7 +1,8 @@
-import { Message } from "discord.js";
-import { Command } from "../../types/Command/Command";
-import { Categories } from "../../types/Command/BaseCommand";
-import { bold } from "@discordjs/builders";
+import { ChatInputCommandInteraction, EmbedBuilder } from "discord.js";
+import { LanguageService } from "../../services/Language";
+import { GuildService } from "../../services/Guild";
+import { SubCommand } from "../../types/Command/SubCommand";
+import { time } from "@discordjs/builders";
 import Bot from "../../classes/Bot";
 
 // DayJS
@@ -11,112 +12,73 @@ import duration from "dayjs/plugin/duration";
 dayjs.extend(duration);
 import("dayjs/locale/en");
 import("dayjs/locale/ru");
+import("dayjs/locale/uk");
 
-export default class BotinfoCommand extends Command {
+export default class BotInfoCommand extends SubCommand {
 	constructor(client: Bot) {
 		super(client, {
+			commandName: "other",
+
 			name: "botinfo",
-			aliases: ["bi"],
-
-			description: {
-				en: "Displays Current Bot Statistics!",
-				ru: "Выводит Текующую Статистику Бота!",
+			description: "Displays current bot statistics.",
+			descriptionLocalizations: {
+				ru: "Отображает текущую статистику бота.",
 			},
-
-			category: Categories.OTHER,
 		});
 	}
 
 	async run(
-		message: Message,
-		args: string[],
-		lang: typeof import("@locales/English").default
+		command: ChatInputCommandInteraction<"cached">,
+		lang: LanguageService
 	) {
-		const guildLocale = await this.client.database.getSetting(
-			message.guild.id,
-			"locale"
-		);
+		const service = new GuildService(this.client);
+		const locale = await service.getSetting(command.guildId, "locale");
 
-		if (guildLocale === "en-US") dayjs.locale("en");
-		else if (guildLocale === "ru-RU") dayjs.locale("ru");
+		locale === "en-US"
+			? dayjs.locale("en")
+			: locale === "ru-RU"
+			? dayjs.locale("ru")
+			: dayjs.locale("uk");
 
-		const format = lang.GLOBAL.DAYJS_FORMAT;
-		const title = lang.OTHER.BOTINFO.TITLE;
+		const { BOTINFO } = await (await lang.all()).OTHER_COMMANDS;
+		const createdTimestamp = new Date(this.client.user.createdTimestamp);
+		const readyTimestamp = new Date(this.client.readyTimestamp);
 
-		// Bot Information
-		const [
-			guilds,
-			users,
-			emojis,
-			channels,
-			commands,
-			events,
-			botUptime,
-			runnedAt,
-			apiPing,
-			botVersion,
-			fieldName,
-		] = [
-			lang.OTHER.BOTINFO.GUILDS,
-			lang.OTHER.BOTINFO.USERS,
-			lang.OTHER.BOTINFO.EMOJIS,
-			lang.OTHER.BOTINFO.CHANNELS,
-			lang.OTHER.BOTINFO.COMMANDS,
-			lang.OTHER.BOTINFO.EVENTS,
-			lang.OTHER.BOTINFO.UPTIME,
-			lang.OTHER.BOTINFO.STARTED_AT,
-			lang.OTHER.BOTINFO.API_PING,
-			lang.OTHER.BOTINFO.BOT_VERSION,
-			lang.OTHER.BOTINFO.FIELD_NAME,
-		];
-
-		const botInfo = {
-			guilds: this.client.functions.sp(this.client.guilds.cache.size),
-			users: this.client.functions.sp(this.client.users.cache.size),
-			emojis: this.client.functions.sp(this.client.emojis.cache.size),
-			channels: this.client.functions.sp(this.client.channels.cache.size),
-			commands: this.client.functions.sp(this.client.commands.size),
-			events: this.client.functions.sp(this.client.events.size),
-			uptime: uptime(this.client.uptime, format),
-			runTime: new Date(this.client.readyTimestamp).toLocaleString(
-				guildLocale
-			),
-			apiPing: `${this.client.ws.ping}ms`,
+		const INFO = {
+			GUILDS: sp(this.client.guilds.cache.size),
+			USERS: sp(this.client.users.cache.size),
+			CHANNELS: sp(this.client.channels.cache.size),
+			PING: `${this.client.ws.ping}ms`,
+			COMMANDS: sp(this.client.commands.size),
+			VERSION: this.client.version,
+			CREATED: time(createdTimestamp, "R"),
+			STARTED: time(readyTimestamp, "R"),
 		};
 
-		const embed = this.client.functions.buildEmbed(
-			message,
-			"Blurple",
-			`${title}:`,
-			false,
-			false,
-			true
+		const embed = new EmbedBuilder();
+		embed.setColor(this.client.functions.color("Blurple"));
+		embed.setAuthor(this.client.functions.author(command.member));
+		embed.setThumbnail(this.client.user.displayAvatarURL());
+		embed.setDescription(
+			[
+				`**${BOTINFO.BOT_GUILDS}**: **${INFO.GUILDS}**`,
+				`**${BOTINFO.BOT_USERS}**: **${INFO.USERS}**`,
+				`**${BOTINFO.BOT_CHANNELS}**: **${INFO.CHANNELS}**`,
+				`**${BOTINFO.BOT_COMMANDS}**: **${INFO.COMMANDS}**`,
+				"",
+				`**${BOTINFO.BOT_VERSION}**: **${INFO.VERSION}**`,
+				`**${BOTINFO.BOT_PING}**: **${INFO.PING}**`,
+				`**${BOTINFO.BOT_CREATED}**: **${INFO.CREATED}**`,
+				`**${BOTINFO.BOT_STARTED}**: **${INFO.STARTED}**`,
+			].join("\n")
 		);
 
-		embed.addFields({
-			name: `${fieldName}:`,
-			value: [
-				`› **${guilds}**: **${botInfo.guilds}**`,
-				`› **${users}**: **${botInfo.users}**`,
-				`› **${emojis}**: **${botInfo.emojis}**`,
-				`› **${channels}**: **${botInfo.channels}**`,
-				`› **${commands}**: **${botInfo.commands}**`,
-				`› **${events}**: **${botInfo.events}**`,
-				`› **${apiPing}**: **${botInfo.apiPing}**`,
-				`› **${runnedAt}**: **${botInfo.runTime}**`,
-				`› **${botUptime}**: **${botInfo.uptime}**`,
-				`› **${botVersion}**: **${this.client.version}**`,
-			].join("\n"),
-		});
-
-		embed.setThumbnail(this.client.user.displayAvatarURL());
-
-		return message.channel.send({
+		await command.reply({
 			embeds: [embed],
 		});
 	}
 }
 
-function uptime(ms: number, format: string) {
-	return dayjs.duration(ms).format(format);
+function sp(num: string | number) {
+	return Number(num).toLocaleString("be");
 }

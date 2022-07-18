@@ -13,3 +13,9 @@ export type GuildConfig = {
 	twitchSystem: boolean;
 	twitchStreamers: Streamer[];
 };
+
+export interface ExperimentOptions {
+	id: number;
+	name: string;
+	description: string;
+}

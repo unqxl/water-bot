@@ -1,7 +1,7 @@
 {
 	"compilerOptions": {
 		"target": "ESNext",
-		"lib": ["ESNext"],
+		"lib": ["ESNext", "DOM"],
 		"module": "commonjs",
 		"moduleResolution": "node",
 		"checkJs": false,
@@ -15,14 +15,9 @@
 		"skipDefaultLibCheck": true,
 		"declaration": false,
 		"resolveJsonModule": true,
-		"typeRoots": ["./src/types/index.d.ts"],
-
-		"baseUrl": "./src",
-		"paths": {
-			"@locales/*": ["locales/*"]
-		}
+		"baseUrl": "./src"
 	},
 
-	"include": ["src"],
+	"include": ["src", "scripts/prepare.ts"],
 	"exclude": ["node_modules", ".github", ".vscode"]
 }

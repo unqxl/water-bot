@@ -1,6 +1,7 @@
-import Event from "../../types/Event/Event";
+import { bold, EmbedBuilder, GuildMember } from "discord.js";
+import { GuildService } from "../../services/Guild";
+import Event from "../../types/Event";
 import Bot from "../../classes/Bot";
-import { GuildMember, Embed, TextChannel, Util } from "discord.js";
 
 export default class GuildMemberBoostEvent extends Event {
 	constructor() {
@@ -8,42 +9,39 @@ export default class GuildMemberBoostEvent extends Event {
 	}
 
 	async run(client: Bot, member: GuildMember) {
-		const settings = await client.database.getSettings(member.guild.id);
-		if (!settings.log_channel) return;
+		const service = new GuildService(client);
 
-		const log_channel = member.guild.channels.cache.get(
-			settings.log_channel
-		) as TextChannel;
-		if (!log_channel) return;
-
-		const lang_file = await client.functions.getLanguageFile(
-			member.guild.id
+		const texts = await service.getSetting(member.guild.id, "texts");
+		const members_channel = service.getSetting(
+			member.guild.id,
+			"members_channel"
 		);
-		const title = lang_file.EVENTS.GUILD_EVENTS.MEMBER_BOOST.TITLE;
-		const description =
-			lang_file.EVENTS.GUILD_EVENTS.MEMBER_BOOST.DESCRIPTION(
-				member.user.tag,
-				client.functions.sp(member.guild.premiumSubscriptionCount)
+
+		if (members_channel) {
+			const channel = member.guild.channels.cache.get(members_channel);
+			if (!channel) return;
+			if (!channel.isTextBased()) return;
+
+			const color = client.functions.color("Blurple");
+			const author = client.functions.author(member);
+			const text = bold(
+				texts.boost
+					.replace("%s", member.toString())
+					.replace("%s1", member.user.tag)
+					.replace("%s2", member.guild.premiumSubscriptionCount.toString())
 			);
 
-		const happend_at = lang_file.EVENTS.HAPPEND_AT(
-			new Date().toLocaleString(settings.locale)
-		);
+			const embed = new EmbedBuilder();
+			embed.setColor(color);
+			embed.setAuthor(author);
+			embed.setDescription(`🎉 | ${text}`);
+			embed.setTimestamp();
 
-		const embed = new Embed()
-			.setColor(Util.resolveColor("Blurple"))
-			.setAuthor({
-				name: member.user.tag,
-				iconURL: member.user.displayAvatarURL(),
-			})
-			.setTitle(title)
-			.setDescription(description)
-			.setFooter({
-				text: happend_at,
+			return channel.send({
+				embeds: [embed],
 			});
+		}
 
-		return log_channel.send({
-			embeds: [embed],
-		});
+		return;
 	}
 }

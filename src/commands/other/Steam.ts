@@ -1,197 +1,180 @@
-import { Categories, ValidateReturn } from "../../types/Command/BaseCommand";
-import { Embed, Message, Util } from "discord.js";
-import { Command } from "../../types/Command/Command";
-import Bot from "../../classes/Bot";
+import {
+	ApplicationCommandOptionType,
+	ChatInputCommandInteraction,
+	EmbedBuilder,
+} from "discord.js";
+import { LanguageService } from "../../services/Language";
+import { GuildService } from "../../services/Guild";
+import { SubCommand } from "../../types/Command/SubCommand";
 import { bold } from "@discordjs/builders";
+import TurndownService from "turndown";
+import Bot from "../../classes/Bot";
 
-export default class SteamCommand extends Command {
+export default class SteamCommand extends SubCommand {
 	constructor(client: Bot) {
 		super(client, {
-			name: "steam",
+			commandName: "other",
 
-			description: {
-				en: "Shows Game Information!",
-				ru: "Показывает информацию игры!",
+			name: "steam",
+			description: "Displays Steam game information.",
+			descriptionLocalizations: {
+				ru: "Показывает информацию об игре Steam.",
 			},
 
-			category: Categories.OTHER,
-			usage: "<prefix>steam <name>",
+			options: [
+				{
+					type: ApplicationCommandOptionType.String,
+					name: "game",
+					description: "Steam game name.",
+					descriptionLocalizations: {
+						ru: "Название игры в Steam.",
+					},
+					required: true,
+				},
+			],
 		});
 	}
 
-	async validate(
-		message: Message,
-		args: string[],
-		lang: typeof import("@locales/English").default
-	): Promise<ValidateReturn> {
-		const name = args.join(" ");
-		if (!name) {
-			const text = lang.ERRORS.ARGS_MISSING("steam");
-			const embed = this.client.functions.buildEmbed(
-				message,
-				"Red",
-				text,
-				false,
-				"❌",
-				true
-			);
+	async run(
+		command: ChatInputCommandInteraction<"cached">,
+		lang: LanguageService
+	) {
+		if (this.client.config.keys.steam_key === null) {
+			const color = this.client.functions.color("Red");
+			const author = this.client.functions.author(command.member);
 
-			return {
-				ok: false,
-				error: {
-					embeds: [embed],
-				},
-			};
+			const embed = new EmbedBuilder();
+			embed.setColor(color);
+			embed.setAuthor(author);
+			embed.setDescription(`❌ | ${bold("IMDB Key is not set.")}`);
+			embed.setTimestamp();
+
+			return command.reply({ embeds: [embed] });
 		}
 
-		return {
-			ok: true,
-		};
-	}
+		command.deferReply();
 
-	async run(
-		message: Message,
-		args: string[],
-		lang: typeof import("@locales/English").default
-	) {
-		const locale = await this.client.database.getSetting(
-			message.guild.id,
-			"locale"
-		);
+		const service = new GuildService(this.client);
+		const locale = await service.getSetting(command.guildId, "locale");
+		var l =
+			locale === "en-US"
+				? "en"
+				: locale === "ru-RU"
+				? "ru"
+				: locale === "uk-UA"
+				? "uk"
+				: locale;
 
-		const l = locale === "en-US" ? "en" : "ru";
-		const name = args.join(" ");
+		const query = command.options.getString("game", true);
 		const { success, data } = await this.client.apis.steam.getAppInfo(
-			name,
-			l
-		);
-
-		const app_url = this.client.apis.steam.getStoreAppLink(
-			data.steam_appid
+			query,
+			locale
 		);
 
 		if (!success) {
-			const text = lang.ERRORS.NOT_FOUND("Steam API");
-			const embed = this.client.functions.buildEmbed(
-				message,
-				"Red",
-				text,
-				false,
-				"❌",
-				true
-			);
+			const author = this.client.functions.author(command.member);
+			const color = this.client.functions.color("Red");
+			const text = await lang.get("ERRORS:DATA_NOT_FOUND", "Steam API");
 
-			return message.channel.send({
+			const embed = new EmbedBuilder();
+			embed.setColor(color);
+			embed.setAuthor(author);
+			embed.setDescription(`❌ | ${bold(text)}`);
+			embed.setTimestamp();
+
+			return command.editReply({
 				embeds: [embed],
 			});
 		}
 
-		const embed = new Embed();
-		embed.setColor(Util.resolveColor("Blurple"));
-		embed.setAuthor({
-			name: message.author.username,
-			iconURL: message.author.displayAvatarURL(),
+		const {
+			OTHER_COMMANDS: { STEAM },
+			OTHER,
+		} = await lang.all();
+
+		const author = this.client.functions.author(command.member);
+		const color = this.client.functions.color("Blurple");
+		const app_url = this.client.apis.steam.getStoreAppLink(data.steam_appid);
+
+		const support_windows =
+			data.platforms.windows === true ? bold(OTHER.YES) : bold(OTHER.NO);
+
+		const support_mac =
+			data.platforms.mac === true ? bold(OTHER.YES) : bold(OTHER.NO);
+
+		const support_linux =
+			data.platforms.linux === true ? bold(OTHER.YES) : bold(OTHER.NO);
+
+		const coming_soon =
+			data.release_date.coming_soon === true ? bold(OTHER.YES) : bold(OTHER.NO);
+
+		const notes =
+			typeof data.content_descriptors.notes === "string"
+				? bold(data.content_descriptors.notes)
+				: bold(OTHER.NONE);
+
+		const turndown = new TurndownService();
+		turndown.rules.add("img", {
+			filter: "img",
+			replacement: () => {
+				return "";
+			},
 		});
+		turndown.rules.add("br", {
+			filter: ["br", "hr"],
+			replacement: () => {
+				return "\n";
+			},
+		});
+
+		const about = turndown.turndown(data.about_the_game);
+		const res = [
+			`› ${bold(STEAM.ABOUT)}:`,
+			`${about}`,
+			"",
+			`› ${bold(STEAM.LANGUAGES)}:`,
+			`${bold(turndown.turndown(data.supported_languages))}`,
+			"",
+			`› ${bold(STEAM.PLATFORMS)}:`,
+			`${bold(data.developers.join(", "))}`,
+			"",
+			`› ${bold(STEAM.PLATFORMS)}:`,
+			`» ${bold(STEAM.WINDOWS)}: ${support_windows}`,
+			`» ${bold(STEAM.MAC)}: ${support_mac}`,
+			`» ${bold(STEAM.LINUX)}: ${support_linux}`,
+			"",
+			`› ${bold(STEAM.CATEGORIES)}:`,
+			`${bold(data.categories.map((c) => c.description).join(", "))}`,
+			"",
+			`› ${bold(STEAM.GENRES)}:`,
+			`${bold(data.genres.map((c) => c.description).join(", "))}`,
+			"",
+			`› ${bold(STEAM.RECOMMENDATIONS)}:`,
+			`${bold(data.recommendations.total.toLocaleString(locale))}`,
+			"",
+			`› ${bold(STEAM.RELEASE_DATE)}:`,
+			`» ${bold(STEAM.COMING_SOON)}: ${coming_soon}`,
+			`» ${bold(STEAM.DATE)}: ${bold(data.release_date.date)}`,
+			"",
+			`› ${bold(STEAM.PRICE)}:`,
+			`» ${bold(STEAM.PRICE)}: ${bold(data.price_overview.final_formatted)}`,
+			`» ${bold(STEAM.DISCOUNT)}: ${bold(
+				data.price_overview.discount_percent.toString() + "%"
+			)}`,
+			"",
+			`› ${bold(STEAM.NOTES)}:`,
+			`${notes}`,
+		].join("\n");
+
+		const embed = new EmbedBuilder();
+		embed.setColor(color);
+		embed.setAuthor(author);
 		embed.setTitle(data.name);
+		embed.setDescription(res);
 		embed.setURL(data.website ?? app_url);
 		embed.setImage(data.header_image ?? null);
 
-		embed.addFields(
-			{
-				name: lang.OTHER.STEAM.FIELDS.ABOUT,
-				value: bold(data.about_the_game),
-				inline: false,
-			},
-			{
-				name: lang.OTHER.STEAM.FIELDS.LANGUAGES,
-				value: bold(
-					data.supported_languages
-						.replaceAll("<strong>", "")
-						.replaceAll("</strong>", "")
-						.replaceAll("<br>", "\n")
-				),
-				inline: true,
-			},
-			{
-				name: lang.OTHER.STEAM.FIELDS.DEVELOPERS,
-				value: bold(data.developers.join(", ")),
-				inline: true,
-			},
-			{
-				name: lang.OTHER.STEAM.FIELDS.PLATFORMS,
-				value: [
-					`› ${bold(lang.OTHER.STEAM.PLATFORMS.WINDOWS)}: ${
-						data.platforms.windows === true
-							? bold(lang.GLOBAL.YES)
-							: bold(lang.GLOBAL.NO)
-					}`,
-					`› ${bold(lang.OTHER.STEAM.PLATFORMS.MACOS)}: ${
-						data.platforms.mac === true
-							? bold(lang.GLOBAL.YES)
-							: bold(lang.GLOBAL.NO)
-					}`,
-					`› ${bold(lang.OTHER.STEAM.PLATFORMS.LINUX)}: ${
-						data.platforms.linux === true
-							? bold(lang.GLOBAL.YES)
-							: bold(lang.GLOBAL.NO)
-					}`,
-				].join("\n"),
-				inline: false,
-			},
-			{
-				name: lang.OTHER.STEAM.FIELDS.CATEGORIES,
-				value: bold(
-					data.categories.map((c) => c.description).join(", ")
-				),
-				inline: true,
-			},
-			{
-				name: lang.OTHER.STEAM.FIELDS.GENRES,
-				value: bold(data.genres.map((c) => c.description).join(", ")),
-				inline: true,
-			},
-			{
-				name: lang.OTHER.STEAM.FIELDS.RECOMENDATIONS,
-				value: bold(data.recommendations.total.toLocaleString("be")),
-				inline: true,
-			},
-			{
-				name: lang.OTHER.STEAM.FIELDS.RELEASE_DATE,
-				value: [
-					`› ${bold(lang.OTHER.STEAM.COMING_SOON)}: ${
-						data.release_date.coming_soon === true
-							? bold(lang.GLOBAL.YES)
-							: bold(lang.GLOBAL.NO)
-					}`,
-					`› ${bold(lang.OTHER.STEAM.DATE)}: ${bold(
-						data.release_date.date
-					)}`,
-				].join("\n"),
-				inline: true,
-			},
-			{
-				name: lang.OTHER.STEAM.FIELDS.PRICE,
-				value: [
-					`› ${bold(lang.OTHER.STEAM.PRICE)}: ${bold(
-						data.price_overview.final_formatted
-					)}`,
-					`› ${bold(lang.OTHER.STEAM.DISCOUNT)}: ${bold(
-						data.price_overview.discount_percent.toString() + "%"
-					)}`,
-				].join("\n"),
-				inline: true,
-			},
-			{
-				name: lang.OTHER.STEAM.FIELDS.NOTES,
-				value:
-					typeof data.content_descriptors.notes === "string"
-						? bold(data.content_descriptors.notes)
-						: bold(lang.GLOBAL.NONE),
-				inline: true,
-			}
-		);
-
-		return message.channel.send({
+		return command.editReply({
 			embeds: [embed],
 		});
 	}

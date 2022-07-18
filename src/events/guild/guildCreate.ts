@@ -1,52 +1,39 @@
-import { Guild, Embed, User, Util } from "discord.js";
-import { getRepository } from "typeorm";
-import { GuildConfiguration } from "../../typeorm/entities/GuildConfiguration";
+import { GuildService } from "../../services/Guild";
+import { EmbedBuilder, Guild } from "discord.js";
+import Event from "../../types/Event";
 import Bot from "../../classes/Bot";
-import Event from "../../types/Event/Event";
 
 export default class GuildCreateEvent extends Event {
-	constructor(
-		private readonly guildConfigRepository = getRepository(
-			GuildConfiguration
-		)
-	) {
+	constructor() {
 		super("guildCreate");
 	}
 
 	async run(client: Bot, guild: Guild) {
-		await client.database.createGuild(guild.id);
+		const service = new GuildService(client);
+		service.create(guild.id);
 
-		const config = await this.guildConfigRepository.findOne({
-			guild_id: guild.id,
+		const embed = new EmbedBuilder();
+		embed.setColor("Blurple");
+		embed.setAuthor({
+			name: guild.name,
+			iconURL: guild.iconURL(),
 		});
+		embed.setDescription(
+			[
+				`🎉 | **Bot has been added to new server!**`,
+				`› **Name**: **${guild.name}**`,
+				`› **ID**: **${guild.id}**`,
+				`› **Owner**: **${await (await guild.fetchOwner()).toString()} (${
+					guild.ownerId
+				})**`,
+				`› **Members**: **${guild.members.cache.size.toLocaleString("be")}`,
+			].join("\n")
+		);
 
-		if (config) console.log(`Configruration of ${guild.id} was found!`);
-		else {
-			console.log(`Configruration of ${guild.id} wasn't found!`);
+		const user = client.users.cache.get(client.owners[0]);
+		if (!user) return;
 
-			const newConfig = await this.guildConfigRepository.create({
-				guild_id: guild.id,
-			});
-
-			return this.guildConfigRepository.save(newConfig);
-		}
-
-		const owner = client.users.cache.get("852921856800718908") as User;
-		const guildOwner = await guild.fetchOwner();
-
-		const embed = new Embed()
-			.setColor(Util.resolveColor("Blurple"))
-			.setTitle("🎉 New Server 🎉")
-			.setDescription(
-				`› **Name**: **${guild.name}** (**${
-					guild.id
-				}**)\n› **Members**: **${client.functions.sp(
-					guild.memberCount
-				)}**\n› **Owner**: **${guildOwner.user.tag}**`
-			)
-			.setTimestamp();
-
-		return owner.send({
+		return user.send({
 			embeds: [embed],
 		});
 	}

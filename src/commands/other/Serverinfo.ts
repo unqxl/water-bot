@@ -1,130 +1,100 @@
-import { Embed, Guild, Util, ChannelType } from "discord.js";
-import { bold, inlineCode } from "@discordjs/builders";
-import { Command } from "../../types/Command/Command";
-import { Categories } from "../../types/Command/BaseCommand";
-import { Message } from "discord.js";
+import {
+	ChannelType,
+	ChatInputCommandInteraction,
+	EmbedBuilder,
+	Guild,
+} from "discord.js";
+import { bold, inlineCode, time } from "@discordjs/builders";
+import { LanguageService } from "../../services/Language";
+import { SubCommand } from "../../types/Command/SubCommand";
 import Bot from "../../classes/Bot";
 
-export default class ServerinfoCommand extends Command {
+export default class ServerInfoCommand extends SubCommand {
 	constructor(client: Bot) {
 		super(client, {
+			commandName: "other",
+
 			name: "serverinfo",
-			aliases: ["si", "serveri", "sinfo"],
-
-			description: {
-				en: "Displays Server Information!",
-				ru: "Показывает Информацию Сервера!",
+			description: "Displays Server statistics.",
+			descriptionLocalizations: {
+				ru: "Отображает статистику сервера.",
 			},
-
-			category: Categories.OTHER,
 		});
 	}
 
 	async run(
-		message: Message,
-		args: string[],
-		lang: typeof import("@locales/English").default
+		command: ChatInputCommandInteraction<"cached">,
+		lang: LanguageService
 	) {
-		const info = await this.getInfo(message.guild);
-		const embed = new Embed();
+		const info = await this.getInfo(command.guild);
+		const embed = new EmbedBuilder();
 
-		// Embed Title and Field Names
-		const [title, information, precences, members, channels] = [
-			lang.OTHER.SERVER_INFO.TITLE,
-			lang.OTHER.SERVER_INFO.FIELDS.ZERO,
-			lang.OTHER.SERVER_INFO.FIELDS.FIRST,
-			lang.OTHER.SERVER_INFO.FIELDS.SECOND,
-			lang.OTHER.SERVER_INFO.FIELDS.THIRD,
+		const { SERVERINFO } = await (await lang.all()).OTHER_COMMANDS;
+		const author = this.client.functions.author(command.member);
+		const color = this.client.functions.color("Blurple");
+
+		const [guild_id, owner, members, created_at] = [
+			bold(inlineCode(info.id)),
+			bold(info.owner.toString()),
+			bold(inlineCode(info.members)),
+			bold(info.created_at),
 		];
 
-		// Precences
-		const [online, idle, dnd] = [
-			lang.OTHER.SERVER_INFO.STATUSES.ONLINE,
-			lang.OTHER.SERVER_INFO.STATUSES.IDLE,
-			lang.OTHER.SERVER_INFO.STATUSES.DND,
+		const [online_users, idle_users, dnd_users] = [
+			bold(inlineCode(info.onlineUsers)),
+			bold(inlineCode(info.idleUsers)),
+			bold(inlineCode(info.dndUsers)),
 		];
 
-		// Users
 		const [humans, bots] = [
-			lang.OTHER.SERVER_INFO.MEMBER_TYPES.HUMANS,
-			lang.OTHER.SERVER_INFO.MEMBER_TYPES.BOTS,
+			bold(inlineCode(info.users.humans)),
+			bold(inlineCode(info.users.bots)),
 		];
 
-		// Channels
-		const [text, news, voice, stage, categories] = [
-			lang.OTHER.SERVER_INFO.CHANNELS.TEXT,
-			lang.OTHER.SERVER_INFO.CHANNELS.NEWS,
-			lang.OTHER.SERVER_INFO.CHANNELS.VOICE,
-			lang.OTHER.SERVER_INFO.CHANNELS.STAGE,
-			lang.OTHER.SERVER_INFO.CHANNELS.CATEGORIES,
+		const [
+			text_channels,
+			news_channels,
+			voice_channels,
+			stages_channels,
+			categories_channels,
+		] = [
+			bold(inlineCode(info.channels.textChannels)),
+			bold(inlineCode(info.channels.newsChannels)),
+			bold(inlineCode(info.channels.voiceChannels)),
+			bold(inlineCode(info.channels.stagesChannels)),
+			bold(inlineCode(info.channels.categoriesChannels)),
 		];
 
-		// Other
-		const [guild_id, owner, member_count, createdAt] = [
-			lang.OTHER.SERVER_INFO.OTHER.GUILD_ID,
-			lang.OTHER.SERVER_INFO.OTHER.OWNER,
-			lang.OTHER.SERVER_INFO.OTHER.MEMBER_COUNT,
-			lang.OTHER.SERVER_INFO.OTHER.CREATED_AT,
-		];
+		const res = [
+			`› ${bold(SERVERINFO.INFORMATION)}:`,
+			`» ${bold(SERVERINFO.GUILD_ID)}: ${guild_id}`,
+			`» ${bold(SERVERINFO.OWNER)}: ${owner}`,
+			`» ${bold(SERVERINFO.MEMBER_COUNT)}: ${members}`,
+			`» ${bold(SERVERINFO.CREATED_AT)}: ${created_at}`,
+			"",
+			`› ${bold(SERVERINFO.PRESENCES)}:`,
+			`» ${bold(SERVERINFO.ONLINE)}: ${online_users}`,
+			`» ${bold(SERVERINFO.IDLE)}: ${idle_users}`,
+			`» ${bold(SERVERINFO.DND)}: ${dnd_users}`,
+			"",
+			`› ${bold(SERVERINFO.MEMBERS)}:`,
+			`» ${bold(SERVERINFO.HUMANS)}: ${humans}`,
+			`» ${bold(SERVERINFO.BOTS)}: ${bots}`,
+			"",
+			`› ${bold(SERVERINFO.CATEGORIES)}:`,
+			`» ${bold(SERVERINFO.TEXT)}: ${text_channels}`,
+			`» ${bold(SERVERINFO.NEWS)}: ${news_channels}`,
+			`» ${bold(SERVERINFO.VOICE)}: ${voice_channels}`,
+			`» ${bold(SERVERINFO.STAGE)}: ${stages_channels}`,
+			`» ${bold(SERVERINFO.CATEGORIES)}: ${categories_channels}`,
+		].join("\n");
 
-		embed.setColor(Util.resolveColor("Blurple"));
-		embed.setAuthor({
-			name: message.author.username,
-			iconURL: message.author.displayAvatarURL(),
-		});
-		embed.setTitle(title);
-		embed.setThumbnail(message.guild.iconURL());
+		embed.setColor(color);
+		embed.setAuthor(author);
+		embed.setDescription(res);
+		embed.setTimestamp();
 
-		embed.addFields(
-			{
-				name: `› ${bold(information)}:`,
-				value: [
-					`» ${bold(guild_id)}: ${bold(inlineCode(info.id))}`,
-					`» ${bold(owner)}: ${bold(info.owner.toString())}`,
-					`» ${bold(member_count)}: ${bold(
-						inlineCode(info.members)
-					)}`,
-					`» ${bold(createdAt)}: ${bold(info.created_at)}`,
-				].join("\n"),
-			},
-			{
-				name: `› ${bold(precences)}:`,
-				value: [
-					`» ${bold(online)}: ${bold(inlineCode(info.onlineUsers))}`,
-					`» ${bold(idle)}: ${bold(inlineCode(info.idleUsers))}`,
-					`» ${bold(dnd)}: ${bold(inlineCode(info.dndUsers))}`,
-				].join("\n"),
-			},
-			{
-				name: `› ${bold(members)}:`,
-				value: [
-					`» ${bold(humans)}: ${bold(inlineCode(info.users.humans))}`,
-					`» ${bold(bots)}: ${bold(inlineCode(info.users.bots))}`,
-				].join("\n"),
-			},
-			{
-				name: `› ${bold(channels)}:`,
-				value: [
-					`» ${bold(text)}: ${bold(
-						inlineCode(info.channels.textChannels)
-					)}`,
-					`» ${bold(news)}: ${bold(
-						inlineCode(info.channels.newsChannels)
-					)}`,
-					`» ${bold(voice)}: ${bold(
-						inlineCode(info.channels.voiceChannels)
-					)}`,
-					`» ${bold(stage)}: ${bold(
-						inlineCode(info.channels.stagesChannels)
-					)}`,
-					`» ${bold(categories)}: ${bold(
-						inlineCode(info.channels.categoriesChannels)
-					)}`,
-				].join("\n"),
-			}
-		);
-
-		return message.channel.send({
+		return command.reply({
 			embeds: [embed],
 		});
 	}
@@ -135,24 +105,24 @@ export default class ServerinfoCommand extends Command {
 		const channels = guild.channels.cache;
 
 		// Statuses
-		var online = 0;
-		var idle = 0;
-		var dnd = 0;
+		let online = 0;
+		let idle = 0;
+		let dnd = 0;
 
 		// Types
-		var humans = 0;
-		var bots = 0;
+		let humans = 0;
+		let bots = 0;
 
 		// Channels
-		var text_channels = 0;
-		var news_channels = 0;
-		var voice_channels = 0;
-		var stages_channels = 0;
-		var categories_channels = 0;
+		let text_channels = 0;
+		let news_channels = 0;
+		let voice_channels = 0;
+		let stages_channels = 0;
+		let categories_channels = 0;
 
 		// Percent
-		var humansPercent = 0;
-		var botsPercent = 0;
+		let humansPercent = 0;
+		let botsPercent = 0;
 
 		// Other
 		const emotes = [];
@@ -192,25 +162,29 @@ export default class ServerinfoCommand extends Command {
 		});
 
 		channels.forEach((channel) => {
-			if (channel.type === ChannelType.GuildText) text_channels++;
-			else if (channel.type === ChannelType.GuildNews) news_channels++;
-			else if (channel.type === ChannelType.GuildVoice) voice_channels++;
-			else if (channel.type === ChannelType.GuildCategory)
+			if (channel.type === ChannelType.GuildText) {
+				text_channels++;
+			} else if (channel.type === ChannelType.GuildNews) {
+				news_channels++;
+			} else if (channel.type === ChannelType.GuildVoice) {
+				voice_channels++;
+			} else if (channel.type === ChannelType.GuildCategory) {
 				categories_channels++;
-			else if (channel.type === ChannelType.GuildStageVoice)
+			} else if (channel.type === ChannelType.GuildStageVoice) {
 				stages_channels++;
+			}
 		});
 
 		humansPercent = this.calculatePercent(humans, members.size);
 		botsPercent = this.calculatePercent(bots, members.size);
 
-		var createdAt = Math.floor(guild.createdTimestamp / 1000);
+		const createdAt = guild.createdAt;
 
 		return {
 			name: guild.name,
 			id: guild.id,
 			owner: await guild.fetchOwner(),
-			created_at: `<t:${createdAt}> (<t:${createdAt}:R>)`,
+			created_at: `${time(createdAt)} (${time(createdAt, "R")})`,
 
 			members: guild.memberCount.toLocaleString(),
 			onlineUsers: online.toLocaleString(),

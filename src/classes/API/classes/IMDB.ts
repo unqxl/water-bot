@@ -1,5 +1,5 @@
-import { request } from "undici";
 import { IMDBFilmData, IMDBSearchData, IMDBSearchResult } from "../types";
+import { request } from "undici";
 
 export = class IMDBAPI {
 	public key: string;
@@ -11,17 +11,18 @@ export = class IMDBAPI {
 	}
 
 	generateSearchLink(name: string, l: string) {
-		var link = `https://imdb-api.com/${l}/API/Search/${this.key}/${name}`;
+		const link = `https://imdb-api.com/${l}/API/Search/${this.key}/${name}`;
 		return link;
 	}
 
 	generateInfoLink(id: string, l: string) {
-		var link = `https://imdb-api.com/${l}/API/Title/${this.key}/${id}`;
+		const link = `https://imdb-api.com/${l}/API/Title/${this.key}/${id}`;
 		return link;
 	}
 
 	async getFirstResult(name: string, l: string): Promise<IMDBSearchResult> {
 		const link = this.generateSearchLink(name, l);
+
 		const data: IMDBSearchData = await (await request(link)).body.json();
 		if (!data.results.length) return null;
 
@@ -31,6 +32,7 @@ export = class IMDBAPI {
 	async getData(name: string, l: string): Promise<IMDBFilmData> {
 		const { id } = await this.getFirstResult(name, l);
 		const link = this.generateInfoLink(id, l);
+		
 		const data: IMDBFilmData = await (await request(link)).body.json();
 		return data;
 	}

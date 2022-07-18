@@ -1,69 +1,73 @@
-import { Message } from "discord.js";
-import { Command } from "../../types/Command/Command";
-import { Categories } from "../../types/Command/BaseCommand";
+import { ChatInputCommandInteraction, EmbedBuilder, time } from "discord.js";
+import { LanguageService } from "../../services/Language";
+import { GuildService } from "../../services/Guild";
+import { SubCommand } from "../../types/Command/SubCommand";
+import { bold } from "@discordjs/builders";
 import Bot from "../../classes/Bot";
 
-export default class WeeklyCommand extends Command {
+export default class WeeklyCommand extends SubCommand {
 	constructor(client: Bot) {
 		super(client, {
+			commandName: "economy",
+
 			name: "weekly",
-
-			description: {
-				en: "Get Your Weekly Reward!",
-				ru: "Получите свою Еженедельную Награду!",
+			description: "Gives weekly reward.",
+			descriptionLocalizations: {
+				ru: "Выдаёт еженедельную награду.",
 			},
-
-			category: Categories.ECONOMY,
 		});
 	}
 
 	async run(
-		message: Message,
-		args: string[],
-		lang: typeof import("@locales/English").default
+		command: ChatInputCommandInteraction<"cached">,
+		lang: LanguageService
 	) {
 		const weekly = await this.client.economy.rewards.weekly(
-			message.guild.id,
-			message.author.id
+			command.guildId,
+			command.user.id
 		);
 
 		if ("status" in weekly) {
-			const locale = await this.client.database.getSetting(
-				message.guild.id,
-				"locale"
-			);
+			const service = new GuildService(this.client);
+			const locale = service.getSetting(command.guildId, "locale");
 
 			const collectAt = new Date(weekly.data);
-			const text = lang.ECONOMY.TIME_ERROR(
+			const collectAtFormat = time(collectAt, "R");
+			const text = await lang.get(
+				"ERRORS:TIME_ERROR",
 				collectAt.toLocaleString(locale),
-				collectAt
+				collectAtFormat
 			);
 
-			const embed = this.client.functions.buildEmbed(
-				message,
-				"Red",
-				text,
-				false,
-				"❌",
-				true
-			);
+			const color = this.client.functions.color("Red");
+			const author = this.client.functions.author(command.member);
+			const embed = new EmbedBuilder();
+			embed.setColor(color);
+			embed.setAuthor(author);
+			embed.setDescription(`❌ | ${bold(text)}`);
+			embed.setTimestamp();
 
-			return message.channel.send({
+			return command.reply({
 				embeds: [embed],
+				ephemeral: true,
 			});
 		}
 
-		const text = lang.ECONOMY.WEEKLY_REWARD(weekly.amount);
-		const embed = this.client.functions.buildEmbed(
-			message,
-			"Blurple",
-			text,
-			false,
-			"✅",
-			true
+		const sp = (num: string | number) => this.client.functions.sp(num);
+		const color = this.client.functions.color("Blurple");
+		const author = this.client.functions.author(command.member);
+		const text = await lang.get(
+			"ECONOMY_COMMANDS:WEEKLY:TEXT",
+			sp(weekly.amount)
 		);
 
-		return message.channel.send({
+		const embed = new EmbedBuilder();
+		embed.setColor(color);
+		embed.setAuthor(author);
+		embed.setDescription(`✅ | ${bold(text)}`);
+		embed.setTimestamp();
+
+		return command.reply({
 			embeds: [embed],
 		});
 	}

@@ -1,12 +1,11 @@
 import { CronCommand, CronJob } from "cron";
-import { Moment } from "moment";
 import Bot from "../classes/Bot";
 
 export class Job extends CronJob {
 	constructor(
 		client: Bot,
 		name: string,
-		cronTime: string | Date | Moment,
+		cronTime: string | Date,
 		onTick: CronCommand,
 		onComplete?: CronCommand | null,
 		start?: boolean,
@@ -28,6 +27,6 @@ export class Job extends CronJob {
 			unrefTimeout
 		);
 
-		client.logger.log(`Job with name "${name}" started!`, "CRON");
+		client.logger.log(`Job with name "${name}" started!`);
 	}
 }

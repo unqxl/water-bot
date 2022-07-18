@@ -1,6 +1,7 @@
-import { Guild, Embed, User, Util } from "discord.js";
+import { GuildService } from "../../services/Guild";
+import { EmbedBuilder, Guild } from "discord.js";
+import Event from "../../types/Event";
 import Bot from "../../classes/Bot";
-import Event from "../../types/Event/Event";
 
 export default class GuildDeleteEvent extends Event {
 	constructor() {
@@ -8,24 +9,31 @@ export default class GuildDeleteEvent extends Event {
 	}
 
 	async run(client: Bot, guild: Guild) {
-		await client.database.deleteGuild(guild.id);
+		const service = new GuildService(client);
+		service.delete(guild.id);
 
-		const owner = client.users.cache.get("852921856800718908") as User;
-		const guildOwner = await guild.fetchOwner();
+		const embed = new EmbedBuilder();
+		embed.setColor("Blurple");
+		embed.setAuthor({
+			name: guild.name,
+			iconURL: guild.iconURL(),
+		});
+		embed.setDescription(
+			[
+				`🎉 | **Bot has been deleted from server!**`,
+				`› **Name**: **${guild.name}**`,
+				`› **ID**: **${guild.id}**`,
+				`› **Owner**: **${await (await guild.fetchOwner()).toString()} (${
+					guild.ownerId
+				})**`,
+				`› **Members**: **${guild.members.cache.size.toLocaleString("be")}`,
+			].join("\n")
+		);
 
-		const embed = new Embed()
-			.setColor(Util.resolveColor("Blurple"))
-			.setTitle("😔 Server Deleted 😔")
-			.setDescription(
-				`› **Name**: **${guild.name}** (**${
-					guild.id
-				}**)\n› **Members**: **${client.functions.sp(
-					guild.memberCount
-				)}**\n› **Owner**: **${guildOwner.user.tag}**`
-			)
-			.setTimestamp();
+		const user = client.users.cache.get(client.owners[0]);
+		if (!user) return;
 
-		return owner.send({
+		return user.send({
 			embeds: [embed],
 		});
 	}

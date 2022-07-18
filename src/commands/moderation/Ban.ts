@@ -1,178 +1,100 @@
 import {
-	ButtonInteraction,
-	ActionRow,
-	ButtonComponent,
-	ComponentType,
+	ApplicationCommandOptionType,
+	ChatInputCommandInteraction,
+	EmbedBuilder,
 } from "discord.js";
-import { Categories, ValidateReturn } from "../../types/Command/BaseCommand";
-import { Command } from "../../types/Command/Command";
-import { Message } from "discord.js";
+import { LanguageService } from "../../services/Language";
+import { SubCommand } from "../../types/Command/SubCommand";
 import Bot from "../../classes/Bot";
 
-export default class BanCommand extends Command {
+export default class BanCommand extends SubCommand {
 	constructor(client: Bot) {
 		super(client, {
+			commandName: "moderation",
+
 			name: "ban",
-
-			description: {
-				en: "Bans Member from the Guild!",
-				ru: "Банит Участника Сервера!",
+			description: "Bans a member from the server.",
+			descriptionLocalizations: {
+				ru: "Банит участника сервера.",
 			},
-
-			category: Categories.MODERATION,
-			usage: "<prefix>ban <member> [reason]",
 
 			memberPermissions: ["BanMembers"],
 			botPermissions: ["BanMembers"],
+
+			options: [
+				{
+					type: ApplicationCommandOptionType.User,
+					name: "member",
+					description: "The member to ban.",
+					descriptionLocalizations: {
+						ru: "Участник, которого нужно забанить.",
+					},
+					required: true,
+				},
+				{
+					type: ApplicationCommandOptionType.String,
+					name: "reason",
+					description: "The reason for the ban.",
+					descriptionLocalizations: {
+						ru: "Причина бана.",
+					},
+					required: false,
+				},
+			],
 		});
-	}
-
-	async validate(
-		message: Message,
-		args: string[],
-		lang: typeof import("@locales/English").default
-	): Promise<ValidateReturn> {
-		const member =
-			message.mentions.members.first() ||
-			message.guild.members.cache.get(args[0]);
-
-		if (!member) {
-			const text = lang.ERRORS.ARGS_MISSING("ban");
-			const embed = this.client.functions.buildEmbed(
-				message,
-				"Red",
-				text,
-				false,
-				"❌",
-				true
-			);
-
-			return {
-				ok: false,
-				error: {
-					embeds: [embed],
-				},
-			};
-		}
-
-		if (!member.bannable) {
-			const text = lang.ERRORS.MEMBER_NOT_BANNABLE(member.toString());
-			const embed = this.client.functions.buildEmbed(
-				message,
-				"Red",
-				text,
-				false,
-				"❌",
-				true
-			);
-
-			return {
-				ok: false,
-				error: {
-					embeds: [embed],
-				},
-			};
-		}
-
-		return {
-			ok: true,
-		};
 	}
 
 	async run(
-		message: Message,
-		args: string[],
-		lang: typeof import("@locales/English").default
+		command: ChatInputCommandInteraction<"cached">,
+		lang: LanguageService
 	) {
-		const member =
-			message.mentions.members.first() ||
-			message.guild.members.cache.get(args[0]);
+		const member = command.options.getMember("member") || command.member;
+		const reason =
+			command.options.getString("reason") ||
+			(await lang.get("OTHER:NONE"));
 
-		var reason = args.slice(1).join(" ");
-		if (!reason) reason = "-";
+		if (member.id === command.member.id) {
+			const color = this.client.functions.color("Red");
+			const author = this.client.functions.author(command.member);
 
-		const [accept, decline, confirmText] = [
-			lang.FUNCTIONS.VERIFICATION.ACCEPT,
-			lang.FUNCTIONS.VERIFICATION.DECLINE,
-			lang.FUNCTIONS.VERIFICATION.TEXT,
-		];
+			const text = await lang.get("ERRORS:CANNOT_MODERATE_YOURSELF");
+			const embed = new EmbedBuilder();
+			embed.setColor(color);
+			embed.setAuthor(author);
+			embed.setDescription(`❌ | ${text}`);
+			embed.setTimestamp();
 
-		const confirmButton = new ButtonComponent()
-			.setCustomId("confirm")
-			.setStyle(3)
-			.setLabel(accept)
-			.setEmoji({ name: "✅" });
+			return command.reply({ embeds: [embed] });
+		} else if (member.id === this.client.user.id) {
+			const color = this.client.functions.color("Red");
+			const author = this.client.functions.author(command.member);
 
-		const cancelButton = new ButtonComponent()
-			.setCustomId("cancel")
-			.setStyle(4)
-			.setLabel(decline)
-			.setEmoji({ name: "❌" });
+			const text = await lang.get("ERRORS:CANNOT_MODERATE_BOT");
+			const embed = new EmbedBuilder();
+			embed.setColor(color);
+			embed.setAuthor(author);
+			embed.setDescription(`❌ | ${text}`);
+			embed.setTimestamp();
 
-		const confirmRow = new ActionRow().addComponents(
-			confirmButton,
-			cancelButton
+			return command.reply({ embeds: [embed] });
+		}
+
+		await member.ban({ reason });
+
+		const color = this.client.functions.color("Blurple");
+		const author = this.client.functions.author(command.member);
+		const text = await lang.get(
+			"MODERATION_COMMANDS:BAN:TEXT",
+			member.toString(),
+			reason
 		);
 
-		const confirmEmbed = this.client.functions.buildEmbed(
-			message,
-			"Blurple",
-			confirmText,
-			false,
-			"✉️",
-			true
-		);
+		const embed = new EmbedBuilder();
+		embed.setColor(color);
+		embed.setAuthor(author);
+		embed.setDescription(`✅ | ${text}`);
+		embed.setTimestamp();
 
-		const msg = await message.channel.send({
-			embeds: [confirmEmbed],
-			components: [confirmRow],
-		});
-
-		const collector = await msg.createMessageComponentCollector({
-			filter: (btn) => btn.user.id === message.author.id,
-			componentType: ComponentType.Button,
-			max: 1,
-			time: 20000,
-		});
-
-		collector.on("collect", async (btn: ButtonInteraction) => {
-			if (btn.customId === "confirm") {
-				const text = lang.MODERATION.BANNED(
-					member.toString(),
-					reason,
-					message.author.toString()
-				);
-				const embed = this.client.functions.buildEmbed(
-					message,
-					"Blurple",
-					text,
-					false,
-					"✅",
-					true
-				);
-
-				await member.ban({ deleteMessageDays: 7, reason: reason });
-
-				await msg.edit({
-					embeds: [embed],
-					components: [],
-				});
-
-				return;
-			} else if (btn.customId === "cancel") {
-				collector.stop();
-				await msg.delete();
-
-				return;
-			}
-		});
-
-		collector.on("end", async (collected, reason) => {
-			if (reason === "time") {
-				await msg.delete();
-			} else if (collected.first().customId === "cancel") {
-				await msg.delete();
-			}
-		});
+		return command.reply({ embeds: [embed] });
 	}
 }

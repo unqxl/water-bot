@@ -1,83 +1,71 @@
-import { Categories, ValidateReturn } from "../../types/Command/BaseCommand";
-import { Command } from "../../types/Command/Command";
-import { Embed } from "discord.js";
+import {
+	ApplicationCommandOptionType,
+	ChatInputCommandInteraction,
+	EmbedBuilder,
+	resolveColor,
+} from "discord.js";
+import { LanguageService } from "../../services/Language";
+import { SubCommand } from "../../types/Command/SubCommand";
 import { request } from "undici";
-import { Message } from "discord.js";
+import { bold } from "@discordjs/builders";
 import Bot from "../../classes/Bot";
 
-export default class MDNCommand extends Command {
+export default class MDNCommand extends SubCommand {
 	constructor(client: Bot) {
 		super(client, {
-			name: "mdn",
+			commandName: "other",
 
-			description: {
-				en: "Gives You information about your query from MDN!",
-				ru: "Предоставляем вам информацию по поводу вашего запроса с MDN!",
+			name: "mdn",
+			description: "Shows information about something from MDN.",
+			descriptionLocalizations: {
+				ru: "Пропускает текущую песню.",
 			},
 
-			category: Categories.OTHER,
-			usage: "<prefix>mdn <query>",
+			options: [
+				{
+					type: ApplicationCommandOptionType.String,
+					name: "query",
+					description: "Query to search in MDN.",
+					descriptionLocalizations: {
+						ru: "Поисковый запрос в MDN.",
+					},
+					required: true,
+				},
+			],
 		});
 	}
 
-	async validate(
-		message: Message,
-		args: string[],
-		lang: typeof import("@locales/English").default
-	): Promise<ValidateReturn> {
-		const query = args[0];
-		if (!query) {
-			const text = lang.ERRORS.ARGS_MISSING("mdn");
-			const embed = this.client.functions.buildEmbed(
-				message,
-				"Red",
-				text,
-				false,
-				"❌",
-				true
-			);
-
-			return {
-				ok: false,
-				error: {
-					embeds: [embed],
-				},
-			};
-		}
-
-		return {
-			ok: true,
-		};
-	}
-
 	async run(
-		message: Message,
-		args: string[],
-		lang: typeof import("@locales/English").default
+		command: ChatInputCommandInteraction<"cached">,
+		lang: LanguageService
 	) {
 		const url = "https://mdn.gideonbot.com/embed?q=";
-		const query = args[0];
+		const query = encodeURIComponent(
+			command.options.getString("query", true)
+		);
 
 		const data = await (await request(`${url}${query}`)).body.json();
 		if (data.code && data.code === 404) {
-			const text = lang.ERRORS.NOT_FOUND("MDN");
-			const embed = this.client.functions.buildEmbed(
-				message,
-				"Red",
-				text,
-				false,
-				"❌",
-				true
-			);
+			const author = this.client.functions.author(command.member);
+			const color = this.client.functions.color("Red");
+			const text = await lang.get("ERRORS:DATA_NOT_FOUND", "MDN");
 
-			return message.channel.send({
+			const embed = new EmbedBuilder();
+			embed.setColor(color);
+			embed.setAuthor(author);
+			embed.setDescription(`❌ | ${bold(text)}`);
+			embed.setTimestamp();
+
+			return command.reply({
+				ephemeral: true,
 				embeds: [embed],
 			});
 		}
 
-		const embed = new Embed(data);
+		data.color = resolveColor(data.color);
+		const embed = new EmbedBuilder(data);
 
-		return message.channel.send({
+		return command.reply({
 			embeds: [embed],
 		});
 	}

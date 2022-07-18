@@ -1,0 +1,348 @@
+{
+	"ERRORS": {
+		"BOT_MISSING_PERMISSIONS": "Oh, it looks like I don't have some permissions to run this command: %s",
+		"USER_MISSING_PERMISSIONS": "Oh, it looks like you don't have some rights to run this command: %s",
+		"NO_ACCESS": "Oh, it looks like you have no access to this command!",
+		"JOIN_VOICE": "To use this command, you need to log into the voice channel!",
+		"JOIN_BOT_VOICE": "To use this command, you need to log into the voice channel where the bot is located!",
+		"QUEUE_IS_EMPTY": "The song's music queue is empty now!",
+		"MUSIC_IS_PAUSED": "The song is already paused!",
+		"MUSIC_IS_RESUMED": "The song is already playing!",
+		"NOT_ENOUGH_MONEY": "You don't have enough money to %s!",
+		"TIME_ERROR": "You've already received your reward!\nTry again in %s (%s)",
+		"USER_IS_BOT": "This user is a bot!",
+		"DATA_NOT_FOUND": "Data from %s is not found!",
+		"NOT_IN_LIST": "\"%s\" is not in the list!",
+		"ALREADY_IN_LIST": "\"%s\" is already in the list!",
+		"ALREADY_HAS_EXPERIMENT": "Guild \"%s\" already has an experiment \"%s\"!",
+		"EXPERIMENT_NOT_FOUND": "Experiment \"%s\" isn't been granted for guild \"%s\"!",
+		"NO_GUILD": "No guild with ID \"%s\" found!",
+		"IN_EXPERIMENT_MODE": "Command \"%s\" is not available because it is in experiment mode and this server has not been granted this experiment!",
+		"CANNOT_MODERATE_YOURSELF": "You cannot kick or ban or timeout yourself!",
+		"CANNOT_MODERATE_BOT": "You cannot kick or ban or timeout me!",
+		"PLAYER_NOT_FOUND": "Player \"%s\" is not found in Statistics!",
+		"PLAYER_ERROR": "The player either hasn't played game or their profile is private!"
+	},
+	"EVENTS": {},
+	"PERMISSIONS": {
+		"AddReactions": "Add Reactions",
+		"Administrator": "Administrator",
+		"AttachFiles": "Attach Files",
+		"BanMembers": "Ban Members",
+		"ChangeNickname": "Change Nickname",
+		"Connect": "Connect",
+		"CreateInstantInvite": "Create Instant Invite",
+		"CreatePrivateThreads": "Create Private Threads",
+		"CreatePublicThreads": "Create Public Threads",
+		"DeafenMembers": "Defean Members",
+		"EmbedLinks": "Embed Links",
+		"KickMembers": "Kick Members",
+		"ManageChannels": "Manage Channels",
+		"ManageEmojisAndStickers": "Manage Emojis and Stickers",
+		"ManageEvents": "Manage Events",
+		"ManageGuild": "Manage Guild",
+		"ManageMessages": "Manage Messages",
+		"ManageNicknames": "Manage Nicknames",
+		"ManageRoles": "Manage Roles",
+		"ManageThreads": "Manage Threads",
+		"ManageWebhooks": "Manage Webhooks",
+		"MentionEveryone": "Mention Everyone",
+		"ModerateMembers": "Moderate Members",
+		"MoveMembers": "Move Members",
+		"MuteMembers": "Mute Members",
+		"PrioritySpeaker": "Priority Speaker",
+		"ReadMessageHistory": "Read Message History",
+		"RequestToSpeak": "Request to Speak",
+		"SendMessages": "Send Messages",
+		"SendMessagesInThreads": "Send Messages in Threads",
+		"SendTTSMessages": "Send TTS Messages",
+		"Speak": "Speak",
+		"Stream": "Stream",
+		"UseApplicationCommands": "Use Application Commands",
+		"UseEmbeddedActivities": "Use Embedded Activities",
+		"UseExternalEmojis": "Use External Emojis",
+		"UseExternalStickers": "Use External Stickers",
+		"UseVAD": "Use Voice Activity",
+		"ViewAuditLog": "View Audit Log",
+		"ViewChannel": "View Channel",
+		"ViewGuildInsights": "View Guild Insights"
+	},
+	"MODERATION_COMMANDS": {
+		"BAN": {
+			"TEXT": "You have successfully banned %s for \"%s\"!"
+		},
+		"KICK": {
+			"TEXT": "You have successfully kicked %s for \"%s\"!"
+		},
+		"TIMEOUT": {
+			"TEXT": "You have successfully granted a timeout to %s because of \"%s\" on %s!"
+		}
+	},
+	"MUSIC_COMMANDS": {
+		"NOWPLAYING": {
+			"TITLE": "Now Playing - %s",
+			"NAME": "Song Name",
+			"DURATION": "Song Duration",
+			"REQUESTEDBY": "Requested By"
+		},
+		"PAUSE": {
+			"TEXT": "Music is paused by %s!"
+		},
+		"REPEAT": {
+			"QUEUE_MODE": "Queue",
+			"SONG_MODE": "Song",
+			"DISABLED": "Disabled",
+			"TEXT": "Repeat Mode is changed to `%s` by %s!"
+		},
+		"SHUFFLE": {
+			"TEXT": "Music Queue is shuffled by %s!"
+		},
+		"SKIP": {
+			"TEXT": "Song is skipped by %s!"
+		},
+		"STOP": {
+			"TEXT": "Music is stopped by %s!"
+		},
+		"VOLUME": {
+			"CURRENT": "Current Volume is %s.",
+			"TEXT": "Volume is changed to `%s` by %s!"
+		}
+	},
+	"ECONOMY_COMMANDS": {
+		"BALANCE_ADD": {
+			"TEXT": "You have added `%s` coins to %s balance!"
+		},
+		"BALANCE_SUBT": {
+			"TEXT": "You have subtracted `%s` coins from %s balance!"
+		},
+		"BALANCE_GET": {
+			"TEXT": "Your current balance is `%s` coins (`%s` is in bank)!"
+		},
+		"BANK_DEPOSIT": {
+			"TEXT": "You have deposited `%s` coins to the bank!"
+		},
+		"BANK_WITHDRAW": {
+			"TEXT": "You have withdrawn `%s` coins from the bank!"
+		},
+		"DAILY": {
+			"TEXT": "You have received `%s` coins from daily reward!"
+		},
+		"WEEKLY": {
+			"TEXT": "You have received `%s` coins from weekly reward!"
+		},
+		"WORK": {
+			"TEXT": "You have received `%s` coins from work!"
+		}
+	},
+	"GAMES_COMMANDS": {
+		"VALORANT": {
+			"MATCHES": "Matches",
+			"REGION": "Region",
+			"LEVEL": "Level",
+			"RANK": "Rank",
+			"ELO": "ELO",
+			"PLACEMENT": "Placement",
+			"WINS": "Wins",
+			"PLAYED": "Played"
+		}
+	},
+	"OTHER_COMMANDS": {
+		"BOTINFO": {
+			"BOT_GUILDS": "Servers",
+			"BOT_USERS": "Users",
+			"BOT_CHANNELS": "Channels",
+			"BOT_PING": "Ping",
+			"BOT_COMMANDS": "Commands",
+			"BOT_VERSION": "Version",
+			"BOT_CREATED": "Created At",
+			"BOT_STARTED": "Started At"
+		},
+		"COVID": {
+			"TOTAL": "Total",
+			"TODAY": "Today",
+			"CASES": "Cases",
+			"RECOVERED": "Recovered",
+			"DEATHS": "Deaths",
+			"POPULATION": "Population",
+			"CRITICAL": "Critical",
+			"LAST_UPDATE": "Last Update"
+		},
+		"HELP": {
+			"ECONOMY_DESCRIPTION": "Commands that allow you to create an economy system on the server.",
+			"GAMES_DESCRIPTION": "Commands that can show you your stats from games.",
+			"MODERATION_DESCRIPTION": "Commands that allow you to moderate server.",
+			"MUSIC_DESCRIPTION": "Commands that allow you to play and manage music on the server.",
+			"OTHER_DESCRIPTION": "Commands that contain some information about the user/server.",
+			"OWNER_DESCRIPTION": "Commands that are intended only for the bot owner.",
+			"SETTINGS_DESCRIPTION": "Commands that allow you to manage the server configuration."
+		},
+		"IMDB": {
+			"DIRECTORS": "Directors",
+			"WRITERS": "Writers",
+			"STARS": "Stars",
+			"COMPANIES": "Companies",
+			"COUNTRIES": "Countries",
+			"LANGUAGES": "Languages",
+			"RATINGS": "Ratings",
+			"CONTENT_RATING": "Content Rating",
+			"IMDB_RATING": "IMDB Rating",
+			"LENGTH": "Length"
+		},
+		"OSU": {
+			"STATISTICS": "Statistics",
+			"GRADES": "Grades",
+			"OTHER_USERNAMES": "Other Usernames",
+			"LEVEL": "Level",
+			"ACCURACY": "Accuracy",
+			"PP": "PP",
+			"RANKED_SCORE": "Ranked Score",
+			"PLAYCOUNT": "Playcount",
+			"RANK": "World Rank",
+			"COUNTRY_RANK": "Country Rank",
+			"COUNTRY": "Country",
+			"LAST_VISIT": "Last Visit",
+			"SSH": "SSH",
+			"SS": "SS",
+			"SH": "SH",
+			"S": "S",
+			"A": "A"
+		},
+		"OSU_BEATMAP": {
+			"ARTIST": "Artist",
+			"CREATOR": "Creator",
+			"STATUS": "Status",
+			"TITLE": "Title",
+			"SUBMITTED_AT": "Submitted At",
+			"LAST_UPDATED": "Last Updated",
+			"TAGS": "Tags",
+			"DIFFICULTIES": "Difficulties",
+			"MODE": "Mode",
+			"STARS": "Stars",
+			"DIFF_NAME": "Difficulty",
+			"BPM": "BPM",
+			"URL": "URL",
+			"AR": "AR",
+			"CS": "CS"
+		},
+		"SERVERINFO": {
+			"INFORMATION": "Information",
+			"PRESENCES": "Presences",
+			"MEMBERS": "Members",
+			"CHANNELS": "Channels",
+			"ONLINE": "Online",
+			"IDLE": "Idle",
+			"DND": "DND",
+			"OFFLINE": "Offline",
+			"HUMANS": "Humans",
+			"BOTS": "Bots",
+			"TEXT": "Text Channels",
+			"VOICE": "Voice Channels",
+			"CATEGORIES": "Categories",
+			"NEWS": "News Channels",
+			"STAGE": "Stage Channels",
+			"GUILD_ID": "Guild ID",
+			"OWNER": "Owner",
+			"MEMBER_COUNT": "Member Count",
+			"CREATED_AT": "Created At"
+		},
+		"STEAM": {
+			"ABOUT": "About the Game",
+			"LANGUAGES": "Supported Languages",
+			"PLATFORMS": "Supported Platforms",
+			"CATEGORIES": "Categories",
+			"GENRES": "Genres",
+			"RECOMMENDATIONS": "Recommendations",
+			"RELEASE_DATE": "Release Date",
+			"FIELD_PRICE": "Game Price",
+			"NOTES": "Notes",
+			"WINDOWS": "Windows",
+			"MAC": "Mac",
+			"LINUX": "Linux",
+			"COMING_SOON": "Coming Soon",
+			"DATE": "Date",
+			"PRICE": "Price",
+			"DISCOUNT": "Discount"
+		},
+		"USERINFO": {
+			"INFORMATION_TITLE": "\"%s's\" Information",
+			"INFORMATION_BTN": "Information",
+			"BADGES_TITLE": "\"%s's\" Badges",
+			"BADGES_BTN": "Badges",
+			"ID": "ID",
+			"USERNAME": "Username",
+			"DISCRIMINATOR": "Discriminator",
+			"AVATARS": "Avatars",
+			"BANNERS": "Banners",
+			"STATUS": "Status",
+			"CREATED_AT": "Created At",
+			"JOINED_AT": "Joined At",
+			"ROLES": "Roles"
+		}
+	},
+	"OWNER_COMMANDS": {
+		"RELOAD": {
+			"COMMAND_RELOADED": "The command \"%s\" has been reloaded!"
+		},
+		"EXPERIMENTS": {
+			"GRANTED": "You have granted the experiment \"%s\" to the guild \"%s\"!",
+			"REVOKED": "You have revoked the experiment \"%s\" for the guild \"%s\"!"
+		}
+	},
+	"SETTINGS_COMMANDS": {
+		"CONFIG": {
+			"AUTO_ROLE": "Auto Role",
+			"MUTE_ROLE": "Mute Role",
+			"TWITCH_CHANNEL": "Twitch Channel",
+			"MEMBERS_CHANNEL": "Members Channel",
+			"LOG_CHANNEL": "Log Channel",
+			"PREFIX": "Prefix",
+			"TWITCH_SYSTEM": "Twitch Notification System"
+		},
+		"TEXT_CHANGES": {
+			"WELCOME_LABEL": "Welcome Text Change Modal",
+			"WELCOME_CHANGED": "Welcome Text has been successfully changed!",
+			"GOODBYE_LABEL": "Bye Text Change Modal",
+			"GOODBYE_CHANGED": "Bye Text has been successfully changed!"
+		},
+		"RESET_PROMPT": "There's %s in the database. Are you want to reset it?",
+		"EDIT_TEXT": "%s is changed to %s!",
+		"ENABLE_TEXT": "%s is enabled!",
+		"DISABLE_TEXT": "%s is disabled!",
+		"ADD_TEXT": "\"%s\" is added into %s!",
+		"REMOVE_TEXT": "\"%s\" is removed from %s!",
+		"RESET_TEXT": "%s is resetted!"
+	},
+	"ECONOMY_ACTIONS": {
+		"DEPOSIT": "deposit in bank",
+		"WITHDRAW": "withdraw frow the bank"
+	},
+	"OTHER": {
+		"NONE": "None",
+		"NOTHING": "Nothing",
+		"YES": "Yes",
+		"NO": "No"
+	},
+	"BADGES": {
+		"BotHTTPInteractions": "Bot HTTP Interactions",
+		"BugHunterLevel1": "Bug Hunter Level 1",
+		"BugHunterLevel2": "Bug Hunter Level 2",
+		"CertifiedModerator": "Certified Moderator",
+		"Hypesquad": "HypeSquad",
+		"HypeSquadOnlineHouse1": "HypeSquad Bravery",
+		"HypeSquadOnlineHouse2": "HypeSquad Brilliance",
+		"HypeSquadOnlineHouse3": "HypeSquad Balance",
+		"Partner": "Partner",
+		"PremiumEarlySupporter": "Premium Early Supporter",
+		"Spammer": "Spammer",
+		"Staff": "Staff",
+		"TeamPseudoUser": "Team Pseudo User",
+		"VerifiedBot": "Verified Bot",
+		"VerifiedDeveloper": "Verified Developer",
+		"Quarantined": "Quarantined"
+	},
+	"TWITCH_SYSTEM": {
+		"STREAM_STARTED": "%s is now streaming on Twitch!",
+		"STREAM_TITLE": "Stream Title",
+		"VIEWERS": "Viewers"
+	}
+}

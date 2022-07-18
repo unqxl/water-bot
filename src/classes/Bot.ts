@@ -1,192 +1,38 @@
-import "reflect-metadata";
-
 import {
 	Client,
 	Collection,
 	GatewayIntentBits,
 	Partials,
 	ActivityType,
-	Util,
 } from "discord.js";
-import { EnmapGiveaways } from "./EnmapGiveaways";
-import { Moderation } from "discord-moderation";
-import { Leveling } from "./Leveling";
-import { Client as dagpiClient } from "dagpijs";
-import { DiscordTogether } from "discord-together";
-import { Client as IMDBClient } from "imdb-api";
-import { Economy } from "@badboy-discord/discordjs-economy";
-import WebServer from "./Server";
+import { Moderation } from "@djs-modules/moderation";
+import { Economy } from "@djs-modules/economy";
 import Enmap from "enmap";
 import DisTube from "distube";
 import logs from "discord-logs";
 
+// APIs
+import { Client as IMDBClient } from "imdb-api";
+
 // Other
-import DBManager from "./DBManager";
-import Handlers from "./Handlers";
 import Functions from "./Functions";
-import config from "../config";
-import TwitchSystem from "../modules/TwitchSystem";
+import Handlers from "./Handlers";
 import Logger from "./Logger";
-import TopGG from "../modules/TopGG";
-import DJSystem from "../modules/DJSystem";
-import distubeEvents from "../events/distubeEvents";
-import NekoClient from "nekos.life";
-import ClanSystem from "../modules/ClanSystem";
+import config from "../cfg";
+import API from "./API";
 
 // Distube Plugins
 import { YtDlpPlugin } from "@distube/yt-dlp";
-import SpotifyPlugin from "@distube/spotify";
 import SoundCloudPlugin from "@distube/soundcloud";
 
 // Interfaces and Structures
-import { Command } from "../types/Command/Command";
+import { ExperimentOptions } from "../types/types";
 import { SlashCommand } from "../types/Command/SlashCommand";
-import { CustomCommand, GuildConfig } from "../types/types";
-import { ClansGuild } from "../interfaces/Clans";
-import Event from "../types/Event/Event";
-
-// MySQL
-import { createConnection, getRepository } from "typeorm";
-import { GuildConfiguration } from "../typeorm/entities/GuildConfiguration";
-
-// WebSocket
-import { io, Socket } from "socket.io-client";
-import API from "./API";
+import { SubCommand } from "../types/Command/SubCommand";
+import { GuildData } from "../types/Guild";
+import Event from "../types/Event";
 
 export = class Bot extends Client {
-	//? [Collections]
-	public commands: Collection<string, Command> = new Collection();
-	public slashCommands: Collection<string, SlashCommand> = new Collection();
-	public aliases: Collection<string, string> = new Collection();
-	public events: Collection<string, Event> = new Collection();
-	public _configs: Collection<string, GuildConfiguration> = new Collection();
-
-	//? [Other]
-	public owners: string[] = ["852921856800718908"];
-	public config: typeof config = config;
-	public twitchKey: string = "";
-	public version: string = "2.2.0-dev";
-
-	//? [Storages]
-	public custom_commands: Enmap<string, CustomCommand[]> = new Enmap({
-		name: "custom_commands",
-		dataDir: "./db",
-		wal: false,
-	}); //? Custom Commands Storage
-
-	public configurations: Enmap<string, GuildConfig> = new Enmap({
-		name: "configurations",
-		dataDir: "./db",
-		wal: false,
-	}); //? Configurations Storage
-
-	public leveling = new Enmap({
-		name: "leveling",
-		dataDir: "./db",
-		wal: false,
-	}); //? Leveling Storage
-
-	public giveawaysDB = new Enmap({
-		name: "giveaways",
-		dataDir: "./db",
-		wal: false,
-	}); //? Giveaways Storage
-
-	public clansDB: Enmap<string, ClansGuild> = new Enmap({
-		name: "clans",
-		dataDir: "./db",
-		wal: false,
-	}); //? Clans Storage
-
-	//? [APIs]
-	public dagpi: dagpiClient = new dagpiClient(this.config.keys.dagpi_key);
-	public nekos: NekoClient = new NekoClient();
-	public imdb: IMDBClient = new IMDBClient({
-		apiKey: this.config.keys.imdb_key,
-	});
-	// @ts-expect-error
-	public together: DiscordTogether<{}> = new DiscordTogether(this);
-
-	public handlers: Handlers = new Handlers(this);
-	public functions: Functions = new Functions(this);
-
-	//? [Systems]
-	public apis: API = new API(this.config);
-	public web: WebServer = new WebServer({ port: 80 });
-	public socket: Socket = io("http://localhost:3001");
-	public clans: ClanSystem = new ClanSystem(this);
-	public DJSystem: DJSystem = new DJSystem(this);
-	public levels: Leveling = new Leveling(this);
-	public logger: Logger = new Logger();
-	public twitchSystem: TwitchSystem = new TwitchSystem(this);
-	public database: DBManager = null;
-
-	//? [Modules]
-	// @ts-expect-error
-	public moderation: Moderation = new Moderation(this, {
-		dbPath: "./db/",
-		locale: "en-US",
-
-		systems: {
-			ghostPing: true,
-			antiInvite: true,
-			antiJoin: true,
-			antiLink: true,
-			antiSpam: true,
-			autoRole: false,
-		},
-	});
-
-	public economy: Economy = new Economy({
-		DBName: "economy",
-		DBPath: "./db/",
-		rewards: {
-			daily: 150,
-			weekly: 1050,
-			work: [100, 150],
-		},
-	});
-
-	public music: DisTube = new DisTube(this, {
-		leaveOnEmpty: true,
-		leaveOnFinish: true,
-		leaveOnStop: true,
-
-		emitNewSongOnly: true,
-		emitAddSongWhenCreatingQueue: false,
-		emptyCooldown: 5,
-
-		plugins: [
-			new SpotifyPlugin(),
-			new SoundCloudPlugin(),
-			new YtDlpPlugin(),
-		],
-
-		ytdlOptions: {
-			highWaterMark: 1024 * 1024 * 64,
-			quality: "highestaudio",
-			liveBuffer: 60000,
-			dlChunkSize: 1024 * 1024 * 64,
-		},
-	});
-
-	public giveaways: EnmapGiveaways = new EnmapGiveaways(this, {
-		endedGiveawaysLifetime: 60000 * 60 * 24,
-
-		default: {
-			botsCanWin: false,
-			embedColor: Util.resolveColor("Blurple"),
-			embedColorEnd: Util.resolveColor("Green"),
-			reaction: "🎉",
-
-			lastChance: {
-				enabled: true,
-				embedColor: Util.resolveColor("Yellow"),
-				content: "Last Chance to Enter!",
-			},
-		},
-	});
-
 	constructor() {
 		super({
 			partials: [
@@ -206,6 +52,7 @@ export = class Bot extends Client {
 				GatewayIntentBits.GuildEmojisAndStickers,
 				GatewayIntentBits.GuildMessageReactions,
 				GatewayIntentBits.GuildPresences,
+				GatewayIntentBits.MessageContent,
 			],
 
 			presence: {
@@ -213,66 +60,125 @@ export = class Bot extends Client {
 				activities: [
 					{
 						type: ActivityType.Watching,
-						name: "music 🎶",
+						name: "released :pog:",
 					},
 				],
 			},
 		});
 
-		this.music.setMaxListeners(100);
-		this.setMaxListeners(100);
+		this.commands = new Collection();
+		this.aliases = new Collection();
+		this.events = new Collection();
+
+		this.owners = ["852921856800718908"];
+		this.config = config;
+		this.twitchKey = null;
+		this.version = "2.3.0";
+
+		this.configurations = new Enmap({
+			name: "configurations",
+			dataDir: "./db",
+			wal: false,
+		});
+
+		this.experiments = new Enmap({
+			name: "experiments",
+			dataDir: "./db",
+			wal: false,
+		});
+
+		this.imdb = new IMDBClient({
+			apiKey: this.config.keys.imdb_key,
+		});
+
+		this.handlers = new Handlers(this);
+		this.functions = new Functions(this);
+		this.apis = new API(this.config);
+		this.logger = new Logger();
+
+		this.moderation = new Moderation(this, {
+			dbPath: "./db/",
+			locale: "en-US",
+
+			defaultSystems: {
+				ghostPing: true,
+				antiInvite: true,
+				antiJoin: true,
+				antiLink: true,
+				antiSpam: true,
+				autoRole: false,
+			},
+		});
+
+		this.economy = new Economy({
+			DBName: "economy",
+			DBPath: "./db/",
+			rewards: {
+				daily: 150,
+				weekly: 1050,
+				work: [100, 150],
+			},
+		});
+
+		this.music = new DisTube(this, {
+			leaveOnEmpty: true,
+			leaveOnFinish: true,
+			leaveOnStop: true,
+
+			emitNewSongOnly: true,
+			emitAddSongWhenCreatingQueue: false,
+			emptyCooldown: 5,
+
+			plugins: [new SoundCloudPlugin(), new YtDlpPlugin({ update: true })],
+		});
+
+		this.music.setMaxListeners(Infinity);
+		this.setMaxListeners(Infinity);
 	}
 
 	async start() {
-		if (!this.application?.owner) await this.application?.fetch();
-
-		//? [MySQL Setup - Start]
-		await createConnection({
-			name: "default",
-			type: "mysql",
-			host: this.config.mysql.host,
-			port: 3306,
-			username: this.config.mysql.username,
-			password: this.config.mysql.password,
-			database: this.config.mysql.database,
-			entities: [GuildConfiguration],
-		});
-
-		const configRepo = getRepository(GuildConfiguration);
-		const guildConfigs = await configRepo.find();
-		const configMappings = new Collection<string, GuildConfiguration>();
-
-		for (const config of guildConfigs) {
-			configMappings.set(config.guild_id, config);
-		}
-
-		this.configs = configMappings;
-		this.database = new DBManager(this);
-		//? [MySQL Setup - End]
-
-		await distubeEvents(this);
 		await logs(this);
+
 		await this.handlers.loadEvents();
-		await this.handlers.loadCommands();
-		await this.handlers.loadSlashCommands();
 		await this.functions.updateToken();
 
-		new TopGG(this);
-
-		this.config.bot.test
-			? this.login(this.config.bot.testToken)
-			: this.login(this.config.bot.token);
+		this.login(this.config.bot.token);
 	}
 
 	async wait(ms: number) {
 		return new Promise((res) => setTimeout(res, ms));
 	}
-
-	get configs(): Collection<string, GuildConfiguration> {
-		return this._configs;
-	}
-
-	set configs(guildConfigs: Collection<string, GuildConfiguration>) {
-		this._configs = guildConfigs;
-	}
 };
+
+declare module "discord.js" {
+	interface Client {
+		//? Collections
+		commands: Collection<string, SlashCommand | SubCommand>;
+		aliases: Collection<string, string>;
+		events: Collection<string, Event>;
+
+		//? Other
+		owners: string[];
+		config: typeof config;
+		twitchKey: string;
+		version: string;
+
+		//? Storages
+		configurations: Enmap<string, GuildData>; //? Guild Configurations
+		experiments: Enmap<string, ExperimentOptions[]>; //? Guild's Experminents
+
+		//? APIs
+		imdb: IMDBClient;
+
+		//? Systems
+		handlers: Handlers;
+		functions: Functions;
+		apis: API;
+		logger: Logger;
+
+		//? Modules
+		moderation: Moderation;
+		economy: Economy;
+		music: DisTube;
+	}
+}

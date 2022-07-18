@@ -1,42 +1,60 @@
-import { Categories, ValidateReturn } from "../../types/Command/BaseCommand";
-import { Command } from "../../types/Command/Command";
-import { Message } from "discord.js";
+import {
+	ChatInputCommandInteraction,
+	EmbedBuilder,
+	GuildMember,
+} from "discord.js";
+import { LanguageService } from "../../services/Language";
+import { ValidateReturn } from "../../types/Command/BaseSlashCommand";
+import { SubCommand } from "../../types/Command/SubCommand";
+import { bold } from "@discordjs/builders";
 import Bot from "../../classes/Bot";
 
-export default class PauseCommand extends Command {
+export default class PauseCommand extends SubCommand {
 	constructor(client: Bot) {
 		super(client, {
+			commandName: "music",
+
 			name: "pause",
-
-			description: {
-				en: "Pauses Playing Music!",
-				ru: "Ставит на Паузу Играющую Песню!",
+			description: "Pauses the current song.",
+			descriptionLocalizations: {
+				ru: "Приостанавливает воспроизведение музыки.",
 			},
-
-			category: Categories.MUSIC,
-			usage: "<prefix>pause",
 		});
 	}
 
 	async validate(
-		message: Message,
-		args: string[],
-		lang: typeof import("@locales/English").default
+		command: ChatInputCommandInteraction<"cached">,
+		lang: LanguageService
 	): Promise<ValidateReturn> {
-		const { djRoles } = this.client.configurations.get(message.guild.id);
-		if (djRoles.length) {
-			const { status, message: error } = await this.client.DJSystem.check(
-				message
-			);
-			if (!status) {
-				const embed = this.client.functions.buildEmbed(
-					message,
-					"Red",
-					error,
-					false,
-					"❌",
-					true
-				);
+		const color = this.client.functions.color("Red");
+		const author = this.client.functions.author(command.member);
+
+		const voiceCheck = this.client.functions.voiceCheck(
+			command.guild.members.me,
+			command.member as GuildMember
+		);
+		if (!voiceCheck) {
+			if (voiceCheck.code === 1) {
+				const text = await lang.get("ERRORS:JOIN_VOICE");
+				const embed = new EmbedBuilder();
+				embed.setColor(color);
+				embed.setAuthor(author);
+				embed.setDescription(`❌ | ${bold(text)}`);
+				embed.setTimestamp();
+
+				return {
+					ok: false,
+					error: {
+						embeds: [embed],
+					},
+				};
+			} else if (voiceCheck.code === 2) {
+				const text = await lang.get("ERRORS:JOIN_BOT_VOICE");
+				const embed = new EmbedBuilder();
+				embed.setColor(color);
+				embed.setAuthor(author);
+				embed.setDescription(`❌ | ${bold(text)}`);
+				embed.setTimestamp();
 
 				return {
 					ok: false,
@@ -47,62 +65,14 @@ export default class PauseCommand extends Command {
 			}
 		}
 
-		const [error, voice_error] = await Promise.all([
-			lang.ERRORS.NOT_JOINED_VOICE,
-			lang.ERRORS.JOIN_BOT_VOICE,
-		]);
-
-		if (!message.member.voice.channel) {
-			const embed = this.client.functions.buildEmbed(
-				message,
-				"Red",
-				error,
-				false,
-				"❌",
-				true
-			);
-
-			return {
-				ok: false,
-				error: {
-					embeds: [embed],
-				},
-			};
-		}
-
-		if (
-			message.guild.me.voice.channel &&
-			message.member.voice.channel &&
-			message.member.voice.channel !== message.guild.me.voice.channel
-		) {
-			const embed = this.client.functions.buildEmbed(
-				message,
-				"Red",
-				voice_error,
-				false,
-				"❌",
-				true
-			);
-
-			return {
-				ok: false,
-				error: {
-					embeds: [embed],
-				},
-			};
-		}
-
-		const queue = this.client.music.getQueue(message);
+		const queue = this.client.music.getQueue(command.guild);
 		if (!queue) {
-			const text = lang.ERRORS.QUEUE_EMPTY;
-			const embed = this.client.functions.buildEmbed(
-				message,
-				"Red",
-				text,
-				false,
-				"❌",
-				true
-			);
+			const text = await lang.get("ERRORS:QUEUE_IS_EMPTY");
+			const embed = new EmbedBuilder();
+			embed.setColor(color);
+			embed.setAuthor(author);
+			embed.setDescription(`❌ | ${bold(text)}`);
+			embed.setTimestamp();
 
 			return {
 				ok: false,
@@ -112,16 +82,13 @@ export default class PauseCommand extends Command {
 			};
 		}
 
-		if (!queue.playing) {
-			const text = lang.ERRORS.PAUSED;
-			const embed = this.client.functions.buildEmbed(
-				message,
-				"Red",
-				text,
-				false,
-				"❌",
-				true
-			);
+		if (queue.paused) {
+			const text = await lang.get("ERRORS:MUSIC_IS_PAUSED");
+			const embed = new EmbedBuilder();
+			embed.setColor(color);
+			embed.setAuthor(author);
+			embed.setDescription(`❌ | ${bold(text)}`);
+			embed.setTimestamp();
 
 			return {
 				ok: false,
@@ -137,24 +104,26 @@ export default class PauseCommand extends Command {
 	}
 
 	async run(
-		message: Message,
-		args: string[],
-		lang: typeof import("@locales/English").default
+		command: ChatInputCommandInteraction<"cached">,
+		lang: LanguageService
 	) {
-		const queue = this.client.music.getQueue(message);
+		const queue = this.client.music.getQueue(command.guild);
 		queue.pause();
 
-		const text = lang.MUSIC.PAUSED;
-		const embed = this.client.functions.buildEmbed(
-			message,
-			"Blurple",
-			text,
-			false,
-			"✅",
-			true
+		const text = await lang.get(
+			"MUSIC_COMMANDS:PAUSE:TEXT",
+			command.user.toString()
 		);
 
-		return message.channel.send({
+		const color = this.client.functions.color("Blurple");
+		const author = this.client.functions.author(command.member);
+		const embed = new EmbedBuilder();
+		embed.setColor(color);
+		embed.setAuthor(author);
+		embed.setDescription(`✅ | ${bold(text)}`);
+		embed.setTimestamp();
+
+		return command.reply({
 			embeds: [embed],
 		});
 	}
