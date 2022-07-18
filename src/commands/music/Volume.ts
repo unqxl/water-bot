@@ -46,7 +46,8 @@ export default class VolumeCommand extends SubCommand {
 			command.guild.members.me,
 			command.member as GuildMember
 		);
-		if (!voiceCheck) {
+
+		if (voiceCheck.status === false) {
 			if (voiceCheck.code === 1) {
 				const text = await lang.get("ERRORS:JOIN_VOICE");
 				const embed = new EmbedBuilder();

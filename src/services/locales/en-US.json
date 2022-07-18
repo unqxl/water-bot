@@ -109,20 +109,23 @@
 			"QUEUE_MODE": "Queue",
 			"SONG_MODE": "Song",
 			"DISABLED": "Disabled",
-			"TEXT": "Repeat Mode is changed to `%s` by %s!"
+			"TEXT": "Repeat Mode was changed to `%s` by %s!"
+		},
+		"RESUME": {
+			"TEXT": "Music was resumed by %s!"
 		},
 		"SHUFFLE": {
-			"TEXT": "Music Queue is shuffled by %s!"
+			"TEXT": "Music Queue was shuffled by %s!"
 		},
 		"SKIP": {
-			"TEXT": "Song is skipped by %s!"
+			"TEXT": "Song was skipped by %s!"
 		},
 		"STOP": {
-			"TEXT": "Music is stopped by %s!"
+			"TEXT": "Music was stopped by %s!"
 		},
 		"VOLUME": {
 			"CURRENT": "Current Volume is %s.",
-			"TEXT": "Volume is changed to `%s` by %s!"
+			"TEXT": "Volume was changed to `%s` by %s!"
 		}
 	},
 	"ECONOMY_COMMANDS": {

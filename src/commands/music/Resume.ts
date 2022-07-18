@@ -33,7 +33,8 @@ export default class ResumeCommand extends SubCommand {
 			command.guild.members.me,
 			command.member as GuildMember
 		);
-		if (!voiceCheck) {
+
+		if (voiceCheck.status === false) {
 			if (voiceCheck.code === 1) {
 				const text = await lang.get("ERRORS:JOIN_VOICE");
 				const embed = new EmbedBuilder();
@@ -110,7 +111,10 @@ export default class ResumeCommand extends SubCommand {
 		const queue = this.client.music.getQueue(command.guild);
 		queue.resume();
 
-		const text = await lang.get("MUSIC_COMMANDS:RESUME:TEXT");
+		const text = await lang.get(
+			"MUSIC_COMMANDS:RESUME:TEXT",
+			command.user.toString()
+		);
 		const color = this.client.functions.color("Blurple");
 		const author = this.client.functions.author(command.member);
 		const embed = new EmbedBuilder();

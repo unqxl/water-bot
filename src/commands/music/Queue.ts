@@ -37,7 +37,8 @@ export default class QueueCommand extends SubCommand {
 			command.guild.members.me,
 			command.member as GuildMember
 		);
-		if (!voiceCheck) {
+
+		if (voiceCheck.status === false) {
 			if (voiceCheck.code === 1) {
 				const text = await lang.get("ERRORS:JOIN_VOICE");
 				const embed = new EmbedBuilder();
@@ -181,18 +182,14 @@ export default class QueueCommand extends SubCommand {
 							const index = bold((i + 1).toString());
 							const right_part = `[${formattedDuration} | ${requestedBy}]`;
 
-							return `${index}: ${bold(Name)} ${bold(
-								right_part
-							)}`;
+							return `${index}: ${bold(Name)} ${bold(right_part)}`;
 						})
 						.slice(i0, i1)
 						.join("\n");
 
 					embed.setDescription(description);
 					embed.setFooter({
-						text: `Page: ${page}/${Math.ceil(
-							queue.songs.length / 10
-						)}`,
+						text: `Page: ${page}/${Math.ceil(queue.songs.length / 10)}`,
 					});
 
 					int.update({
@@ -232,18 +229,14 @@ export default class QueueCommand extends SubCommand {
 							const index = bold((i + 1).toString());
 							const right_part = `[${formattedDuration} | ${requestedBy}]`;
 
-							return `${index}: ${bold(Name)} ${bold(
-								right_part
-							)}`;
+							return `${index}: ${bold(Name)} ${bold(right_part)}`;
 						})
 						.slice(i0, i1)
 						.join("\n");
 
 					embed.setDescription(description);
 					embed.setFooter({
-						text: `Page: ${page}/${Math.ceil(
-							queue.songs.length / 10
-						)}`,
+						text: `Page: ${page}/${Math.ceil(queue.songs.length / 10)}`,
 					});
 
 					int.update({
