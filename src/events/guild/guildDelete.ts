@@ -20,13 +20,13 @@ export default class GuildDeleteEvent extends Event {
 		});
 		embed.setDescription(
 			[
-				`🎉 | **Bot has been deleted from server!**`,
+				`**Bot has been deleted from server!**`,
 				`› **Name**: **${guild.name}**`,
 				`› **ID**: **${guild.id}**`,
 				`› **Owner**: **${await (await guild.fetchOwner()).toString()} (${
 					guild.ownerId
 				})**`,
-				`› **Members**: **${guild.members.cache.size.toLocaleString("be")}`,
+				`› **Members**: **${guild.members.cache.size.toLocaleString("be")}**`,
 			].join("\n")
 		);
 

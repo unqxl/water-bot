@@ -26,7 +26,7 @@ export default class GuildCreateEvent extends Event {
 				`› **Owner**: **${await (await guild.fetchOwner()).toString()} (${
 					guild.ownerId
 				})**`,
-				`› **Members**: **${guild.members.cache.size.toLocaleString("be")}`,
+				`› **Members**: **${guild.members.cache.size.toLocaleString("be")}**`,
 			].join("\n")
 		);
 
