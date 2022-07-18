@@ -3,6 +3,7 @@ import { GuildService } from "../../services/Guild";
 import { Job } from "../../plugins/Job";
 import Event from "../../types/Event";
 import Bot from "../../classes/Bot";
+import TwitchNotifications from "../../modules/TwitchNotifications";
 
 export default class ReadyEvent extends Event {
 	constructor() {
@@ -31,9 +32,7 @@ export default class ReadyEvent extends Event {
 			for (var option of command.options.values()) {
 				var name = "";
 
-				if (
-					option.type === ApplicationCommandOptionType.SubcommandGroup
-				) {
+				if (option.type === ApplicationCommandOptionType.SubcommandGroup) {
 					for (const subcommand of option.options.values()) {
 						name = `${command.name}-${option.name}-${subcommand.name}`;
 
@@ -78,6 +77,18 @@ export default class ReadyEvent extends Event {
 			true,
 			"Europe/Moscow"
 		).start();
+
+		new Job(
+			client,
+			"Twitch Streams",
+			"0 5 0 * * *",
+			async () => {
+				await checkStreams(client);
+			},
+			null,
+			true,
+			"Europe/Moscow"
+		).start();
 	}
 }
 
@@ -96,6 +107,19 @@ async function checkUp(client: Bot) {
 		else await service.getSettings(guild.id);
 
 		service.checkAndMigrate(guildID);
+	}
+
+	return true;
+}
+
+async function checkStreams(client: Bot) {
+	const guildIDS = [];
+	for (const id of client.guilds.cache.keys()) {
+		guildIDS.push(id);
+	}
+
+	for (const guildID of guildIDS) {
+		new TwitchNotifications(client).handle(guildID);
 	}
 
 	return true;
