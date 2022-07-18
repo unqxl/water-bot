@@ -26,13 +26,13 @@ export = class TwitchNotifications {
 		}
 
 		const streamers = settings.streamers;
-		for (let i = 0; i < streamers.length; i++) {
+		for (const streamer of streamers) {
 			const token = this.client.twitchKey;
 			const client_id = this.client.config.twitch.client_id;
 
 			const stream_data = await (
 				await request(
-					`https://api.twitch.tv/helix/streams?first=1&user_login=${streamers[i].name}`,
+					`https://api.twitch.tv/helix/streams?first=1&user_login=${streamer.name}`,
 					{
 						headers: {
 							Authorization: `Bearer ${token}`,
@@ -44,7 +44,7 @@ export = class TwitchNotifications {
 
 			const streamer_data = await (
 				await request(
-					`https://api.twitch.tv/helix/users?login=${streamers[i].name}`,
+					`https://api.twitch.tv/helix/users?login=${streamer.name}`,
 					{
 						headers: {
 							Authorization: `Bearer ${token}`,
@@ -55,12 +55,12 @@ export = class TwitchNotifications {
 			).body.json();
 
 			if (!stream_data || !streamer_data) continue;
-			if (stream_data && !stream_data.length) continue;
+			if (stream_data.data.length === 0) continue;
 
-			const stream = stream_data[0];
+			const stream = stream_data.data[0];
 			const [
 				stream_id,
-				streamer,
+				_streamer,
 				stream_title,
 				profile_url,
 				thumbnail_url,
@@ -70,7 +70,7 @@ export = class TwitchNotifications {
 				stream.id,
 				stream.user_name,
 				stream.title,
-				streamer_data[0].profile_image_url,
+				streamer_data.data[0].profile_image_url,
 				stream.thumbnail_url
 					.replace("{width}", "1280")
 					.replace("{height}", "720"),
@@ -78,20 +78,20 @@ export = class TwitchNotifications {
 				stream.started_at,
 			];
 
-			if (streamers[i].last_stream === stream_id) continue;
+			if (streamer.last_stream === stream_id) continue;
 
-			streamers[i].last_stream = stream_id;
+			streamer.last_stream = stream_id;
 			service.set(id, "streamers", streamers);
 
 			twitchStreamerLive(this.client, {
 				guild_id: guild.id,
 				stream_id,
-				streamer,
+				streamer: _streamer,
 				stream_title,
 				profile_url,
 				thumbnail_url,
-				viewers,
-				started_at,
+				viewers: Number(viewers),
+				started_at: new Date(started_at).getTime(),
 			});
 		}
 	}

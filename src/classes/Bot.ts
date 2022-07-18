@@ -146,6 +146,11 @@ export = class Bot extends Client {
 		await this.functions.updateToken();
 
 		this.login(this.config.bot.token);
+
+		// Every 10 minutes, update the token
+		setInterval(() => {
+			this.functions.updateToken();
+		}, 600000);
 	}
 
 	async wait(ms: number) {

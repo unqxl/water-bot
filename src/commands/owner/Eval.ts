@@ -78,40 +78,5 @@ export default class EvalCommand extends SubCommand {
 		modal.addComponents([row]);
 
 		await command.showModal(modal);
-
-		this.client.on("interactionCreate", async (interaction) => {
-			if (interaction.type !== InteractionType.ModalSubmit) return;
-
-			const code = interaction.fields.getTextInputValue("code");
-
-			let evaluated;
-			try {
-				evaluated = await eval(code);
-			} catch (error) {
-				evaluated = error.message;
-			}
-
-			if (typeof evaluated !== "string") {
-				evaluated = JSON.stringify(evaluated);
-			} else {
-				evaluated = evaluated.replace(/\n/g, "\n\t");
-				evaluated = evaluated.replace(this.client.toJSON, "❌");
-			}
-
-			const color = this.client.functions.color("Blurple");
-			const author = this.client.functions.author(command.member);
-
-			const embed = new EmbedBuilder();
-			embed.setColor(color);
-			embed.setAuthor(author);
-			embed.setDescription(codeBlock("js", evaluated));
-			embed.setTimestamp();
-
-			interaction.reply({
-				embeds: [embed],
-			});
-
-			return;
-		});
 	}
 }

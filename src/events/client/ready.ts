@@ -66,29 +66,11 @@ export default class ReadyEvent extends Event {
 
 		client.logger.log(`${client.user.tag} is ready!`);
 
-		new Job(
-			client,
-			"Twitch Token Update",
-			"0 10 0 * * *",
-			async () => {
-				await client.functions.updateToken();
-			},
-			null,
-			true,
-			"Europe/Moscow"
-		).start();
-
-		new Job(
-			client,
-			"Twitch Streams",
-			"0 5 0 * * *",
-			async () => {
-				await checkStreams(client);
-			},
-			null,
-			true,
-			"Europe/Moscow"
-		).start();
+		// Every 5 minutes, check if there are any new notifications
+		await checkStreams(client);
+		setInterval(async () => {
+			await checkStreams(client);
+		}, 300000);
 	}
 }
 
