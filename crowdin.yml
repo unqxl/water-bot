@@ -1,3 +1,0 @@
-files:
-  - source: /src/services/locales/ru-RU.json
-    translation: /src/services/locales/%locale%.json

@@ -1,4 +1,4 @@
 {
 	"upgrade": true,
-	"reject": ["chalk"]
+	"reject": ["@types/chalk", "chalk"]
 }
